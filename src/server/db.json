@@ -1,0 +1,25 @@
+{
+    "users":[
+    {
+      "name": "abishek",
+      "age": "21",
+      "gender": "male",
+      "contact": "9962313564",
+      "Bloodgroup": "B+ve",
+      "Appointmentno": "101",
+      "Appointmentdate": "02/12",
+      "priority": "urgent"
+    },
+    {
+        "name": "abishek",
+        "age": "23",
+        "gender": "male",
+        "contact": "9962313564",
+        "Bloodgroup": "B+ve",
+        "Appointmentno": "103",
+        "Appointmentdate": "02/12",
+        "priority": "urgent"
+      }
+    ]
+
+}

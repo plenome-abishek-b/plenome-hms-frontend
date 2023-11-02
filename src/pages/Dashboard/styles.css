@@ -1,0 +1,87 @@
+.card:hover{
+    box-shadow: 0 5px 7px rgba(0,0,0,0.3);
+}
+
+/* calendarStyles.css */
+/* .rbc-calendar {
+    border: 5px solid #009FBD;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: #0A2647;
+    background-color: #E9F8F9;
+  }
+  
+  .rbc-header {
+    background-color: #009FBD;
+    font-weight: bold;
+    font-family: 'Poppins';
+  }
+  
+  .rbc-today {
+    background-color: #ffe6e6;
+    border-radius: 50%;
+  }
+  
+  .rbc-event {
+    background-color: #009FBD;
+    color: #fff;
+    border-radius: 7px;
+    padding: 5px 4px; /* Add padding to the event title */
+  /* }
+  
+  .rbc-event-content {
+    font-size: 14px;
+    color: #fff;
+  }
+   */ */
+
+   /* Override the default style of the calendar event container */
+.rbc-event {
+    background-color: #007bff; /* Change the background color of events */
+    color: #fff; /* Change the text color of events */
+    border: 1px solid #007bff; /* Add a border to the event container */
+    border-radius: 4px; /* Add border radius to make it slightly rounded */
+  }
+  
+  /* Override the default style of the calendar event wrapper */
+  .rbc-event-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Style the calendar header */
+  .rbc-toolbar {
+    background-color: #35A29F; /* Change the background color of the header */
+    border-radius: 7px; /* Add border radius to make it slightly rounded */
+  }
+  
+  /* Style the calendar header title (month/year) */
+  .rbc-toolbar-label {
+    font-size: 1.5rem; /* Increase the font size of the header title */
+    font-weight: bold; /* Add font weight to make it bolder */
+    color: white;
+  }
+  
+  /* Style the calendar header buttons (prev, next, today) */
+  .rbc-btn-group {
+    margin-bottom: 10px; /* Add some margin at the bottom of the buttons */
+  }
+  
+  /* Style the calendar date cells */
+  .rbc-date-cell {
+    background-color: #f9f9f9; /* Change the background color of the date cells */
+    border: 1px solid #ddd; /* Add a border to the date cells */
+  }
+  
+  /* Style the calendar today's date cell */
+  .rbc-now {
+    background-color: #ffd700; /* Change the background color of today's date cell */
+    font-weight: bold; /* Add font weight to make it bolder */
+  }
+  
+  /* Add this CSS to your existing styles or in a separate CSS file */
+
+
+
