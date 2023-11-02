@@ -137,8 +137,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build --max_old_space_size=8000 build",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build --max_old_space_size=8000 build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.{js,jsx,json,md,html,css,less,scss}\"",
