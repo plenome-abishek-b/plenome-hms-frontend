@@ -80,15 +80,15 @@ export default function OpdChargeDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Charges
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='3' sm='12'>
-                <label>Charge Type</label>
+                <label>Charge Type <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='charge_type' onChange={e=>onChange(e)} value={data.charge_type} >
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='charge_type' onChange={e=>onChange(e)} value={data.charge_type} >
                     <option>Select</option>
                     {chargeType && chargeType.map((ctype) => (
                     <option key={ctype.id} value={ctype.id}>
@@ -99,9 +99,9 @@ export default function OpdChargeDialog({
             </Col>
             {console.log(chargeCategory,"charge category")}
             <Col lg='3' sm='12'>
-                <label>Charge Category</label>
+                <label>Charge Category <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='category' onChange={e=>onChange(e)} value={data.category} >
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='category' onChange={e=>onChange(e)} value={data.category} >
                     <option >Select</option>
                     {chargeCategory && chargeCategory.map((ccategory) => (
                       
@@ -112,9 +112,9 @@ export default function OpdChargeDialog({
                 </select>
             </Col>
             <Col lg='3' sm='12'>
-                <label>Charge Name</label>
+                <label>Charge Name <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='name' onChange={e=>onChange(e)} value={data.name} >
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='name' onChange={e=>onChange(e)} value={data.name} >
                     <option>Select</option>
                     {chargeName && chargeName.map((cname) => (
                     <option key={cname.id} value={cname.id}>
@@ -126,17 +126,17 @@ export default function OpdChargeDialog({
             <Col lg='3' sm='12'>
                 <label>Standard Charge(₹)</label>
                 <br />
-                <input placeholder="" style={{width: '100%', height: '30px'}} id='standard_charge' onChange={e=>onChange(e)} value={data.standard_charge} ></input>
+                <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='standard_charge' onChange={e=>onChange(e)} value={data.standard_charge} ></input>
             </Col>
             <Col lg='3' sm='12'>
                 <label className="mt-2">TPA Charge(₹)</label>
                 <br />
-                <input placeholder="" style={{width: '100%', height: '30px'}} id='tpa_charge' onChange={e=>onChange(e)} value={data.tpa_charge} ></input>
+                <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='tpa_charge' onChange={e=>onChange(e)} value={data.tpa_charge} ></input>
             </Col>
             <Col lg='3' sm='12'>
-                <label className="mt-2">Qty</label>
+                <label className="mt-2">Qty <span className="text-danger">*</span></label>
                 <br />
-                <input placeholder="" style={{width: '100%', height: '30px'}} id='qty' onChange={e=>onChange(e)} value={data.qty} ></input>
+                <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='qty' onChange={e=>onChange(e)} value={data.qty} ></input>
             </Col>
           </Row>
           <br />
@@ -145,7 +145,7 @@ export default function OpdChargeDialog({
                 <label>Total(₹)</label>
             </Col>
             <Col>
-                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0"></input>
+                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%' , borderRadius: '5px', border: "1px solid grey"}} placeholder="0"></input>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -153,7 +153,7 @@ export default function OpdChargeDialog({
                 <label>Tax(₹)</label>
             </Col>
             <Col>
-                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0" id='tax' onChange={e=>onChange(e)} value={data.tax} ></input>
+                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%' , borderRadius: '5px', border: "1px solid grey"}} placeholder="0" id='tax' onChange={e=>onChange(e)} value={data.tax} ></input>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -161,7 +161,7 @@ export default function OpdChargeDialog({
                 <label>Net Amount(₹)</label>
             </Col>
             <Col>
-                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0" id='amount' onChange={e=>onChange(e)} value={data.amount} ></input>
+                <input type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%' , borderRadius: '5px', border: "1px solid grey"}} placeholder="0" id='amount' onChange={e=>onChange(e)} value={data.amount} ></input>
             </Col>
             
           </Row>
@@ -170,12 +170,12 @@ export default function OpdChargeDialog({
             <Col lg='9'>
                 <label>Charge Note</label>
                 <br />
-                <textarea style={{width: '100%'}} id='note' onChange={e=>onChange(e)} value={data.note} ></textarea>
+                <textarea style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}} id='note' onChange={e=>onChange(e)} value={data.note} ></textarea>
             </Col>
             <Col lg='3'>
-                <label>Date</label>
+                <label>Date <span className="text-danger">*</span></label>
                 <br />
-                <input placeholder="" type="date" style={{width:'100%', height: '30px'}} id='date' onChange={e=>onChange(e)} value={data.date} ></input>
+                <input placeholder="" type="date" style={{width:'100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='date' onChange={e=>onChange(e)} value={data.date} ></input>
             </Col>
           </Row>
         </DialogContent>

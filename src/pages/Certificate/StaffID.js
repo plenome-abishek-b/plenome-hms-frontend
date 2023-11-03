@@ -47,14 +47,14 @@ const Staffcard = props => {
               <Col lg='6'>
                 <label>Role</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}}>
+                <select style={{width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px'}}>
                   <option>select</option>
                 </select>
               </Col>
               <Col lg='6'>
                 <label>ID Card Template</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}}>
+                <select style={{width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px'}}>
                   <option>select</option>
                 </select>
               </Col>

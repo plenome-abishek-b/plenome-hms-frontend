@@ -223,13 +223,15 @@ export default function RadiologyBillDialog({ open, handleClose }) {
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#92A4FF" }}
+          style={{ backgroundColor: "#377fc7" }}
         >
-          Bill No
+         
           <div className="mt-2">
+            <h4 className="text-white fw-bold">Radiology Bill</h4>
+
             {" "}
             <select
-              style={{ width: "40%", height: "30px", borderRadius: "5px" }}
+              style={{ width: "40%", height: "30px", borderRadius: "5px" , position: 'relative', right: '25px'}}
               className="ms-3"
               name="patient_id"
               onChange={handleChange}
@@ -241,7 +243,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
               >
                 {searchedData[0]?.patient_name}
               </option>
-              <option>select one</option>
+              <option placeholder="patient">select one</option>
               {patient.map(val => (
                 <option key={val.id} value={val.id}>
                   {val.patient_name}
@@ -264,20 +266,21 @@ export default function RadiologyBillDialog({ open, handleClose }) {
             <button
               onClick={searchByprescipationNo}
               className="btn btn-primary btn-sm"
+              style={{marginLeft: '10px', border: '1px solid white'}}
             >
               go
             </button>
+            
           </div>
+          
+        </DialogTitle>
+        <DialogContent className="mt-2">
           <div className="mt-4 d-flex justify-content-end">
-            <button className="btn btn-primary" onClick={handleOpenDialog}>
+            <button className="btn btn-primary" style={{border: '1px solid #377fc7'}} onClick={handleOpenDialog}>
               <i className="fa fa-plus"></i>&nbsp;Add Patient
             </button>
             <PatientDialog open={openDialog} handleClose={handleCloseDialog} />
           </div>
-        </DialogTitle>
-        <DialogContent className="mt-2">
-          <br />
-
           <h4 className="mt-3">Bill No</h4>
           <p
             className="text-dark fw-bold fs-5"
@@ -297,7 +300,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
                 {searchedData.map(val => (
                   <Row>
                     <Col lg="4" md="4">
-                      <label>Test Name</label>
+                      <label>Test Name <span className="text-danger">*</span></label>
                       <br />
                       <select
                         name="radiology_id"
@@ -332,7 +335,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
                       ></input>
                     </Col>
                     <Col lg="4" md="4">
-                      <label>Report Date</label>
+                      <label>Report Date <span className="text-danger">*</span></label>
                       <input
                         onChange={handleChange}
                         name="reporting_date"
@@ -563,7 +566,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
                     <br />
                     <Row>
                       <Col lg='12'>
-                        <label>Payment Amount(₹)</label>
+                        <label>Payment Amount(₹) <span className="text-danger">*</span></label>
                         <br />
                         <input
                           name="apply_charge"
@@ -585,7 +588,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
                       </Col>
                     </Row>
                     <div className="mt-4">
-                      <button className="btn btn-primary bg-soft">
+                      <button className="btn btn-primary bg-soft fw-bold">
                         Calculate
                       </button>
                     </div>
@@ -598,7 +601,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary fw-bold" 
             onClick={() => handleSubmit(handleClose())}
             autoFocus
           >

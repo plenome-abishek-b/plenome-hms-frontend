@@ -54,7 +54,7 @@ console.log(data,"ressss")
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}} >
                     Add Income details
                 </DialogTitle>
                 <br />
@@ -62,9 +62,9 @@ console.log(data,"ressss")
 
                     <Row>
                         <Col>
-                            <label>Income Head</label>
+                            <label>Income Head <span className="text-danger">*</span></label>
                             <br />
-                            <select onChange={handleChangle} value={formData.inc_head_id} onClick={()=>handleGetIncomeHead()} name="inc_head_id" style={{width: '100%', height: '30px'}}>
+                            <select onChange={handleChangle} value={formData.inc_head_id} onClick={()=>handleGetIncomeHead()} name="inc_head_id" style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}>
                                 <option>select</option>
                                 {incomeHead.map((val=>(
                                 <option key={val.id} value={val.id}>{val.income_category}</option>
@@ -72,9 +72,9 @@ console.log(data,"ressss")
                             </select>
                         </Col>
                         <Col>
-                            <label>Name</label>
+                            <label>Name <span className="text-danger">*</span></label>
                             <br />
-                            <input name="name" onChange={handleChangle} value={formData.name} style={{width: '100%', height: '30px'}}></input>
+                            <input name="name" onChange={handleChangle} value={formData.name} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
                         </Col>
                     </Row>
                     <br />
@@ -82,40 +82,40 @@ console.log(data,"ressss")
                         <Col>
                             <label>Invoice No</label>
                             <br />
-                            <input type="number" name="invoice_no" onChange={handleChangle} value={formData.invoice_no} style={{width: '100%', height: '30px'}}></input>
+                            <input type="number" name="invoice_no" onChange={handleChangle} value={formData.invoice_no} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
                         </Col>
                         <Col>
                             
-                            <label>Today Date</label>
+                            <label>Today Date <span className="text-danger">*</span></label>
                             <br />
-                            <input type='date' name="date" onChange={handleChangle} value={formData.date} style={{width: '100%', height: '30px'}}></input>
+                            <input type='date' name="date" onChange={handleChangle} value={formData.date} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
                         </Col>
                     </Row>
                     <br />
                     <Row>
                         <Col>
-                            <label>Amount</label>
+                            <label>Amount <span className="text-danger">*</span></label>
                             <br />
-                            <input type="number" name="amount" onChange={handleChangle} value={formData.amount} style={{width: '100%', height: '30px'}}></input>
+                            <input type="number" name="amount" onChange={handleChangle} value={formData.amount} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
                         </Col>
                         <Col>
                             <label>Attach Document</label>
                             <br />
-                            <input type='file' name="documents" onChange={handleChangle} value={formData.documents} style={{width: '100%', height: '30px'}}></input>
+                            <input type='file' name="documents" onChange={handleChangle} value={formData.documents} style={{width: '100%', height: '30px' ,borderRadius: '5px'}}></input>
                         </Col>
                     </Row>
                     <br />
                     <Row>
-                        
+                        <Col>
                         <label>Description</label>
                         <br />
-                        <textarea name="note" onChange={handleChangle} value={formData.note} type="text" style={{width: '100%', height: '60px'}}></textarea>
-                        
+                        <textarea name="note" onChange={handleChangle} value={formData.note} type="text" style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></textarea>
+                        </Col>
                     </Row>
                 </DialogContent>
-                <DialogActions>
-                    <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={()=>handleSubmit(handleClose())} autoFocus>
+                <DialogActions className='d-flex justify-content-center'>
+                    <button className='btn btn-danger fw-bold' onClick={handleClose}>Cancel</button>
+                    <button className='btn btn-primary fw-bold' onClick={()=>handleSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

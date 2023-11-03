@@ -71,17 +71,7 @@ function* loginUser({ payload: { user, history } }) {
 
     localStorage.setItem("authUser", JSON.stringify(response));
     yield put(loginSuccess(response));
-    if (response.status === 200) {
-      // dispatch(setRoleName(userData));
-      history.push("/dashboard")
-      console.log("success");
-    } else if (response.status === 401) {
-      console.log("invalid");
-      // Show a toast message indicating "invalid password"
-      prompt("Invalid");
-    } else {
-      // Handle other status codes if needed
-    }
+    history.push("/dashboard");
   } catch (error) {
     yield put(apiError(error));
   }

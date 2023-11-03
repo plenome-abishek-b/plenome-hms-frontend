@@ -170,17 +170,6 @@ import Userrecord from "pages/ABHA/Userrecord";
 import Checkmobileotp from "pages/ABHA/Checkmobileotp";
 import Verifymobileotp from "pages/ABHA/Verifymobileotp";
 import Profile from "pages/ABHA/Profile";
-import DownloadAbha from "pages/ABHA/DownloadAbha";
-import AbhaAddress from "pages/ABHA/AbhaAddress";
-import AbhaAddressMobileOtp from "pages/ABHA/AbhaAddressMobileOtp";
-import AbhaMobileAuth from "pages/ABHA/AbhaMobileAuth";
-import LinkPhrAddress from "pages/ABHA/LinkPhrAddress";
-import LinkPhrPage from "pages/ABHA/LinkPhrPage";
-import AbhaOtpVerification from "pages/ABHA/AbhaOtpVerification";
-import Verifyabhaotp from "pages/ABHA/VerifyAbhaotp";
-import AbhaGenerateOtp from "pages/ABHA/AbhaGenerateOtp";
-import Generateqr from "pages/ABHA/GenerateQr";
-
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -350,17 +339,7 @@ const publicRoutes = [
   {path: "/account/verifyotp/:txnId", component: Verifyotp},
   {path: "/account/abha/checkmobile/:txnId", component: Checkmobileotp},
   {path: "/account/abha/verifymobileotp/:txnId", component: Verifymobileotp},
-  {path: "/account/abha/profile/:responseData", component: Profile},
-  {path: "/account/downloadabha/:responseData", component: DownloadAbha},
-  {path: "/account/abhaaddress", component: AbhaAddress},
-  {path: "/account/abhamobileotp", component: AbhaAddressMobileOtp},
-  {path: "/account/abhamobileauth", component: AbhaMobileAuth},
-  {path: "/account/abhaphrsuggestion", component: LinkPhrAddress},
-  {path: "/account/abhaphrpage", component: LinkPhrPage},
-  {path: "/account/abhaverifyotp", component: AbhaOtpVerification},
-  {path: "/account/abham1verifyotp", component: Verifyabhaotp},
-  {path: "/account/abhagenerateotp", component: AbhaGenerateOtp},
-  {path: "/account/generateqr", component: Generateqr}
+  {path: "/account/abha/profile/:responseData", component: Profile}
 ];
 
 export { authProtectedRoutes, publicRoutes };

@@ -22,7 +22,7 @@ const Sidebar = ( props ) => {
 
   return (
     <React.Fragment>
-      <div className="vertical-menu">
+      <div className="vertical-menu custom-sidebar">
         <div className="navbar-brand-box">
           <Link to="/">
             <span className="logo-lg"></span>

@@ -45,7 +45,7 @@ export default function VisitorDialog({
                                 value={data.purpose}
                                 onChange={e => onChange(e)}
                             /> */}
-              <label>Purpose</label>
+              <label>Purpose <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{
@@ -81,7 +81,7 @@ export default function VisitorDialog({
                             />
                         </Col> */}
             <Col>
-              <label>Name</label>
+              <label>Name <span className="text-danger">*</span></label>
               <br />
               <input
                 id="name"

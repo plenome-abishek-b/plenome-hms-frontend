@@ -33,7 +33,7 @@ const Billing = props => {
                     <CardBody className="billingelmt">
                       <div className="d-flex justify-content-center p-3">
                         <i
-                          className="fas fa-stethoscope fa-lg"
+                          className="fas fa-stethoscope fa-lg custom-icon"
                           style={{ fontSize: "40px" }}
                         ></i>
                         

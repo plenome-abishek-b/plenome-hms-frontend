@@ -60,7 +60,7 @@ export default function CallDialog({
           <br />
           <Row>
             <Col>
-              <label>Name</label>
+              <label>Name <span className="text-danger">*</span></label>
               <br />
               <input
                 id="name"
@@ -186,7 +186,7 @@ export default function CallDialog({
             </Col>
             <Col>
               &nbsp;&nbsp;
-              <label>Call Type</label>
+              <label>Call Type <span className="text-danger">*</span></label>
               <select
                 label="Call Type"
                 id="call_type"

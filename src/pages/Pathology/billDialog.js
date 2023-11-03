@@ -87,7 +87,7 @@ export default function PathologybillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-primary"
-          style={{ backgroundColor: "#92A4FF" }}
+          style={{ backgroundColor: "#377fc7" }}
         >
           <div>
             {" "}
@@ -97,6 +97,9 @@ export default function PathologybillDialog({
                 height: "30px",
                 border: "1px solid grey",
                 borderRadius: "5px",
+                marginRight: '-15px',
+                position: 'relative',
+                right: '25px'
               }}
               className="ms-3"
             >
@@ -109,9 +112,9 @@ export default function PathologybillDialog({
                 ))}
             </select>
             <button
-              className="btn btn-primary ms-2"
+              className="btn btn-primary ms-2 fw-bold"
               onClick={handleOpenDialog}
-              style={{ marginRight: "48px" }}
+              style={{ marginRight: "48px", border: '1px solid white' }}
             >
               <i className="fa fa-plus"></i>&nbsp;Add Patient
             </button>
@@ -153,7 +156,7 @@ export default function PathologybillDialog({
               <Col lg="12">
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Test Name</label>
+                    <label>Test Name <span className="text-danger">*</span></label>
                     <br />
                     <select
                       style={{
@@ -188,7 +191,7 @@ export default function PathologybillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Report Date</label>
+                    <label>Report Date <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -396,7 +399,7 @@ export default function PathologybillDialog({
                       <br />
                       <Row>
                         <Col lg='12'>
-                          <label>Payment Amount(₹)</label>
+                          <label>Payment Amount(₹) <span className="text-danger">*</span></label>
                           <br />
                           <input
                             style={{ width: "100%", height: '30px', borderRadius: '5px', border: '1px solid grey' }}
@@ -433,7 +436,7 @@ export default function PathologybillDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary fw-bold"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

@@ -126,12 +126,12 @@ const Deathrecord = props => {
             breadcrumbItem={props.t("Death Records")}
           />
           <div style={{display: 'flex',justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-outline-danger" onClick={handleClickOpen}>
+            <button className="btn fw-bold text-white" style={{backgroundColor: '#377fc7'}} onClick={handleClickOpen}>
               Add Death Record
             </button>
           </div>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact

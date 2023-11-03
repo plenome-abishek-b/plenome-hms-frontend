@@ -59,7 +59,7 @@ export default function ComplainDialog({
               </select>
             </Col>
             <Col>
-              <label>Complain By</label>
+              <label>Complain By <span className="text-danger">*</span></label>
               <br />
               <input
                 id="complaint_by"
@@ -197,7 +197,7 @@ export default function ComplainDialog({
                 id="image"
                 value={data.image}
                 onChange={e => onChange(e)}
-                style={{width:'100%',height:'30px', border: '1px solid grey', borderRadius: '5px'}}
+                style={{width:'100%',height:'30px'}}
               />
             </Col>
           </Row>

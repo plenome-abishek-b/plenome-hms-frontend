@@ -103,7 +103,7 @@ const Header = props => {
               className="btn btn-sm px-3 font-size-16 header-item "
               id="vertical-menu-btn"
             >
-              <i className="fa fa-fw fa-bars" />
+              <i className="fa fa-fw fa-bars text-white" />
             </button>
 
             <form className="app-search d-none d-lg-block">
@@ -124,9 +124,9 @@ const Header = props => {
                 setmegaMenu(!megaMenu)
               }}
             >
-              <DropdownToggle className="btn header-item " caret tag="button">
+              <DropdownToggle className="btn header-item text-white" caret tag="button">
                 {" "}
-                {props.t("Mega Menu")} <i className="mdi mdi-chevron-down" />
+                {props.t("Mega Menu")} <i className="mdi mdi-chevron-down text-white" />
               </DropdownToggle>
               <DropdownMenu className="dropdown-megamenu">
                 <Row>
@@ -245,7 +245,7 @@ const Header = props => {
                 className="btn header-item noti-icon "
                 id="page-header-search-dropdown"
               >
-                <i className="mdi mdi-magnify" />
+                <i className="mdi mdi-magnify text-white" />
               </button>
               <div
                 className={
@@ -281,21 +281,21 @@ const Header = props => {
               <button 
               className="btn header-item bed-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-bed bx-sm"></i></button>
+              ><i className="bx bx-bed bx-sm text-white"></i></button>
             </div>
 
             <div className="d-none d-lg-inline-block ms-1">
               <button 
               className="btn header-item cal-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-calendar bx-sm"></i></button>
+              ><i className="bx bx-calendar bx-sm text-white"></i></button>
             </div>
 
             <div className="d-none d-lg-inline-block ms-1">
               <button 
               className="btn header-item cal-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-check-square bx-sm"></i></button>
+              ><i className="bx bx-check-square bx-sm text-white"></i></button>
             </div>
 
             <Dropdown
@@ -309,7 +309,7 @@ const Header = props => {
                 className="btn header-item noti-icon "
                 tag="button"
               >
-                <i className="fab fa-whatsapp"></i>
+                <i className="fab fa-whatsapp text-white"></i>
               </DropdownToggle>
             </Dropdown>
 
@@ -319,10 +319,11 @@ const Header = props => {
                 onClick={() => {
                   toggleFullscreen()
                 }}
-                className="btn header-item noti-icon "
+                className="btn header-item noti-icon text-white"
                 data-toggle="fullscreen"
+                style={{color: "white"}}
               >
-                <i className="bx bx-fullscreen" />
+                <i className="bx bx-fullscreen text-white" />
               </button>
             </div>
 
@@ -339,9 +340,10 @@ const Header = props => {
             >
               <button
                 type="button"
-                className="btn header-item noti-icon right-bar-toggle "
+                className="btn header-item noti-icon right-bar-toggle text-white"
+                style={{color: 'white'}}
               >
-                <i className="bx bx-cog bx-spin" />
+                <i className="bx bx-cog bx-spin text-white" />
               </button>
             </div>
           </div>

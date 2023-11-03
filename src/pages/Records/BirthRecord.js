@@ -113,7 +113,7 @@ const Birthrecord = props => {
             <button className="btn btn-primary" onClick={handleClickOpen}>Add Birth Record</button>
           </div>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact

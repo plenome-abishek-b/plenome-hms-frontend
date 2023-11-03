@@ -88,28 +88,27 @@ const Login = props => {
       // <Sidebar userRole={updatedData} />
       // dispatch(setRoleName(updatedData))
   
-      // if (updatedData === "Doctor") {
-      //   dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Doctor" } });
-      //   toast.success("Logged in as a Doctor", {
-      //     duration: 3000,
-      //     style: {
-      //       width: "300px",
-      //       backgroundColor: "lightblue",
-      //       fontSize: "15px",
-      //     },
-      //   });
-      // } else if (updatedData === "Super Admin") {
-      //   dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Super Admin" } });
-      //   toast.success("Logged in as a Super Admin", {
-      //     duration: 3000,
-      //     style: {
-      //       width: "300px",
-      //       backgroundColor: "lightblue",
-      //       fontSize: "15px",
-      //     },
-      //   });
-      // }
-
+      if (updatedData === "Doctor") {
+        dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Doctor" } });
+        toast.success("Logged in as a Doctor", {
+          duration: 3000,
+          style: {
+            width: "300px",
+            backgroundColor: "lightblue",
+            fontSize: "15px",
+          },
+        });
+      } else if (updatedData === "Super Admin") {
+        dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Super Admin" } });
+        toast.success("Logged in as a Super Admin", {
+          duration: 3000,
+          style: {
+            width: "300px",
+            backgroundColor: "lightblue",
+            fontSize: "15px",
+          },
+        });
+      }
   
       await handleVerify(values);
     } catch (error) {
@@ -124,38 +123,28 @@ const Login = props => {
     }
   }, [userData]);
   
-  const handleVerify = async (values) => {
-    try {
-      const response = await api.postAuthUsers(values);
-      console.log(values, 'values');
-      console.log(response);
-      console.log(response.status,'status');
-      // fakeBackend(values.email, values.password);
-  
-      // Check if the response status is 200
-      if (response.status === 200) {
-        // dispatch(setRoleName(userData));
-        // Authentication successful, navigate to the dashboard page
-        console.log("success");
-      } else if (response.status === 401) {
-        console.log("invalid");
-        // Show a toast message indicating "invalid password"
-        prompt("Invalid");
-      } else {
-        // Handle other status codes if needed
-      }
-  
-      // Move the navigation here, outside of the if statement
-      if (response.status === 200) {
-        history.push("/dashboard");
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle the error and display appropriate message
+
+const handleVerify = async(values) => {
+  try {
+    const response = await api.postAuthUsers(values);
+    console.log(values, 'values');
+    console.log(response);
+    fakeBackend(values.email, values.password)
+    
+    
+    // Check if the response status is 200
+    if (response.status === 200) {
+      dispatch(setRoleName(userData))       
+      // Authentication successful, navigate to the dashboard page
+      history.push("/dashboard");
+    } else {
+      // Handle other response statuses if needed
     }
-  };
-  
-  
+  } catch (error) {
+    console.error(error);
+    // Handle the error and display appropriate message   
+  }
+}
 
   const { error } = useSelector(state => ({
     error: state.Login.error,

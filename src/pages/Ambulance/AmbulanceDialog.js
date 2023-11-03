@@ -45,7 +45,7 @@ export default function AmbulanceDialog({ open, handleClose }) {
           <br />
           <Row>
             <Col>
-              <label>Date</label>
+              <label>Date <span className="text-danger">*</span></label>
               <br />
               <input
                 size="small"
@@ -54,7 +54,7 @@ export default function AmbulanceDialog({ open, handleClose }) {
               />
             </Col>
             <Col>
-              <label>Amount</label>
+              <label>Amount <span className="text-danger">*</span></label>
               <br />
               <input
                 size="small"
