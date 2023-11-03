@@ -142,7 +142,7 @@ const handledobChange = event => {
           <Row>
           
             <Col lg="6" md="6" sm="12">
-              <label>Name</label>
+              <label>Name <span className="text-danger">*</span></label>
               <br />
               <input
                 type="text"
@@ -189,7 +189,7 @@ const handledobChange = event => {
             </Col>
            
             <Col lg='3' md='3' sm="12">
-                <label>Age</label>
+                <label>Age </label>
                 <br />
                 {isDateSelected ? (
                   <>

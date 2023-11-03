@@ -73,7 +73,7 @@ const RadioTest = props => {
                         <button className="btn btn-outline-primary" onClick={handleClickOpen}>Add Radiology Test</button>
                     </div>
                     <div
-                        className="ag-theme-balham"
+                        className="ag-theme-alpine"
                         style={{ height: 500, marginTop: "20px" }}
                     >
                     <AgGridReact 

@@ -119,7 +119,7 @@ function OperationTable() {
   return (
     <div >
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button className="btn btn-primary" onClick={handleOpenOperationDialog} style={{ height: '35px' }}>
+        <button className="btn btn-primary custom-btn" onClick={handleOpenOperationDialog} style={{ height: '35px' }}>
           + Add Operation
         </button>
         <OpdOperationDialog open={openOperationDialog} handleClose={handleCloseOperationDialog} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>

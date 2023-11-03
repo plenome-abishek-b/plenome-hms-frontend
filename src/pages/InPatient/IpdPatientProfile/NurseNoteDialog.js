@@ -76,20 +76,20 @@ export default function NurseNoteDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
-        Add Charges
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
+        Add Notes
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='6'>
-                <label>Date</label>
+                <label>Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="date" onChange={handleChange} value={formValues.date} placeholder="" type="date" style={{width: '100%', height: '30px'}}></input>
+                <input name="date" onChange={handleChange} value={formValues.date} placeholder="" type="date" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6'>
-                <label>Nurse</label>
+                <label>Nurse <span className="text-danger">*</span></label>
                 <br />
-                <select name="staff_id" style={{width: '100%', height: '30px'}} onChange={handleChange} value={formValues.staff_id}>
+                <select name="staff_id" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} onChange={handleChange} value={formValues.staff_id}>
                   <option>select one</option>
                 {fetchNurse && fetchNurse.map((nurse)=>(
                     <option key={nurse.staff_id} value={nurse.staff_id}>{nurse.name}</option>
@@ -100,17 +100,17 @@ export default function NurseNoteDialog({
           <br />
           <Row>
             <Col lg='12'>
-                <label>Note</label>
+                <label>Note <span className="text-danger">*</span></label>
                 <br />
-                <textarea name="note" onChange={handleChange} value={formValues.note} style={{width: '100%'}}></textarea>
+                <textarea name="note" onChange={handleChange} value={formValues.note} style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
           </Row>
           <br />
           <Row>
             <Col lg='12'>
-                <label>Comment</label>
+                <label>Comment <span className="text-danger">*</span></label>
                 <br />
-                <textarea name="comment" onChange={handleChange} value={formValues.comment}  style={{width: '100%'}}></textarea>
+                <textarea name="comment" onChange={handleChange} value={formValues.comment}  style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
           </Row>
         </DialogContent>

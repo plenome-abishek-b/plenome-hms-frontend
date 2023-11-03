@@ -158,14 +158,14 @@ useEffect(() => {
           <DialogTitle
             id="alert-dialog-title"
             className="text-white fw-bold"
-            style={{ backgroundColor: "#92A4FF" }}
+            style={{ backgroundColor: "#377fc7" }}
           >
             Add Patient
           </DialogTitle>
           <DialogContent className="mt-4 ms-2">
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Name</label>
+                <label>Name <span className="text-danger">*</span></label>
                 <br />
                 <input
                   type="text"
@@ -248,7 +248,7 @@ useEffect(() => {
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Age</label>
+                <label>Age <span className="text-danger">*</span></label>
                 <br />
                 {isDateSelected ? (
                   <>
@@ -533,7 +533,7 @@ useEffect(() => {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft"
+              className="btn btn-primary bg-soft fw-bold"
               type="submit"
             >
               Save

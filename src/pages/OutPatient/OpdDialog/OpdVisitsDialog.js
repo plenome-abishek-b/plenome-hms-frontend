@@ -71,11 +71,12 @@ const handleConsultant = async () =>{
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" 
+                style={{backgroundColor: '#92A4FF', height: '60px'}}>
         <h4>Patient Details</h4>
-        <Container>
+        <Container style={{paddingTop: '35px' , position: 'relative' , right: '5px' }}>
         <select
-              style={{ width: "20%", height: "30px" }}
+              style={{width: '23%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}
               name="patient_id"
               value={data.patient_id}
               onChange={handlePatientId}
@@ -89,62 +90,62 @@ const handleConsultant = async () =>{
             </select>
         </Container>
         </DialogTitle>
-        <DialogContent className="mt-4 ms-2">
+        <DialogContent className="mt-4 ms-2" style={{paddingTop: '55px'}}>
           <Row>
             <Col lg="8">
               <Row>
-                <Col>
-                  <label>Height</label>
+                <Col lg='6'>
+                  <label >Height</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px', borderRadius: '5px', border: "1px solid grey" , width: '100%'}}
                   ></input>
                 </Col>
-                <Col>
+                <Col lg='6'>
                   <label>Weight</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px' , borderRadius: '5px', border: "1px solid grey" , width: '100%' }}
                   ></input>
                 </Col>
-                <Col>
-                  <label>BP</label>
+                <Col lg='6'>
+                  <label style={{paddingTop: '10px'}}>BP</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px' , borderRadius: '5px', border: "1px solid grey" , width: '100%'  }}
                   ></input>
                 </Col>
-                <Col>
-                  <label>Pulse</label>
+                <Col lg='6'>
+                  <label style={{paddingTop: '10px'}}>Pulse</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px' , borderRadius: '5px', border: "1px solid grey" , width: '100%'  }}
                   ></input>
                 </Col>
-                <Col>
-                  <label>Temperature</label>
+                <Col lg='6'>
+                  <label style={{paddingTop: '10px'}}>Temperature</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px' , borderRadius: '5px', border: "1px solid grey" , width: '100%'  }}
                   ></input>
                 </Col>
-                <Col>
-                  <label>Respiration</label>
+                <Col lg='6'>
+                  <label style={{paddingTop: '10px'}}>Respiration</label>
                   <br />
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px" }}
+                    style={{height: '30px' , borderRadius: '5px', border: "1px solid grey" , width: '100%' }}
                   ></input>
                 </Col>
               </Row>
@@ -158,7 +159,7 @@ const handleConsultant = async () =>{
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px" }}
+                        style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey" }}
                         id="symptoms" value={data.symptoms} onChange={e=>onChange(e)}
                       ></input>
                     </Col>
@@ -168,7 +169,7 @@ const handleConsultant = async () =>{
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px" }}
+                        style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}
                       ></input>
                     </Col>
                     <Col lg="4" md="4" sm="3">
@@ -177,7 +178,7 @@ const handleConsultant = async () =>{
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px" }}
+                        style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}
                       ></input>
                     </Col>
                   </Row>
@@ -190,7 +191,7 @@ const handleConsultant = async () =>{
                   <br />
                   <textarea
                     maxLength="infinity"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%" , borderRadius: '5px', border: "1px solid grey"}}
                   ></textarea>
                 </Col>
                 <Col lg="6" md="6" sm="2">
@@ -198,7 +199,7 @@ const handleConsultant = async () =>{
                   <br />
                   <textarea
                     maxLength="infinity"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%" , borderRadius: '5px', border: "1px solid grey" }}
                   ></textarea>
                 </Col>
               </Row>
@@ -210,9 +211,9 @@ const handleConsultant = async () =>{
               >
                 <Row>
                   <Col lg="12">
-                    <label>Appointment Date</label>
+                    <label>Appointment Date <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{ width: "100%" }} id="appointment_date" value={data.appointment_date} onChange={e=>onChange(e)}></input>
+                    <input placeholder="" style={{ width: "100%" , borderRadius: '5px', border: "1px solid grey"}} id="appointment_date" value={data.appointment_date} onChange={e=>onChange(e)}></input>
                   </Col>
                 </Row>
                 <br />
@@ -220,7 +221,7 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>Case</label>
                     <br />
-                    <input placeholder="" style={{ width: "100%" }} id="case_type" value={data.case_type} onChange={e=>onChange(e)}></input>
+                    <input placeholder="" style={{ width: "100%" , borderRadius: '5px', border: "1px solid grey"}} id="case_type" value={data.case_type} onChange={e=>onChange(e)}></input>
                   </Col>
                 </Row>
                 <br />
@@ -228,7 +229,7 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>Casualty</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }}>
+                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}>
                       <option>No</option>
                       <option>Yes</option>
                     </select>
@@ -237,7 +238,7 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>Old Patient</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }}>
+                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}>
                       <option>No</option>
                       <option>Yes</option>
                     </select>
@@ -248,7 +249,7 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>TPA</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }}>
+                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}>
                       <option>select</option>
                     </select>
                   </Col>
@@ -257,7 +258,7 @@ const handleConsultant = async () =>{
                     <br />
                     <input
                       placeholder=""
-                      style={{ width: "100%", height: "30px" }}
+                      style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}
                       id='refference' onChange={e=>onChange(e)} value={data.refference}
                     ></input>
                   </Col>
@@ -267,7 +268,7 @@ const handleConsultant = async () =>{
                 <Col>
                     <label>Consultant</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }} id='cons_doctor' onChange={e=>onChange(e)} value={data.cons_doctor}>
+                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}} id='cons_doctor' onChange={e=>onChange(e)} value={data.cons_doctor}>
                     <option>select one</option>
                     {consdoctor && consdoctor.map((doctor) => (
                     <option key={doctor.id} value={doctor.id}>
@@ -282,14 +283,14 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>Charge Category</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }}>
+                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: "1px solid grey"}}>
                       <option>Select</option>
                     </select>
                   </Col>
                   <Col>
-                    <label>Charge</label>
+                    <label>Charge <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{ width: "100%" , height: "30px"}}>
+                    <select style={{ width: "100%" , height: "30px" , borderRadius: '5px', border: "1px solid grey"}}>
                       <option>Select</option>
                     </select>
                   </Col>
@@ -299,25 +300,25 @@ const handleConsultant = async () =>{
                   <Col>
                     <label>Tax</label>
                     <br />
-                    <input placeholder="%" style={{width: '100%', height: '30px'}}></input>
+                    <input placeholder="%" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
                   </Col>
                   <Col>
                     <label>Standard Charge(₹)</label>
                     <br />
-                    <input placeholder="" style={{width: '100%', height: '30px'}}></input>
+                    <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
                   </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col>
-                    <label>Applied Charge(₹)</label>
+                    <label>Applied Charge(₹) <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{width: '100%', height: '30px'}}></input>
+                    <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
                   </Col>
                   <Col>
-                    <label>Amount(₹)</label>
+                    <label>Amount(₹) <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{width: '100%', height: '30px'}}></input>
+                    <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
                   </Col>
                 </Row>
                 <br />
@@ -334,9 +335,9 @@ const handleConsultant = async () =>{
                        </select> 
                     </Col> */}
                     <Col>
-                        <label>Paid Amount(₹)</label>
+                        <label>Paid Amount(₹) <span className="text-danger">*</span></label>
                         <br />
-                        <input placeholder="" style={{width: '100%', height: '30px'}}></input>
+                        <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
                     </Col>
                 </Row>
                 <br />
@@ -344,7 +345,7 @@ const handleConsultant = async () =>{
                     <Col>
                         <label>Live Consultation</label>
                         <br />
-                        <select style={{width: '100%', height: '30px'}}>
+                        <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}>
                             <option>No</option>
                             <option>Yes</option>
                         </select>

@@ -7,6 +7,7 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api";
+import "./styles.css"
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -67,7 +68,7 @@ console.log(tableData,"jjijijij")
       headerName: "Patient ID",
       field: "patient_id",
       filter: "agSetColumnFilter",
-      cellStyle: { color: 'red', fontWeight: '500', backgroundColor: '#EEEEEE' },
+      cellStyle: { color: 'red', fontWeight: '900', backgroundColor: '#EEEEEE' },
       cellRenderer: (params) => {
         const pid = params.data.id;
         return (
@@ -175,13 +176,13 @@ console.log(tableData,"jjijijij")
               alignItems: "flex-end",
             }}
           >
-            <button className="btn btn-secondary" onClick={handleClickOpen}>
+            <button className="btn btn-primary bg-soft custom-btn" onClick={handleClickOpen}>
               Add Outpatient
             </button>
           </div>
         </Container>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact

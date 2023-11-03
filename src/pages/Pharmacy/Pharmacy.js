@@ -151,13 +151,13 @@ const Pharmacy = props => {
           {/* Render Breadcrumb */}
           <h3>Pharmacy Bill</h3>
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-          <button className="btn btn-primary bg-soft" style={{marginRight: '10px'}} onClick={handleOpenbill}>+ Generate Bill</button>
-           <Link to='/medicines'><button className="btn btn-success"><i className="fas fa-plus-square"></i> Medicines</button></Link> 
+          <button className="btn btn-primary bg-soft custom-btn" style={{marginRight: '10px'}} onClick={handleOpenbill}>+ Generate Bill</button>
+           <Link to='/medicines'><button className="btn btn-primary custom-btn"><i className="fas fa-plus-square"></i> Medicines</button></Link> 
           </div>
         </Container>
         <PharmacybillDialog open={openbill} handleClose={handleClosebill} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact

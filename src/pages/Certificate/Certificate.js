@@ -100,7 +100,7 @@ const Certificate = props => {
                   <Col lg="4">
                     <label>Module</label>
                     <br />
-                    <select style={{ width: '100%', height: '30px' }} id="module">
+                    <select style={{ width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px' }} id="module">
                       <option>select</option>
                       <option value="1">OPD</option>
                       <option value="2">IPD</option>
@@ -110,7 +110,7 @@ const Certificate = props => {
                   <Col lg="4">
                     <label>Certificate Template</label>
                     <br />
-                    <select style={{ width: '100%', height: '30px' }} id="certificateTemplate">
+                    <select style={{ width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px' }} id="certificateTemplate">
                       {certificateTemp &&
                         certificateTemp.map((cert) => (
                           <option key={cert.certTemp} value={cert.id}>
@@ -128,10 +128,10 @@ const Certificate = props => {
                   </Col>
                 </Row>
                 <br />
-                <Row style={{position: 'relative', right: '14%'}}>
+                <Row style={{position: 'relative', right: '15%'}}>
                   <Col lg="4">
                     {/* Move the dropdown inside a new Col */}
-                    <select id="status" style={{ width: '100%', height: '30px' }} >
+                    <select id="status" style={{ width: '100%', height: '30px' ,border: '1px solid grey', borderRadius: '5px'}} >
                       <option>select</option>
                       <option value="yes">Discharged</option>
                       <option value="no">Not Discharged</option>

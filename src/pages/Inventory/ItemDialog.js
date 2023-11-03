@@ -46,24 +46,24 @@ export default function ItemDialog({ open, handleClose , data,
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
                     Add Item
                 </DialogTitle>
                 <DialogContent>
                     <br />
                     <Row>
 
-                        <label>Item</label>
+                        <label>Item <span className="text-danger">*</span></label>
                         <br />
-                        <input value={data.name} id="name" onChange={e=>onChange(e)} ></input>
+                        <input value={data.name} id="name" onChange={e=>onChange(e)} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
 
                     </Row>
                     <br />
                     <Row>
 
-                        <label>Item Category</label>
+                        <label>Item Category <span className="text-danger">*</span></label>
                         <br />
-                        <select value={data.item_category} id="item_category" onChange={e=>onChange(e)} >
+                        <select value={data.item_category} id="item_category" onChange={e=>onChange(e)} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} >
                             <option>select</option>
                             {itemCategory &&
                 itemCategory.map((cate) => (
@@ -77,9 +77,9 @@ export default function ItemDialog({ open, handleClose , data,
                     <br />
                     <Row>
 
-                        <label>Unit</label>
+                        <label>Unit <span className="text-danger">*</span></label>
                         <br />
-                        <input value={data.unit} id="unit" onChange={e=>onChange(e)} ></input>
+                        <input value={data.unit} id="unit" onChange={e=>onChange(e)} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></input>
 
 
 
@@ -87,9 +87,9 @@ export default function ItemDialog({ open, handleClose , data,
                     <br />
                     <Row>
 
-                        <label>Description</label>
+                        <label>Description <span className="text-danger">*</span></label>
                         <br />
-                        <textarea value={data.description} id="description" onChange={e=>onChange(e)} ></textarea>
+                        <textarea value={data.description} id="description" onChange={e=>onChange(e)} style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}}></textarea>
 
                     </Row>
                 </DialogContent>

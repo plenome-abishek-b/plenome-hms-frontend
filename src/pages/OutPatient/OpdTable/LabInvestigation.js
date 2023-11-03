@@ -51,7 +51,7 @@ function LabInvest() {
   return (
     
         <div className="ag-theme-alpine mt-1"
-            style={{ height: 300 }}>
+            style={{ height: 700 }}>
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}

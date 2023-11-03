@@ -1,8 +1,8 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const baseNestURL = process.env.REACT_APP_FSURL || "http://localhost:4000"
-const mURL = process.env.REACT_APP_MURL || "http://localhost:3001"
+const baseNestURL = "http://localhost:4000"
+const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 const baseNodeURL = "http://localhost:5000"
 
 const http2 = axios.create({

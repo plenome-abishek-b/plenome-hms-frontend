@@ -52,7 +52,7 @@ const getExpenses =async () =>{
 
   const columnDefs = [
     
-    { headerName: 'Invoice no.', field: 'invoice_no', cellStyle: {color: 'green', backgroundColor: '#EEEEEE', fontWeight: 'bold'} },
+    { headerName: 'Invoice no.', field: 'invoice_no', cellStyle: {color: '#377fc7', backgroundColor: '#EEEEEE', fontWeight: 'bold'} },
     { headerName: 'Name', field: 'name' },
     { headerName: 'Date', field: 'date' },
     { headerName: 'Description', field: 'note' },
@@ -81,15 +81,12 @@ const getExpenses =async () =>{
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
             <button className="btn btn-primary" onClick={handleClickOpen}>Add Expense</button>
           </div>
-          <div>
-          <input style={{width:'10%'} } onChange={handleChange}></input><button onClick={()=>onSubmit()} className="btn btn-primary bg-soft"  style={{width:'7%'}}>search</button>
-          </div>
             <ExpenseDialog 
               open={open}
               handleClose={handleClose}
             />
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact
