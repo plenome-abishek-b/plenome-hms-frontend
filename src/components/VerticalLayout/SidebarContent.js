@@ -101,43 +101,43 @@ const SidebarContent = props => {
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
-            <li className="menu-title">{props.t("Menu")} </li>
+            {/* <li className="menu-title">{props.t("Menu")} </li> */}
 
             <li>
               <Link to="/#" >
                 <i className="fas fa-desktop"></i>
-                <span className="ms-2">Dashboard</span>
+                <span className="ms-2 fw-bold">Dashboard</span>
               </Link>
             </li>
               {/* <ul className="sub-menu"> */}
               <li className>
                 <Link to="/billing">
                   <i className="fas fa-file-invoice"></i>
-                  <span className="ms-2">Billing</span>
+                  <span className="ms-2 fw-bold">Billing</span>
                 </Link>
               </li>
               <li>
                 <Link to="/appointment">
                   <i className="fas fa-calendar"></i>
-                  <span className="ms-2">Appointment</span>
+                  <span className="ms-2 fw-bold">Appointment</span>
                 </Link>
               </li>
               <li>
                 <Link to="/opd">
                   <i className="fas fa-stethoscope"></i>
-                  <span className="ms-2">OPD-Out Patient</span>
+                  <span className="ms-2 fw-bold">OPD-Out Patient</span>
                 </Link>
               </li>
               <li>
                 <Link to="/ipd">
                   <i className="fas fa-procedures"></i>
-                  <span className="ms-2">IPD-In Patient</span>
+                  <span className="ms-2 fw-bold">IPD-In Patient</span>
                 </Link>
               </li>
               <li>
                 <Link to="/pharmacy">
                   <i className="fas fa-mortar-pestle"></i>
-                  <span className="ms-2">Pharmacy</span>
+                  <span className="ms-2 fw-bold">Pharmacy</span>
                 </Link>
               </li>
               {/* </ul> */}
@@ -145,41 +145,41 @@ const SidebarContent = props => {
             <li>
               <Link to="/pathology">
                 <i className="fas fa-flask"></i>
-                <span className="ms-2">Pathology</span>
+                <span className="ms-2 fw-bold">Pathology</span>
               </Link>
             </li>
 
             <li>
               <Link to="/radiology">
                 <i className="fas fa-microscope"></i>
-                <span className="ms-2">Radiology</span>
+                <span className="ms-2 fw-bold">Radiology</span>
               </Link>
             </li>
             <li>
               <Link to="/bloodbank">
                 <i className="fas fa-tint"></i>
-                <span className="ms-2">Blood Bank</span>
+                <span className="ms-2 fw-bold">Blood Bank</span>
               </Link>
             </li>
 
             <li>
               <Link to="/ambulance" className="">
                 <i className="fas fa-ambulance"></i>
-                <span className="ms-2">Ambulance</span>
+                <span className="ms-2 fw-bold">Ambulance</span>
               </Link>
             </li>
               <li>
                 <Link to="/frontoffice">
                   <i className="fas fa-hospital-alt"></i>
-                  <span className="ms-2">Front Office</span>
+                  <span className="ms-2 fw-bold">Front Office</span>
                 </Link>
               </li>
               <li>
                 <Link to="#" className="has-arrow">
                   <i className="fa fa-birthday-cake"></i>
-                  <span className="ms-3" style={{color: 'white'}}>Birth & Death Record</span>
+                  <span className="ms-2 fw-bold" style={{color: 'white'}}>Birth & Death Record</span>
                 </Link>
-                <ul className="sub-menu">
+                <ul>
                   <li>
                     <Link to="/birthrecord">{props.t("Birth Record")}</Link>
                   </li>
@@ -192,21 +192,21 @@ const SidebarContent = props => {
               <li>
                 <Link to="/hr">
                   <i className="fas fa-sitemap"></i>
-                  <span className="ms-2">Human Resource</span>
+                  <span className="ms-2 fw-bold">Human Resource</span>
                 </Link>
               </li>
               <li>
                 <Link to="/tpa">
                   <i className="fas fa-umbrella"></i>
-                  <span className="ms-2">TPA Management</span>
+                  <span className="ms-2 fw-bold">TPA Management</span>
                 </Link>
               </li>
               <li>
                 <Link to="#" className="has-arrow">
                   <i className="fas fa-money-bill"></i>
-                  <span className="ms-2">Finance</span>
+                  <span className="ms-2 fw-bold">Finance</span>
                 </Link>
-                <ul style={{ marginLeft: "-30px" }}>
+                <ul>
                   <li>
                     <Link to="/income">{props.t("Income")}</Link>
                   </li>
@@ -222,9 +222,9 @@ const SidebarContent = props => {
                   style={{ pointerEvents: "none" }}
                 >
                   <i className="fas fa-video"></i>
-                  <span className="ms-2">Live Consultation</span>
+                  <span className="ms-2 fw-bold">Live Consultation</span>
                 </Link>
-                <ul style={{ marginLeft: "-30px" }}>
+                <ul>
                   <li>
                     <Link to="/liveconsult">
                       {props.t("Live Consultation")}
@@ -238,9 +238,9 @@ const SidebarContent = props => {
               <li>
                 <Link to="#"  className="has-arrow">
                   <i className="far fa-newspaper"></i>
-                  <span className="ms-2">Certificate</span>
+                  <span className="ms-2 fw-bold">Certificate</span>
                 </Link>
-                <ul style={{ marginLeft: "-30px" }}>
+                <ul>
                   <li>
                   <Link to="/certificate">{props.t("certificate")}</Link>
                   </li>
@@ -255,14 +255,14 @@ const SidebarContent = props => {
               <li>
                 <Link to="/referral">
                 <i className="fas fa-users"></i>
-                <span className="ms-2">Referral</span></Link>
+                <span className="ms-2 fw-bold">Referral</span></Link>
               </li>
               <li>
                 <Link to="#" className="has-arrow">
                   <i className="fas fa-print"></i>
-                  <span className="ms-2">Reports</span>
+                  <span className="ms-2 fw-bold">Reports</span>
                 </Link>
-                <ul style={{ marginLeft: "-30px" }}>
+                <ul >
                   <li>
                     <Link to="/opdreport">{props.t("OPD Report")}</Link>
                   </li>
@@ -430,37 +430,37 @@ const SidebarContent = props => {
               <li>
                 <Link to="/inventory">
                   <i className="fas fa-luggage-cart"></i>
-                  <span className="ms-2">Inventory</span>
+                  <span className="ms-2 fw-bold">Inventory</span>
                 </Link>
               </li>
               <li>
                 <Link to="/message" style={{ pointerEvents: "none" }}>
                   <i className="far fa-envelope"></i>
-                  <span className="ms-2">Messaging</span>
+                  <span className="ms-2 fw-bold">Messaging</span>
                 </Link>
               </li>
               <li>
                 <Link to="/frontcms">
                   <i className="fa fa-solar-panel"></i>
-                  <span className="ms-2">Front CMS</span>
+                  <span className="ms-2 fw-bold">Front CMS</span>
                 </Link>
               </li>
               <li>
                 <Link to="/download">
                   <i className="fas fa-download"></i>
-                  <span className="ms-2">Download</span>
+                  <span className="ms-2 fw-bold">Download</span>
                 </Link>
               </li>
               <li>
                     <Link to="/account/aadhar"> 
                     <i class="fas fa-credit-card"></i>
-                    <span className="ms-2">ABHA Registration</span>
+                    <span className="ms-2 fw-bold">ABHA Registration</span>
                     </Link>
                   </li>
               <li>
                 <Link to="#" className="has-arrow">
                   <i className="fas fa-cogs"></i>
-                  <span className="ms-2">Setup</span>
+                  <span className="ms-2 fw-bold">Setup</span>
                 </Link>
                 <ul style={{ marginLeft: "-30px" }}>
                   <li>

@@ -94,28 +94,28 @@ export default function MedicationDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Medication Dose
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='12' sm='12'>
-                <label>Date</label>
+                <label>Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="date" onChange={handleChange} value={formValue.date} placeholder="" style={{width: '100%', height: '30px'}}></input>
+                <input name="date" onChange={handleChange} value={formValue.date} placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='12' sm='12'>
                 <label>Time</label>
                 <br />
-                <input name="time" onChange={handleChange} value={formValue.time} placeholder="" type="time" style={{width: '100%' , height: '30px'}}></input>
+                <input name="time" onChange={handleChange} value={formValue.time} placeholder="" type="time" style={{width: '100%' , height: '30px' , borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
           <Row>
             <Col lg='12' sm='12'>
-                <label>Medicine Category</label>
+                <label>Medicine Category <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} name="medicine_category" onChange={handleChange} value={formValue.medicine_category}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} name="medicine_category" onChange={handleChange} value={formValue.medicine_category}>
                   <option>select one</option>
                   {medicineCategory && medicineCategory.map((val=>(
                     <option key={val.id} value={val.id}>{val.medicine_category}</option>
@@ -123,9 +123,9 @@ export default function MedicationDialog({
                 </select>
             </Col>
             <Col lg='12' sm='12'>
-                <label className="mt-3">Medicine Name</label>
+                <label className="mt-3">Medicine Name <span className="text-danger">*</span></label>
                 <br />
-                <select name="pharmacy_id" style={{width: '100%', height: '30px'}} onClick={()=>handleMeidcineName()} onChange={handleChange} value={formValue.pharmacy_id}>
+                <select name="pharmacy_id" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} onClick={()=>handleMeidcineName()} onChange={handleChange} value={formValue.pharmacy_id}>
                   <option>Select</option>
                   {medicineName && medicineName.map((val=>(
                     <option key={val.id} value={val.id} >{val.medicine_name}</option>
@@ -136,9 +136,9 @@ export default function MedicationDialog({
           <br />
           <Row>
           <Col lg='12' sm='12'>
-                <label className="mt-3">Dosage</label>
+                <label className="mt-3">Dosage <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} name="medicine_dosage_id" onClick={()=>handleMedicineDose()} onChange={handleChange} value={formValue.medicine_dosage_id}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} name="medicine_dosage_id" onClick={()=>handleMedicineDose()} onChange={handleChange} value={formValue.medicine_dosage_id}>
                   <option>Select</option>
                   {medicineDosage && medicineDosage.map((value=>(
                   <option key={value.id} value={value.id}>{value.dosage}</option>
@@ -148,7 +148,7 @@ export default function MedicationDialog({
             <Col lg='12' sm='12'>
             <label className="mt-3">Remarks</label>
             <br />
-                <textarea name="remark" onChange={handleChange} value={formValue.remark} style={{width: '100%'}}></textarea>
+                <textarea name="remark" onChange={handleChange} value={formValue.remark} style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
           </Row>
           

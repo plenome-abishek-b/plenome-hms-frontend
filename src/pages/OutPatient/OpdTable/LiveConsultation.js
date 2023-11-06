@@ -30,7 +30,7 @@ function LiveConsultation() {
   return (
     
         <div className="ag-theme-alpine mt-4"
-            style={{ height: 100 }}>
+            style={{ height: 700 }}>
             <AgGridReact
               rowData={rowData}
               columnDefs={columnDefs}

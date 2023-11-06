@@ -61,9 +61,9 @@ const Appointment = props => {
       headerName: "Appointment No",
       field: "id",
       cellStyle: {
-        color: "blue",
+        color: "#377fc7",
         fontWeight: "500",
-        backgroundColor: "#D6E4E5",
+        backgroundColor: "rgba(0,0,0,0.1)",
       },
     },
     { headerName: "Appointment Date", field: "date" },
@@ -163,7 +163,7 @@ useEffect(()=>{
             }}
           >
             <button
-              className="btn btn-primary bg-soft"
+              className="btn btn-primary bg-soft custom-btn"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
@@ -171,7 +171,7 @@ useEffect(()=>{
             </button>
             <Link to='/doctorwise'>
             <button
-              className="btn btn-primary bg-soft"
+              className="btn btn-primary bg-soft custom-btn"
               style={{ marginRight: "15px" }}
             >
             <i className="fas fa-align-justify"></i>
@@ -180,7 +180,7 @@ useEffect(()=>{
             </Link>
            <Link to='/patientqueue'>
            <button
-              className="btn btn-primary bg-soft"
+              className="btn btn-primary bg-soft custom-btn"
               style={{ marginRight: "15px" }}
             >
               <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
@@ -188,7 +188,7 @@ useEffect(()=>{
            </Link>
            
             <button
-              className="btn btn-outline-primary"
+              className="btn btn-primary bg-soft custom-btn"
               onClick={() => onBtnExport()}
             >
               <i

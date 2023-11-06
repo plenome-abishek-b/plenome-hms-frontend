@@ -162,9 +162,9 @@ export default function AlertDialog({ open, handleClose, data }) {
         maxWidth="xl"
       
       >
-        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF'}}>
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7'}}>
           Add New Appointment
-            <button className="btn btn-primary ms-3" onClick={handleClickOpen}>
+            <button className="btn text-white ms-3 fw-bold" onClick={handleClickOpen} style={{border: '1px solid white'}}>
               + New Patient
             </button>
             <PatientDialog
@@ -195,7 +195,7 @@ export default function AlertDialog({ open, handleClose, data }) {
           <br />
           <Row>
             <Col lg='3' md='6' sm='12'>
-              <label>Doctor</label>
+              <label>Doctor <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
@@ -216,7 +216,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               </select>
             </Col>
             <Col lg='3' md='6' sm='12'>
-              <label>Doctor Fees</label>
+              <label>Doctor Fees <span className="text-danger">*</span></label>
               <input
                 style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="amount"
@@ -233,7 +233,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               onChange={handleChange}
             ></input>
             <Col lg='3' md='6' sm='12'>
-              <label>Shift</label>
+              <label>Shift <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "35px", borderRadius: '5px' , border: "1px solid grey" }}
@@ -255,7 +255,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               </select>
             </Col>
             <Col lg='3' md='6' sm='12'>
-              <label>Date</label>
+              <label>Date <span className="text-danger">*</span></label>
               <br />
               <input
                 type="date"
@@ -268,7 +268,7 @@ export default function AlertDialog({ open, handleClose, data }) {
           </Row>
           <Row className="mt-4">
             <Col lg='3' md='6' sm='12'>
-              <label>Slot</label>
+              <label>Slot <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
@@ -310,7 +310,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               </select>
             </Col>
             <Col lg='3' md='6' sm='12'>
-              <label>Status</label>
+              <label>Status <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
@@ -338,7 +338,7 @@ export default function AlertDialog({ open, handleClose, data }) {
           <br />
           <Row>
             <Col lg='12' md='12' sm='12'>
-              <label>Live Consultant</label>
+              <label>Live Consultant <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "35px", borderRadius: '5px' ,border: "1px solid grey" }}
@@ -355,12 +355,12 @@ export default function AlertDialog({ open, handleClose, data }) {
         <DialogActions
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          <button onClick={handleClose} className="btn btn-danger bg-soft">
+          <button onClick={handleClose} className="btn fw-bold text-white" style={{backgroundColor: '#B2533E'}}>
             Cancel
           </button>
           <button
             onClick={() => handleFormSubmit(handleClose())}
-            className="btn btn-primary bg-soft"
+            className="btn btn-primary bg-soft fw-bold"
           >
             Submit
           </button>

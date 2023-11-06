@@ -7,6 +7,7 @@ import { useMemo} from "react";
 import IpdDialog from "./IpdDialog";
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
+import './styles.css'
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -161,13 +162,13 @@ console.log(formData,"Ddddddddd")
             alignItems: "flex-end",
           }}
         >
-          <button className="btn btn-primary" onClick={handleClickOpen}>
+          <button className="btn btn-primary custom-btn" onClick={handleClickOpen}>
             + Add Patient
           </button>
         </div>
 
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact

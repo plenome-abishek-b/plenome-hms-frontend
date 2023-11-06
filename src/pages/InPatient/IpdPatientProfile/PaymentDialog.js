@@ -11,7 +11,7 @@ import { useState } from "react"
 import api from "services/Api"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom/cjs/react-router-dom"
-// import { responsiveArray } from "antd/es/_util/responsiveObserve"
+import { responsiveArray } from "antd/es/_util/responsiveObserve"
 
 export default function PaymentDialog({
   patient,
@@ -101,20 +101,20 @@ export default function PaymentDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Payments
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='6' sm='12'>
-             <label>Date</label>
+             <label>Date <span className="text-danger">*</span></label>
              <br />
-             <input onChange={handleChange} value={formData.payment_date} name="payment_date" type="date" style={{width: '100%', height: '30px'}}></input>
+             <input onChange={handleChange} value={formData.payment_date} name="payment_date" type="date" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'> 
-            <label>Amount(₹)</label>
+            <label>Amount(₹) <span className="text-danger">*</span></label>
             <br />
-            <input onChange={handleChange} value={formData.amount} placeholder="100" name="amount" style={{width: '100%', height: '30px'}}></input>
+            <input onChange={handleChange} value={formData.amount} placeholder="100" name="amount" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
@@ -122,7 +122,7 @@ export default function PaymentDialog({
             <Col lg='6' sm='12'>
                 <label>Payment Mode</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} name="payment_mode" onChange={handleChange} value={formData.payment_mode}>
+                <select style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="payment_mode" onChange={handleChange} value={formData.payment_mode}>
                     <option value="UPI">UPI</option>
                     <option value="cash">Cash</option>
                     <option value="Gpay">Gpay</option>
@@ -136,7 +136,7 @@ export default function PaymentDialog({
            <Col lg='12' sm='12'>
                 <label>Note</label>
                 <br />
-                <textarea name="note" onChange={handleChange} value={formData.note} style={{width: '100%'}}></textarea>
+                <textarea name="note" onChange={handleChange} value={formData.note} style={{width: '100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
            </Row>
         </DialogContent>

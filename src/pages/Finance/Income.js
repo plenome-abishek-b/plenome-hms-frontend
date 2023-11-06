@@ -45,7 +45,7 @@ const Income = props => {
 
   const columnDefs = [
 
-    { headerName: "Name", field: "name", cellStyle: { color: 'blue', fontWeight: 'bold', backgroundColor: 'rgba(0,0,0,0.1)' } },
+    { headerName: "Name", field: "name", cellStyle: { color: '#377fc7', fontWeight: 'bold', backgroundColor: 'rgba(0,0,0,0.1)' } },
     {
       headerName: "Invoice No",
       field: "invoice_no",
@@ -85,10 +85,7 @@ const Income = props => {
           <Breadcrumbs
             title={props.t("Income")}
             breadcrumbItem={props.t("Income")}
-          /><div>
-
-<input style={{width:'10%'} } onChange={handleChange}></input><button onClick={()=>onSubmit()} className="btn btn-primary bg-soft"  style={{width:'7%'}}>search</button>
-          </div>
+          />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}><button className='btn btn-primary' variant="outlined" onClick={handleClickOpen}>
             ₹ &nbsp;Add Income
           </button></div>
@@ -98,7 +95,7 @@ const Income = props => {
           />
         </Container>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact

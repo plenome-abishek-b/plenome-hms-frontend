@@ -90,7 +90,7 @@ const MedicinePage = (props) => {
         <Container fluid>
           <h3>Medicines</h3>
           <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-            <button className="btn btn-primary bg-soft" onClick={onBtnExport}>
+            <button className="btn btn-primary bg-soft custom-btn" onClick={onBtnExport}>
               Download Sample Data
             </button>
           </div>
@@ -115,7 +115,7 @@ const MedicinePage = (props) => {
           </Row>
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-          <button className="btn btn-primary bg-soft">
+          <button className="btn btn-primary bg-soft custom-btn">
             <i className="fas fa-caret-up"></i> Import Medicines
           </button>
         </div>

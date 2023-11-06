@@ -34,7 +34,7 @@ export default function PharmacybillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#92A4FF" }}
+          style={{ backgroundColor: "#377fc7" }}
         >
           Bill No
         </DialogTitle>
@@ -59,7 +59,7 @@ export default function PharmacybillDialog({
               <Col lg="12">
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Medicine Category</label>
+                    <label>Medicine Category <span className="text-danger">*</span></label>
                     <br />
                     <select
                       style={{
@@ -77,7 +77,7 @@ export default function PharmacybillDialog({
                     </select>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Medicine Name</label>
+                    <label>Medicine Name <span className="text-danger">*</span></label>
                     <br />
                     <select
                       style={{
@@ -95,7 +95,7 @@ export default function PharmacybillDialog({
                     </select>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Batch No</label>
+                    <label>Batch No <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -114,7 +114,7 @@ export default function PharmacybillDialog({
                 <br />
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Expiry Date</label>
+                    <label>Expiry Date <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -160,7 +160,7 @@ export default function PharmacybillDialog({
 
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Sales Price(₹)</label>
+                    <label>Sales Price(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -189,7 +189,7 @@ export default function PharmacybillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Quantity</label>
+                    <label>Quantity <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -255,7 +255,7 @@ export default function PharmacybillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Tax</label>
+                    <label>Tax <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder="%"

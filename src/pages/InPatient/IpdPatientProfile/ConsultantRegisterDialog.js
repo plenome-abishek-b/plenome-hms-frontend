@@ -75,25 +75,25 @@ export default function ConsultantRegisterDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Consultant Register
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='4' sm='12'>
-                <label>Applied Date</label>
+                <label>Applied Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="date" onChange={handleChange} value={formData.date} placeholder="" style={{width: '100%', height: '30px'}}></input>
+                <input name="date" onChange={handleChange} value={formData.date} placeholder="" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='4' sm='12'>
-                <label>Instruction Date</label>
+                <label>Instruction Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="ins_date" onChange={handleChange} value={formData.ins_date} placeholder="" style={{width: '100%' , height: '30px'}}></input>
+                <input name="ins_date" onChange={handleChange} value={formData.ins_date} placeholder="" style={{width: '100%' , height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='4' sm='12'>
-                <label>Consultant Doctor</label>
+                <label>Consultant Doctor <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%' , height: '30px'}} name="cons_doctor" value={formData.cons_doctor} onChange={handleChange}>
+                <select style={{width: '100%' , height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="cons_doctor" value={formData.cons_doctor} onChange={handleChange}>
                   <option>select one</option>
                   {doctors && doctors.map((doctor)=>(
                     <option key={doctor.staff_id} value={doctor.staff_id}>{doctor.name}</option>
@@ -104,9 +104,9 @@ export default function ConsultantRegisterDialog({
           <br />
           <Row>
           <Col lg='12' sm='12'>
-          <label>Instruction</label>
+          <label>Instruction <span className="text-danger">*</span></label>
             <br />
-            <textarea  onChange={handleChange} value={formData.instruction} name="instruction" style={{width: '100%'}}></textarea>
+            <textarea  onChange={handleChange} value={formData.instruction} name="instruction" style={{width: '100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
           </Col>
             
           </Row>

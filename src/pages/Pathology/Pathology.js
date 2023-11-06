@@ -164,9 +164,9 @@ console.log(fetchData,'fetchdata');
           />
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <Link to='/pathologytest'>
-              <button className="btn btn-danger"><i className="fas fa-bong"></i>&nbsp; Pathology test</button>
+              <button className="btn custom-btn text-white" style={{backgroundColor: '#377fc7', border: '1px solid #377fc7'}}><i className="fas fa-bong"></i>&nbsp; Pathology test</button>
             </Link>
-            <button className="btn btn-secondary" style={{ marginLeft: '10px' }} onClick={handleClickOpen}><i className="far fa-file"></i>&nbsp; Generate bill</button>
+            <button className="btn btn-secondary custom-btn" style={{ marginLeft: '10px' ,backgroundColor: '#377fc7', border: '1px solid #377fc7'}} onClick={handleClickOpen}><i className="far fa-file"></i>&nbsp; Generate bill</button>
           </div>
           <PathologybillDialog 
             open={open}
@@ -177,8 +177,8 @@ console.log(fetchData,'fetchdata');
             setFetchData={setFetchData}
           />
 
-          <div className="ag-theme-balham"
-            style={{ height: 500, marginTop: "20px" }}>
+          <div className="ag-theme-alpine"
+            style={{ height: 700, marginTop: "20px" }}>
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}

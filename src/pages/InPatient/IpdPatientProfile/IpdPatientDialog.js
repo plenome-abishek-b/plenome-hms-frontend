@@ -103,7 +103,7 @@ export default function IpdPatientDialog({
         >
           <DialogTitle
             id="alert-dialog-title"
-            className="text-primary bg-primary bg-soft"
+            className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}}
           >
             Add Patient
             <div
@@ -118,13 +118,13 @@ export default function IpdPatientDialog({
             <Container className="p-2">
               <Row>
                 <Col lg="6" md="6" sm="12">
-                  <label>Name</label>
+                  <label>Name <span className="text-danger">*</span></label>
                   <br />
                   <input
                     type="text"
                     name="patient_name"
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey'}}
                     value={formValues.patient_name}
                     onChange={handleChange}
                     //   onChange={formik.handleChange}
@@ -142,7 +142,7 @@ export default function IpdPatientDialog({
                     //   onChange={formik.handleChange}
                     // value={formik.values.guardian_name}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey'}}
                   ></input>
                 </Col>
               </Row>
@@ -152,7 +152,7 @@ export default function IpdPatientDialog({
                   <label>Gender</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                     name="gender"
                     value={formValues.gender}
                     onChange={handleChange}
@@ -165,16 +165,18 @@ export default function IpdPatientDialog({
                   </select>
                 </Col>
                 <Col sm="2">
-                  <label>Age</label>
+                  <label>Age <span className="text-danger">*</span></label>
                   <br />
                   <input
                     name="age"
                     value={formValues.age}
                     onChange={handleChange}
                     style={{
-                      width: "35px",
-                      height: "35px",
-                      marginRight: "5px",
+                      width: "40px",
+                      height: "30px",
+                      marginRight: "15px",
+                      border: '1px solid grey',
+                      borderRadius: '5px'
                     }}
                     placeholder="YY"
                   ></input>
@@ -183,9 +185,11 @@ export default function IpdPatientDialog({
                     value={formValues.month}
                     onChange={handleChange}
                     style={{
-                      width: "35px",
-                      height: "35px",
-                      marginRight: "5px",
+                      width: "40px",
+                      height: "30px",
+                      marginRight: "15px",
+                      border: '1px solid grey',
+                      borderRadius: '5px'
                     }}
                     placeholder="MM"
                   ></input>
@@ -193,7 +197,8 @@ export default function IpdPatientDialog({
                     name="day"
                     value={formValues.day}
                     onChange={handleChange}
-                    style={{ width: "35px", height: "35px" }}
+                    style={{ width: "40px", height: "30px" , border: '1px solid grey',
+                    borderRadius: '5px' }}
                     placeholder="DD"
                   ></input>
                   <br />
@@ -209,14 +214,14 @@ export default function IpdPatientDialog({
                     onChange={handleChange}
                     //   onChange={formik.handleChange}
                     // value={formik.values.dob}
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px" , borderRadius: '5px', border: '1px solid grey'}}
                   ></input>
                 </Col>
                 <Col sm="2">
                   <label>Blood Group</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                     name="blood_group"
                     value={formValues.blood_group}
                     onChange={handleChange}
@@ -235,7 +240,7 @@ export default function IpdPatientDialog({
                 <Col sm="2">
                   <label>Marital Status</label>
                   <select
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                     name="marital_status"
                     value={formValues.marital_status}
                     onChange={handleChange}
@@ -266,7 +271,7 @@ export default function IpdPatientDialog({
                     onChange={handleChange} // onChange={formik.handleChange}
                     // value={formik.values.number}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
                 <Col lg="4" md="4" sm="3">
@@ -280,7 +285,7 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.email}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
                 <Col lg="4" md="4" sm="2">
@@ -294,7 +299,7 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.address}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
               </Row>
@@ -317,11 +322,11 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.remarks}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px" , borderRadius: '5px', border: '1px solid grey'}}
                   ></input>
                 </Col>
                 <Col lg="4" md="4" sm="3">
-                  <label>Any know Alargies</label>
+                  <label>Any know Allergies</label>
                   <br />
                   <input
                     type="text"
@@ -331,7 +336,7 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.alargies}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
                 {/* <Col sm="2"> */}
@@ -353,7 +358,7 @@ export default function IpdPatientDialog({
               {/* <br /> */}
 
               {/* <br /> */}
-
+              <br />
               <Row>
                 <Col lg="4" md="4" sm="3">
                   <label>TPA ID</label>
@@ -366,7 +371,7 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.tpaId}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
                 <Col lg="4" md="4" sm="3">
@@ -380,7 +385,7 @@ export default function IpdPatientDialog({
                     // value={formik.values.tpa_validity}
                     type="text/number"
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
 
@@ -395,7 +400,7 @@ export default function IpdPatientDialog({
                     // onChange={formik.handleChange}
                     // value={formik.values.NIN}
                     placeholder=""
-                    style={{ width: "100%", height: "35px" }}
+                    style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
                   ></input>
                 </Col>
               </Row>
@@ -412,7 +417,7 @@ export default function IpdPatientDialog({
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft"
+              className="btn btn-primary bg-soft fw-bold"
               type="submit"
             >
               Save

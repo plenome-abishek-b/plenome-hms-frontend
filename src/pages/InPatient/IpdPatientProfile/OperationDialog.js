@@ -98,15 +98,15 @@ export default function OperationDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Operation
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='6' sm='12'>
-                <label>Operation Category</label>
+                <label>Operation Category <span className="text-danger">*</span></label>
                 <br />
-                <select  name="operation_id" style={{width: '100%', height: '30px'}} onChange={handleChange} value={formValue.operation_id}>
+                <select  name="operation_id" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onChange={handleChange} value={formValue.operation_id}>
 
                     <option>Select</option>
                     {operationCategory && operationCategory.map((val=>(
@@ -115,9 +115,9 @@ export default function OperationDialog({
                 </select> 
             </Col>
             <Col lg='6' sm='12'>
-            <label>Operation Name</label>
+            <label>Operation Name <span className="text-danger">*</span></label>
                 <br />
-                <select name="operation_type" onChange={handleChange} value={formValue.operation_type} style={{width: '100%', height: '30px'}} onClick={()=>getOperationName()}>
+                <select name="operation_type" onChange={handleChange} value={formValue.operation_type} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onClick={()=>getOperationName()}>
                     <option>Select</option>
                     {categoryName && categoryName.map((val=>(
                       <option key={val.operation}>{val.operation}</option>
@@ -126,14 +126,14 @@ export default function OperationDialog({
             </Col>
            
             <Col lg='6' sm='12'>
-                <label>Operation Date</label>
+                <label>Operation Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="date" value={formValue.date} onChange={handleChange} style={{width: '100%', height: '30px'}}></input>
+                <input name="date" value={formValue.date} onChange={handleChange} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
-                <label>Consultant Doctor</label>
+                <label>Consultant Doctor <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} name="consultant_doctor" onChange={handleChange} value={formValue.consultant_doctor}>
+                <select style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="consultant_doctor" onChange={handleChange} value={formValue.consultant_doctor}>
                     <option>Select</option>
                     {doctor && doctor.map((val=>(
                       <option key={val.staff_id} value={val.staff_id} >{val.name}</option>
@@ -141,44 +141,44 @@ export default function OperationDialog({
                 </select>
             </Col>
             <Col lg='6' sm='12'>
-                <label>Assignment Cunsoltant 1</label>
+                <label>Assignment Cunsultant 1</label>
                 <br />
-                <input  name="ass_consultant_1" onChange={handleChange} value={formValue.ass_consultant_1} style={{width: '100%', height: '30px'}}></input>
+                <input  name="ass_consultant_1" onChange={handleChange} value={formValue.ass_consultant_1} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
-                <label>Assignment Cunsoltant 2</label>
+                <label>Assignment Cunsultant 2</label>
                 <br />
-                <input name="ass_consultant_2" onChange={handleChange} value={formValue.ass_consultant_2} style={{width: '100%', height: '30px'}}></input>
+                <input name="ass_consultant_2" onChange={handleChange} value={formValue.ass_consultant_2} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>Anasthetist</label>
                 <br />
-                <input name="anesthetist" onChange={handleChange} value={formValue.anesthetist} style={{width: '100%', height: '30px'}}></input>
+                <input name="anesthetist" onChange={handleChange} value={formValue.anesthetist} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>Anasthetist Type</label>
                 <br />
-                <input name="anesthetist_type" onChange={handleChange} value={formValue.anesthetist_type} style={{width: '100%', height: '30px'}}></input>
+                <input name="anesthetist_type" onChange={handleChange} value={formValue.anesthetist_type} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>OT Technician</label>
                 <br />
-                <input name="ot_technician" onChange={handleChange} value={formValue.ot_technician} style={{width: '100%', height: '30px'}}></input>
+                <input name="ot_technician" onChange={handleChange} value={formValue.ot_technician} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>OT Assistant</label>
                 <br />
-                <input name="ot_assistant" onChange={handleChange} value={formValue.ot_assistant} style={{width: '100%', height: '30px'}}></input>
+                <input name="ot_assistant" onChange={handleChange} value={formValue.ot_assistant} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>Remark</label>
                 <br />
-                <input name="remark" onChange={handleChange} value={formValue.remark} style={{width: '100%', height: '30px'}}></input>
+                <input name="remark" onChange={handleChange} value={formValue.remark} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='6' sm='12'>
                 <label>Result</label>
                 <br />
-                <input name="result" onChange={handleChange} value={formValue.result} style={{width: '100%', height: '30px'}}></input>
+                <input name="result" onChange={handleChange} value={formValue.result} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
