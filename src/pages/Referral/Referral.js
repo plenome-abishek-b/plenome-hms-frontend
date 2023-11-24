@@ -128,6 +128,9 @@ const Referral = props => {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
           <Referraldialog open={open} handleClose={handleClose} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit} />

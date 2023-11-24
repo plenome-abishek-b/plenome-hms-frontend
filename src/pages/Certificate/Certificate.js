@@ -149,7 +149,11 @@ const Certificate = props => {
             </CardBody>
           </Card>
           <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
-            <AgGridReact rowData={tableData} columnDefs={columnDefs} defaultColDef={defaultColDef} />
+            <AgGridReact rowData={tableData} columnDefs={columnDefs} defaultColDef={defaultColDef} 
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
+            />
           </div>
         </Container>
       </div>

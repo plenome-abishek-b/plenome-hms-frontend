@@ -88,6 +88,9 @@ const Radiology = props => {
               rowData={radiologyBill}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

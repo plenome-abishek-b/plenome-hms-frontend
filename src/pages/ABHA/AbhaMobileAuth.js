@@ -1,7 +1,7 @@
-import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react"
-import storage from "services/Storage"
-import api from "services/Api"
+import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import storage from "services/Storage";
+import api from "services/Api";
 
 import {
   Row,
@@ -14,58 +14,52 @@ import {
   Input,
   FormFeedback,
   Label,
-} from "reactstrap"
+} from "reactstrap";
 
 //redux
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 
-import { withRouter, Link, useHistory } from "react-router-dom"
-import { toast, Toaster } from "react-hot-toast"
-import aadhar from "./images/shield.png"
+import { withRouter, Link, useHistory } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
+import aadhar from "./images/shield.png";
 
-console.log(aadhar)
+console.log(aadhar);
 
-const Abhamobileauth = props => {
-
-  const history = useHistory()
+const Abhamobileauth = (props) => {
+  const history = useHistory();
 
   const handleFormSubmit = async () => {
-    const healhtIdNumber = localStorage.getItem("healthIdNumber")
-    let authMethods = localStorage.getItem("authMethods")
-    const token = localStorage.getItem("token")
-  
+    const healhtIdNumber = localStorage.getItem("healthIdNumber");
+    let authMethods = localStorage.getItem("authMethods");
+    const token = localStorage.getItem("token");
+
     // Parse authMethods if it's a JSON string
     try {
-      authMethods = JSON.parse(authMethods)
+      authMethods = JSON.parse(authMethods);
     } catch (error) {
       // If it's not valid JSON, keep it as a string
     }
-  
-    console.log(healhtIdNumber, "hiddddd")
-    console.log(authMethods, "authh")
-  
+
+    console.log(healhtIdNumber, "hiddddd");
+    console.log(authMethods, "authh");
+
     try {
       const response = await api.postAbhaMobileAuth({
         authMethod: authMethods,
         healhtIdNumber: healhtIdNumber,
-      })
-      console.log(response,'ressssssssss')
-      const {data} = response
-      console.log(data,'dattt')
-      
-      // // Set the transaction ID in local storage
-      // localStorage.setItem("transactionId", newtxnId);
-      localStorage.setItem('txnID', data.transactionId);
-      history.push("/account/abhamobileotp")
-      
-      // const { formData } = response
-      // console.log(data, "abha address response")
+      });
+      console.log(response, "ressssssssss");
+      const { data } = response;
+      console.log(data, "dattt");
+
+      localStorage.setItem("txnID", data.transactionId);
+      history.push("/account/abhamobileotp");
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
       // Handle errors here
     }
-  }
-  
+  };
+
   return (
     <React.Fragment>
       {/* <Sidebar props={userData}/> */}
@@ -102,7 +96,7 @@ const Abhamobileauth = props => {
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default withRouter(Abhamobileauth)
+export default withRouter(Abhamobileauth);

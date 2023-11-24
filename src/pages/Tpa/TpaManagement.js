@@ -133,6 +133,9 @@ const Tpa = props => {
                 <AgGridReact rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                    pagination={true}
+                    paginationPageSize={10}
+                    domLayout='autoHeight'
                 />
                 <TpaDialog open={openTpa} handleClose={handleCloseTpa} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
               </div>

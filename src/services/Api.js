@@ -2,7 +2,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 const baseNestURL = "http://localhost:4000"
-const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
+// const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 const baseNodeURL = "http://localhost:5000"
 
 const http2 = axios.create({
@@ -2026,12 +2026,12 @@ function creationOfAbhaId(data = {}){
 
 function downloadAbhaCard(data = {}){
   console.log(data,'dattttttt')
-  return http.post(URL.ABHA_DOWNLOAD_CARD, data)
+  return http2.post(URL.ABHA_DOWNLOAD_CARD, data)
 }
 
 function downloadQR(data = {}){
   console.log(data,'dattttttt')
-  return http.post(URL.ABHA_QR_CODE, data)
+  return http2.post(URL.ABHA_QR_CODE, data)
 }
 
 function donwloadPng(data = {}){

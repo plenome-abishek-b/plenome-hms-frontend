@@ -194,6 +194,9 @@ useEffect(()=>{
             open={open}
             handleClose={handleClose}
             data={formData} 
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ import UserSetting from "./SettingPages/UserSetting"
 import { withTranslation } from "react-i18next"
 
 function Settings() {
-  const [activeSetting, setActiveSetting] = useState(null);
+  const [activeSetting, setActiveSetting] = useState("General");
 
   const handleSettingClick = (settingName) => {
     setActiveSetting(settingName);

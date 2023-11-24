@@ -182,6 +182,9 @@ console.log(tableData,"jjijijij")
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>

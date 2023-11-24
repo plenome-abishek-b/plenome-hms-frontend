@@ -12,8 +12,10 @@ import PatientDialog from "./PatientDialog"
 import { useEffect } from "react"
 import api from "services/Api"
 import { useState } from "react"
+import jsPDF from 'jspdf';
 
-export default function AlertDialog({ open, handleClose, data }) {
+
+export default function AlertDialog({ open, handleClose, data, handleBill }) {
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false)
   const [patients, setPatients] = useState([])
 
@@ -22,6 +24,8 @@ export default function AlertDialog({ open, handleClose, data }) {
   const [shift, setShift] = useState([])
   const [slot, setSlot] = useState([])
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+
 
   useEffect(() => {
     getAllPatient()
@@ -40,11 +44,11 @@ export default function AlertDialog({ open, handleClose, data }) {
       const timeoutId = setTimeout(() => {
         handleClose(); // Close the dialog
         window.location.reload(); // Refresh the component
-      }, 1000); // 2 seconds
+      }, 3000); // 2 seconds
       return () => clearTimeout(timeoutId); // Clean up the timeout on component unmount
     }
   }, [formSubmitted, handleClose]);
-  
+
 
   const [formValues, setFormValues] = useState({
     patient_id: "",
@@ -65,6 +69,19 @@ export default function AlertDialog({ open, handleClose, data }) {
     created_at: "2023-02-11 11:11:11",
     is_queue: 1,
   })
+
+  const generatePdf = () => {
+    const doc = new jsPDF();
+    doc.text("Bill Details", 10, 10);
+    doc.text(`Patient Name: ${formData.patient_name}`, 10, 20);
+    doc.text(`Gender: ${formData.gender}`, 10, 30);
+    doc.text(`Doctor Name: ${formData.doctor}`, 10, 40);
+    doc.text(`Doctor Fees: ${formData.amount}`, 10, 50);
+    doc.save('bill.pdf');
+  }
+  
+
+
   const handleChange = event => {
     console.log(event.target, "oooo")
     const { name, value } = event.target
@@ -96,6 +113,9 @@ export default function AlertDialog({ open, handleClose, data }) {
   //   setExample(exampleArray)
   //   }
   //   else{
+
+
+  
   //     console.log("empty")
   //   }
   // }
@@ -148,7 +168,7 @@ export default function AlertDialog({ open, handleClose, data }) {
     const response = await api.postAppointment(formValues)
     const { data } = response
     console.log(data, "appointment response")
-    setFormSubmitted(true); 
+    setFormSubmitted(true);
   }
 
   console.log(example.undefined, "datttc")
@@ -160,17 +180,17 @@ export default function AlertDialog({ open, handleClose, data }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         maxWidth="xl"
-      
+
       >
-        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7'}}>
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{ backgroundColor: '#377fc7' }}>
           Add New Appointment
-            <button className="btn text-white ms-3 fw-bold" onClick={handleClickOpen} style={{border: '1px solid white'}}>
-              + New Patient
-            </button>
-            <PatientDialog
-              open={openpatientDialog}
-              handleClose={handleDialogClose}
-            />
+          <button className="btn text-white ms-3 fw-bold" onClick={handleClickOpen} style={{ border: '1px solid white' }}>
+            + New Patient
+          </button>
+          <PatientDialog
+            open={openpatientDialog}
+            handleClose={handleDialogClose}
+          />
         </DialogTitle>
         <DialogContent className="mt-4">
           <Row>
@@ -198,7 +218,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Doctor <span className="text-danger">*</span></label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="doctor"
                 onChange={handleChange}
                 value={formValues.doctor}
@@ -227,7 +247,7 @@ export default function AlertDialog({ open, handleClose, data }) {
             </Col>
             <input
               hidden
-              style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
+              style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
               name="specialist"
               value={formValues.specialist}
               onChange={handleChange}
@@ -236,7 +256,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Shift <span className="text-danger">*</span></label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px' , border: "1px solid grey" }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 onClick={() => getShifts()}
                 name="global_shift_id"
                 value={formValues.global_shift_id}
@@ -259,7 +279,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <br />
               <input
                 type="date"
-                style={{ width: "100%", height: "35px", borderRadius: '5px',border: "1px solid grey"  }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="date"
                 value={formValues.date}
                 onChange={handleChange}
@@ -271,7 +291,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Slot <span className="text-danger">*</span></label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 onClick={() => getSlot()}
                 name="shift_id"
                 value={formValues.shift_id}
@@ -290,7 +310,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Priority</label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px' , border: "1px solid grey" }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="priority"
                 value={formValues.priority}
                 onChange={handleChange}
@@ -303,7 +323,7 @@ export default function AlertDialog({ open, handleClose, data }) {
             <Col lg='3' md='6' sm='12'>
               <label>Payment</label>
               <br />
-              <select style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}>
+              <select style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}>
                 <option>Cash</option>
                 <option>Cheque</option>
                 <option>UPI</option>
@@ -313,7 +333,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Status <span className="text-danger">*</span></label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey"  }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="appointment_status"
                 value={formValues.appointment_status}
                 onChange={handleChange}
@@ -328,7 +348,7 @@ export default function AlertDialog({ open, handleClose, data }) {
             <label>Message</label>
             <Col lg='12' md='12' sm='12'>
               <textarea
-                style={{ width: "100%", height: "60px", borderRadius: '5px' ,border: "1px solid grey" }}
+                style={{ width: "100%", height: "60px", borderRadius: '5px', border: "1px solid grey" }}
                 name="message"
                 value={formValues.message}
                 onChange={handleChange}
@@ -341,7 +361,7 @@ export default function AlertDialog({ open, handleClose, data }) {
               <label>Live Consultant <span className="text-danger">*</span></label>
               <br />
               <select
-                style={{ width: "100%", height: "35px", borderRadius: '5px' ,border: "1px solid grey" }}
+                style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey" }}
                 name="live_consult"
                 value={formValues.live_consult}
                 onChange={handleChange}
@@ -355,15 +375,21 @@ export default function AlertDialog({ open, handleClose, data }) {
         <DialogActions
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          <button onClick={handleClose} className="btn fw-bold text-white" style={{backgroundColor: '#B2533E'}}>
+          <button onClick={handleClose} className="btn fw-bold text-white" style={{ backgroundColor: '#B2533E' }}>
             Cancel
           </button>
           <button
-            onClick={() => handleFormSubmit(handleClose())}
+            onClick={() => {
+              handleFormSubmit(handleClose());
+              generatePdf();
+            }}
             className="btn btn-primary bg-soft fw-bold"
           >
             Submit
           </button>
+
+
+
         </DialogActions>
       </Dialog>
     </div>

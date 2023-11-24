@@ -136,7 +136,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="text-white fw-bold">Outpatient Income</p>
-                        <h5 className="mb-0 text-white">₹ 20000.00</h5>
+                        <h5 className="mb-0 text-white">{opdIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">

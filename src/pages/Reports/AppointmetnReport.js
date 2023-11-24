@@ -221,11 +221,14 @@ return (
 
               <br />
 
-              <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
+              <div className="ag-theme-alpine mt-2" style={{ height: 700 }}>
                 <AgGridReact
                   rowData={data}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
             </CardBody>

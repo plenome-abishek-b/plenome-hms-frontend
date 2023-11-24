@@ -133,6 +133,9 @@ const MedicinePurchase = props => {
                         columnDefs={columnDefs}
                         defaultColDef={defaultColDef}
                         onGridReady={onGridReady}   
+                        pagination={true}
+                        paginationPageSize={10}
+                        domLayout='autoHeight'
                         />
                     </div>
             </div>

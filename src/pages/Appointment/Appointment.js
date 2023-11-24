@@ -28,6 +28,8 @@ const initialValue = {
   status: ""
 }
 
+
+
 const Appointment = props => {
   const gridRef = useRef()
 
@@ -37,7 +39,7 @@ const Appointment = props => {
 
   const [open, setOpen] = React.useState(false)
 
-  const [datas,setDatas] = useState(null)
+  const [datas, setDatas] = useState(null)
 
   const handleClickOpen = () => {
     //dialog open
@@ -136,12 +138,12 @@ const Appointment = props => {
   const onBtnExport = useCallback(() => {
     gridRef.current.api.exportDataAsExcel()
   }, [])
-useEffect(()=>{
-  getAppointment()
-},[])
-  const getAppointment = async () =>{
+  useEffect(() => {
+    getAppointment()
+  }, [])
+  const getAppointment = async () => {
     const response = await api.getAppointment()
-    const {data} = response
+    const { data } = response
     console.log(data, 'dddddd')
     setDatas(data)
   }
@@ -170,23 +172,23 @@ useEffect(()=>{
               + Add Appointment
             </button>
             <Link to='/doctorwise'>
-            <button
-              className="btn btn-primary bg-soft custom-btn"
-              style={{ marginRight: "15px" }}
-            >
-            <i className="fas fa-align-justify"></i>
-              &nbsp;&nbsp;Doctor Wise
-            </button>
+              <button
+                className="btn btn-primary bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-justify"></i>
+                &nbsp;&nbsp;Doctor Wise
+              </button>
             </Link>
-           <Link to='/patientqueue'>
-           <button
-              className="btn btn-primary bg-soft custom-btn"
-              style={{ marginRight: "15px" }}
-            >
-              <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
-            </button>
-           </Link>
-           
+            <Link to='/patientqueue'>
+              <button
+                className="btn btn-primary bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
+              </button>
+            </Link>
+
             <button
               className="btn btn-primary bg-soft custom-btn"
               onClick={() => onBtnExport()}
@@ -202,19 +204,22 @@ useEffect(()=>{
 
         <div
           className="ag-theme-alpine"
-          style={{ height: 500, marginTop: "20px" }}
+          style={{ height: 1000, marginTop: "20px" }}
         >
           <AgGridReact
             ref={gridRef}
             rowData={datas}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
-            // onGridReady={onGridReady}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
+
           <AlertDialog
             open={open}
             handleClose={handleClose}
-            data={formData} 
+            data={formData}
           />
         </div>
       </div>

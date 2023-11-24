@@ -14,8 +14,10 @@ import {
 import { Link } from "react-router-dom"
 import { Select } from "@mui/material"
 import api from "services/Api"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 function RegisterStaff() {
+  const history = useHistory()
   const initialStaffValues = {
     staff_id: null,
     specialist: "",
@@ -95,6 +97,7 @@ function RegisterStaff() {
     console.log(data, "after1111")
 
     await handleStaffRole(staff_data.data)
+    history.push("/account/login")
   }
 
   const handleStaffRole = async staffId => {

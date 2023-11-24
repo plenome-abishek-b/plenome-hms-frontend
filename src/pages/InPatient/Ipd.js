@@ -169,13 +169,16 @@ console.log(formData,"Ddddddddd")
 
         <div
           className="ag-theme-alpine"
-          style={{ height: 500, marginTop: "20px" }}
+          style={{ height: 700, marginTop: "20px" }}
         >
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             onGridReady={onGridReady}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>
