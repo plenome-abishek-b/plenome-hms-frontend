@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React ,{useState, useEffect, useCallback} from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react"; 
 import {Link} from 'react-router-dom';
@@ -151,8 +151,8 @@ const Pharmacy = props => {
           {/* Render Breadcrumb */}
           <h3>Pharmacy Bill</h3>
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-          <button className="btn btn-primary bg-soft custom-btn" style={{marginRight: '10px'}} onClick={handleOpenbill}>+ Generate Bill</button>
-           <Link to='/medicines'><button className="btn btn-primary custom-btn"><i className="fas fa-plus-square"></i> Medicines</button></Link> 
+          <button className="btn-mod bg-soft custom-btn" style={{marginRight: '10px'}} onClick={handleOpenbill}>+ Generate Bill</button>
+           <Link to='/medicines'><button className="btn-mod custom-btn"><i className="fas fa-plus-square"></i> Medicines</button></Link> 
           </div>
         </Container>
         <PharmacybillDialog open={openbill} handleClose={handleClosebill} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>

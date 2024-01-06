@@ -34,7 +34,7 @@ export default function PharmacybillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
         >
           Bill No
         </DialogTitle>
@@ -438,7 +438,7 @@ export default function PharmacybillDialog({
                 </Row>
                 </Container>
                 <div className="mt-4">
-                  <button className="btn btn-primary bg-soft">Calculate</button>
+                  <button className="btn-mod bg-soft">Calculate</button>
                 </div>
               </Col>
             </Row>
@@ -447,7 +447,7 @@ export default function PharmacybillDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

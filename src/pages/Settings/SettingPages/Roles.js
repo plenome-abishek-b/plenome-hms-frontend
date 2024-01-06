@@ -88,7 +88,7 @@ function RoleSetting() {
               <br />
               <input style={{width: '100%'}} id="name" onChange={e=>onChange(e)}></input>
               <div className="d-flex justify-content-end mt-3">
-                <button className="btn btn-primary" onClick={handleFormSubmit}>Save</button>
+                <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
               </div>
             </CardBody>
           </Card>

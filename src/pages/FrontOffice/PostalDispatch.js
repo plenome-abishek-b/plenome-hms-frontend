@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api"
@@ -138,7 +138,7 @@ const PostalDispatch = props => {
             onChange={onChange}
             handleFormSubmit={handleFormSubmit}
           />
-          <div className="ag-theme-balham"
+          <div className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}>
             <AgGridReact
               rowData={tableData}

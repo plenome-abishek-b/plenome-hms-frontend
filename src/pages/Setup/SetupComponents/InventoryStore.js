@@ -71,7 +71,7 @@ const SearchValue  = async ()=>{
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Item Store</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Item Store</button>
             </div> 
               <div
                 className="ag-theme-alpine"

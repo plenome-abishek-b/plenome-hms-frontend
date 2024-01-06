@@ -99,7 +99,7 @@ const Otreport = props => {
                 <Col lg="4">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration" >
                   <option>select</option>
                     <option value="This Year" >Today</option>
                     <option value="This Week" >This Week</option>
@@ -117,7 +117,7 @@ const Otreport = props => {
                 <Col lg="4">
                   <label>Consultant Doctor</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="doctor" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="doctor" >
                     <option>select</option>
                     {consdoctor && consdoctor.map((med) => (
                     <option key={med.id} value={med.id}>
@@ -132,7 +132,7 @@ const Otreport = props => {
                 <Col lg='4'>
                 <label>Operation Category</label>
                 <br />
-                <select style={{width: "100%",height:'30px'}} id="category" >
+                <select style={{width: "100%",height:'30px', border: '1px solid grey', borderRadius: '5px'}} id="category" >
                 <option>select</option>
                 {operationCategory && operationCategory.map((operation) => (
                     <option key={operation.id} value={operation.id}>
@@ -144,7 +144,7 @@ const Otreport = props => {
                 <Col lg='4'>
                     <label>Operation Name</label>
                     <br />
-                    <select style={{width: "100%",height:'30px'}} id="operation" >
+                    <select style={{width: "100%",height:'30px', border: '1px solid grey', borderRadius: '5px'}} id="operation" >
                         <option>select</option>
                         {operationName && operationName.map((medicine) => (
                     <option key={medicine.id} value={medicine.id}>
@@ -155,7 +155,7 @@ const Otreport = props => {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getOTReportList} >Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getOTReportList} >Search</button>
               </div>
             </CardBody>
           </Card>

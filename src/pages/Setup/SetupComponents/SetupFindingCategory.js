@@ -49,7 +49,7 @@ const setupFindingCategory = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenFindingCategory}>
+                <button className="btn-mod bg-soft" onClick={handleOpenFindingCategory}>
                   <i className="fa fa-plus"></i>&nbsp; Add Finding
                 </button>
               </div>

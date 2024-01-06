@@ -633,7 +633,7 @@ const OutPatientProfile = props => {
                     <TabPane tabId="9">
                       <h4 className="mt-4">Timeline</h4>
                       <div>
-                        <button className="btn btn-primary custom-btn" onClick={handleOpenTimeline}>+ Add Timeline</button>
+                        <button className="btn-mod custom-btn" onClick={handleOpenTimeline}>+ Add Timeline</button>
                         <OpdTimelineDialog open={openTimeline} handleClose={handleCloseTimeline}/>
                       </div>
                       <OpdTimeline />

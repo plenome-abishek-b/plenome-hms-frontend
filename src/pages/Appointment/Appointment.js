@@ -63,7 +63,7 @@ const Appointment = props => {
       headerName: "Appointment No",
       field: "id",
       cellStyle: {
-        color: "#377fc7",
+        color: "#6070FF",
         fontWeight: "500",
         backgroundColor: "rgba(0,0,0,0.1)",
       },
@@ -71,7 +71,7 @@ const Appointment = props => {
     { headerName: "Appointment Date", field: "date" },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
-    { headerName: "Priority", field: "priority" },
+    { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
     { headerName: "Status", field: "appointment_status" },
@@ -91,14 +91,14 @@ const Appointment = props => {
     },
   ]
 
-  const defaultColDef = useMemo(
-    () => ({
-      sortable: true,
-      filter: true,
-      flex: 1,
-    }),
-    []
-  )
+  // const defaultColDef = useMemo(
+  //   () => ({
+  //     sortable: true,
+  //     filter: true,
+  //     flex: 1,
+  //   }),
+  //   []
+  // )
 
   // useEffect(() => {
   //   // getUsers from json
@@ -148,6 +148,17 @@ const Appointment = props => {
     setDatas(data)
   }
 
+  const defaultColDef = {
+    sortable: true,
+    filter: true,
+    flex: 1,
+  };
+
+  const defaultSort = [
+    // Define default sorting based on "Appointment No" column
+    { colId: 'id', sort: 'asc' },
+  ];
+
   console.log(datas, 'dataaaaaaa')
   return (
     <React.Fragment>
@@ -165,7 +176,7 @@ const Appointment = props => {
             }}
           >
             <button
-              className="btn btn-primary bg-soft custom-btn"
+              className="btn-mod bg-soft custom-btn"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
@@ -173,7 +184,7 @@ const Appointment = props => {
             </button>
             <Link to='/doctorwise'>
               <button
-                className="btn btn-primary bg-soft custom-btn"
+                className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-justify"></i>
@@ -182,7 +193,7 @@ const Appointment = props => {
             </Link>
             <Link to='/patientqueue'>
               <button
-                className="btn btn-primary bg-soft custom-btn"
+                className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
@@ -190,7 +201,7 @@ const Appointment = props => {
             </Link>
 
             <button
-              className="btn btn-primary bg-soft custom-btn"
+              className="btn-mod bg-soft custom-btn"
               onClick={() => onBtnExport()}
             >
               <i
@@ -210,10 +221,11 @@ const Appointment = props => {
             ref={gridRef}
             rowData={datas}
             columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
             pagination={true}
-            paginationPageSize={10}
+            paginationPageSize={15}
             domLayout='autoHeight'
+            defaultColDef={defaultColDef}
+            defaultSort={defaultSort}
           />
 
           <AlertDialog

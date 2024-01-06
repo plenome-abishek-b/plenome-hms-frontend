@@ -4,7 +4,7 @@ import {
     Container,
 } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useState, useEffect} from "react";
 
@@ -126,7 +126,7 @@ const Complain = props => {
             handleFormSubmit={handleFormSubmit}
                     />
                     <div
-                        className="ag-theme-balham"
+                        className="ag-theme-alpine"
                         style={{ height: 500, marginTop: "20px" }}
                     >
                         <AgGridReact

@@ -51,7 +51,7 @@ const InventoryitemReport = props => {
                 <Col lg='4'>
                     <label>Time Duration</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }} id="timeDuration">
+                    <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration">
                     <option>select</option>
                     <option value="today">Today</option>
                     <option>This Week</option>
@@ -67,7 +67,7 @@ const InventoryitemReport = props => {
                   </select>
                 </Col>
                 <div className="d-flex justify-content-end">
-                <button className="btn btn-primary" onClick={getInventoryItems}>Search</button>
+                <button className="btn-mod" onClick={getInventoryItems}>Search</button>
             </div>
             </Row>
            <br />

@@ -112,7 +112,7 @@ export default function ConsultantRegisterDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

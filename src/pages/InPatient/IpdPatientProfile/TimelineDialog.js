@@ -95,7 +95,7 @@ export default function TimelineDialog({
          
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft " onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft " onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

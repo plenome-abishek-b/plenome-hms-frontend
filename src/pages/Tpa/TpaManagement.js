@@ -122,7 +122,7 @@ const Tpa = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenTpa}>
+                <button className="btn-mod bg-soft" onClick={handleOpenTpa}>
                   <i className="fa fa-plus"></i>&nbsp; Add TPA
                 </button>
               </div>

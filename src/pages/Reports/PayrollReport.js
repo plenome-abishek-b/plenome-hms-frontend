@@ -63,7 +63,7 @@ const Payrollreport = props => {
                 <Col lg='4'>
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration">
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration">
                     <option>select</option>
                     <option>Today</option>
                     <option>This Week</option>
@@ -78,7 +78,7 @@ const Payrollreport = props => {
                     <option>Period</option>
                   </select>
                   <div className="d-flex justify-content-end mt-2">
-                    <button className="btn btn-primary btn-sm ms-2" onClick={getReportPayroll}>
+                    <button className="btn-mod btn-sm ms-2" onClick={getReportPayroll}>
                       Search
                     </button>
                   </div>

@@ -208,19 +208,19 @@ const Aadhar = props => {
                 <CardBody style={{ border: "10px solid rgba(0,0,0,0.3)" }}>
                   <div className="d-flex justify-content-center">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={handleFormSubmit}
                     >
                       Download ABHA
                     </button>
                     <button
-                      className="btn btn-primary ms-3"
+                      className="btn-mod ms-3"
                       onClick={getProfile}
                     >
                       Get profile
                     </button>
                     <Link to='/account/abhaaddress'>
-                      <button className="btn btn-primary ms-3">
+                      <button className="btn-mod ms-3">
                         ABHA Address Creation
                       </button>
                     </Link>
@@ -323,7 +323,7 @@ const Aadhar = props => {
                       <div className="d-flex justify-content-center">
                         <button
                           onClick={updateProfile}
-                          className="btn btn-primary"
+                          className="btn-mod"
                         >
                           update
                         </button>

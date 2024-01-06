@@ -60,7 +60,7 @@ const rowData = [
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenParamDialog}><i className="fa fa-plus"></i>&nbsp; Add Pathology Category</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenParamDialog}><i className="fa fa-plus"></i>&nbsp; Add Pathology Category</button>
             </div>
               <div
                 className="ag-theme-alpine"

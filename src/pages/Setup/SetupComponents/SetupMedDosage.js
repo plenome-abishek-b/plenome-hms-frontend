@@ -105,7 +105,7 @@ const [formData, setFormData] = useState(initialMedDosageValue);
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenMedDose}><i className="fa fa-plus"></i>&nbsp; Add Medicine Dose</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenMedDose}><i className="fa fa-plus"></i>&nbsp; Add Medicine Dose</button>
             </div>
               <div
                 className="ag-theme-alpine"

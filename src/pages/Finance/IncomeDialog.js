@@ -54,7 +54,7 @@ console.log(data,"ressss")
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}} >
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}} >
                     Add Income details
                 </DialogTitle>
                 <br />
@@ -115,7 +115,7 @@ console.log(data,"ressss")
                 </DialogContent>
                 <DialogActions className='d-flex justify-content-center'>
                     <button className='btn btn-danger fw-bold' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary fw-bold' onClick={()=>handleSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod fw-bold' onClick={()=>handleSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

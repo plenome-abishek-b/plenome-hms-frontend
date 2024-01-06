@@ -49,7 +49,7 @@ export default function BillingDialog({
               style={{ height: "35px", fontSize: "18px" }}
             ></input>
             <button
-              className="btn btn-primary bg-soft ms-3"
+              className="btn-mod bg-soft ms-3"
               onClick={handleClickOpen}
             >
               + New Patient
@@ -186,7 +186,7 @@ export default function BillingDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={handleClose} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={handleClose} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

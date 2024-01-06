@@ -67,7 +67,7 @@ const Payroll = props => {
                 style={{ display: "flex", justifyContent: "flex-end" }}
                 className="mt-2"
               >
-                <button className="btn btn-primary">
+                <button className="btn-mod">
                   <i className="fas fa-search"></i>&nbsp;Search
                 </button>
               </div>

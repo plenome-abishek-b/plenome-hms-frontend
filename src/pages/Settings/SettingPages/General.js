@@ -603,7 +603,7 @@ function General() {
                 <div>
                   <h4>Mobile App</h4>
                   <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary" onClick={handleClickOpen}>
+                    <button className="btn-mod" onClick={handleClickOpen}>
                       Register Your Android App
                     </button>
                   </div>
@@ -681,7 +681,7 @@ function General() {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end">
-                <button className="btn btn-primary" onClick={handleFormSubmit}>Save</button>
+                <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
               </div>
             </Container>
 

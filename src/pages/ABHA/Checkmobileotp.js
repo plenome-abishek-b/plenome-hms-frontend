@@ -120,7 +120,7 @@ const Checkmobileotp = props => {
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
 
-                    <button className="btn btn-primary" onClick={handleFormSubmit}>submit</button>
+                    <button className="btn-mod" onClick={handleFormSubmit}>submit</button>
 
                   </div>
                 </CardBody>

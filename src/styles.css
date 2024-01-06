@@ -1,14 +1,15 @@
 /* styles.css */
 .ag-theme-alpine .ag-header {
     /* Use a gradient background color */
-    background: #377fc7;
+    background: #7070FF;;
     color: white; /* Change this to the desired text color */
     border-radius: 10px 10px 0 0;
     border: none;
   }
   
   .ag-theme-alpine .ag-header-cell {
-    border-color: #377fc7; /* Border color for header cells */
+    border-color: #7070FF; /* Border color for header cells */
+    text-align: center;
   }
   
   .ag-theme-alpine .ag-header .ag-header-cell-label {
@@ -35,17 +36,25 @@
   }
 
   .custom-btn{
-    background: #377fc7
+    background: #6070FF
   }
 
   .custom-card{
-    background: #377fc7;
+    background: #6070FF;
   }
 
   .custom-card-expense{
-    background: #377fc7;
+    background: #6070FF;
   }
 
   .navbar-header{
-    background: #377fc7;
+    background: #7070FF;
+  }
+
+  .btn-mod{
+    background-color: #6070FF;
+    height: 35px;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #6070FF;
   }

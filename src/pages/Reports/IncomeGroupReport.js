@@ -64,7 +64,7 @@ const Incomegroupreport = props => {
                   <label>Time Duration</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                     id="timeDuration"
                   >
                     <option>select</option>
@@ -84,7 +84,7 @@ const Incomegroupreport = props => {
                 <Col lg="4">
                   <label>Search Income Head</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="incomeHead">
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="incomeHead">
                     <option>select one</option>
                     {incomeHead &&
                       incomeHead.map(income => (
@@ -96,7 +96,7 @@ const Incomegroupreport = props => {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary" onClick={getIncomes}>
+                <button className="btn-mod" onClick={getIncomes}>
                   Search
                 </button>
               </div>

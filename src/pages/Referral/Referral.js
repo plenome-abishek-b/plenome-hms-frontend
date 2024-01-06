@@ -8,7 +8,7 @@ import api from "services/Api";
 //i18n
 import {  withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import Referraldialog from "./Dialog/ReferralDialog";
@@ -117,11 +117,11 @@ const Referral = props => {
         <Container fluid>
           <h4>Referral Payment List</h4>
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleOpen}>Add Referral Payment</button>
-            <Link to="/referralperson"><button className="btn btn-primary ms-2">Referral person</button></Link>
+            <button className="btn-mod" onClick={handleOpen}>Add Referral Payment</button>
+            <Link to="/referralperson"><button className="btn-mod ms-2">Referral person</button></Link>
           </div>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 700, marginTop: "20px" }}
           >
             <AgGridReact

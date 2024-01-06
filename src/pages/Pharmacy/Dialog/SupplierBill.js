@@ -34,7 +34,7 @@ export default function SupplierbillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
         >
           Bill No
         </DialogTitle>
@@ -444,7 +444,7 @@ export default function SupplierbillDialog({
                     </Row>
                   </Container>
                   <div className="mt-4">
-                    <button className="btn btn-primary bg-soft fw-bold">
+                    <button className="btn-mod bg-soft fw-bold">
                       Calculate
                     </button>
                   </div>
@@ -460,7 +460,7 @@ export default function SupplierbillDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary fw-bold"
+            className="btn-mod fw-bold"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

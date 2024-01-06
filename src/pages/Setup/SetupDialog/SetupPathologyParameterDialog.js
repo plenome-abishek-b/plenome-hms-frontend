@@ -103,7 +103,7 @@ export default function SetupPathologyParameterDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-sm"
+            className="btn-mod bg-soft btn-sm"
             onClick={() => handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

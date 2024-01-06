@@ -130,7 +130,7 @@ const SetupSource = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenSource}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenSource}>
                     <i className="fa fa-plus"></i>&nbsp; Add Source
                   </button>
                 </div>

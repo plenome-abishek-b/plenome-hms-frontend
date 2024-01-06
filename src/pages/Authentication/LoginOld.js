@@ -136,15 +136,7 @@ const Login = props => {
       fakeBackend(values.email, values.password);
   
       if (response.status === 401) {
-
-        toast.error("Invalid email or password", {
-          duration: 3000,
-          style: {
-            width: "300px",
-            backgroundColor: "lightcoral",
-            fontSize: "15px",
-          },
-        });
+        prompt("Invalid email or password")
       } else if (response.status === 200) {
         console.log("Authentication successful");
         dispatch(setRoleName(userData));

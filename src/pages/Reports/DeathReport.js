@@ -53,7 +53,7 @@ const Deathreport = props => {
                 <Col lg="4">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration">
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration">
                     <option>select</option>
                     <option value='today'>Today</option>
                     <option>This Week</option>
@@ -71,7 +71,7 @@ const Deathreport = props => {
                 <Col lg="4">
                   <label>Gender</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="gender">
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="gender">
                     <option>select</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -79,7 +79,7 @@ const Deathreport = props => {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getDeaths}>Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getDeaths}>Search</button>
               </div>
             </CardBody>
           </Card>

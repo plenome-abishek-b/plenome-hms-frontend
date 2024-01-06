@@ -108,7 +108,7 @@ export default function OpdBillingDialog({
             </select>
                 {console.log(listPatient,'list patient')}
             <button
-              className="btn btn-primary bg-soft ms-3"
+              className="btn-mod bg-soft ms-3"
               onClick={handleClickOpen}
             >
               + New Patient
@@ -425,7 +425,7 @@ export default function OpdBillingDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
+          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
             Save
           </button>
         </DialogActions>

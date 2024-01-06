@@ -107,7 +107,7 @@ const AbhaAddress = props => {
                   </Row>
                   <div className="d-flex justify-content-center">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={AbhaAddressCreation}
                     >
                       submit

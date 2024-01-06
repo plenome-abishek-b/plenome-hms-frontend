@@ -109,7 +109,7 @@ const Abhagenerateotp = props => {
                   </div>
                   <div className="d-flex justify-content-center mt-5 mb-5">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={handleFormSubmit}
                     >
                       Mobile OTP

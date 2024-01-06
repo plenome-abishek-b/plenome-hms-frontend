@@ -122,8 +122,8 @@ const Dashboard = props => {
                 <div className="row ">
                   <div className="col-6 ">
                     <div className="text-primary p-3 mt-2">
-                      <h5 className="fw-bold" style={{ color: "#377fc7" }}>Welcome Back!</h5>
-                      <p className="fs-6" style={{ color: "#377fc7" }}>BlockTrack Dashboard</p>
+                      <h5 className="fw-bold" style={{ color: "#6070FF" }}>Welcome Back!</h5>
+                      <p className="fs-6" style={{ color: "#6070FF" }}>BlockTrack Dashboard</p>
                     </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-stethoscope fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -164,7 +164,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-procedures fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -186,7 +186,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-mortar-pestle fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -208,7 +208,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-flask fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -230,7 +230,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-microscope fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -252,7 +252,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-tint fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -274,7 +274,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-ambulance fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -296,7 +296,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-money-bill-wave fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>
@@ -318,7 +318,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-rupee-sign fa-lg"
-                            style={{ color: "#377fc7" }}
+                            style={{ color: "#6070FF" }}
                           ></i>
                         </span>
                       </div>

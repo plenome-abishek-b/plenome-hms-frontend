@@ -113,7 +113,7 @@ const Tpareport = props => {
                 <Col lg="4">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration" >
                     <option>select</option>
                     <option value="This Year" >Today</option>
                     <option value="This Week" >This Week</option>
@@ -131,7 +131,7 @@ const Tpareport = props => {
                 <Col lg="4">
                   <label>Doctor</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="doctor" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="doctor" >
                     <option>select</option>
                     {consdoctor && consdoctor.map((med) => (
                     <option key={med.id} value={med.id}>
@@ -143,7 +143,7 @@ const Tpareport = props => {
                 <Col lg="4">
                   <label>TPA</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="tpa" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="tpa" >
                     <option>select</option>
                     {Tpa && Tpa.map((tpa) => (
                     <option key={tpa.id} value={tpa.id}>
@@ -158,14 +158,14 @@ const Tpareport = props => {
                 <Col lg="4">
                   <label>Case ID</label>
                   <br />
-                  <input style={{ width: "100%", height: "30px" }} id="caseId" >
+                  <input style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="caseId" >
                    
                   </input>
                 </Col>
                 <Col lg="4">
                   <label>Charge Category</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="chargeCategory" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="chargeCategory" >
                     <option>select</option>
                     {chargeCategory && chargeCategory.map((ccategory) => (
                       
@@ -178,7 +178,7 @@ const Tpareport = props => {
                 <Col lg="4">
                   <label>Charge</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="charge" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="charge" >
                     <option>select</option>
                     {chargeName && chargeName.map((cname) => (
                     <option key={cname.id} value={cname.id}>
@@ -190,7 +190,7 @@ const Tpareport = props => {
               </Row>
               <br />
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getTPAReportList} >Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getTPAReportList} >Search</button>
               </div>
             </CardBody>
           </Card>

@@ -95,7 +95,7 @@ export default function ItemDialog({ open, handleClose , data,
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={() => handleFormSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod' onClick={() => handleFormSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

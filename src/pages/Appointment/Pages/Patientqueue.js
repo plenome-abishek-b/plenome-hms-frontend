@@ -128,8 +128,8 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
             </Row>
             <br />
             <div style={{display: 'flex', justifyContent: 'flex-end' ,alignItems: 'flex-end'}} className="mt-4">
-            <button className="btn btn-primary bg-soft" style={{marginRight:'10px'}}>Reorder Queue</button>
-                <button className="btn btn-primary bg-soft" onClick={()=>handleSearch()}>Search</button>
+            <button className="btn-mod bg-soft" style={{marginRight:'10px'}}>Reorder Queue</button>
+                <button className="btn-mod bg-soft" onClick={()=>handleSearch()}>Search</button>
 
             </div>
           </div>

@@ -513,7 +513,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft"
+              className="btn-mod bg-soft"
               type="submit"
             >
               Save

@@ -57,7 +57,7 @@ const setupRadiologyUnit = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenPathUnitType}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenPathUnitType}>
                     <i className="fa fa-plus"></i>&nbsp; Add Unit Type
                   </button>
                 </div>

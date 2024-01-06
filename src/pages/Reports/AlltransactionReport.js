@@ -72,7 +72,7 @@ const Alltransactionreport = props => {
                   <Col lg="4" md="4" sm="12">
                     <label>Time Duration</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="timeDuration">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="timeDuration">
                         <option>select</option>
                         <option value="today">Today</option>
                         <option>This Week</option>
@@ -90,7 +90,7 @@ const Alltransactionreport = props => {
                   <Col lg="4" md="4" sm="12">
                     <label>Collected By</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="collectedBy">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="collectedBy">
                     {collectedBy &&
                       collectedBy.map(collect => (
                         <option key={collect.collectedBy} value={collect.id}>
@@ -102,7 +102,7 @@ const Alltransactionreport = props => {
                   <Col lg="4" md="4" sm="12">
                   <label>Select Head</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="head">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="head">
                         <option>select</option>
                         <option value="ipd">IPD</option>
                         <option value="opd">OPD</option>
@@ -116,7 +116,7 @@ const Alltransactionreport = props => {
                     </select>
                   </Col>
                   <div className="d-flex justify-content-end mt-3">
-                    <button className="btn btn-primary" onClick={getTransactions}>Search</button>
+                    <button className="btn-mod" onClick={getTransactions}>Search</button>
                   </div>
                 </Row>
                 <br />

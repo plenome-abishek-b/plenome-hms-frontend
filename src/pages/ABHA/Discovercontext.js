@@ -51,7 +51,7 @@ const Carecontext = props => {
                      Records</h5>
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
-                    <button className="btn btn-primary">Link Records</button>
+                    <button className="btn-mod">Link Records</button>
                   </div>
                 </CardBody>
               </Card>

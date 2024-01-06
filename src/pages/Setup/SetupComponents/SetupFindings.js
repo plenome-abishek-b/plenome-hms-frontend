@@ -50,7 +50,7 @@ const setupFindings = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenFinding}>
+                <button className="btn-mod bg-soft" onClick={handleOpenFinding}>
                   <i className="fa fa-plus"></i>&nbsp; Add Finding
                 </button>
               </div>

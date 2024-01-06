@@ -77,14 +77,6 @@ function* loginUser({ payload: { user, history } }) {
       history.push("/dashboard");
     } else if (response.status === 401) {
       prompt("Invalid email or password");
-      toast.danger("Invalid email or password", {
-        duration: 3000,
-        style: {
-          width: "300px",
-          backgroundColor: "lightcoral",
-          fontSize: "15px",
-        },
-      });
       // Handle the case where login is not successful due to invalid email or password
       // You can add additional actions or error messages if needed
     } else {

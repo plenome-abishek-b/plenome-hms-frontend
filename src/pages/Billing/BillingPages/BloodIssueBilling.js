@@ -6,7 +6,7 @@ import { Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
 //ag-grid modules
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useEffect , useState} from "react";
 import { Link } from "react-router-dom";
@@ -156,13 +156,13 @@ const BloodIssueBilling = props => {
         <Container fluid>
           <h4>Blood Issue Billing</h4>
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={handleClickOpen}><i className="fas fa-microscope"></i> &nbsp;Issue Bill</button>
+            <button className="btn-mod" style={{ marginLeft: '10px' }} onClick={handleClickOpen}><i className="fas fa-microscope"></i> &nbsp;Issue Bill</button>
           </div>
           <BloodIssueBillingDialog open={open} handleClose={handleClose}  data={formData}
             onChange={onChange}
             handleFormSubmit={handleFormSubmit} setFetchData={setFetchData}/>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 700, marginTop: "20px" }}
           >
             <AgGridReact

@@ -139,12 +139,12 @@ const Certificate = props => {
                   </Col>
                 </Row>
                 <div className="d-flex justify-content-end mt-3">
-                  <button className="btn btn-primary" onClick={getCertificateView}>
+                  <button className="btn-mod" onClick={getCertificateView}>
                     Search
                   </button>
                 </div>
                  <div dangerouslySetInnerHTML={{ __html: htmlData }} />
-                <button onClick={handlePrint} className="btn btn-primary">Print</button>
+                <button onClick={handlePrint} className="btn-mod">Print</button>
               </div>
             </CardBody>
           </Card>

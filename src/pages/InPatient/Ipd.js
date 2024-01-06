@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo} from "react";
 import IpdDialog from "./IpdDialog";
@@ -162,7 +162,7 @@ console.log(formData,"Ddddddddd")
             alignItems: "flex-end",
           }}
         >
-          <button className="btn btn-primary custom-btn" onClick={handleClickOpen}>
+          <button className="btn-mod custom-btn" onClick={handleClickOpen}>
             + Add Patient
           </button>
         </div>

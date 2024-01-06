@@ -49,7 +49,7 @@ const AudittrailReport = props => {
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary">Delete All</button>
+                <button className="btn-mod">Delete All</button>
             </div>
             <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
             <AgGridReact

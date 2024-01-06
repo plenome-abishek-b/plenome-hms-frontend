@@ -176,25 +176,25 @@ const Downloadabha = props => {
                     style={{ display: "flex" }}
                   >
                     <button
-                      className="btn btn-primary ms-3"
+                      className="btn-mod ms-3"
                       onClick={handleFormSubmit}
                     >
                       Card
                     </button>
                     <button
-                      className="btn btn-primary ms-3"
+                      className="btn-mod ms-3"
                       onClick={handleQrcode}
                     >
                       QR Code
                     </button>
                     <button
-                      className="btn btn-primary ms-3"
+                      className="btn-mod ms-3"
                       onClick={handleSvg}
                     >
                       SVG
                     </button>
                     <button
-                      className="btn btn-primary ms-3"
+                      className="btn-mod ms-3"
                       onClick={handlePng}
                     >
                       PNG

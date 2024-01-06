@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import {  withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import BirthDialog from "./BirthRecordDialog";
@@ -110,7 +110,7 @@ const Birthrecord = props => {
             breadcrumbItem={props.t("Birth Records")}
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleClickOpen}>Add Birth Record</button>
+            <button className="btn-mod" onClick={handleClickOpen}>Add Birth Record</button>
           </div>
           <div
             className="ag-theme-alpine"

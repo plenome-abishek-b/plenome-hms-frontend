@@ -53,7 +53,7 @@ const Patientbillreport = props => {
                                     <br />
                                     <div>
                                         <input id="case_ID"></input>
-                                        <button className="btn btn-primary btn-sm ms-2" onClick={getPatientBills}>Search</button>
+                                        <button className="btn-mod btn-sm ms-2" onClick={getPatientBills}>Search</button>
                                     </div>
                                 </Col>
                             </Row>

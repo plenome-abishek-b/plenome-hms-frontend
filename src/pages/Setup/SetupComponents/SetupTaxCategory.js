@@ -71,6 +71,9 @@ const setupTaxCategory = props => {
     //for posting and getting data at a sametime
     api.postTaxCategory(formData).then(resp => {
       console.log(resp)
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     })
     handleClose()
 
@@ -92,7 +95,7 @@ const setupTaxCategory = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenTaxCategory}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenTaxCategory}>
                     <i className="fa fa-plus"></i>&nbsp; Add Tax Category
                   </button>
                 </div>

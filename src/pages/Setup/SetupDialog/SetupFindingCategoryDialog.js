@@ -59,7 +59,7 @@ export default function SetupFindingCategoryDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md"
             onClick={handleClose}
             style={{ marginRight: "3%" }}
           >

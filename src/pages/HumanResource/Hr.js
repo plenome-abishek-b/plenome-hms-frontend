@@ -40,7 +40,7 @@ const Hr = props => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Link to="/addstaff">
               <button
-                className="btn btn-primary"
+                className="btn-mod"
                 style={{ marginRight: "10px" }}
               >
                 Add Staff&nbsp;<i className="fas fa-caret-down"></i>
@@ -48,7 +48,7 @@ const Hr = props => {
             </Link>
             <Link to="/attendance">
               <button
-                className="btn btn-primary"
+                className="btn-mod"
                 style={{ marginRight: "10px" }}
               >
                 <i className="fas fa-bars"></i>&nbsp;Staff Attendance
@@ -56,7 +56,7 @@ const Hr = props => {
             </Link>
             <Link to="/payroll">
               <button
-                className="btn btn-primary"
+                className="btn-mod"
                 style={{ marginRight: "10px" }}
               >
                 <i className="fas fa-align-justify"></i>&nbsp;Payroll
@@ -64,7 +64,7 @@ const Hr = props => {
             </Link>
             <Link to="/leaves">
               <button
-                className="btn btn-primary"
+                className="btn-mod"
                 style={{ marginRight: "10px" }}
               >
                 <i className="fas fa-align-justify"></i>&nbsp;Leaves
@@ -94,7 +94,7 @@ const Hr = props => {
                     </div>
                   </div>
                   <div className="col-sm-10">
-                    <button className="btn btn-primary btn-sm mt-3">
+                    <button className="btn-mod btn-sm mt-3">
                       <i className="fas fa-search"></i>&nbsp; Search
                     </button>
                   </div>
@@ -116,7 +116,7 @@ const Hr = props => {
                     </div>
                   </div>
                   <div className="col-sm-10">
-                    <button className="btn btn-primary btn-sm mt-3">
+                    <button className="btn-mod btn-sm mt-3">
                       <i className="fas fa-search"></i>&nbsp; Search
                     </button>
                   </div>

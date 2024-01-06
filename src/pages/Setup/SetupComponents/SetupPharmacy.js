@@ -84,7 +84,7 @@ const SetupPharmacy = props => {
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenMedicineCategory}><i className="fa fa-plus"></i>&nbsp; Add Medicine Category</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenMedicineCategory}><i className="fa fa-plus"></i>&nbsp; Add Medicine Category</button>
             </div>
               <div
                 className="ag-theme-alpine"

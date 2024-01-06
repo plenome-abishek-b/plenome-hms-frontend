@@ -21,7 +21,7 @@ const Staffattendancereport = props => {
                                 <Col lg="4">
                                     <label>Role</label>
                                     <br />
-                                    <select style={{ width: '100%',height: "30px" }}>
+                                    <select style={{ width: '100%',height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                                         <option>Admin</option>
                                         <option>Super Admin</option>
                                         <option>Doctor</option>
@@ -36,7 +36,7 @@ const Staffattendancereport = props => {
                                 <Col lg="4">
                                     <label>Month</label>
                                     <br />
-                                    <select style={{  width: '100%',height: "30px" }}>
+                                    <select style={{  width: '100%',height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                                         <option>select</option>
                                         <option>January</option>
                                         <option>February</option>
@@ -56,7 +56,7 @@ const Staffattendancereport = props => {
                                 <Col lg="4">
                                     <label>Year</label>
                                     <br />
-                                    <select style={{  width: '100%',height: "30px" }}>
+                                    <select style={{  width: '100%',height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                                         <option>select</option>
                                         <option>2021</option>
                                         <option>2022</option>
@@ -67,7 +67,7 @@ const Staffattendancereport = props => {
                             </Row>
                             <br />
                             <div className="d-flex justify-content-end">
-                                <button className="btn btn-primary">Search</button>
+                                <button className="btn-mod">Search</button>
                             </div>
                         </CardBody>
                     </Card>

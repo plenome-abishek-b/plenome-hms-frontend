@@ -157,7 +157,7 @@ export default function ApptDialog({ open, handleClose, data }) {
               alignItems: "flex-end",
             }}
           >
-            <button className="btn btn-primary" onClick={handleClickOpen}>
+            <button className="btn-mod" onClick={handleClickOpen}>
               + New Patient
             </button>
             <PatientDialog
@@ -350,7 +350,7 @@ export default function ApptDialog({ open, handleClose, data }) {
           </button>
           <button
             onClick={() => handleFormSubmit(handleClose())}
-            className="btn btn-primary bg-soft"
+            className="btn-mod bg-soft"
           >
             Submit
           </button>

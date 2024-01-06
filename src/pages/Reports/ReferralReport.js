@@ -92,7 +92,7 @@ const Referralreport = props => {
                 <Col lg="4">
                   <label>Payee</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="payee" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="payee" >
                     <option>select</option>
                     {payee && payee.map((pay) => (
                     <option key={pay.name} value={pay.name}>
@@ -104,7 +104,7 @@ const Referralreport = props => {
                 <Col lg="4">
                   <label>Patient Type</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="patient_type" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="patient_type" >
                     <option>select</option>
                     {patientType && patientType.map((type) => (
                     <option key={type.name} value={type.name}>
@@ -116,7 +116,7 @@ const Referralreport = props => {
                 <Col lg="4">
                   <label>Patient</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="patient" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="patient" >
                     <option>select</option>
                     {patient && patient.map((pat) => (
                     <option key={pat.id} value={pat.id}>
@@ -128,7 +128,7 @@ const Referralreport = props => {
               </Row>
               <br />
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getReferralReportList} >Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getReferralReportList} >Search</button>
               </div>
             </CardBody>
           </Card>

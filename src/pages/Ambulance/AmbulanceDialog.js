@@ -17,7 +17,7 @@ export default function AmbulanceDialog({ open, handleClose }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF'}}>
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF'}}>
           Add Ambulance call details
         </DialogTitle>
         <DialogContent>
@@ -92,7 +92,7 @@ export default function AmbulanceDialog({ open, handleClose }) {
           <button className="btn btn-danger" onClick={handleClose}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handleClose} autoFocus>
+          <button className="btn-mod" onClick={handleClose} autoFocus>
             Submit
           </button>
         </DialogActions>

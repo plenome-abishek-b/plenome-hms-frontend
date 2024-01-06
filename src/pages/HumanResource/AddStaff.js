@@ -471,7 +471,7 @@ const AddStaff = props => {
                         </CardBody>
                       </Card>
                       <div className="d-flex justify-content-end">
-                      <button className="btn text-white fw-bold" style={{backgroundColor: '#377fc7'}}>Save</button>
+                      <button className="btn text-white fw-bold" style={{backgroundColor: '#6070FF'}}>Save</button>
                       </div>
                      
                     </UncontrolledCollapse>

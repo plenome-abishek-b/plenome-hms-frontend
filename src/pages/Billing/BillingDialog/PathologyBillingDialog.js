@@ -120,7 +120,7 @@ export default function PathologybillingDialog({
           </select> */}
           </div>
           <div className="mt-3 d-flex justify-content-end">
-            <button className="btn btn-primary" onClick={handleOpenDialog} style={{marginRight: '48px'}}><i className="fa fa-plus" ></i>&nbsp;Add Patient</button>
+            <button className="btn-mod" onClick={handleOpenDialog} style={{marginRight: '48px'}}><i className="fa fa-plus" ></i>&nbsp;Add Patient</button>
             <OpdPatientDialog
               open={openDialog}
               handleClose={handleCloseDialog} 
@@ -347,7 +347,7 @@ export default function PathologybillingDialog({
                       </Col>
                     </Row>
                     <div className="mt-4">
-                      <button className="btn btn-primary bg-soft">
+                      <button className="btn-mod bg-soft">
                         Calculate
                       </button>
                     </div>
@@ -362,7 +362,7 @@ export default function PathologybillingDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

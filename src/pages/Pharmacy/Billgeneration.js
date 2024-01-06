@@ -43,7 +43,7 @@ const BillGeneration = props => {
           <input placeholder="search.." style={{width: '60%', height: '30px'}}></input>
           <div>
           <h4 className="mt-3">Bill No</h4>
-          <button className="btn btn-primary bg-soft" onClick={handleClickOpen}>+ Add Patient</button>
+          <button className="btn-mod bg-soft" onClick={handleClickOpen}>+ Add Patient</button>
           <PatientDialog 
               open={openDialog}
               handleClose={handleDialogClose}
@@ -223,8 +223,8 @@ const BillGeneration = props => {
                         
                     </Row>
                     <div className="mt-4" style={{marginLeft: '64%'}}>
-                        <button className="btn btn-primary bg-soft">Calculate</button>
-                        <button className="btn btn-primary bg-soft" style={{marginLeft: '10px'}}>Save</button>
+                        <button className="btn-mod bg-soft">Calculate</button>
+                        <button className="btn-mod bg-soft" style={{marginLeft: '10px'}}>Save</button>
                     </div>
                   </Col>
                 </Row>

@@ -18,6 +18,16 @@ const SidebarContent = (props) => {
     { id: 'dashboard', name: 'Dashboard', enabled: true },
     { id: 'billing', name: 'Billing', enabled: true },
   ]);
+
+
+  const handleToggle = (moduleId) => {
+    setModules((prevModules) =>
+      prevModules.map((module) =>
+        module.id === moduleId ? { ...module, enabled: !module.enabled } : module
+      )
+    );
+  };
+
   // console.log(props,"prop")
   const location = useLocation();
   const userData = location.state ? location.state.userData : null;
@@ -101,6 +111,7 @@ const SidebarContent = (props) => {
 
   return (
     <React.Fragment>
+      
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
@@ -442,8 +453,26 @@ const SidebarContent = (props) => {
             </li>
             <li>
               <Link to="/account/aadhar">
-                <i class="fas fa-credit-card"></i>
+              <i class="fas fa-address-card"></i>
                 <span className="ms-2 fw-bold">ABHA Registration</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/linkcarecontext">
+              <i class="fas fa-link"></i>
+                <span className="ms-2 fw-bold">Link Care-context</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/discovercarecontext">
+              <i class="fas fa-book-open"></i>
+                <span className="ms-2 fw-bold">Discover Care-context</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/consentrequest">
+              <i class="fas fa-hand-holding-medical"></i>
+                <span className="ms-2 fw-bold">Consent Request</span>
               </Link>
             </li>
             <li>
@@ -480,6 +509,28 @@ const SidebarContent = (props) => {
                     </li>
                     <li>
                       <Link to="/unittype">{props.t("Unit Type")}</Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Appointment")}
+                  </Link>
+                  <ul style={{ marginLeft: "-30px" }}>
+                    <li>
+                      <Link to="/setupslotappointment">
+                        {props.t("Slots")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/onlineappointment/globalshift">
+                        {props.t("Shift")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/setupdoctorglobalshift">
+                        {props.t("Doctor Shift")}
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -615,28 +666,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
-                  <Link to="#" className="has-arrow">
-                    {props.t("Appointment")}
-                  </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
-                    <li>
-                      <Link to="/admin/onlineappointment">
-                        {props.t("Slots")}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/onlineappointment/globalshift">
-                        {props.t("Shift")}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/onlineappointment/doctorglobalshift">
-                        {props.t("Doctor Shift")}
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
+               
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Human Resource")}

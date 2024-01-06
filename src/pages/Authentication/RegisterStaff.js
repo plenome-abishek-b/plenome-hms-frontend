@@ -500,7 +500,7 @@ function RegisterStaff() {
               >
 
                 <button
-                  className="btn btn-primary"
+                  className="btn-mod"
                   onClick={handleFormSubmit}
                   style={{ width: "100px", height: "50px" }}
                 >

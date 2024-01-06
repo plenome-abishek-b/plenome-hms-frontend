@@ -24,7 +24,7 @@ export default function DeathDialog({ open, handleClose , data,onChange,
                 aria-describedby="alert-dialog-description"
                 maxWidth='md'
             >
-                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}}>
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}}>
                     Add Death Details
                 </DialogTitle>
                 <DialogContent style={{paddingTop: '20px'}}>
@@ -70,7 +70,7 @@ export default function DeathDialog({ open, handleClose , data,onChange,
                 </DialogContent>
                 <DialogActions className='d-flex justify-content-center'>
                     <button className='btn btn-danger fw-bold' style={{backgroundColor: "#B2533E"}} onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary fw-bold' onClick={() => handleFormSubmit()} autoFocus>
+                    <button className='btn-mod fw-bold' onClick={() => handleFormSubmit()} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

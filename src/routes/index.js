@@ -180,7 +180,11 @@ import AbhaOtpVerification from "pages/ABHA/AbhaOtpVerification";
 import Verifyabhaotp from "pages/ABHA/VerifyAbhaotp";
 import AbhaGenerateOtp from "pages/ABHA/AbhaGenerateOtp";
 import Generateqr from "pages/ABHA/GenerateQr";
-
+import Linkcarecontext from "pages/Carecontext/Linkcarecontext";
+import Discovercontext from "pages/Carecontext/Discovercontext";
+import Consentrequest from "pages/Carecontext/Consentrequest";
+import SetupSlotAppt from "pages/Setup/SetupComponents/SetupSlotTimeAppt";
+import SetupDoctorShift from "pages/Setup/SetupComponents/SetupDoctorShift";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -289,7 +293,7 @@ const authProtectedRoutes = [
 
   //setup appointment
   {path:"/onlineappointment/globalshift",component:Shift_setupAppointment},
-  {path:"/onlineappointment/doctorglobalshift",component:DoctorShift_setupAppointment},
+  {path:"/setupdoctorglobalshift",component:DoctorShift_setupAppointment},
   {path:"/admin/onlineappointment",component:Slots_setupAppointment},
   {path: "/alltransactionreport", component: AlltransactionReport},
   {path: "/pharmacybillreport", component: PharmacybillReport},
@@ -314,6 +318,7 @@ const authProtectedRoutes = [
   {path: "/referralreport", component: ReferralReport},
   {path: "/patientvisitreport", component: PatientVisitReport},
   {path: "/patientlogincreds", component: PatientLoginCreds},
+  {path: "/setupslotappointment", component: SetupSlotAppt},
   //Setup HR
   {path:'/human-resource-setup/leave-type',component:SetupLeavetype},
    {path:'/human-resource-setup/department',component:SetupDepartment},
@@ -334,7 +339,9 @@ const authProtectedRoutes = [
   {path: "/notifications", component: Notifications},
   {path: "/carecontext", component: Carecontext},
   {path: "/userrecord", component: Userrecord},
-  
+  {path: "/linkcarecontext", component: Linkcarecontext},
+  {path: "/discovercarecontext", component: Discovercontext},
+  {path: "/consentrequest", component: Consentrequest},
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

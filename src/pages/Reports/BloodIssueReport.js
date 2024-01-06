@@ -152,7 +152,7 @@ const Bloodissuereport = props => {
                 <Col lg="3">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration" onChange={handleChange} value={formData.timeDuration}>
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration" onChange={handleChange} value={formData.timeDuration}>
                     <option>select</option>
                     <option value="This Year" >Today</option>
                     <option value="This Week" >This Week</option>
@@ -170,7 +170,7 @@ const Bloodissuereport = props => {
                 <Col lg="3">
                   <label>Blood Collect By</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="bloodCollectedBy" onChange={handleChange} value={formData.bloodCollectedBy}>
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodCollectedBy" onChange={handleChange} value={formData.bloodCollectedBy}>
                     <option>select</option>
                     {consdoctor && consdoctor.map((collected) => (
                     <option key={collected.id} value={collected.id}>
@@ -182,7 +182,7 @@ const Bloodissuereport = props => {
                 <Col lg='3'>
                 <label>Amount Collect By</label>
                 <br />
-                <select style={{ width: "100%", height: "30px" }} id="amountCollectedBy" onChange={handleChange} value={formData.amountCollectedBy}>
+                <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="amountCollectedBy" onChange={handleChange} value={formData.amountCollectedBy}>
                     <option>select</option>
                     {amountCollectedBy && amountCollectedBy.map((collectedamount) => (
                     <option key={collectedamount.id} value={collectedamount.id}>
@@ -194,7 +194,7 @@ const Bloodissuereport = props => {
                 <Col lg='3'>
                 <label>Blood Group</label>
                 <br />
-                <select style={{ width: "100%", height: "30px" }} id="bloodGroup"  onChange={handleChange} value={formData.bloodGroup}>
+                <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodGroup"  onChange={handleChange} value={formData.bloodGroup}>
                     <option>select</option>
                     {bloodgroupData && bloodgroupData.map((bloodgroup) => (
                     <option key={bloodgroup.name} value={bloodgroup.id}>
@@ -209,7 +209,7 @@ const Bloodissuereport = props => {
                 <Col lg='3'>
                     <label>Blood Donor</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }} id="bloodDonor" onChange={handleChange} value={formData.bloodDonor}>
+                    <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodDonor" onChange={handleChange} value={formData.bloodDonor}>
                         <option>select</option>
                         {bloodDonorData && bloodDonorData.map((blooddonor) => (
                     <option key={blooddonor.bloodDonorData} value={blooddonor.id}>
@@ -221,7 +221,7 @@ const Bloodissuereport = props => {
               </Row>
               <br />
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getBloodIssueReportList}>Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getBloodIssueReportList}>Search</button>
               </div>
             </CardBody>
           </Card>

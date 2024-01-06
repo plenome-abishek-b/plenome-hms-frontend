@@ -76,7 +76,7 @@ export default function PathologyDialog({
       >
         <DialogTitle
           id="alert-dialog-title"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
           className="text-white fw-bold"
         >
           Add New Pathology
@@ -379,7 +379,7 @@ export default function PathologyDialog({
             Cancel
           </button>
           <button
-            className="btn btn-primary fw-bold"
+            className="btn-mod fw-bold"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

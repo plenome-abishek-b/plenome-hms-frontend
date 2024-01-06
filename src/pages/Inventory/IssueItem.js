@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useEffect , useState } from "react";
 import IssueItemDialog from "./IssueItemDialog";
@@ -137,7 +137,7 @@ const IssueItem = props => {
           {/* Render Breadcrumb */}
           <h4>Issue Item List</h4>
           <div className="d-flex justify-content-end">
-            <button className="btn btn-primary" onClick={handleOpenIssue}>Add Issue Item</button>
+            <button className="btn-mod" onClick={handleOpenIssue}>Add Issue Item</button>
           </div>
           <IssueItemDialog 
             open={openIssueItem}
@@ -147,7 +147,7 @@ const IssueItem = props => {
             handleFormSubmit={handleFormSubmit}
           />
            <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 700, marginTop: "20px" }}
         >
           <AgGridReact
