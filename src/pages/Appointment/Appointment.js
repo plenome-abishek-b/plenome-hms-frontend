@@ -1,15 +1,15 @@
-import React, { useEffect } from "react"
-import { Button, Container } from "reactstrap"
-import { AgGridReact, AgGridColumn } from "ag-grid-react"
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
-import { useMemo, useState, useCallback, useRef } from "react"
-import AlertDialog from "./Dialog/Dialog"
-import api from "services/Api"
+import React, { useEffect } from "react";
+import { Button, Container } from "reactstrap";
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { useMemo, useState, useCallback, useRef } from "react";
+import AlertDialog from "./Dialog/Dialog";
+import api from "services/Api";
 //Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb"
-import { withTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 //redux
 
@@ -25,40 +25,42 @@ const initialValue = {
   source: "",
   live: "",
   fees: "",
-  status: ""
-}
+  status: "",
+};
 
+const Appointment = (props) => {
+  const gridRef = useRef();
 
+  const [tableData, setTableData] = useState(null);
 
-const Appointment = props => {
-  const gridRef = useRef()
+  const [formData, setFormData] = useState(initialValue);
 
-  const [tableData, setTableData] = useState(null)
+  const [open, setOpen] = React.useState(false);
 
-  const [formData, setFormData] = useState(initialValue)
-
-  const [open, setOpen] = React.useState(false)
-
-  const [datas, setDatas] = useState(null)
+  const [datas, setDatas] = useState(null);
 
   const handleClickOpen = () => {
     //dialog open
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleClose = () => {
     //dialog close
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
-  const onChange = e => {
+  const onChange = (e) => {
     //catch the parameters when changed.
-    const { value, id } = e.target
-    setFormData({ ...formData, [id]: value })
-  }
+    const { value, id } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
 
   const columnDefs = [
-    { headerName: "Patient Name", field: "patient_name", filter: "agSetColumnFilter" },
+    {
+      headerName: "Patient Name",
+      field: "patient_name",
+      filter: "agSetColumnFilter",
+    },
     {
       headerName: "Appointment No",
       field: "id",
@@ -78,7 +80,7 @@ const Appointment = props => {
     {
       headerName: "Actions",
       field: "id",
-      cellRendererFramework: params => (
+      cellRendererFramework: (params) => (
         <div>
           <button
             className="btn btn-danger btn-sm"
@@ -89,7 +91,7 @@ const Appointment = props => {
         </div>
       ),
     },
-  ]
+  ];
 
   // const defaultColDef = useMemo(
   //   () => ({
@@ -136,17 +138,17 @@ const Appointment = props => {
   // }, [])
 
   const onBtnExport = useCallback(() => {
-    gridRef.current.api.exportDataAsExcel()
-  }, [])
+    gridRef.current.api.exportDataAsExcel();
+  }, []);
   useEffect(() => {
-    getAppointment()
-  }, [])
+    getAppointment();
+  }, []);
   const getAppointment = async () => {
-    const response = await api.getAppointment()
-    const { data } = response
-    console.log(data, 'dddddd')
-    setDatas(data)
-  }
+    const response = await api.getAppointment();
+    const { data } = response;
+    console.log(data, "dddddd");
+    setDatas(data);
+  };
 
   const defaultColDef = {
     sortable: true,
@@ -156,10 +158,10 @@ const Appointment = props => {
 
   const defaultSort = [
     // Define default sorting based on "Appointment No" column
-    { colId: 'id', sort: 'asc' },
+    { colId: "id", sort: "asc" },
   ];
 
-  console.log(datas, 'dataaaaaaa')
+  console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
       <div className="page-content">
@@ -182,7 +184,7 @@ const Appointment = props => {
             >
               + Add Appointment
             </button>
-            <Link to='/doctorwise'>
+            {/* <Link to="/doctorwise">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -191,14 +193,14 @@ const Appointment = props => {
                 &nbsp;&nbsp;Doctor Wise
               </button>
             </Link>
-            <Link to='/patientqueue'>
+            <Link to="/patientqueue">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link>
+            </Link> */}
 
             <button
               className="btn-mod bg-soft custom-btn"
@@ -223,20 +225,16 @@ const Appointment = props => {
             columnDefs={columnDefs}
             pagination={true}
             paginationPageSize={15}
-            domLayout='autoHeight'
+            domLayout="autoHeight"
             defaultColDef={defaultColDef}
             defaultSort={defaultSort}
           />
 
-          <AlertDialog
-            open={open}
-            handleClose={handleClose}
-            data={formData}
-          />
+          <AlertDialog open={open} handleClose={handleClose} data={formData} />
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default withTranslation()(Appointment)
+export default withTranslation()(Appointment);
