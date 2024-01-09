@@ -13,6 +13,7 @@ function SetupSlotAppt() {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [timeInputs, setTimeInputs] = useState([]);
+  
 
   const addNewTimeInputRow = () => {
     setTimeInputs((prevTimeInputs) => [

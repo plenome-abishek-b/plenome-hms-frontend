@@ -181,10 +181,10 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
       SetCharge(data);
   
       if (data.length > 0) {
-        const firstChargeAmount = data[0].amount;
+        const firstChargeAmount = data[0].standard_charge;
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
-          amount: firstChargeAmount,
+          standard_charge: firstChargeAmount,
         }));
       }
     } catch (error) {
@@ -280,7 +280,7 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
               <input
                 style={{ width: "100%", height: "35px", borderRadius: '5px', border: "1px solid grey", backgroundColor:'rgba(0,0,0,0.2)' }}
                 name="amount"
-                value={formValues.amount}
+                value={formValues.standard_charge}
                 onChange={handleChange}
                 type="number"
                 readOnly 

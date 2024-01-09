@@ -68,7 +68,7 @@ const URL = {
   CHARGES_URL: "/setup-hospital-charge-charges",
   CHARGES_CATEGORY_URL: "/setup-hospital-charges-charge-category",
   CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-module",
-  SETUP_CHARGE_CATEGORY_URL: "/setup-hospital-charges-charge-category",
+  SETUP_CHARGE_CATEGORY_URL: "/setup-hospital-charges-charge-category/bytype/",
   SETUP_CHARGE_NAME: "/setup-hospital-charge-charges",
   SETUP_TAX_URL: "/setup-hospital-charges-tax-category",
   SETUP_UNIT_URL: "/setup-hospital-charges-unit-type",
@@ -658,9 +658,12 @@ function getChargetype(data = {}) {
   return http3.get(URL.CHARGE_TYPE_URL, data);
 }
 
-function getSetupChargeCategory(data = {}) {
-  return http3.get(URL.SETUP_CHARGE_CATEGORY_URL, data);
+		
+function getSetupChargeCategory(id,data = {}) {
+    const url = `${URL.SETUP_CHARGE_CATEGORY_URL}${id}`;
+    return http3.get(url, data);
 }
+  
 
 function getSetupChargeName(data = {}) {
   return http3.get(URL.SETUP_CHARGE_NAME, data);
