@@ -10,21 +10,48 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 //redux
 import SetupRaiologyParameterDialog from "../SetupDialog/SetupRadiologyParameterDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 function SetupRadiologyParameter(){
 const [openParamDiaolog, setOpenParamDialog] = useState(false);
 const [data,datas] = useState([])
+const [selectedData,setSelectedData] = useState({})
 
 const rowData = [
     {category: 'New Category'}
 ]
+const handleEditClick = (data) =>{
+  console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenParamDialog(true)
+ }
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+         console.log(userConfirmed,"delete");
+ if(userConfirmed){
+       const deleteResponse = await api.deleteSetupRadiologyParameter(data.id)
+       getRadiologyParameter()
+ }else{
+  console.log("cancelled");
+ }
 
+ }
   const columnDefs = [
     {headerName: 'Parameter Name', field: 'parameter_name'},
     {headerName: 'Reference Range', field: 'reference_range'},
     {headerName: 'Unit', field: 'unit'},
     {headerName: 'Description', field: 'description'},
-    {headerName: 'Action', field: ''},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -40,6 +67,7 @@ const rowData = [
   },[])
 
   const handleOpenParamDialog = () => {
+    setSelectedData({})
     setOpenParamDialog(true);
   }
 
@@ -47,10 +75,19 @@ const rowData = [
     setOpenParamDialog(false);
   }
   const getRadiologyParameter = async () =>{
-  const response = await api.getRadiologyParameter()
+  const response = await api.getSetupRadiologyParameter()
   const {data} = response
   datas(data)
   }
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   return (
     <React.Fragment>
@@ -70,8 +107,9 @@ const rowData = [
                   rowData={data}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupRaiologyParameterDialog open={openParamDiaolog} handleClose={handleCloseParamDialog}/>
+                <SetupRaiologyParameterDialog selectedData={selectedData} getRadiologyParameter={getRadiologyParameter} open={openParamDiaolog} handleClose={handleCloseParamDialog}/>
                 </div>
             </CardBody>
           </Card>

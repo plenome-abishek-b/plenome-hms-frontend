@@ -9,18 +9,20 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import SetupPathologyUnitDialog from "../SetupDialog/SetupPathologyUnitDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const setupPathologyUnitType = props => {
 
   const initialPathologySetupUnitValue = {
     unit_name: "",
-    unit_type: "Patho",
-    created_at: "2023-02-02 11:11:11"
+    unit_type: "",
       }
 
   const [openpathUnitDialog, setOpenPathUnitDialog] = useState();
   const [tableData,setTableData] = useState()
   const [formData, setFormData] = useState(initialPathologySetupUnitValue)
+  const [selectedData,setSelectedData] = useState({})
 
 
   const onChange = e => {
@@ -33,9 +35,35 @@ const setupPathologyUnitType = props => {
   // const rowData = [
   //   {unit: 'Micrometer'}
   // ]
-
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenPathUnitDialog(true);
+  
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteetupPathologyUnit(data.id)
+         getSetupPathoUnit()
+   }else{
+    console.log("cancelled");
+   }
+  
+   }
   const columnDefs = [
-    { headerName: "Unit Name", field: "unit_name" }
+    { headerName: "Unit Name", field: "unit_name" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -49,6 +77,7 @@ const setupPathologyUnitType = props => {
 
 
   const handleOpenPathUnitType = () => {
+    setSelectedData({})
     setOpenPathUnitDialog(true);
   }
 
@@ -62,14 +91,16 @@ const setupPathologyUnitType = props => {
     getSetupPathoUnit()
   }, [])
 
-  const getSetupPathoUnit = () => {
+  const getSetupPathoUnit =async () => {
     
     // api.getPatient().then(res => setTableData(res.data))
-    api.getPathologySetupUnit().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+    // api.getPathologySetupUnit().then(res => {
+    //   console.log(res,'response');
+    //   setTableData(res.data)})
+    // api.http
+    const response = await api.getSetupPathologyUnit()
+    const {data} = response
+    setTableData(data)
   }
 
   function patientId(e){
@@ -110,6 +141,15 @@ const setupPathologyUnitType = props => {
   
     handleClose();
   }
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
 
   return (
@@ -133,8 +173,10 @@ const setupPathologyUnitType = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                    frameworkComponents={components}
+
                   />
-                  <SetupPathologyUnitDialog open={openpathUnitDialog} handleClose={handleClosePathUnitType} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+                  <SetupPathologyUnitDialog getSetupPathoUnit={getSetupPathoUnit} selectedData={selectedData} open={openpathUnitDialog} handleClose={handleClosePathUnitType} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
                 </div>
               </div>
             </CardBody>

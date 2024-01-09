@@ -2,9 +2,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 // const baseNestURL = "http://13.200.35.19:310";
+const baseNestURL = "http://localhost:4000";
+
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
-const baseNodeURL = "http://13.200.35.19:3101";
+// const baseNodeURL = "http://13.200.35.19:3101";
+const baseNodeURL = "http://localhost:5000";
+
 const baseNestSetupandMainURL = "http://13.200.35.19:3102";
+const baseNestSetupURL = "http://13.200.35.19:3102";
+
 
 // const http2 = axios.create({
 //   baseURL: baseNestURL,
@@ -17,6 +23,10 @@ const http = axios.create({
 const http3 = axios.create({
   baseURL: baseNestSetupandMainURL,
 });
+const http4 = axios.create({
+  baseURL: baseNestSetupURL,
+});
+
 
 // const http4 = axios.create({
 //   baseURL: baseNestMainURL,
@@ -336,7 +346,15 @@ const URL = {
   SETUP_APPT_SHIFT: "/setup-appointment-shift",
   SETUP_APPT_GLOBAL_SHIFT: "/setup-appointment-doctor-shift",
 
-  APPT_DOC_URL: "/internal-appointment-staff"
+  APPT_DOC_URL: "/internal-appointment-staff",
+  SETUP_RADIOLOGY_CATEGORY:"/setup-radiology-radiology-category",
+  SETUP_RADIOLOGY_UNIT:'/setup-radiology-unit',
+  SETUP_RADIOLOGY_PARAMETER:'/setup-radiology-radiology-parameter',
+  SETUP_PATHOLOGY_CATEGORY:'/setup-pathology-pathology-category',
+  SETUP_PATHOLOGY_UNIT:'/setup-pathology-unit',
+  SETUP_PATHOLOGY_PARMETER:'/setup-pathology-pathology-parameter',
+  SETUP_FINDINGS:'/setup-findings-finding',
+  SETUP_FINDING_CATEGORY:'/findings_category'
 };
 
 function getStaffcountData(roleId) {
@@ -2183,6 +2201,128 @@ function postAbhaMobileAuth(data) {
 function getLinkAddress(transactionId) {
   return http2.post(URL.ABHA_PHR_ADDRESS_SUGGESTION, { transactionId });
 }
+////////
+
+function postSetupRadiologyCategory(data){
+  return http4.post(URL.SETUP_RADIOLOGY_CATEGORY,data)
+}
+function patchSetupRadiologyCategory(data){
+console.log(data,"ccc")
+  const url = `${URL.SETUP_RADIOLOGY_CATEGORY}/${data.id}`
+  return http4.patch(url,data)
+}
+function getSetupRadiologyCategory(){
+  return http4.get(URL.SETUP_RADIOLOGY_CATEGORY)
+}
+function deleteSetupRadiologyCategory(data){
+  const url = `${URL.SETUP_RADIOLOGY_CATEGORY}/${data}`
+  return http4.delete(url);
+}
+function postSetupRadiologyUnit(data){
+  return http4.post(URL.SETUP_RADIOLOGY_UNIT,data)
+}
+function getSetupRadiologyUnit(){
+  return http4.get(URL.SETUP_RADIOLOGY_UNIT)
+}
+function deleteSetupRadiologyUnit(data){
+  const url = `${URL.SETUP_RADIOLOGY_UNIT}/${data}`
+  return http4.delete(url);
+}
+function patchSetupRadiologyUnit(data){
+  console.log(data,"ccc")
+    const url = `${URL.SETUP_RADIOLOGY_UNIT}/${data.id}`
+    return http4.patch(url,data)
+  }
+function postSetupRadiologyParameter(data){
+  return http4.post(URL.SETUP_RADIOLOGY_PARAMETER,data)
+}
+function getSetupRadiologyParameter(){
+  return http4.get(URL.SETUP_RADIOLOGY_PARAMETER)
+}
+function patchSetupRadiologyParameter(data){
+  console.log(data,"ccc")
+    const url = `${URL.SETUP_RADIOLOGY_PARAMETER}/${data.id}`
+    return http4.patch(url,data)
+  }
+  function deleteSetupRadiologyParameter(data){
+    const url = `${URL.SETUP_RADIOLOGY_PARAMETER}/${data}`
+    return http4.delete(url);
+  }
+  function postSetupPathologyCategory(data) {
+    return http4.post(URL.SETUP_PATHOLOGY_CATEGORY,data)
+  }
+  function getSetupPathologyCategory() {
+    return http4.get(URL.SETUP_PATHOLOGY_CATEGORY)
+  }
+  function patchSetupPathologyCategory(data) {
+    const url = `${URL.SETUP_PATHOLOGY_CATEGORY}/${data.id}`
+    return http4.patch(url,data)
+  }
+  function deleteSetupPathologyCategory(id) {
+    const url = `${URL.SETUP_PATHOLOGY_CATEGORY}/${id}`
+
+    return http4.delete(url)
+  }
+  function getSetupPathologyUnit(){
+    return http4.get(URL.SETUP_PATHOLOGY_UNIT)  
+  }
+  function postSetupPathologyUnit(data){
+    return http4.post(URL.SETUP_PATHOLOGY_UNIT,data)
+  }
+  function deleteetupPathologyUnit(id){
+    const url = `${URL.SETUP_PATHOLOGY_UNIT}/${id}`
+    return http4.delete(url)
+  }
+  function updateStupPathologyUnit(data){
+    const url = `${URL.SETUP_PATHOLOGY_UNIT}/${data?.id}`
+    return http4.patch(url,data)
+  }
+  function getSetupPathologyParameter(){
+    return http4.get(URL.SETUP_PATHOLOGY_PARMETER)
+  }
+  function postSetupPathologyParameter(data){
+    return http4.post(URL.SETUP_PATHOLOGY_PARMETER,data)
+  }
+  function deleteSetupPathologyParameter(id){
+    const url =`${URL.SETUP_PATHOLOGY_PARMETER}/${id}`
+    return http4.delete(url)
+  }
+  function updateSetupPathologyParameter(data){
+    const url =`${URL.SETUP_PATHOLOGY_PARMETER}/${data?.id}`
+    return http4.patch(url,data)
+  }
+  function getSetup_Findings(){
+    return http4.get(URL.SETUP_FINDINGS)
+  }
+  function postSetup_Findings(data){
+    return http4.post(URL.SETUP_FINDINGS,data)
+  }
+  function updateSetup_Findings(data){
+    console.log(data,"patching");
+    const url = `${URL.SETUP_FINDINGS}/${data?.id}`
+    http4.patch(url,data)
+  }
+  function deleteSetup_Findings(id){
+    const url = `${URL.SETUP_FINDINGS}/${id}`
+    http4.delete(url)
+  }
+  function getSetup_Finding_Category(){
+    return http4.get(URL.SETUP_FINDING_CATEGORY)
+  }
+  function postSetup_Finding_Category(data){
+    return http4.post(URL.SETUP_FINDING_CATEGORY,data)
+  }
+  function patchSetup_Finding_Category(data){
+    const url = `${URL.SETUP_FINDING_CATEGORY}/${data?.id}`
+    return http4.patch(url,data)
+  }
+  function deleteSetup_Finding_Category(id){
+    const url = `${URL.SETUP_FINDING_CATEGORY}/${id}`
+    return http4.delete(url)
+  }
+
+  
+////////
 
 function createPhrAddress(
   transactionId,
@@ -2611,7 +2751,39 @@ const api = {
   updateSetupApptGlobalShift,
   getApptDoctor,
   getApptShift, 
-  getApptSlot
+  getApptSlot,
+  postSetupRadiologyCategory,
+  getSetupRadiologyCategory,
+  patchSetupRadiologyCategory,
+  deleteSetupRadiologyCategory,
+  postSetupRadiologyUnit,
+  getSetupRadiologyUnit,
+  patchSetupRadiologyUnit,
+  deleteSetupRadiologyUnit,
+  postSetupRadiologyParameter,
+  getSetupRadiologyParameter,
+  patchSetupRadiologyParameter,
+  deleteSetupRadiologyParameter,
+  getSetupPathologyCategory,
+  postSetupPathologyCategory,
+  patchSetupPathologyCategory,
+  deleteSetupPathologyCategory,
+  getSetupPathologyUnit,
+  postSetupPathologyUnit,
+  updateStupPathologyUnit,
+  deleteetupPathologyUnit,
+  getSetupPathologyParameter,
+  postSetupPathologyParameter,
+  updateSetupPathologyParameter,
+  deleteSetupPathologyParameter,
+  getSetup_Finding_Category,
+  postSetup_Finding_Category,
+  patchSetup_Finding_Category,
+  deleteSetup_Finding_Category,
+  getSetup_Findings,
+  postSetup_Findings,
+  updateSetup_Findings,
+  deleteSetup_Findings
 };
 
 export default api;

@@ -9,21 +9,72 @@ import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import api from "services/Api"
 import { useState } from "react"
+import { useEffect } from "react"
 
 export default function SetupRadiologyUnitDialog({
   open,
   handleClose,
   data,
+  getRadiologyunit,
+  selectedData
 }) {
   const [openUnitTypeDialog, setOpenUnitTypeDialog] = React.useState(false)
   const [formData,setFormData] = useState({
    unit_name:'',
-   unit_type:'radio',
-   created_at:'2012-11-12 11:11:11'
+   unit_type:'radio'
   })
+  const [validate,setValidate] = useState(false)
   const handleFormSubmit =async () =>{
-  const response = await api.postRadiologyUnit(formData)
+    try {
+      if(formData?.unit_name === '' || formData?.unit_name === undefined){
+           setValidate(true)
+           setTimeout(() =>{
+            setValidate(false)
+           },3000)
+      }else{
+        const data = {
+          unit_name:formData.unit_name,
+          unit_type:'radio'
+        }
+        console.log(data,"formData");
+         
+        // window.location.reload()
+      const response = await api.postSetupRadiologyUnit(data)
+      console.log(response,"res");
+      // if(response.data){
+        setFormData({unit_name:''})
+        getRadiologyunit()
+        handleClose()
+
+      }
+    } catch (error) {
+      console.log(error);
+      getRadiologyunit()
+      handleClose()
+    }
+  // }
   }
+  const handleFormSubmitUpdate = async () =>{
+    const data = {
+      ...formData,id:selectedData?.id
+    }
+    const response = await api.patchSetupRadiologyUnit(data)
+    getRadiologyunit()
+  }
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormData({
+        unit_name: selectedData.unit_name || "",
+  
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormData({
+        unit_name:""
+      });
+    }
+  }, [selectedData]);
   const handleChange = (e) =>{
     const {name,value} = e.target
     setFormData({
@@ -70,18 +121,25 @@ export default function SetupRadiologyUnitDialog({
             <Row>
                 <label>Unit</label>
                 <br />
-                <input name="unit_name" onChange={handleChange} value={formData.unit_name} type="text" placeholder=""></input>
+                <input name="unit_name" placeholder={validate? "fill the unit name":""} onChange={handleChange} value={formData.unit_name} type="text" style={{borderColor:validate? 'red' :'inherit'}}></input>
             </Row>
           </Container>
         </DialogContent>
         <DialogActions>
-          <button
+          {selectedData?.unit_name ?<button
             className="btn-mod bg-soft btn-md"
-            onClick={()=>handleFormSubmit(handleClose())}
+            onClick={()=>handleFormSubmitUpdate(handleClose())}
             style={{ marginRight: "3%" }}
           >
-            Save
-          </button>
+            Saves
+          </button>:
+          <button
+          className="btn-mod bg-soft btn-md"
+          onClick={()=>handleFormSubmit()}
+          style={{ marginRight: "3%" }}
+        >
+          Save
+        </button>}
         </DialogActions>
       </Dialog>
     </div>
