@@ -10,7 +10,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import CallDialog from "./CallDialog";
@@ -120,7 +120,7 @@ const CallLog = props => {
                         breadcrumbItem={props.t("Calls")}
                     />
                     <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                        <button className="btn btn-primary" onClick={handleClickOpen}>+ Add Call log</button>
+                        <button className="btn-mod" onClick={handleClickOpen}>+ Add Call log</button>
                     </div>
                     <CallDialog 
                         open={open}
@@ -130,7 +130,7 @@ const CallLog = props => {
                         handleFormSubmit={handleFormSubmit}
                     />
                     <div
-                        className="ag-theme-balham"
+                        className="ag-theme-alpine"
                         style={{ height: 500, marginTop: "20px" }}
                     >
                         <AgGridReact

@@ -40,7 +40,7 @@ export default function GeneralDialog({ open, handleClose, data, onChange, handl
                 </Row>
                 </DialogContent>
                 <DialogActions>
-                    <button className='btn btn-primary' onClick={handleClose} autoFocus>
+                    <button className='btn-mod' onClick={handleClose} autoFocus>
                         Save
                     </button>
                 </DialogActions>

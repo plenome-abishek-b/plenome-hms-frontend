@@ -8,7 +8,6 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import AlertDialog from "./MedicineDialog";
-import 'ag-grid-enterprise';
 import {Row, Col} from "reactstrap";
 import api from "services/Api";
 import SupplierbillDialog from "./Dialog/SupplierBill";
@@ -45,7 +44,7 @@ const MedicinePurchase = props => {
 
 
  const columnDefs = [
-        { headerName: 'Pharmacy Purchase No', field: 'id',cellStyle: {color: '#377fc7', fontWeight: '500', backgroundColor: '#EEEEEE'},cellRenderer: (params) => {
+        { headerName: 'Pharmacy Purchase No', field: 'id',cellStyle: {color: '#6070FF', fontWeight: '500', backgroundColor: '#EEEEEE'},cellRenderer: (params) => {
     const id = params.data.id;
     return (
       <p>
@@ -122,7 +121,7 @@ const MedicinePurchase = props => {
                     {/* Render Breadcrumb */}
                     <h3>Medicine Purchase List</h3>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                    <button className="btn btn-primary bg-soft custom-btn" onClick={handleOpenSupplier}>+ Purchase Medicine</button>
+                    <button className="btn-mod bg-soft custom-btn" onClick={handleOpenSupplier}>+ Purchase Medicine</button>
                     <SupplierbillDialog open={openSupplier} handleClose={handleCloseSupplier} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
                     </div>
                 </Container>
@@ -133,6 +132,9 @@ const MedicinePurchase = props => {
                         columnDefs={columnDefs}
                         defaultColDef={defaultColDef}
                         onGridReady={onGridReady}   
+                        pagination={true}
+                        paginationPageSize={10}
+                        domLayout='autoHeight'
                         />
                     </div>
             </div>

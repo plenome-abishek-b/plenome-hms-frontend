@@ -115,7 +115,7 @@ const Abhamobileotp = props => {
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={AbhaAddressCreation}
                     >
                       submit

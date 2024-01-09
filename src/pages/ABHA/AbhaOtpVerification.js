@@ -139,7 +139,7 @@ useEffect(() => {
                   </div>
                   <div className="d-flex justify-content-center mt-3">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={handleFormSubmit}
                     >
                       submit

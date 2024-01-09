@@ -55,7 +55,7 @@ const [chargeData,setChargeData] = useState([])
         <Container fluid>
           <h4>Discharged Patient List</h4>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "100px" }}
           >
             <AgGridReact

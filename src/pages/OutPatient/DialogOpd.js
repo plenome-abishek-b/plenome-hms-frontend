@@ -74,7 +74,7 @@ export default function OpdDialog({
         maxWidth="lg"
       >
         <DialogTitle id="alert-dialog-title">
-          <Container className="p-3" fluid style={{backgroundColor: '#377fc7'}}>
+          <Container className="p-3" fluid style={{backgroundColor: '#6070FF'}}>
             {/* <input
               placeholder="Search"
               style={{ height: "35px", fontSize: "18px" }}
@@ -108,7 +108,7 @@ export default function OpdDialog({
             </select>
                 {console.log(listPatient,'list patient')}
             <button
-              className="btn btn-primary bg-soft ms-3 fw-bold"
+              className="btn-mod bg-soft ms-3 fw-bold"
               onClick={handleClickOpen}
               style={{border: '1px solid white'}}
             >
@@ -426,7 +426,7 @@ export default function OpdDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md fw-bold" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
+          <button className="btn-mod bg-soft btn-md fw-bold" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
             Save
           </button>
         </DialogActions>

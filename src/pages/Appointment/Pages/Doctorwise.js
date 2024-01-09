@@ -80,7 +80,7 @@ const DoctorWise = props => {
             </Row>
             <br />
             <div style={{display: 'flex', justifyContent: 'flex-end' ,alignItems: 'flex-end'}} className="mt-4">
-                <button className="btn btn-primary bg-soft" onClick={()=>doctorWiseAppointment()}>Search</button>
+                <button className="btn-mod bg-soft" onClick={()=>doctorWiseAppointment()}>Search</button>
             </div>
           </div>
           {doctorwiseData === null || doctorwiseData.length === 0 ?

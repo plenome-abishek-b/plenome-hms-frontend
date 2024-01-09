@@ -87,7 +87,7 @@ export default function PathologybillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-primary"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
         >
           <div>
             {" "}
@@ -112,7 +112,7 @@ export default function PathologybillDialog({
                 ))}
             </select>
             <button
-              className="btn btn-primary ms-2 fw-bold"
+              className="btn-mod ms-2 fw-bold"
               onClick={handleOpenDialog}
               style={{ marginRight: "48px", border: '1px solid white' }}
             >
@@ -422,7 +422,7 @@ export default function PathologybillDialog({
                       </Row>
 
                       <div className="mt-4">
-                        <button className="btn btn-primary bg-soft">
+                        <button className="btn-mod bg-soft">
                           Calculate
                         </button>
                       </div>
@@ -436,7 +436,7 @@ export default function PathologybillDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary fw-bold"
+            className="btn-mod fw-bold"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

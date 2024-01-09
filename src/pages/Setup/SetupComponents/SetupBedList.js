@@ -121,7 +121,7 @@ const SetupBedList = props => {
           <Card>
             <CardBody>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenBedDialog}><i className="fa fa-plus"></i>&nbsp; Add Bed</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenBedDialog}><i className="fa fa-plus"></i>&nbsp; Add Bed</button>
             </div>
               <div
                 className="ag-theme-alpine"

@@ -78,7 +78,7 @@ const handleConsultant = async () =>{
         maxWidth="lg"
       >
         <DialogTitle id="alert-dialog-title" >
-          <Container className="p-3" fluid style={{backgroundColor: '#377fc7'}}>
+          <Container className="p-3" fluid style={{backgroundColor: '#6070FF'}}>
           <select
               style={{ width: "20%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
               id="patient_id"
@@ -93,7 +93,7 @@ const handleConsultant = async () =>{
                 ))}
             </select>
             <button
-              className="ms-3 btn btn-primary fw-bold"
+              className="ms-3 btn-mod fw-bold"
               onClick={handleClickOpen}
               style={{border: '1px solid white'}}
             >
@@ -335,7 +335,7 @@ const handleConsultant = async () =>{
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md fw-bold" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md fw-bold" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

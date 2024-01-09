@@ -82,7 +82,7 @@ export default function RadioDialog({ open, handleClose }) {
       >
         <DialogTitle
           id="alert-dialog-title"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
           className="text-white fw-bold"
         >
           Add Radiology Details
@@ -371,7 +371,7 @@ export default function RadioDialog({ open, handleClose }) {
             Cancel
           </button>
           <button
-            className="btn btn-primary fw-bold"
+            className="btn-mod fw-bold"
             onClick={() => handleSubmit(handleClose())}
             autoFocus
           >

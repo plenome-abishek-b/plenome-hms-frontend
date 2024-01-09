@@ -112,7 +112,7 @@ const SetupSymptomsType = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenDialog}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenDialog}>
                     <i className="fa fa-plus"></i>&nbsp; Add Symptoms Type
                   </button>
                 </div>

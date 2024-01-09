@@ -76,7 +76,7 @@ const Pharmacybillreport = props => {
                   <Col lg="4" md="6" sm="12">
                     <label>Time Duration</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="timeDuration">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="timeDuration">
                         <option>select</option>
                         <option>Today</option>
                         <option>This Week</option>
@@ -94,7 +94,7 @@ const Pharmacybillreport = props => {
                   <Col lg="4" md="6" sm="12">
                     <label>Collected By</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="collectedBy">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="collectedBy">
                     {collectedBy &&
                       collectedBy.map(collect => (
                         <option key={collect.collectedBy} value={collect.id}>
@@ -106,7 +106,7 @@ const Pharmacybillreport = props => {
                   <Col lg="4" md="6" sm="12">
                   <label>From Age</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="fromAge">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="fromAge">
                         <option>select</option>
                         <option value="5">5</option>
                         <option>10</option>
@@ -136,7 +136,7 @@ const Pharmacybillreport = props => {
                 <Col lg='4' md='6' sm='12'>
                 <label>To Age</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="toAge">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="toAge">
                         <option>select</option>
                         <option>5</option>
                         <option>10</option>
@@ -162,7 +162,7 @@ const Pharmacybillreport = props => {
                   <Col lg='4' md='6' sm='12'>
                     <label>Gender</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="gender">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="gender">
                         <option>select</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -171,7 +171,7 @@ const Pharmacybillreport = props => {
                   <Col lg='4' md='6' sm='12'>
                     <label>Payment Mode</label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} id="paymentMode">
+                    <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="paymentMode">
                         <option>select</option>
                         <option value="Cash">Cash</option>
                         <option value="Cheque">Cheque</option>
@@ -180,7 +180,7 @@ const Pharmacybillreport = props => {
                   </Col>
                 </Row>
                 <div className="d-flex justify-content-end mt-3">
-                    <button className="btn btn-primary" onClick={getPharmacyBill}>Search</button>
+                    <button className="btn-mod" onClick={getPharmacyBill}>Search</button>
                   </div>
                 <br />
                 <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
@@ -188,6 +188,9 @@ const Pharmacybillreport = props => {
                 rowData={tableData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
               </div>

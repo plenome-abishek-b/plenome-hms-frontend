@@ -126,7 +126,7 @@ function Visits() {
   return (
     <div>
       <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-        <button className='btn btn-primary bg-soft custom-btn' onClick={handleOpenVisit}>
+        <button className='btn-mod bg-soft custom-btn' onClick={handleOpenVisit}>
        <i className="fas fa-exchange-alt"></i> 
           &nbsp;Visits
         </button>
@@ -138,6 +138,9 @@ function Visits() {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
     </div>

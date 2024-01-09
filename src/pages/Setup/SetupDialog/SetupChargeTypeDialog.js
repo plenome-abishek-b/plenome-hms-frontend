@@ -112,7 +112,7 @@ export default function SetupChargeTypeDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md"
             onClick={()=>handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

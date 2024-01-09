@@ -40,7 +40,7 @@ const StaffAttendance = props => {
               </Row>
               <br />
               <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button className="btn btn-primary"><i className="fas fa-search"></i>&nbsp;Search</button>
+                <button className="btn-mod"><i className="fas fa-search"></i>&nbsp;Search</button>
               </div>
             </CardBody>
           </Card>

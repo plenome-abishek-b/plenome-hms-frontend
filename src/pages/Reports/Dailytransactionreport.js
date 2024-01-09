@@ -53,15 +53,15 @@ const Dailytransactionreport = props => {
                   <Col lg="6" md="6" sm="12">
                     <label>Date From</label>
                     <br />
-                    <input type="date" style={{width: '80%' , height: '30px'}} id="fromDate"></input>
+                    <input type="date" style={{width: '80%' , height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="fromDate"></input>
                   </Col>
                   <Col lg="6" md="6" sm="12">
                     <label>Date To</label>
                     <br />
-                    <input type="date" style={{width: '80%' , height: '30px'}} id="toDate"></input>
+                    <input type="date" style={{width: '80%' , height: '30px', border: '1px solid grey', borderRadius: '5px'}} id="toDate"></input>
                   </Col>
                   <div className="d-flex justify-content-end mt-3">
-                    <button className="btn btn-primary" onClick={getDailyTransaction}>Search</button>
+                    <button className="btn-mod" onClick={getDailyTransaction}>Search</button>
                   </div>
                 </Row>
               </div>
@@ -71,6 +71,9 @@ const Dailytransactionreport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
           </CardBody>

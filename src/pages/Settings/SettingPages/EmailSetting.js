@@ -97,7 +97,7 @@ const onChange = (e) => {
               </div>
             )}
             <div className="d-flex justify-content-center mt-4">
-              <button className="btn btn-primary" onClick={handleFormSubmit}>Save</button>
+              <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
             </div>
           </CardBody>
         </Card>

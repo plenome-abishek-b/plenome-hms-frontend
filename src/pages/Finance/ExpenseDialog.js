@@ -56,7 +56,7 @@ const getExpenseHead =async () =>{
             >
                 <DialogTitle id="alert-dialog-title" 
                 className="text-white fw-bold" 
-                style={{backgroundColor: '#377fc7', height: '60px'}}>
+                style={{backgroundColor: '#6070FF', height: '60px'}}>
                     Add Expense Details
                 </DialogTitle>
                 <DialogContent style={{paddingTop: '10px'}}>
@@ -115,7 +115,7 @@ const getExpenseHead =async () =>{
                 </DialogContent>
                 <DialogActions>
                     <button onClick={handleClose} className='btn btn-danger fw-bold'>Cancel</button>
-                    <button onClick={()=>handleSubmit(handleClose())} autoFocus className='btn btn-primary fw-bold'>
+                    <button onClick={()=>handleSubmit(handleClose())} autoFocus className='btn-mod fw-bold'>
                         Submit
                     </button>
                 </DialogActions>

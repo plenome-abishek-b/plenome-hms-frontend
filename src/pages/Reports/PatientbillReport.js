@@ -53,7 +53,7 @@ const Patientbillreport = props => {
                                     <br />
                                     <div>
                                         <input id="case_ID"></input>
-                                        <button className="btn btn-primary btn-sm ms-2" onClick={getPatientBills}>Search</button>
+                                        <button className="btn-mod btn-sm ms-2" onClick={getPatientBills}>Search</button>
                                     </div>
                                 </Col>
                             </Row>
@@ -64,6 +64,9 @@ const Patientbillreport = props => {
                 rowData={tableData[0]}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
                 </Container>

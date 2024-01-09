@@ -133,11 +133,11 @@ const Patientvisitreport = props => {
                     <br />
                     <input
                       placeholder="Patient ID"
-                      style={{ width: "100%", height: "30px" }}
+                      style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                       id="patient_ID"
                     ></input>
                     <button
-                      className="btn btn-primary mt-2"
+                      className="btn-mod mt-2"
                       onClick={getPatientVisit}
                     >
                       Search
@@ -239,6 +239,9 @@ const Patientvisitreport = props => {
                   }
                   columnDefs={AmbulanceDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
             </CardBody>

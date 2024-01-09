@@ -10,7 +10,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 
@@ -65,12 +65,12 @@ const Ambulance = props => {
             breadcrumbItem={props.t("Ambulance")}
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleClickOpen}><i className="fas fa-ambulance"></i>
+            <button className="btn-mod" onClick={handleClickOpen}><i className="fas fa-ambulance"></i>
               &nbsp;Add Ambulance Call
             </button>
           </div>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact

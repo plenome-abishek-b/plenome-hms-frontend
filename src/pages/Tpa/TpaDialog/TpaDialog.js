@@ -45,7 +45,7 @@ export default function TpaDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold" 
-          style={{backgroundColor: '#377fc7'}}
+          style={{backgroundColor: '#6070FF'}}
         >
           Add TPA
         </DialogTitle>
@@ -88,7 +88,7 @@ export default function TpaDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md fw-bold"
+            className="btn-mod bg-soft btn-md fw-bold"
             onClick={() => handleFormSubmit()}
             style={{ marginRight: "3%" }}
           >

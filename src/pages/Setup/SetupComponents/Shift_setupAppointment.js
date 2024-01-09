@@ -18,10 +18,10 @@ const Shift_setupAppointment = props => {
   const [openBbDialog, setOpenBbDialog] = useState();
   const [appointmentSetupShift,setAppointmentSetupShift] = useState([])
   useEffect(()=>{
-  getAppointmentSetupShift()
+    getSetupAppointmentShift()
   },[])
-  const getAppointmentSetupShift =async () =>{
-   const response = await api.getAppointmentsetupShifts()
+  const getSetupAppointmentShift =async () =>{
+   const response = await api.getSetupApptShift()
    const {data} = response
    setAppointmentSetupShift(data)
    console.log(data,"resp")
@@ -30,7 +30,7 @@ const Shift_setupAppointment = props => {
   const columnDefs = [
     {headerName: 'Name', field: 'name'},
     {headerName: 'Time From', field: 'start_time'},
-    {headerName: 'Timt To', field: 'end_time'}
+    {headerName: 'Time To', field: 'end_time'}
   ]
 
   const defaultColDef = useMemo(
@@ -58,7 +58,7 @@ const Shift_setupAppointment = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenBb}>
+                <button className="btn-mod bg-soft" onClick={handleOpenBb}>
                   <i className="fa fa-plus"></i>&nbsp; Add Shift
                 </button>
               </div>

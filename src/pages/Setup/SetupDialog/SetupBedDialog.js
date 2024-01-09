@@ -115,7 +115,7 @@ export default function SetupBedListDialog({
         &nbsp; <label>Mark as unused</label>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={() => handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

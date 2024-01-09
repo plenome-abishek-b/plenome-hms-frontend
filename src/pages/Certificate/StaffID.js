@@ -59,20 +59,23 @@ const Staffcard = props => {
                 </select>
               </Col>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary">Search</button>
+                <button className="btn-mod">Search</button>
               </div>
             </Row>
           </div>
           </CardBody>
         </Card>
         <div className="d-flex justify-content-end">
-            <button className="btn btn-primary">Generate</button>
+            <button className="btn-mod">Generate</button>
         </div>
         <h4>Staff List</h4>
         <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
             <AgGridReact
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

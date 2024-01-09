@@ -282,7 +282,7 @@ export default function PrescriptionDialog({
                 <textarea name="instruction" onChange={handleChange} value={formData.instruction} style={{width: '100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
             <div className="mt-2">
-            {/* <button className="btn btn-primary">+ Add Medicine</button> */}
+            {/* <button className="btn-mod">+ Add Medicine</button> */}
 
             </div>
           </Row>
@@ -354,7 +354,7 @@ export default function PrescriptionDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button  className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button  className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

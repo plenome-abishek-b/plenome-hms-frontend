@@ -40,11 +40,18 @@ export default function SetupUnitTypeDialog({
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="lg"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "600px", // Set your width here
+            },
+          },
+        }}
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="bg-primary bg-soft text-primary"
+          className="bg-primary text-white"
         >
           Add Unit Type
         </DialogTitle>
@@ -53,13 +60,13 @@ export default function SetupUnitTypeDialog({
             <Row>
                 <label>Unit</label>
                 <br />
-                <input type="text" placeholder="" id="unit" value={data.unit} onChange={e=>onChange(e)}></input>
+                <input type="text" placeholder="" id="unit" value={data.unit} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
             </Row>
           </Container>
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md"
             onClick={()=>handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

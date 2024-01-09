@@ -165,7 +165,7 @@ const SmsSetting = () => {
                           </Row>
                           <br />
                           <div className="d-flex justify-content-center">
-                            <button className="btn btn-primary">Save</button>
+                            <button className="btn-mod">Save</button>
                           </div>
                         </Container>
                       </div>
@@ -211,7 +211,7 @@ const SmsSetting = () => {
                           </Row>
                           <br />
                           <div className="d-flex justify-content-center">
-                            <button className="btn btn-primary">Save</button>
+                            <button className="btn-mod">Save</button>
                           </div>
                         </Container>
                       </div>
@@ -257,7 +257,7 @@ const SmsSetting = () => {
                           </Row>
                           <br />
                           <div className="d-flex justify-content-center">
-                            <button className="btn btn-primary">Save</button>
+                            <button className="btn-mod">Save</button>
                           </div>
                         </Container>
                       </div>
@@ -303,7 +303,7 @@ const SmsSetting = () => {
                           </Row>
                           <br />
                           <div className="d-flex justify-content-center">
-                            <button className="btn btn-primary">Save</button>
+                            <button className="btn-mod">Save</button>
                           </div>
                         </Container>
                       </div>

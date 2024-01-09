@@ -270,7 +270,7 @@ export default function VisitorDialog({
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit()}
             autoFocus
           >

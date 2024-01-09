@@ -20,7 +20,7 @@ export default function BirthDialog({ open, handleClose, data, onChange, handleF
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}}>
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}}>
                     Add Birth Details
                 </DialogTitle>
                 <DialogContent style={{paddingTop: '20px'}}>
@@ -120,7 +120,7 @@ export default function BirthDialog({ open, handleClose, data, onChange, handleF
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger fw-bold' onClick={handleClose} style={{backgroundColor: '#B2533E'}}>Cancel</button>
-                    <button className='btn btn-primary fw-bold' onClick={()=>handleFormSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod fw-bold' onClick={()=>handleFormSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

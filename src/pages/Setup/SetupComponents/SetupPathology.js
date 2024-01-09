@@ -10,17 +10,19 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 //redux
 import SetupPathologyDialog from "../SetupDialog/SetupPathologyDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 function SetupPathology(){
 
   const initialPathologySetupCategoryValue = {
     category_name: "",
-    created_at: "2023-02-02 11:11:11"
       }
 
 const [openPathDiaolog, setOpenPathDialog] = useState(false);
 const [tableData,setTableData] = useState()
 const [formData, setFormData] = useState(initialPathologySetupCategoryValue)
+const [selectedData,setSelectedData] = useState({})
 
 
 const onChange = e => {
@@ -34,9 +36,35 @@ const onChange = e => {
 // const rowData = [
 //     {category: 'New Category'}
 // ]
+const handleEditClick = (data) =>{
+  // console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenPathDialog(true);
 
+ }
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+         console.log(userConfirmed,"delete");
+ if(userConfirmed){
+       const deleteResponse = await api.deleteSetupPathologyCategory(data.id)
+       getSetupPathoCategory()
+ }else{
+  console.log("cancelled");
+ }
+
+ }
   const columnDefs = [
-    {headerName: 'Category Name', field: 'category_name'}
+    {headerName: 'Category Name', field: 'category_name'},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -48,7 +76,8 @@ const onChange = e => {
     []
   )
 
-  const handleOpenPathDialog = () => {
+  const handleOpenPathDialog = () =>{
+    setSelectedData({})
     setOpenPathDialog(true);
   }
 
@@ -62,14 +91,16 @@ const onChange = e => {
     getSetupPathoCategory()
   }, [])
 
-  const getSetupPathoCategory = () => {
+  const getSetupPathoCategory =async () => {
     
     // api.getPatient().then(res => setTableData(res.data))
-    api.getPathologySetupCategory().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+    // api.getPathologySetupCategory().then(res => {
+    //   console.log(res,'response');
+    //   setTableData(res.data)})
+    const response = await api.getSetupPathologyCategory();
+    console.log(response.data,"pathology");
+    setTableData(response.data);
+    // api.http
   }
 
   function patientId(e){
@@ -99,17 +130,27 @@ const onChange = e => {
     //   console.log(resp.data, 'patient');
     // });
   
-    api
-      .getPathologySetupCategory({ headers: { "content-type": "application/json" } })
-      .then(resp => {
-        getSetupPathoCategory();
-        setFormData(initialPathologySetupCategoryValue);
-        console.log()
-        event.preventDefault();
-      });
+    // api
+    //   .getPathologySetupCategory({ headers: { "content-type": "application/json" } })
+    //   .then(resp => {
+    //     getSetupPathoCategory();
+    //     setFormData(initialPathologySetupCategoryValue);
+    //     console.log()
+    //     event.preventDefault();
+    //   });
   
     handleClose();
   }
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
+  
 
   return (
     <React.Fragment>
@@ -119,7 +160,7 @@ const onChange = e => {
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenPathDialog}><i className="fa fa-plus"></i>&nbsp; Add Pathology Category</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenPathDialog}><i className="fa fa-plus"></i>&nbsp; Add Pathology Category</button>
             </div>
               <div
                 className="ag-theme-alpine"
@@ -129,8 +170,9 @@ const onChange = e => {
                   rowData={tableData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupPathologyDialog open={openPathDiaolog} handleClose={handleClosePathDialog}
+                <SetupPathologyDialog selectedData={selectedData} getSetupPathoCategory={getSetupPathoCategory} open={openPathDiaolog} handleClose={handleClosePathDialog}
                 data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
                 </div>
             </CardBody>

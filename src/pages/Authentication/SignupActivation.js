@@ -62,7 +62,7 @@ function SignupActivation() {
                       <Col lg="5">
                         {" "}
                         <div className="mt-2 mb-5">
-                          <button className="btn btn-primary">
+                          <button className="btn-mod">
                             Resend OTP
                           </button>
                           <button

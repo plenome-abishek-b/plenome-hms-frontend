@@ -126,7 +126,7 @@ function OpdCharges() {
 
     <div >
     <div className='d-flex justify-content-end'>
-    <button className="btn btn-primary custom-btn" onClick={handleOpenCharge}>+ Add Charges</button>
+    <button className="btn-mod custom-btn" onClick={handleOpenCharge}>+ Add Charges</button>
     </div>
      
       <OpdChargeDialog open={openDialog} handleClose={handleCloseCharge} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
@@ -136,6 +136,9 @@ function OpdCharges() {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
           </div>

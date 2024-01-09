@@ -28,6 +28,8 @@ const initialValue = {
   status: ""
 }
 
+
+
 const Appointment = props => {
   const gridRef = useRef()
 
@@ -37,7 +39,7 @@ const Appointment = props => {
 
   const [open, setOpen] = React.useState(false)
 
-  const [datas,setDatas] = useState(null)
+  const [datas, setDatas] = useState(null)
 
   const handleClickOpen = () => {
     //dialog open
@@ -61,7 +63,7 @@ const Appointment = props => {
       headerName: "Appointment No",
       field: "id",
       cellStyle: {
-        color: "#377fc7",
+        color: "#6070FF",
         fontWeight: "500",
         backgroundColor: "rgba(0,0,0,0.1)",
       },
@@ -69,7 +71,7 @@ const Appointment = props => {
     { headerName: "Appointment Date", field: "date" },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
-    { headerName: "Priority", field: "priority" },
+    { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
     { headerName: "Status", field: "appointment_status" },
@@ -89,14 +91,14 @@ const Appointment = props => {
     },
   ]
 
-  const defaultColDef = useMemo(
-    () => ({
-      sortable: true,
-      filter: true,
-      flex: 1,
-    }),
-    []
-  )
+  // const defaultColDef = useMemo(
+  //   () => ({
+  //     sortable: true,
+  //     filter: true,
+  //     flex: 1,
+  //   }),
+  //   []
+  // )
 
   // useEffect(() => {
   //   // getUsers from json
@@ -136,15 +138,26 @@ const Appointment = props => {
   const onBtnExport = useCallback(() => {
     gridRef.current.api.exportDataAsExcel()
   }, [])
-useEffect(()=>{
-  getAppointment()
-},[])
-  const getAppointment = async () =>{
+  useEffect(() => {
+    getAppointment()
+  }, [])
+  const getAppointment = async () => {
     const response = await api.getAppointment()
-    const {data} = response
+    const { data } = response
     console.log(data, 'dddddd')
     setDatas(data)
   }
+
+  const defaultColDef = {
+    sortable: true,
+    filter: true,
+    flex: 1,
+  };
+
+  const defaultSort = [
+    // Define default sorting based on "Appointment No" column
+    { colId: 'id', sort: 'asc' },
+  ];
 
   console.log(datas, 'dataaaaaaa')
   return (
@@ -163,32 +176,32 @@ useEffect(()=>{
             }}
           >
             <button
-              className="btn btn-primary bg-soft custom-btn"
+              className="btn-mod bg-soft custom-btn"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
               + Add Appointment
             </button>
             <Link to='/doctorwise'>
-            <button
-              className="btn btn-primary bg-soft custom-btn"
-              style={{ marginRight: "15px" }}
-            >
-            <i className="fas fa-align-justify"></i>
-              &nbsp;&nbsp;Doctor Wise
-            </button>
+              <button
+                className="btn-mod bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-justify"></i>
+                &nbsp;&nbsp;Doctor Wise
+              </button>
             </Link>
-           <Link to='/patientqueue'>
-           <button
-              className="btn btn-primary bg-soft custom-btn"
-              style={{ marginRight: "15px" }}
-            >
-              <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
-            </button>
-           </Link>
-           
+            <Link to='/patientqueue'>
+              <button
+                className="btn-mod bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
+              </button>
+            </Link>
+
             <button
-              className="btn btn-primary bg-soft custom-btn"
+              className="btn-mod bg-soft custom-btn"
               onClick={() => onBtnExport()}
             >
               <i
@@ -202,19 +215,23 @@ useEffect(()=>{
 
         <div
           className="ag-theme-alpine"
-          style={{ height: 500, marginTop: "20px" }}
+          style={{ height: 1000, marginTop: "20px" }}
         >
           <AgGridReact
             ref={gridRef}
             rowData={datas}
             columnDefs={columnDefs}
+            pagination={true}
+            paginationPageSize={15}
+            domLayout='autoHeight'
             defaultColDef={defaultColDef}
-            // onGridReady={onGridReady}
+            defaultSort={defaultSort}
           />
+
           <AlertDialog
             open={open}
             handleClose={handleClose}
-            data={formData} 
+            data={formData}
           />
         </div>
       </div>

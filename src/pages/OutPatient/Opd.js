@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api";
@@ -91,7 +91,7 @@ console.log(tableData,"jjijijij")
     { headerName: "Gender", field: "gender" },
     { headerName: "Contact", field: "mobileno" },
     { headerName: "Consultant", field: "name" },
-    { headerName: "Last visit", field: "appointment_date" },
+    // { headerName: "Last visit", field: "appointment_date" },
     { headerName: "Age", field: "age" }
     //{ headerName: "Total Recheckup", field: "totalrecheckup" },
   ];
@@ -176,7 +176,7 @@ console.log(tableData,"jjijijij")
               alignItems: "flex-end",
             }}
           >
-            <button className="btn btn-primary bg-soft custom-btn" onClick={handleClickOpen}>
+            <button className="btn-mod bg-soft custom-btn" onClick={handleClickOpen}>
               Add Outpatient
             </button>
           </div>
@@ -189,6 +189,9 @@ console.log(tableData,"jjijijij")
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>

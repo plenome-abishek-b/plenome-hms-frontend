@@ -127,7 +127,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Time Duration</label>
                   <br />
-                  <select name="timeDuration" onChange={handleChange} value={formData.timeDuration} style={{ width: "100%", height: "30px" }}>
+                  <select name="timeDuration" onChange={handleChange} value={formData.timeDuration} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                      <option>select</option>
                     <option value='today'>Today</option>
                     <option value='ThisWeek'>This week</option>
@@ -146,7 +146,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Doctor</label>
                   <br />
-                  <select name="doctor" value={formData.doctor} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select name="doctor" value={formData.doctor} onChange={handleChange} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {doctors.map((val=>(
                 <option key={val.staff_id} value={val.staff_id}>{val.name}</option>
@@ -156,7 +156,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Shift</label>
                   <br />
-                  <select name="shift" value={formData.shift} onChange={handleChange} onClick={()=>handleShifts()} style={{ width: "100%", height: "30px" }}>
+                  <select name="shift" value={formData.shift} onChange={handleChange} onClick={()=>handleShifts()} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {shift.map((val=>(
                 <option key={val.id} value={val.id}>{val.name}</option>
@@ -166,7 +166,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Appointment Priority</label>
                   <br />
-                  <select name="priority" value={formData.priority} onChange={handleChange} onClick={()=>AppointmentPriority()}  style={{ width: "100%", height: "30px" }}>
+                  <select name="priority" value={formData.priority} onChange={handleChange} onClick={()=>AppointmentPriority()}  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {appointment_priority.map((val=>(
                 <option key={val.id} value={val.appoint_priority}>{val.appoint_priority}</option>
@@ -180,7 +180,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Source</label>
                   <br />
-                  <select name="source" value={formData.source} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select name="source" value={formData.source} onChange={handleChange} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     <option key="Online" value="Online">Online</option>
                     <option key="Offline" value="Offline">Offline</option>
@@ -196,7 +196,7 @@ return (
         name="fromDate"
         value={formData.fromDate}
         onChange={handleChange}
-        style={{ width: "100%", height: "30px" }}
+        style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
       />
     </Col>
     <Col lg="3" sm="12">
@@ -207,7 +207,7 @@ return (
         name="toDate"
         value={formData.toDate}
         onChange={handleChange}
-        style={{ width: "100%", height: "30px" }}
+        style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
       />
     </Col>
   </>
@@ -215,17 +215,20 @@ return (
               </Row>
               <br />
               <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <button onClick={handleSearch} className="btn btn-primary"><i className="fas fa-search"></i>&nbsp;Search</button>
+              <button onClick={handleSearch} className="btn-mod"><i className="fas fa-search"></i>&nbsp;Search</button>
               </div>
               
 
               <br />
 
-              <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
+              <div className="ag-theme-alpine mt-2" style={{ height: 700 }}>
                 <AgGridReact
                   rowData={data}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
             </CardBody>

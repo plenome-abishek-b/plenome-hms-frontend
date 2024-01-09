@@ -121,7 +121,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Time Duration</label>
                   <br />
-                  <select name="timeDuration" onChange={handleChange} value={formData.timeDuration} style={{ width: "100%", height: "30px" }}>
+                  <select name="timeDuration" onChange={handleChange} value={formData.timeDuration} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                      <option>select</option>
                     <option value='today'>Today</option>
                     <option value='ThisWeek'>This week</option>
@@ -140,7 +140,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Doctor</label>
                   <br />
-                  <select name="doctor" value={formData.doctor} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select name="doctor" value={formData.doctor} onChange={handleChange} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {doctors.map((val=>(
                 <option key={val.staff_id} value={val.staff_id}>{val.name}</option>
@@ -152,7 +152,7 @@ return (
                   <br />
                   <select
                   name="fromAge"
-        style={{ width: '100%', height: '30px' }}
+        style={{ width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px' }}
         value={formData.fromAge}
         onChange={handleFromAgeChange}
       >
@@ -184,7 +184,7 @@ return (
                   <br />
                   <select
                   name="toAge"
-        style={{ width: '100%', height: '30px' }}
+        style={{ width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px' }}
         value={toAge}
         onChange={handleToAgeChange}
       >
@@ -201,7 +201,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Gender</label>
                   <br />
-                  <select name="gender" value={formData.gender} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select name="gender" value={formData.gender} onChange={handleChange} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     <option key="male" value="Male">Male</option>
                     <option key="female" value="Femail">Female</option>
@@ -211,7 +211,7 @@ return (
                   <label>Symptoms</label>
                   <br />
                   {console.log(symptoms,"dd")}
-                  <select name="symptoms" value={formData.symptoms} onChange={handleChange} onClick={()=>getSymptoms()} style={{ width: "100%", height: "30px" }}>
+                  <select name="symptoms" value={formData.symptoms} onChange={handleChange} onClick={()=>getSymptoms()} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {symptoms && symptoms.map((val=>(
                        <option key={val.symptoms_title} value={val.symptoms_title}>{val.symptoms_title}</option>
@@ -221,7 +221,7 @@ return (
                 <Col lg="3" sm="12">
                   <label>Findings</label>
                   <br />
-                  <select name="findings"  value={formData.findings} onChange={handleChange} onClick={()=>getFindings()} style={{ width: "100%", height: "30px" }}>
+                  <select name="findings"  value={formData.findings} onChange={handleChange} onClick={()=>getFindings()} style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}>
                     <option>select</option>
                     {finding && finding.map((val=>(
                  <option key={val.id} value={val.id}>{val.name}</option>
@@ -231,7 +231,7 @@ return (
               </Row>
               <br />
               <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <button onClick={handleSearch} className="btn btn-primary"><i className="fas fa-search"></i>&nbsp;Search</button>
+              <button onClick={handleSearch} className="btn-mod"><i className="fas fa-search"></i>&nbsp;Search</button>
               </div>
               
 
@@ -242,6 +242,9 @@ return (
                   rowData={data}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout='autoHeight'
                 />
               </div>
             </CardBody>

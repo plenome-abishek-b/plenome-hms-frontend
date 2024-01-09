@@ -20,7 +20,7 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}}>
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}}>
                     Add Medicine details
                 </DialogTitle>
                 <DialogContent className='mt-2'>
@@ -107,7 +107,7 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                     <br />
                 </DialogContent>
                 <DialogActions>
-                    <button className='btn btn-primary fw-bold' onClick={handleFormSubmit} autoFocus>
+                    <button className='btn-mod fw-bold' onClick={handleFormSubmit} autoFocus>
                         Save
                     </button>
                 </DialogActions>

@@ -335,7 +335,7 @@ const PrefixSetting = () => {
           </Row>
           <br />
           <div className="d-flex justify-content-center">
-            <button className="btn btn-primary" onClick={handleFormSubmit}>Save</button>
+            <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
           </div>
         </Container>
       </div>

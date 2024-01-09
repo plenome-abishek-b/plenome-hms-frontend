@@ -13,6 +13,7 @@ import {
 } from "../../../helpers/fakebackend_helper";
 import storage from "services/Storage";
 import accessToken from "helpers/jwt-token-access/accessToken";
+import { toast } from "react-hot-toast";
 
 const fireBaseBackend = getFirebaseBackend();
 
@@ -49,7 +50,6 @@ const fireBaseBackend = getFirebaseBackend();
 function* loginUser({ payload: { user, history } }) {
   try {
     let response;
-    
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       response = yield call(
@@ -71,7 +71,18 @@ function* loginUser({ payload: { user, history } }) {
 
     localStorage.setItem("authUser", JSON.stringify(response));
     yield put(loginSuccess(response));
-    history.push("/dashboard");
+
+    // Check the condition before navigating to the dashboard
+    if (response.status === 200) {
+      history.push("/dashboard");
+    } else if (response.status === 401) {
+      prompt("Invalid email or password");
+      // Handle the case where login is not successful due to invalid email or password
+      // You can add additional actions or error messages if needed
+    } else {
+      console.error("Unexpected error occurred");
+      // Handle other error cases here if needed
+    }
   } catch (error) {
     yield put(apiError(error));
   }

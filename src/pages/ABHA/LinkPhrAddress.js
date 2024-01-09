@@ -73,13 +73,13 @@ const Linkaddress = props => {
 
                   <div className="mt-4 d-flex justify-content-center">
                     <button
-                      className="btn btn-primary"
+                      className="btn-mod"
                       onClick={handleFormSubmit}
                     >
                       Check here
                     </button>
                     <Link to='/account/abhaphrpage'>
-                      <button className="btn btn-primary ms-3">Create</button>
+                      <button className="btn-mod ms-3">Create</button>
                     </Link>
                   </div>
                 </CardBody>

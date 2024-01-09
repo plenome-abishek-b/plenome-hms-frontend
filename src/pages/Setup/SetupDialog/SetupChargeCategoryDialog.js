@@ -67,11 +67,18 @@ console.log(data, 'dataaaaaaa')
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="lg"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "600px", // Set your width here
+            },
+          },
+        }}
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="bg-primary bg-soft text-primary"
+          className="bg-primary text-white"
         >
           Add Charges
         </DialogTitle>
@@ -80,12 +87,12 @@ console.log(data, 'dataaaaaaa')
             <Row>
               <label>Charge Type</label>
               <br />
-              <select style={{ height: '35px' }} id="charge_type_id" value={data.charge_type_id} onChange={e => onChange(e)}>
+              <select style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }} id="charge_type_id" value={data.charge_type_id} onChange={e => onChange(e)}>
                 <option>select</option>
                 {chargetypes &&
                   chargetypes.map(charge_type => (
                     <option key={charge_type.id} value={charge_type.id}>
-                      {charge_type.charge_type}
+                      {charge_type.module_shortcode}
                     </option>
                   ))}
               </select>
@@ -94,19 +101,19 @@ console.log(data, 'dataaaaaaa')
             <Row>
               <label>Name</label>
               <br />
-              <input id='name' value={data.name} onChange={e=>onChange(e)}></input>
+              <input id='name' value={data.name} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
             </Row>
             <br />
             <Row>
               <label>Description</label>
               <br />
-              <textarea style={{ height: '50px' }} id="description" value={data.description} onChange={e => onChange(e)}></textarea>
+              <textarea style={{ height: '50px', border: '1px solid grey', borderRadius: '5px' }} id="description" value={data.description} onChange={e => onChange(e)} ></textarea>
             </Row>
           </Container>
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md"
             onClick={() => handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

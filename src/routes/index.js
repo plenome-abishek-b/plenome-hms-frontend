@@ -170,6 +170,21 @@ import Userrecord from "pages/ABHA/Userrecord";
 import Checkmobileotp from "pages/ABHA/Checkmobileotp";
 import Verifymobileotp from "pages/ABHA/Verifymobileotp";
 import Profile from "pages/ABHA/Profile";
+import DownloadAbha from "pages/ABHA/DownloadAbha";
+import AbhaAddress from "pages/ABHA/AbhaAddress";
+import AbhaAddressMobileOtp from "pages/ABHA/AbhaAddressMobileOtp";
+import AbhaMobileAuth from "pages/ABHA/AbhaMobileAuth";
+import LinkPhrAddress from "pages/ABHA/LinkPhrAddress";
+import LinkPhrPage from "pages/ABHA/LinkPhrPage";
+import AbhaOtpVerification from "pages/ABHA/AbhaOtpVerification";
+import Verifyabhaotp from "pages/ABHA/VerifyAbhaotp";
+import AbhaGenerateOtp from "pages/ABHA/AbhaGenerateOtp";
+import Generateqr from "pages/ABHA/GenerateQr";
+import Linkcarecontext from "pages/Carecontext/Linkcarecontext";
+import Discovercontext from "pages/Carecontext/Discovercontext";
+import Consentrequest from "pages/Carecontext/Consentrequest";
+import SetupSlotAppt from "pages/Setup/SetupComponents/SetupSlotTimeAppt";
+import SetupDoctorShift from "pages/Setup/SetupComponents/SetupDoctorShift";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -278,7 +293,7 @@ const authProtectedRoutes = [
 
   //setup appointment
   {path:"/onlineappointment/globalshift",component:Shift_setupAppointment},
-  {path:"/onlineappointment/doctorglobalshift",component:DoctorShift_setupAppointment},
+  {path:"/setupdoctorglobalshift",component:DoctorShift_setupAppointment},
   {path:"/admin/onlineappointment",component:Slots_setupAppointment},
   {path: "/alltransactionreport", component: AlltransactionReport},
   {path: "/pharmacybillreport", component: PharmacybillReport},
@@ -303,6 +318,7 @@ const authProtectedRoutes = [
   {path: "/referralreport", component: ReferralReport},
   {path: "/patientvisitreport", component: PatientVisitReport},
   {path: "/patientlogincreds", component: PatientLoginCreds},
+  {path: "/setupslotappointment", component: SetupSlotAppt},
   //Setup HR
   {path:'/human-resource-setup/leave-type',component:SetupLeavetype},
    {path:'/human-resource-setup/department',component:SetupDepartment},
@@ -323,7 +339,9 @@ const authProtectedRoutes = [
   {path: "/notifications", component: Notifications},
   {path: "/carecontext", component: Carecontext},
   {path: "/userrecord", component: Userrecord},
-  
+  {path: "/linkcarecontext", component: Linkcarecontext},
+  {path: "/discovercarecontext", component: Discovercontext},
+  {path: "/consentrequest", component: Consentrequest},
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
@@ -339,7 +357,17 @@ const publicRoutes = [
   {path: "/account/verifyotp/:txnId", component: Verifyotp},
   {path: "/account/abha/checkmobile/:txnId", component: Checkmobileotp},
   {path: "/account/abha/verifymobileotp/:txnId", component: Verifymobileotp},
-  {path: "/account/abha/profile/:responseData", component: Profile}
+  {path: "/account/abha/profile/:responseData", component: Profile},
+  {path: "/account/downloadabha/:responseData", component: DownloadAbha},
+  {path: "/account/abhaaddress", component: AbhaAddress},
+  {path: "/account/abhamobileotp", component: AbhaAddressMobileOtp},
+  {path: "/account/abhamobileauth", component: AbhaMobileAuth},
+  {path: "/account/abhaphrsuggestion", component: LinkPhrAddress},
+  {path: "/account/abhaphrpage", component: LinkPhrPage},
+  {path: "/account/abhaverifyotp", component: AbhaOtpVerification},
+  {path: "/account/abham1verifyotp", component: Verifyabhaotp},
+  {path: "/account/abhagenerateotp", component: AbhaGenerateOtp},
+  {path: "/account/generateqr", component: Generateqr}
 ];
 
 export { authProtectedRoutes, publicRoutes };

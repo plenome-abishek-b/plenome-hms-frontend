@@ -8,7 +8,7 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 
-import SetupPurposeDialog from "../SetupDialog/SetupFrontOfficeDialog"
+import SetupPurposeDialog from "../SetupDialog/SetupFrontOfficeDialog"      
 import api from "services/Api"
 
 const setupFrontofficePurpose = props => {
@@ -128,7 +128,7 @@ const setupFrontofficePurpose = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenPurpose}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenPurpose}>
                     <i className="fa fa-plus"></i>&nbsp; Add Purpose
                   </button>
                 </div>

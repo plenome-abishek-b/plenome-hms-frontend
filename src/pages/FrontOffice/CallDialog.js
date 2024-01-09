@@ -264,7 +264,7 @@ export default function CallDialog({
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit()}
             autoFocus
           >

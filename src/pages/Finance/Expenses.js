@@ -9,7 +9,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import ExpenseDialog from "./ExpenseDialog";
@@ -52,7 +52,7 @@ const getExpenses =async () =>{
 
   const columnDefs = [
     
-    { headerName: 'Invoice no.', field: 'invoice_no', cellStyle: {color: '#377fc7', backgroundColor: '#EEEEEE', fontWeight: 'bold'} },
+    { headerName: 'Invoice no.', field: 'invoice_no', cellStyle: {color: '#6070FF', backgroundColor: '#EEEEEE', fontWeight: 'bold'} },
     { headerName: 'Name', field: 'name' },
     { headerName: 'Date', field: 'date' },
     { headerName: 'Description', field: 'note' },
@@ -79,7 +79,7 @@ const getExpenses =async () =>{
             breadcrumbItem={props.t("Expenses")}
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleClickOpen}>Add Expense</button>
+            <button className="btn-mod" onClick={handleClickOpen}>Add Expense</button>
           </div>
             <ExpenseDialog 
               open={open}

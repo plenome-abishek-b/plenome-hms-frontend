@@ -103,7 +103,7 @@ export default function IpdPatientDialog({
         >
           <DialogTitle
             id="alert-dialog-title"
-            className="text-white fw-bold" style={{backgroundColor: '#377fc7', height: '60px'}}
+            className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}}
           >
             Add Patient
             <div
@@ -417,7 +417,7 @@ export default function IpdPatientDialog({
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft fw-bold"
+              className="btn-mod bg-soft fw-bold"
               type="submit"
             >
               Save

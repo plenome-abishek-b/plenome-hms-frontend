@@ -129,7 +129,7 @@ const Downloads = props => {
                         breadcrumbItem={props.t("Downloads")}
                     />
                     <div style={{display:'flex',justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                        <button className="btn btn-primary" onClick={handleClickOpen}>Add File</button>
+                        <button className="btn-mod" onClick={handleClickOpen}>Add File</button>
                     </div>
                     <div
                         className="ag-theme-alpine"

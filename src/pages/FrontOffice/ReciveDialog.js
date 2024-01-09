@@ -187,7 +187,7 @@ export default function ReceiveDialog({ open, handleClose, data }) {
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

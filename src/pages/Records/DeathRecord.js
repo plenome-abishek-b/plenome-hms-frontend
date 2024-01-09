@@ -10,7 +10,7 @@ import { withTranslation } from "react-i18next";
 
 //ag-grid modules
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useState , useEffect } from "react";
 import DeathDialog from "./DeathRecordDialog";
@@ -126,7 +126,7 @@ const Deathrecord = props => {
             breadcrumbItem={props.t("Death Records")}
           />
           <div style={{display: 'flex',justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn fw-bold text-white" style={{backgroundColor: '#377fc7'}} onClick={handleClickOpen}>
+            <button className="btn fw-bold text-white" style={{backgroundColor: '#6070FF'}} onClick={handleClickOpen}>
               Add Death Record
             </button>
           </div>
@@ -138,6 +138,9 @@ const Deathrecord = props => {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
           <DeathDialog 

@@ -223,7 +223,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#377fc7" }}
+          style={{ backgroundColor: "#6070FF" }}
         >
          
           <div className="mt-2">
@@ -265,7 +265,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
             ></input>
             <button
               onClick={searchByprescipationNo}
-              className="btn btn-primary btn-sm"
+              className="btn-mod btn-sm"
               style={{marginLeft: '10px', border: '1px solid white'}}
             >
               go
@@ -276,7 +276,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
         </DialogTitle>
         <DialogContent className="mt-2">
           <div className="mt-4 d-flex justify-content-end">
-            <button className="btn btn-primary" style={{border: '1px solid #377fc7'}} onClick={handleOpenDialog}>
+            <button className="btn-mod" style={{border: '1px solid #6070FF'}} onClick={handleOpenDialog}>
               <i className="fa fa-plus"></i>&nbsp;Add Patient
             </button>
             <PatientDialog open={openDialog} handleClose={handleCloseDialog} />
@@ -588,7 +588,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
                       </Col>
                     </Row>
                     <div className="mt-4">
-                      <button className="btn btn-primary bg-soft fw-bold">
+                      <button className="btn-mod bg-soft fw-bold">
                         Calculate
                       </button>
                     </div>
@@ -601,7 +601,7 @@ export default function RadiologyBillDialog({ open, handleClose }) {
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary fw-bold" 
+            className="btn-mod fw-bold" 
             onClick={() => handleSubmit(handleClose())}
             autoFocus
           >
