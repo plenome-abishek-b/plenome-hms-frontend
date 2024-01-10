@@ -9,9 +9,11 @@ const DoctorShift_setupAppointment = (props) => {
   const [rowData, setRowData] = useState([]);
   const [morningValues, setMorningValues] = useState({});
   const [nightValues, setNightValues] = useState({});
+  const [shifts, setShifts] = useState();
 
   useEffect(() => {
     getSetupDoctorGlobalShift();
+    getSetupShift();
   }, []);
 
   const mapApiDataToRowData = (apiData) => {
@@ -39,6 +41,13 @@ const DoctorShift_setupAppointment = (props) => {
     return rowData;
   };
 
+  const getSetupShift = async () => {
+    const response =await api.getSetupApptShift();
+    const { data } = response
+    console.log(data, "shift data");
+    setShifts(data);
+  };
+
   const getSetupDoctorGlobalShift = async () => {
     try {
       const response = await api.getSetupApptGlobalShift();
@@ -60,33 +69,35 @@ const DoctorShift_setupAppointment = (props) => {
     console.log("Dropdown change:", doctorName, selectedValue, shiftType);
     setRowData((prevData) =>
       prevData.map((row, index) => {
-        if (row.name === doctorName) {
+        if (row.name === doctorName) { 
           const updatedRow = {
             ...row,
             [shiftType]: selectedValue === "Yes",
           };
-  
+
           const updatedGlobalShiftId = shiftType === "morning" ? 1 : 2;
-  
+
           // Generate a unique id for the row (starting from 1)
           const updatedId = index + 1;
-  
+
           // Update the global_shift_id in the API
           api.updateSetupApptGlobalShift(updatedId, {
             global_shift_id: updatedGlobalShiftId,
           });
-  
+
           // Update the local state directly
-          return { ...updatedRow, id: updatedId, global_shift_id: updatedGlobalShiftId };
+          return {
+            ...updatedRow,
+            id: updatedId,
+            global_shift_id: updatedGlobalShiftId,
+          };
         }
         return row;
       })
     );
   };
-  
-  
-  
-   return (
+
+  return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
@@ -100,60 +111,42 @@ const DoctorShift_setupAppointment = (props) => {
                 <thead>
                   <tr>
                     <th>Doctor Name</th>
-                    <th>Morning</th>
-                    <th>Night</th>
+                    {shifts &&
+                      shifts.map((shift) => (
+                        <th key={shift.id}>{shift.name}</th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
                   {rowData.map((item) => (
                     <tr key={item.doctor_name}>
                       <td>{item.doctor_name}</td>
-                      <td>
-                        <input
-                          value={item.global_shift_id === 1 ? "Yes" : "No"}
-                          onChange={(e) =>
-                            handleDropdownChange(
-                              item.doctor_name,
-                              e.target.value,
-                              "morning"
-                            )
-                          }
-                          style={{
-                            backgroundColor:
-                              item.global_shift_id === 1
-                                ? "#00cc00"
-                                : "#ff6666",
-                            border: "1px solid #7070FF",
-                            borderRadius: "5px",
-                            color: "white",
-                          }}
-                          type="checkbox"
-                        >
-                        </input>
-                      </td>
-                      <td>
-                        <input
-                          value={item.global_shift_id === 2 ? "Yes" : "No"}
-                          onChange={(e) =>
-                            handleDropdownChange(
-                              item.doctor_name,
-                              e.target.value,
-                              "night"
-                            )
-                          }
-                          style={{
-                            backgroundColor:
-                              item.global_shift_id === 2
-                                ? "#00cc00"
-                                : "#ff6666",
-                            border: "1px solid #7070FF",
-                            borderRadius: "5px",
-                            color: "white",
-                          }}
-                          type="checkbox"
-                        >
-                        </input>
-                      </td>
+                      {shifts.map((shift) => (
+                        <td key={shift.id}>
+                          <input
+                            value={
+                              item.global_shift_id === shift.id ? "Yes" : "No"
+                            }
+                            onChange={(e) =>
+                              handleDropdownChange(
+                                item.doctor_name,
+                                e.target.value,
+                                shift.name.toLowerCase() // use shift name as a parameter
+                              )
+                            }
+                            style={{
+                              backgroundColor:
+                                item.global_shift_id === shift.id
+                                  ? "#00cc00"
+                                  : "#ff6666",
+                              border: "1px solid #7070FF",
+                              borderRadius: "5px",
+                              color: "white",
+                            }}
+                            type="checkbox"
+                          />
+                        </td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>

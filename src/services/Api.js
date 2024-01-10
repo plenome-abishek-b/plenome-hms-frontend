@@ -6,9 +6,9 @@ const baseNestURL = "http://localhost:4000";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 // const baseNodeURL = "http://13.200.35.19:3101";
-const baseNodeURL = "http://localhost:5000";
+const baseNodeURL = "http://localhost:4000";
 
-const baseNestSetupandMainURL = "http://13.200.35.19:3102";
+const baseNestSetupandMainURL = "http://localhost:5000";
 const baseNestSetupURL = "http://13.200.35.19:3102";
 
 
