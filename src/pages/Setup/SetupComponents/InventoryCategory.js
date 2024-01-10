@@ -60,6 +60,7 @@ const SetupInventoryCategory = props => {
         [name]:value
     })
   }
+
   const handleSubmit = async() =>{
     const response = await api.postInvestmentCategory_setup(formValue)
     const {data} = response
