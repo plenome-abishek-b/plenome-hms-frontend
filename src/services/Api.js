@@ -354,7 +354,9 @@ const URL = {
   SETUP_PATHOLOGY_UNIT:'/setup-pathology-unit',
   SETUP_PATHOLOGY_PARMETER:'/setup-pathology-pathology-parameter',
   SETUP_FINDINGS:'/setup-findings-finding',
-  SETUP_FINDING_CATEGORY:'/findings_category'
+  SETUP_FINDING_CATEGORY:'/findings_category',
+  SETUP_CHARGE_TYPE_MASTER:'/setup-hospital-charges-charge-type-master',
+  SETUP_CHARGE_TYPE_MODULE:'/setup-hospital-charges-charge-type-module'
 };
 
 function getStaffcountData(roleId) {
@@ -2323,6 +2325,24 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.SETUP_FINDING_CATEGORY}/${id}`
     return http4.delete(url)
   }
+  function getSetup_chargeType_setup(){
+    return http4.get(URL.SETUP_CHARGE_TYPE_MASTER)
+  }
+  function postSetup_chargeType_setup(data){
+    return http4.post(URL.SETUP_CHARGE_TYPE_MASTER,data)
+  }
+  function patchSetup_chargeType_setup(data){
+    const url = `${URL.SETUP_CHARGE_TYPE_MASTER}/${data.id}`
+    return http4.patch(URL.SETUP_CHARGE_TYPE_MASTER,data)
+  }
+  function deleteSetup_chargeType_setup(id){
+    const url = `${URL.SETUP_CHARGE_TYPE_MASTER}/${id}`
+    return http4.delete(url)
+  }
+
+  function getSetup_ChargeType_module(){
+    return http4.get(URL.SETUP_CHARGE_TYPE_MODULE)
+  }
 
   
 ////////
@@ -2786,7 +2806,12 @@ const api = {
   getSetup_Findings,
   postSetup_Findings,
   updateSetup_Findings,
-  deleteSetup_Findings
+  deleteSetup_Findings,
+  postSetup_chargeType_setup,
+  getSetup_chargeType_setup,
+  patchSetup_chargeType_setup,
+  deleteSetup_chargeType_setup,
+  getSetup_ChargeType_module
 };
 
 export default api;

@@ -15,6 +15,7 @@ export default function SetupChargeTypeDialog({
   data,
   onChange,
   handleFormSubmit,
+  getChargeType
 })
 
 

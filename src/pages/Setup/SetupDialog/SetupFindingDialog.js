@@ -22,6 +22,11 @@ export default function SetupFindingDialog({
 }) {
   const [openFindingDialog, setOpenFindingDialog] = React.useState(false)
   const [setupCategory,setSetupCategory] = useState([])
+  const [validate,setValidate] = useState({
+    description:false,
+    finding_category_id:false,
+    name:false
+  })
   const [formData,setFormData] = useState({
     description:'',
     finding_category_id:'',
@@ -32,20 +37,41 @@ export default function SetupFindingDialog({
     //dialog open
     setOpenFindingDialog(true)
   }
-  const handleFormSubmit = async () =>{ 
+  const handleFormSubmit = async () =>{
     try{
-    const datas ={
-      ...formData,Hospital_id:1,
-      created_at: "2023-05-22 10:11:13"
-    }
-      console.log(formData,"login formdata");
-     const response = await api.postSetup_Findings(datas)
-     const {data} = response
-     console.log(data,"posted");
-     getFindings()
+      if(formData?.name === '' || formData?.name === undefined){
+       setValidate({...validate,name:true})
+       setTimeout(()=>{
+        setValidate({...validate,name:false})
+       },3000)
+      }
+      else if(formData?.description === '' || formData?.description === undefined){
+       setValidate({...validate,description:true})
+       setTimeout(()=>{
+        setValidate({...validate,description:false})
+       },3000)
+      }
+      else if(formData?.finding_category_id === "" || formData?.finding_category_id === undefined){
+        setValidate({...validate,finding_category_id:true})
+        setTimeout(()=>{
+          setValidate({...validate,finding_category_id:false})
+         },3000)
+      }
+      else{
+        const datas ={
+          ...formData,Hospital_id:1,
+          created_at: "2023-05-22 10:11:13"
+        }
+          console.log(formData,"login formdata");
+         const response = await api.postSetup_Findings(datas)
+         const {data} = response
+         console.log(data,"posted");
+         getFindings()
+         handleClose()
+      }
     }catch(error){
       getFindings()
-
+      handleClose()
     }
   }
 
@@ -127,13 +153,13 @@ export default function SetupFindingDialog({
             <Row>
                 <label>Finding<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input onChange={handleChange} name="name" value={formData?.name} type="text" style={{height: '30px'}}></input>
+                <input onChange={handleChange} name="name" placeholder={validate?.name ? "Enter finding name":""} value={formData?.name} type="text" style={{height: '30px',borderColor:validate?.name ? 'red':'inherit'}}></input>
             </Row>
             <br />
             <Row>
   <label>Category</label>
-  <br />
-  <select style={{ height: '30px' }} onClick={getSetupFindingCategory} name="finding_category_id" value={formData?.finding_category_id} onChange={handleChange} >
+  <br />.
+  <select onClick={getSetupFindingCategory} name="finding_category_id" value={formData?.finding_category_id} onChange={handleChange} style={{height: '30px',borderColor:validate?.finding_category_id ? 'red':'inherit'}}>
     <option>select</option>
     {setupCategory &&
       setupCategory.map((val) => {
@@ -149,9 +175,10 @@ export default function SetupFindingDialog({
             <Row>
                 <label>Description</label>
                 <br />
-                <textarea name="description" value={formData?.description} onChange={handleChange} style={{height: '50px'}}></textarea>
+                <textarea name="description" placeholder={validate?.description ? "Enter description":""} value={formData?.description} onChange={handleChange} style={{height: '50px',borderColor:validate?.description ? 'red':'inherit'}}></textarea>
             </Row>
           </Container>
+          
         </DialogContent>
         <DialogActions>
          { selectedData?.name ?<button
@@ -163,7 +190,7 @@ export default function SetupFindingDialog({
           </button>:
           <button
           className="btn-mod bg-soft btn-md"
-          onClick={()=>handleFormSubmit(handleClose())}
+          onClick={()=>handleFormSubmit()}
           style={{ marginRight: "3%" }}
         >
           Save
