@@ -293,7 +293,7 @@ const authProtectedRoutes = [
 
   //setup appointment
   {path:"/onlineappointment/globalshift",component:Shift_setupAppointment},
-  {path:"/setupdoctorglobalshift",component:SetupDoctorShift},
+  {path:"/setupdoctorglobalshift",component:DoctorShift_setupAppointment},
   {path:"/admin/onlineappointment",component:Slots_setupAppointment},
   {path: "/alltransactionreport", component: AlltransactionReport},
   {path: "/pharmacybillreport", component: PharmacybillReport},

@@ -32,7 +32,6 @@ const Setupdoctorshift = (props) => {
 
   const handleCheckboxChange = async (staffId, shiftId) => {
     try {
-      // Find the doctor in the rowData array
       const updatedRowData = rowData.map((item) =>
         item.staff_id === staffId
           ? { ...item, global_shift_id: shiftId }
@@ -41,7 +40,6 @@ const Setupdoctorshift = (props) => {
 
       setRowData(updatedRowData);
 
-      // Call the API to update the global_shift_id for the specific staff
       await api.updateSetupApptGlobalShift(staffId, shiftId);
     } catch (error) {
       console.error("Error updating global shifts:", error);
