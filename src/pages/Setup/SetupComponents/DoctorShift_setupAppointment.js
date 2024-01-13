@@ -70,7 +70,12 @@ const DoctorShift_setupAppointment = (props) => {
     } catch (error) {
       console.error("Error fetching global shifts:", error);
     }
+
   };
+
+  const globalShiftIds = rowData.map(item => item.global_shift_id);
+
+console.log(globalShiftIds,'global ids');        
 
   const handleDropdownChange = (doctorName, selectedValue, shiftType) => {
     console.log("Dropdown change:", doctorName, selectedValue, shiftType);

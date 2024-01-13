@@ -67,7 +67,7 @@ const URL = {
 
   CHARGES_URL: "/setup-hospital-charge-charges",
   CHARGES_CATEGORY_URL: "/setup-hospital-charges-charge-category",
-  CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-module",
+  CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-master",
   SETUP_CHARGE_CATEGORY_URL: "/setup-hospital-charges-charge-category/bytype/",
   SETUP_CHARGE_NAME: "/setup-hospital-charge-charges",
   SETUP_TAX_URL: "/setup-hospital-charges-tax-category",
