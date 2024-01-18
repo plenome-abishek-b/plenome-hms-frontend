@@ -8,7 +8,7 @@ const baseNestURL = "http://localhost:4000";
 // const baseNodeURL = "http://13.200.35.19:3101";
 const baseNodeURL = "http://localhost:4000";
 
-const baseNestSetupandMainURL = "http://localhost:5000";
+const baseNestSetupandMainURL = "http://13.200.35.19:3102";
 const baseNestSetupURL = "http://13.200.35.19:3102";
 
 
@@ -355,9 +355,12 @@ const URL = {
   SETUP_PATHOLOGY_PARMETER:'/setup-pathology-pathology-parameter',
   SETUP_FINDINGS:'/setup-findings-finding',
   SETUP_FINDING_CATEGORY:'/findings_category',
+  SETUP_CHARGE_TYPE_MASTER_MODULE:'/setup-hospital-charges-charge-type-module/module',
+  SETUP_CHARGE_TYPE_MODULE:'/setup-hospital-charges-charge-type-module',
   SETUP_CHARGE_TYPE_MASTER:'/setup-hospital-charges-charge-type-master',
-  SETUP_CHARGE_TYPE_MODULE:'/setup-hospital-charges-charge-type-module'
-};
+  SETUP_INVENTORY_CATEGORY:'/setup-inventory-item-category',
+  SETUP_INVENTORY_STOER:'/setup-inventory-item-store'
+};  
 
 function getStaffcountData(roleId) {
   console.log("roleId:", roleId);
@@ -2326,10 +2329,11 @@ function patchSetupRadiologyParameter(data){
     return http4.delete(url)
   }
   function getSetup_chargeType_setup(){
-    return http4.get(URL.SETUP_CHARGE_TYPE_MASTER)
+    console.log("callings");
+    return http.get(URL.SETUP_CHARGE_TYPE_MASTER_MODULE)
   }
   function postSetup_chargeType_setup(data){
-    return http4.post(URL.SETUP_CHARGE_TYPE_MASTER,data)
+    return http.post(URL.SETUP_CHARGE_TYPE_MASTER,data)
   }
   function patchSetup_chargeType_setup(data){
     const url = `${URL.SETUP_CHARGE_TYPE_MASTER}/${data.id}`
@@ -2343,7 +2347,24 @@ function patchSetupRadiologyParameter(data){
   function getSetup_ChargeType_module(){
     return http4.get(URL.SETUP_CHARGE_TYPE_MODULE)
   }
-
+  function postSetup_ChargeType_module(data){
+    return http.post(URL.SETUP_CHARGE_TYPE_MODULE,data)
+  }
+  function getSetup_Inventory_Category(){
+    return http.get(URL.SETUP_INVENTORY_CATEGORY)
+  }
+  function postSetup_Inventory_Category(data){
+    return http.post(URL.SETUP_INVENTORY_CATEGORY,data)
+  }
+  function patchSetup_Inventory_Category(data){
+    const url = `${URL.SETUP_INVENTORY_CATEGORY}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetup_Inventory_Category(id){
+    const url = `${URL.SETUP_INVENTORY_CATEGORY}/${id}`
+    return http.delete(url)
+  }
+  
   
 ////////
 
@@ -2811,7 +2832,12 @@ const api = {
   getSetup_chargeType_setup,
   patchSetup_chargeType_setup,
   deleteSetup_chargeType_setup,
-  getSetup_ChargeType_module
+  getSetup_ChargeType_module,
+  postSetup_ChargeType_module,
+  getSetup_Inventory_Category,
+  postSetup_Inventory_Category,
+  patchSetup_Inventory_Category,
+  deleteSetup_Inventory_Category
 };
 
 export default api;

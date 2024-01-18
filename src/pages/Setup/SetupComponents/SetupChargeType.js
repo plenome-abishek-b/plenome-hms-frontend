@@ -22,9 +22,12 @@ const SetupChargeType = (props) => {
   const [open, setOpen] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [formData, setFormData] = useState(initialValue);
-  const [checkboxState, setCheckboxState] = useState({});
+  const [checkboxState, setCheckboxState] = useState({ appointment: true,
+    opd: false,
+    ipd: false});
   const [chargeData,setChargeData] = useState([]);
   const [data,setData] = useState([])
+  const [appointment,setAppointment] = useState(false)
   const handleEditClick = (data) =>{
     console.log(data,"edit");
     setSelectedData(data)
@@ -44,15 +47,15 @@ const SetupChargeType = (props) => {
    }
    
   const columnDefs = [
-    { headerName: "Charge Type", field: "charge_type" },
+    { headerName: "Charge Type", field: "charge_type"},
     { headerName: "Appointment",  field: "appointment",
-    cellRenderer: 'checkboxRenderer', },
-    { headerName: "OPD", field: "opd" ,cellRenderer: 'checkboxRenderer'},
-    { headerName: "IPD", field: "ipd",cellRenderer: 'checkboxRenderer' },
-    { headerName: "Pathology", field: "pathology",cellRenderer: 'checkboxRenderer' },
-    { headerName: "Radiology", field: "radiology" ,cellRenderer: 'checkboxRenderer'},
-    { headerName: "Blood Bank", field: "bloodbank",cellRenderer: 'checkboxRenderer'},
-    { headerName: "Ambulance", field: "ambulance",cellRenderer: 'checkboxRenderer'},
+    cellRenderer: 'checkboxRendererAppointment'},
+    // { headerName: "OPD", field: "opd" ,cellRenderer: 'checkboxRendererOpd'},
+    // { headerName: "IPD", field: "ipd",cellRenderer: 'checkboxRendererIpd' },
+    // { headerName: "Pathology", field: "pathology",cellRenderer: 'checkboxRendererPatho' },
+    // { headerName: "Radiology", field: "radiology" ,cellRenderer: 'checkboxRendererRadio'},
+    // { headerName: "Blood Bank", field: "bloodbank",cellRenderer: 'checkboxRendererBG'},
+    // { headerName: "Ambulance", field: "ambulance",cellRenderer: 'checkboxRendererAmbu'},
     {
       headerName: 'Actions',
       field: 'actions',
@@ -105,14 +108,23 @@ const SetupChargeType = (props) => {
     });
   };
 
-  const handleCheckboxChange = (rowIndex, field) => {
+  const change = () =>{
+    console.log("callitttttttng");
+  }
+  const handleCheckboxChange = async (rowIndex, field) => {
+    console.log("just for fun");
     console.log(rowIndex,field,"changing");
- 
-    setCheckboxState((prevCheckboxState) => {
-      const key = `${rowIndex}_${field}`;
-      const newState = { ...prevCheckboxState, [key]: !prevCheckboxState[key] };
-      return newState;
-    });
+    // setCheckboxState((prevCheckboxState) => {
+    //   const key = `${rowIndex}_${field}`;
+    //   const newState = { ...prevCheckboxState, [key]: !prevCheckboxState[key] };
+    //   return newState;
+    // });
+    // const data ={
+    //   // id:
+    //   charge_type_master_id:rowIndex,
+    //   module_shortcode:field
+    // }
+  //  const response = await 
   };
   const targetRowIndex = 0; 
   useEffect(() => {
@@ -122,44 +134,28 @@ const SetupChargeType = (props) => {
     // ];
     // setTableData(initialData);
     getChargeType()
-    getChargemodule()
+    // getChargemodule()
   }, []);
 
   const getChargeType = async () =>{
    const response = await api.getSetup_chargeType_setup()
-   console.log(response.data,"loging charge type");
-   setTableData(response.data)
-  }
-  const getChargemodule = async () =>{
-    const response = await api.getSetup_ChargeType_module()
-    console.log(response.data,"ee");
-    setChargeData(response.data)
-    const groupedArray = response.data.reduce((accumulator, currentObject) => {
-      const existingGroup = accumulator.find(
-        group => group.charge_type_master_id === currentObject.charge_type_master_id
-      );
-    
-      if (existingGroup) {
-        existingGroup.module_shortcode.push(currentObject.module_shortcode);
-      } else {
-        accumulator.push({
-          charge_type_master_id: currentObject.charge_type_master_id,
-          module_shortcode: [currentObject.module_shortcode]
-        });
-      }
-    
-      return accumulator;
-    }, []);
-    console.log(groupedArray,"fillterarrayz");
-    setData(groupedArray)
-    console.log(modules,"fillterarray");
-}
+   console.log(response,"loging charge type");
+  //  setTableData(response.data)
+  setTableData(response.data)
+  // const initialCheckboxState = {};
 
-  // const isModuleShortcodePresent = (field) => {
-  //   return chargeData && chargeData.some(data => data.module_shortcode === field);
-  // };
-// let datas;
-const components = {  
+  //   console.log(row,"rowss");
+  //   initialCheckboxState[row?.charge_type] = {
+  //     appointment: row.modules?.appointment === true,
+  //       opd: row.modules?.opd === true,
+  //       ipd: row.modules?.ipd === true,
+  //     // ... other modules
+  //   };
+  // });
+  // setCheckboxState(initialCheckboxState)
+  }
+
+const components = {
   actionsRenderer: (props) => (
     <div>
       <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
@@ -167,13 +163,72 @@ const components = {
       <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
     </div>
   ),
-  checkboxRenderer: (props) => (
+  checkboxRendererAppointment: (props) => (
+    console.log(props?.data,"weee"),
+    // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
     <input
       type="checkbox"
-      checked={props.value === 'yes'} // Assuming 'yes' means checked, adjust as needed
-      onChange={() => handleCheckboxChange(props.rowIndex, props.colDef.field)}
+      // checked={props?.data?.modules?.appointment}
+      onChange={() => handleCheckboxChange(props.data.charge_type, 'appointment')}
     />
   ),
+//   checkboxRendererOpd: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       name="opdcheckbox"
+//       checked={props?.data?.modules?.opd}
+//       // value={props?.data?.modules?.opd}
+//     />
+//   ),
+//   checkboxRendererIpd: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       checked={props?.data?.modules?.ipd}
+
+//     />
+//   ),
+//   checkboxRendererPatho: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       checked={props?.data?.modules?.pathology}
+//  // Assuming 'yes' means checked, adjust as needed
+//       // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
+//       // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
+//     />
+//   ),
+//   checkboxRendererRadio: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       checked={props?.data?.modules?.radiology}
+//  // Assuming 'yes' means checked, adjust as needed
+//       // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
+//       // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
+//     />
+//   ),
+//   checkboxRendererBG: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       checked={props?.data?.modules?.bloodbank}
+//  // Assuming 'yes' means checked, adjust as needed
+//       // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
+//       // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
+//     />
+//   ),
+//   checkboxRendererAmbu: (props) => (
+//     // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
+//     <input
+//       type="checkbox"
+//       checked={props?.data?.modules?.ambulance}
+//  // Assuming 'yes' means checked, adjust as needed
+//       // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
+//       // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
+//     />
+//   ),
 };
   return (
     <React.Fragment>
