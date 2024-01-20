@@ -74,6 +74,7 @@ const SetupInventoryCategory = props => {
   )
 
   const handleOpenOperation = () => {
+    setSelectedData({})
     setOpenSetupOperationDialog(true);
   }
 

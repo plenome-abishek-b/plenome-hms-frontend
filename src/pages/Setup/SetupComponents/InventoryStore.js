@@ -11,21 +11,42 @@ import SetupOperationsDialog from "../SetupDialog/SetupOperationDialog"
 import SetupInventoryStoreDialog from "../SetupDialog/SetupInventoryStoreDialog"
 import { useEffect } from "react"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupInventoryStore = props => {
 
     const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
      const [storeData,setStoreData] = useState([])
      const [inputValue, setInputValue] = useState('');
+  const [selectedData,setSelectedData] = useState({})
+
 useEffect(()=>{
   getInventoryStore()
 },[])
 const getInventoryStore = async () =>{
-    const response = await api.getInvestmentStore_setup()
+    const response = await api.getSetup_Inventory_store()
     const {data} = response
     setStoreData(data)
     console.log(data)
 }
+const handleEditClick = (data) =>{
+  console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenSetupOperationsDialog(true)
+ }
+
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+         console.log(userConfirmed,"delete");
+ if(userConfirmed){
+       const deleteResponse = await api.deleteSetup_Inventory_store(data.id)
+       getInventoryStore()
+ }else{
+  console.log("cancelled");
+ }
+ }
 const SearchValue  = async ()=>{
     const response = await api.getInvestmentStore_setup (inputValue)
     const {data}= response 
@@ -37,7 +58,15 @@ const SearchValue  = async ()=>{
   const columnDefs = [
     {headerName: 'Item Store Name', field: 'item_store'},
     {headerName: 'Item Store Code', field: 'code'},
-    {headerName: 'Action', field: 'action'}
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
   ]
 
   const defaultColDef = useMemo(
@@ -50,6 +79,7 @@ const SearchValue  = async ()=>{
   )
 
   const handleOpenSetupOperations = () => {
+    setSelectedData({})
     setOpenSetupOperationsDialog(true);
   }
 
@@ -57,7 +87,15 @@ const SearchValue  = async ()=>{
     setOpenSetupOperationsDialog(false);
   }
 
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)}/>
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -81,8 +119,9 @@ const SearchValue  = async ()=>{
                   rowData={storeData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupInventoryStoreDialog open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
+                <SetupInventoryStoreDialog selectedData={selectedData} getInventoryStore={getInventoryStore} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
                 </div>
             </CardBody>
           </Card>

@@ -21,6 +21,12 @@ export default function SetupInventoryCategoryDialog({
 }) {
   const [openSetupOperationDialog, setOpenSetupOperationDialog] = React.useState(false)
   const [formData,setFormData] = useState({})
+  const [validate,setValidate] = useState({
+  item_category: false,
+  is_active:"yes",
+  description: false,
+  Hospital_id:1
+  })
     
   const handleClickOpen = () => {
     //dialog open
@@ -41,22 +47,37 @@ export default function SetupInventoryCategoryDialog({
       setFormData({
         item_category: selectedData?.item_category || "",
         is_active: "yes",
-        description: selectedData?.description || ""
+        description: selectedData?.description || "",
+        Hospital_id:1
       });
     } else {
       // Reset form data when selectedData is not available (for addition)
       setFormData({
         item_category: "",
         is_active:"yes",
-        description: ""
+        description: "",
+        Hospital_id:1
       });
     }
   }, [selectedData]);
   
   const handleSubmit = async () =>{
-  const response = await api?.postSetup_Inventory_Category(formData)
-  handleClose()
-  getInventoryCategory()
+    if(formData?.item_category === ''){
+     setValidate({...validate,item_category:true})
+     setTimeout(() => {
+      setValidate({...validate,item_category:false});
+    }, 10000);
+    }
+    else if(formData?.description === ''){
+     setValidate({...validate,description:true})
+     setTimeout(() => {
+      setValidate({...validate,description:false})
+     }, 10000);
+    }else{
+      const response = await api?.postSetup_Inventory_Category(formData)
+      handleClose()
+      getInventoryCategory()
+    }
   }
   const handleUpdate = async () =>{
     const newData = {
@@ -90,12 +111,12 @@ export default function SetupInventoryCategoryDialog({
             <Row className="p-2">
                 <label>Item Category<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="item_category" value={formData?.item_category} onChange={handleChange} style={{height: '30px',width:'100%'}}></input>
+                <input name="item_category" placeholder={validate?.item_category ? "enter item category":""} value={formData?.item_category} onChange={handleChange}  style={{height: '30px',width:'100%',borderColor :validate?.item_category ? 'red':'inherit'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Description<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="description" value={formData?.description} onChange={handleChange} style={{height: '70px'}}></input>
+                <input name="description" placeholder={validate?.description ? "enter description":""} value={formData?.description} onChange={handleChange} style={{height: '70px',borderColor :validate?.description ? 'red':'inherit'}}></input>
             </Row>
         </DialogContent>
         <DialogActions>

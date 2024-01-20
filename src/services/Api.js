@@ -359,7 +359,12 @@ const URL = {
   SETUP_CHARGE_TYPE_MODULE:'/setup-hospital-charges-charge-type-module',
   SETUP_CHARGE_TYPE_MASTER:'/setup-hospital-charges-charge-type-master',
   SETUP_INVENTORY_CATEGORY:'/setup-inventory-item-category',
-  SETUP_INVENTORY_STOER:'/setup-inventory-item-store'
+  SETUP_INVENTORY_STOER:'/setup-inventory-item-store',
+  SETUP_INVENTORY_SUPPLIER:'/setup-inventory-item-supplier',
+  SETUP_HR_LEAVETYPE:'/setup-human-resource-leave-types',
+  SETUP_HR_DEPARTMENT:'/setup-human-resource-department',
+  SETUP_HR_DESIGNATION:'/setup-human-resource-designation',
+  SETUP_HR_SPECIALIST:'/setup-human-resource-specialist'
 };  
 
 function getStaffcountData(roleId) {
@@ -1396,6 +1401,7 @@ function getHrsetup_Leavetype() {
   return http.get(URL.HR_SETUP_LEAVE_TYPE);
 }
 function postHrsetup_LeaveType(data) {
+  console.log(data,"consoling");
   return http.post(URL.HR_SETUP_LEAVE_TYPE, data);
 }
 function getHrsetup_Department() {
@@ -2364,8 +2370,91 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.SETUP_INVENTORY_CATEGORY}/${id}`
     return http.delete(url)
   }
-  
-  
+  function getSetup_Inventory_store(){
+    return http.get(URL.SETUP_INVENTORY_STOER)
+  }
+  function postSetup_Inventory_store(data){
+    return http.post(URL.SETUP_INVENTORY_STOER,data)
+  }
+  function updateSetup_Inventory_store(data){
+    const url = `${URL.SETUP_INVENTORY_STOER}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetup_Inventory_store(id){
+    const url = `${URL.SETUP_INVENTORY_STOER}/${id}`
+    return http.delete(url)
+  }
+  function getSetup_Inventory_supplier(){
+    return http.get(URL.SETUP_INVENTORY_SUPPLIER)
+  }
+  function postSetup_Inventory_supplier(data){
+    return http.post(URL.SETUP_INVENTORY_SUPPLIER,data)
+  }
+  function updateSetup_Inventory_supplier(data){
+    const url = `${URL.SETUP_INVENTORY_SUPPLIER}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetup_Inventory_supplier(id){
+    const url = `${URL.SETUP_INVENTORY_SUPPLIER}/${id}`
+    return http.delete(url)
+  }
+  function getSetupHR_leaveType(){
+    return http.get(URL.SETUP_HR_LEAVETYPE)
+  }
+  function postSetupHR_leaveType(data){
+    console.log(data);
+    return http.post(URL.SETUP_HR_LEAVETYPE,data)
+  }
+  function updateSetupHR_leaveType(data){
+    const url = `${URL.SETUP_HR_LEAVETYPE}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_leaveType(id){
+    return http.delete(`${URL.SETUP_HR_LEAVETYPE}/${id}`)
+  }
+  function getSetupHR_department(){
+    return http.get(URL.SETUP_HR_DEPARTMENT)
+  }
+  function postSetupHR_department(data){
+    return http.post(URL.SETUP_HR_DEPARTMENT,data)
+  }
+  function updateSetupHR_department(data){
+    const url = `${URL.SETUP_HR_DEPARTMENT}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_department(id){
+    const url = `${URL.SETUP_HR_DEPARTMENT}/${id}`
+    return http.delete(url)
+  }
+  function getSetupHR_designation(){
+    return http.get(URL.SETUP_HR_DESIGNATION)
+  }
+  function postSetupHR_designation(data){
+    return http.post(URL.SETUP_HR_DESIGNATION,data)
+  }
+  function updateSetupHR_designation(data){
+    const url = `${URL.SETUP_HR_DESIGNATION}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_designation(id){
+    const url = `${URL.SETUP_HR_DESIGNATION}/${id}`
+    return http.delete(url)
+  }
+  function getSetupHR_specialist(){
+    return http.get(URL.SETUP_HR_SPECIALIST)
+  }
+  function postSetupHR_specialist(data){
+    return http.post(URL.SETUP_HR_SPECIALIST,data)
+  }
+  function updateSetupHR_specialist(data){
+    const url = `${URL.SETUP_HR_SPECIALIST}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_specialist(id){
+    const url = `${URL.SETUP_HR_SPECIALIST}/${id}`
+    return http.delete(url)
+    
+  }
 ////////
 
 function createPhrAddress(
@@ -2837,7 +2926,31 @@ const api = {
   getSetup_Inventory_Category,
   postSetup_Inventory_Category,
   patchSetup_Inventory_Category,
-  deleteSetup_Inventory_Category
+  deleteSetup_Inventory_Category,
+  getSetup_Inventory_store,
+  postSetup_Inventory_store,
+  updateSetup_Inventory_store,
+  deleteSetup_Inventory_store,
+  getSetup_Inventory_supplier,
+  postSetup_Inventory_supplier,
+  updateSetup_Inventory_supplier,
+  deleteSetup_Inventory_supplier,
+  getSetupHR_leaveType,
+  postSetupHR_leaveType,
+  updateSetupHR_leaveType,
+  deleteSetupHR_leaveType,
+  getSetupHR_department,
+  postSetupHR_department,
+  updateSetupHR_department,
+  deleteSetupHR_department,
+  getSetupHR_designation,
+  postSetupHR_designation,
+  updateSetupHR_designation,
+  deleteSetupHR_designation,
+  getSetupHR_specialist,
+  postSetupHR_specialist,
+  updateSetupHR_specialist,
+  deleteSetupHR_specialist,
 };
 
 export default api;
