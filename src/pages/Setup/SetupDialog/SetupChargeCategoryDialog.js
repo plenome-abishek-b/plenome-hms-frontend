@@ -92,7 +92,7 @@ console.log(data, 'dataaaaaaa')
                 {chargetypes &&
                   chargetypes.map(charge_type => (
                     <option key={charge_type.id} value={charge_type.id}>
-                      {charge_type.module_shortcode}
+                      {charge_type.charge_type}
                     </option>
                   ))}
               </select>

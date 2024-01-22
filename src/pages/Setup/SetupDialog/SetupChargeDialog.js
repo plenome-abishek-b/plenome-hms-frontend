@@ -44,7 +44,7 @@ export default function SetupChargeDialog({
 
   useEffect(() => {
     getChargeType();
-    getsetupChargeCategory();
+    handleChargeTypeChange();
     getChargename();
     getTaxCategoryId();
     getUnitType();
@@ -58,11 +58,23 @@ export default function SetupChargeDialog({
     setChargetypes(data);
   };
 
-  const getsetupChargeCategory = async () => {
-    const response = await api.getSetupChargeCategory();
-    const { data } = response;
-    console.log(data, "ppppppp");
-    setChargecategory(data);
+  const handleChargeTypeChange = async (e) => {
+    onChange(e);
+
+    const selectedChargeTypeId = e.target.value;
+    if (selectedChargeTypeId !== "select") {
+      try {
+        const setupChargeCategoryResponse = await api.getSetupChargeCategory(
+          selectedChargeTypeId
+        );
+        const { data } = setupChargeCategoryResponse;
+        console.log(data, "ppppppp");
+
+        setChargecategory(data);
+      } catch (error) {
+        console.error("Error fetching setup charge category:", error);
+      }
+    }
   };
 
   const getChargename = async () => {
@@ -106,20 +118,21 @@ export default function SetupChargeDialog({
     setSelectedTaxCategoryId(selectedTaxCategoryId);
     setPercentage(selectedTaxCategory?.percentage || "");
 
-    const taxCategoryId = selectedTaxCategory
-    console.log(taxCategoryId,'tax ctgry') 
+    const taxCategoryId = selectedTaxCategory;
+    console.log(taxCategoryId, "tax ctgry");
 
-    const updateTaxCategorys ={...data,[e.target.id]:selectedTaxCategoryId}
-    console.log(updateTaxCategorys,'updated');
-    setUpdateTaxCategory(updateTaxCategorys)
-
+    const updateTaxCategorys = {
+      ...data,
+      [e.target.id]: selectedTaxCategoryId,
+    };
+    console.log(updateTaxCategorys, "updated");
+    setUpdateTaxCategory(updateTaxCategorys);
   };
 
   const handleFormSubmits = () => {
-    updateTaxCategorys(updateTaxCategory)
-    handleFormSubmit(data, handleClose,updateTaxCategory);
+    updateTaxCategorys(updateTaxCategory);
+    handleFormSubmit(data, handleClose, updateTaxCategory);
   };
-
 
   console.log(taxcategory, "tax");
 
@@ -145,10 +158,7 @@ export default function SetupChargeDialog({
           },
         }}
       >
-        <DialogTitle
-          id="alert-dialog-title"
-          className="bg-primary text-white"
-        >
+        <DialogTitle id="alert-dialog-title" className="bg-primary text-white">
           Add Charges
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
@@ -166,13 +176,13 @@ export default function SetupChargeDialog({
                   }}
                   id="charge_type"
                   value={data.charge_type}
-                  onChange={(e) => onChange(e)}
+                  onChange={handleChargeTypeChange} // Use the modified handler
                 >
-                  <option>select</option>
+                  <option value="select">select</option>
                   {chargetypes &&
                     chargetypes.map((charge_type) => (
                       <option key={charge_type.id} value={charge_type.id}>
-                        {charge_type.module_shortcode}
+                        {charge_type.charge_type}
                       </option>
                     ))}
                 </select>
@@ -349,7 +359,7 @@ export default function SetupChargeDialog({
                   }}
                   id="description"
                   value={data.description}
-                  onChange={(e)=>onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></textarea>
               </Col>
             </Row>
@@ -366,7 +376,7 @@ export default function SetupChargeDialog({
                   }}
                   id="date"
                   value={data.date}
-                  onChange={(e)=>onChange(e)}
+                  onChange={(e) => onChange(e)}
                   type="date"
                 ></input>
               </Col>

@@ -1,2 +1,5 @@
 # plenome-hms-frontend
-hms-frontend
+
+npm install --legacy-peer-deps
+
+npm start

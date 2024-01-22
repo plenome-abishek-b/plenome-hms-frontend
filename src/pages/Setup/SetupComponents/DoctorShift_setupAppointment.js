@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Card, CardBody } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import api from "services/Api";
@@ -7,26 +7,33 @@ import "./styles.css";
 
 const DoctorShift_setupAppointment = (props) => {
   const [rowData, setRowData] = useState([]);
-  const [morningValues, setMorningValues] = useState({});
-  const [nightValues, setNightValues] = useState({});
-  const [shifts, setShifts] = useState();
+  const [shifts, setShifts] = useState([]);
 
   useEffect(() => {
     getSetupDoctorGlobalShift();
     getSetupShift();
   }, []);
 
-  const mapApiDataToRowData = (apiData) => {
-    const morningValues = {};
-    const nightValues = {};
 
+// useEffect(() => {
+//   try {
+//     const storedData =
+//       JSON.parse(localStorage.getItem("globalShiftIds")) || {};
+
+//     setRowData((prevData) =>
+//       prevData.map((row) => ({
+//         ...row,
+//         global_shift_id: storedData[row.doctor_name] || row.global_shift_id,
+//       }))
+//     );
+//   } catch (error) {
+//     console.error("Error fetching data from localStorage:", error);
+//   }
+// }, [rowData]); 
+  
+  
+ const mapApiDataToRowData = (apiData) => {
     const rowData = apiData.map((item) => {
-      const selectedMorningValue = item.global_shift_id === 1 ? "Yes" : "No";
-      const selectedNightValue = item.global_shift_id === 2 ? "Yes" : "No";
-
-      morningValues[item.doctor_name] = selectedMorningValue;
-      nightValues[item.doctor_name] = selectedNightValue;
-
       return {
         staff_id: item.staff_id,
         doctor_name: item.doctor_name,
@@ -35,61 +42,70 @@ const DoctorShift_setupAppointment = (props) => {
       };
     });
 
-    setMorningValues(morningValues);
-    setNightValues(nightValues);
-
     return rowData;
   };
 
   const getSetupShift = async () => {
-    const response =await api.getSetupApptShift();
-    const { data } = response
-    console.log(data, "shift data");
-    setShifts(data);
+    try {
+      const response = await api.getSetupApptShift();
+      const { data } = response;
+      console.log(data, "shift data");
+      setShifts(data);
+    } catch (error) {
+      console.error("Error fetching shifts:", error);
+    }
   };
 
   const getSetupDoctorGlobalShift = async () => {
     try {
       const response = await api.getSetupApptGlobalShift();
       const { data } = response;
-      setRowData(data.staff_id);
-      if (Array.isArray(data) && data.length > 0) {
-        const morningShift = data.some((item) => item.global_shift_id === 1);
-        const nightShift = data.some((item) => item.global_shift_id === 2);
 
+      if (Array.isArray(data) && data.length > 0) {
         const rowData = mapApiDataToRowData(data);
         setRowData(rowData);
+
+        localStorage.setItem("rowData", JSON.stringify(rowData));
       }
     } catch (error) {
       console.error("Error fetching global shifts:", error);
     }
+
   };
+
+  const globalShiftIds = rowData.map(item => item.global_shift_id);
+
+console.log(globalShiftIds,'global ids');        
 
   const handleDropdownChange = (doctorName, selectedValue, shiftType) => {
     console.log("Dropdown change:", doctorName, selectedValue, shiftType);
     setRowData((prevData) =>
       prevData.map((row, index) => {
-        if (row.name === doctorName) { 
+        if (row.name === doctorName) {
           const updatedRow = {
             ...row,
             [shiftType]: selectedValue === "Yes",
           };
 
-          const updatedGlobalShiftId = shiftType === "morning" ? 1 : 2;
+          const selectedShift = shifts.find(
+            (shift) => shift.name.toLowerCase() === shiftType
+          );
 
-          // Generate a unique id for the row (starting from 1)
           const updatedId = index + 1;
 
-          // Update the global_shift_id in the API
           api.updateSetupApptGlobalShift(updatedId, {
-            global_shift_id: updatedGlobalShiftId,
+            global_shift_id: selectedShift ? selectedShift.id : null,
           });
 
-          // Update the local state directly
+          const storedData =
+            JSON.parse(localStorage.getItem("globalShiftIds")) || {};
+          storedData[doctorName] = selectedShift ? selectedShift.id : null;
+          localStorage.setItem("globalShiftIds", JSON.stringify(storedData));
+
           return {
             ...updatedRow,
             id: updatedId,
-            global_shift_id: updatedGlobalShiftId,
+            global_shift_id: selectedShift ? selectedShift.id : null,
           };
         }
         return row;
@@ -104,9 +120,7 @@ const DoctorShift_setupAppointment = (props) => {
           <h4>Doctor shift</h4>
           <Card>
             <CardBody>
-              <div
-                style={{ display: "flex", justifyContent: "flex-end" }}
-              ></div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
               <table>
                 <thead>
                   <tr>
@@ -118,27 +132,23 @@ const DoctorShift_setupAppointment = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {rowData.map((item) => (
-                    <tr key={item.doctor_name}>
-                      <td>{item.doctor_name}</td>
+                  {rowData.map((doctor) => (
+                    <tr key={doctor.doctor_name}>
+                      <td>{doctor.doctor_name}</td>
                       {shifts.map((shift) => (
                         <td key={shift.id}>
                           <input
-                            value={
-                              item.global_shift_id === shift.id ? "Yes" : "No"
-                            }
+                            value={doctor.global_shift_id === shift.id ? "Yes" : "No"}
                             onChange={(e) =>
                               handleDropdownChange(
-                                item.doctor_name,
+                                doctor.doctor_name,
                                 e.target.value,
-                                shift.name.toLowerCase() // use shift name as a parameter
+                                shift.name.toLowerCase()
                               )
                             }
                             style={{
                               backgroundColor:
-                                item.global_shift_id === shift.id
-                                  ? "#00cc00"
-                                  : "#ff6666",
+                                doctor.global_shift_id === shift.id ? "#00cc00" : "#ff6666",
                               border: "1px solid #7070FF",
                               borderRadius: "5px",
                               color: "white",
