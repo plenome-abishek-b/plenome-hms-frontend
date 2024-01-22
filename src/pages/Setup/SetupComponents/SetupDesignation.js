@@ -13,21 +13,48 @@ import { useEffect } from "react"
 import api from "services/Api"
 import SetupDepartmentDialog from "../SetupDialog/SetupDeparmentDialog"
 import SetupDesignationDialog from "../SetupDialog/SetupDesignationDialog"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupDesignation = props => {
 
     const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
-
+    const [selectedData,setSelectedData] = useState({})
   const [rowData,setrowDate] = useState([])
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenSetupOperationsDialog(true)
+   }
   
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetupHR_designation(data.id)
+         getDesignation()
+   }else{
+    console.log("cancelled");
+   }
+   }
   const columnDefs = [
     {headerName: 'Designation List', field: 'designation'},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
   ]
  useEffect(()=>{
   getDesignation()
  },[])
  const getDesignation= async () =>{
-  const response = await api.getHrsetup_Designation()
+  const response = await api.getSetupHR_designation()
   const {data} = response
   setrowDate(data)
   console.log(data,"fd")
@@ -42,6 +69,7 @@ const SetupDesignation = props => {
   )
 
   const handleOpenSetupOperations = () => {
+    setSelectedData({})
     setOpenSetupOperationsDialog(true);
   }
 
@@ -49,7 +77,15 @@ const SetupDesignation = props => {
     setOpenSetupOperationsDialog(false);
   }
 
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    )
+  }
   return (
     <React.Fragment>
       <div className="page-content">
@@ -68,8 +104,9 @@ const SetupDesignation = props => {
                   rowData={rowData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupDesignationDialog getDesignation={getDesignation} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
+                <SetupDesignationDialog selectedData={selectedData} getDesignation={getDesignation} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
                 </div>
             </CardBody>
           </Card>

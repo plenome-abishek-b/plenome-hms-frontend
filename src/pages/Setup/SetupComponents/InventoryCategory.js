@@ -11,28 +11,55 @@ import SetupOperationCategoryDialog from "../SetupDialog/SetupOperationCategoryD
 import SetupInventoryCategoryDialog from "../SetupDialog/SetupInventoryCategoryDialog"
 import { useEffect } from "react"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupInventoryCategory = props => {
 
   const [openSetupOperationDialog, setOpenSetupOperationDialog] = useState();
   const [categoryData,setCategoryData] = useState([])
   const [inputValue, setInputValue] = useState('');
+  const [selectedData,setSelectedData] = useState({})
   const [formValue,setFormValue] = useState({
     item_category:'',
     description:'',
     created_at:'2023-01-11 11:11:11',
     is_active:'yes'
    })
+   const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenSetupOperationDialog(true)
+   }
 
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetup_Inventory_Category(data.id)
+         getInventoryCategory()
+   }else{
+    console.log("cancelled");
+   }
+   }
   const columnDefs = [
     {headerName: 'Name', field: 'item_category'},
-    {headerName: 'Action', field: 'action'}
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
   ]
   useEffect(()=>{
-    getInvestmentCategory()
+    getInventoryCategory()
    },[])
-   const getInvestmentCategory = async () =>{
-     const resposne = await api.getInvestmetnCategory_setup()
+   const getInventoryCategory = async () =>{
+     const resposne = await api.getSetup_Inventory_Category()
      const {data} = resposne
      console.log(data,"data")
      setCategoryData(data)
@@ -47,6 +74,7 @@ const SetupInventoryCategory = props => {
   )
 
   const handleOpenOperation = () => {
+    setSelectedData({})
     setOpenSetupOperationDialog(true);
   }
 
@@ -75,6 +103,15 @@ const SetupInventoryCategory = props => {
     const {data}= response 
     setCategoryData(data)
  };
+ const components = {
+  actionsRenderer: (props) => (
+    <div>
+      <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+      &nbsp;
+      <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+    </div>
+  ),
+};
 
   return (
     <React.Fragment>
@@ -100,8 +137,9 @@ const SetupInventoryCategory = props => {
                   rowData={categoryData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupInventoryCategoryDialog formValue={formValue} handleChange={handleChange} handleSubmit={handleSubmit} open={openSetupOperationDialog} handleClose={handleCloseOperation}/>
+                <SetupInventoryCategoryDialog getInventoryCategory={getInventoryCategory} selectedData={selectedData} formValue={formValue} handleChange={handleChange} handleSubmit={handleSubmit} open={openSetupOperationDialog} handleClose={handleCloseOperation}/>
                 </div>
             </CardBody>
           </Card>
