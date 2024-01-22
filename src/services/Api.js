@@ -6,9 +6,9 @@ const baseNestURL = "http://localhost:4000";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 // const baseNodeURL = "http://13.200.35.19:3101";
-const baseNodeURL = "http://localhost:4000";
+const baseNodeURL = "http://localhost:5000";
 
-const baseNestSetupandMainURL = "http://localhost:5000";
+const baseNestSetupandMainURL = "http://13.200.35.19:3102";
 const baseNestSetupURL = "http://13.200.35.19:3102";
 
 
@@ -366,6 +366,11 @@ const URL = {
   SETUP_HR_DESIGNATION:'/setup-human-resource-designation',
   SETUP_HR_SPECIALIST:'/setup-human-resource-specialist'
 };  
+
+function getAppointmentbyId(id){
+  const url = `${URL.APPOINTMENT_URL}/${id}`
+  return http.get(url);
+}
 
 function getStaffcountData(roleId) {
   console.log("roleId:", roleId);
@@ -2320,6 +2325,12 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.SETUP_FINDINGS}/${id}`
     http4.delete(url)
   }
+
+  function deleteAppointment(id){
+    const url = `${URL.APPOINTMENT_URL}/${id}`
+    http4.delete(url)
+  }
+
   function getSetup_Finding_Category(){
     return http4.get(URL.SETUP_FINDING_CATEGORY)
   }
@@ -2512,6 +2523,7 @@ http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 const api = {
   getUser,
@@ -2951,6 +2963,8 @@ const api = {
   postSetupHR_specialist,
   updateSetupHR_specialist,
   deleteSetupHR_specialist,
+  deleteAppointment,
+  getAppointmentbyId
 };
 
 export default api;

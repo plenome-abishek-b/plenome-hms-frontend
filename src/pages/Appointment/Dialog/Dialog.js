@@ -46,8 +46,8 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
     if (formSubmitted) {
       const timeoutId = setTimeout(() => {
         handleClose(); 
-        // window.location.reload(); 
-      }); 
+        window.location.reload(); 
+      },1000); 
       return () => clearTimeout(timeoutId); 
     }
   }, [formSubmitted, handleClose]);
@@ -64,7 +64,7 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
     appointment_status: "",
     message: "",
     live_consult: "",
-    time: "11:50:00",
+    time: "",
     specialist: "",
     source: "",
     is_opd: "yes",
@@ -118,6 +118,20 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
     console.log(data, "patients")
     setPatients(data)
   }
+
+  const updatedPatientsData = patients.map(patient => {
+    // Remove "/" from the patient_name property
+    const updatedPatient = {
+        ...patient,
+        patient_name: patient.patient_name.replace("/", "")
+    };
+
+    return updatedPatient;
+});
+
+
+  
+
   const getAllDoctors = async () => {
     const response = await api.getApptDoctor()
     const { data } = response
@@ -243,8 +257,8 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
                 value={formValues.patient_id}
                 onChange={handleChange}
               >
-                {patients &&
-                  patients.map(patient => (
+                {updatedPatientsData &&
+                  updatedPatientsData.map(patient => (
                     <option key={patient.id} value={patient.id}>
                       {patient.patient_name}
                     </option>
