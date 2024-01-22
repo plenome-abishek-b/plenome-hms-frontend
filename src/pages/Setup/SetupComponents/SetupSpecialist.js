@@ -14,25 +14,45 @@ import api from "services/Api"
 import SetupDepartmentDialog from "../SetupDialog/SetupDeparmentDialog"
 import SetupDesignationDialog from "../SetupDialog/SetupDesignationDialog"
 import SetupSpecialistDialog from "../SetupDialog/SetupSpecialistDialog"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupSpecialist = props => {
 
     const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
+    const [selectedData,setSelectedData] = useState({})
 
   const [rowData,setrowDate] = useState([])
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenSetupOperationsDialog(true)
+   }
   
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetupHR_specialist(data.id)
+         getSpecialist()
+   }else{
+    console.log("cancelled");
+   }
+   }
   const columnDefs = [
     {headerName: 'Designation List', field: 'specialist_name'},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
   ]
- useEffect(()=>{
-  getSpecialist()
- },[])
- const getSpecialist= async () =>{
-  const response = await api.getHrsetup_Specilist()
-  const {data} = response
-  setrowDate(data)
-  console.log(data,"fd")
- }
+
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
@@ -43,23 +63,41 @@ const SetupSpecialist = props => {
   )
 
   const handleOpenSetupOperations = () => {
+    setSelectedData({})
     setOpenSetupOperationsDialog(true);
   }
 
   const handleCloseSetupOperations = () => {
     setOpenSetupOperationsDialog(false);
   }
+  useEffect(()=>{
+    getSpecialist()
+   },[])
+   const getSpecialist = async() =>{
+    const response = await api.getSetupHR_specialist()
+    const {data} = response
+    setrowDate(data)
+    console.log(data,"fd")
+   }
 
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    )
+  } 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <h4>Designation</h4>
+          <h4>Specialist List</h4>
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Designation</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Specialist</button>
             </div>
               <div
                 className="ag-theme-alpine"
@@ -69,8 +107,9 @@ const SetupSpecialist = props => {
                   rowData={rowData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupSpecialistDialog getSpecialist={getSpecialist} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
+                <SetupSpecialistDialog selectedData={selectedData} getSpecialist={getSpecialist} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
                 </div>
             </CardBody>
           </Card>

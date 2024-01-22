@@ -49,7 +49,7 @@ function SetupSlotAppt() {
     const response = await api.getApptDoctor();
     const { data } = response;
     setDoctor(data);
-    console.log(data, "setup doctor");
+    console.log(data, "setup doctors");
   };
 
   const getShift = async () => {

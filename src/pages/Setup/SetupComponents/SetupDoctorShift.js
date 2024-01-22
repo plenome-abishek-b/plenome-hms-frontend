@@ -17,6 +17,7 @@ const Setupdoctorshift = (props) => {
   const getSetupShift = async () => {
     const response = await api.getSetupApptShift();
     const { data } = response;
+    console.log(data,"getting");
     setShifts(data);
   };
 
@@ -24,6 +25,7 @@ const Setupdoctorshift = (props) => {
     try {
       const response = await api.getSetupApptGlobalShift();
       const { data } = response;
+      console.log(data,"resp");
       setRowData(data);
     } catch (error) {
       console.error("Error fetching global shifts:", error);
@@ -31,7 +33,11 @@ const Setupdoctorshift = (props) => {
   };
 
   const handleCheckboxChange = async (staffId, shiftId) => {
+    console.log("calling");
     try {
+
+      console.log(staffId,shiftId,"both getting");
+      // Find the doctor in the rowData array
       const updatedRowData = rowData.map((item) =>
         item.staff_id === staffId
           ? { ...item, global_shift_id: shiftId }
@@ -40,7 +46,12 @@ const Setupdoctorshift = (props) => {
 
       setRowData(updatedRowData);
 
+      // Call the API to update the global_shift_id for the specific staff
+    const response =   await api.updateSetupApptGlobalShift(staffId, shiftId);
+    console.log(response.data,"edeeed");
+
       await api.updateSetupApptGlobalShift(staffId, shiftId);
+
     } catch (error) {
       console.error("Error updating global shifts:", error);
     }
@@ -70,6 +81,7 @@ const Setupdoctorshift = (props) => {
                       {shifts.map((shift) => (
                         <td key={shift.id}>
                           <input
+                            key={item.global_shift_id}
                             checked={item.global_shift_id === shift.id}
                             onChange={() => handleCheckboxChange(item.staff_id, shift.id)}
                             type="checkbox"

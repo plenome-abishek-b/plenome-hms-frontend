@@ -11,27 +11,55 @@ import SetupOperationsDialog from "../SetupDialog/SetupOperationDialog"
 import SetupInventorySupplierDialog from "../SetupDialog/SetupInventorySupplierDialog"
 import { useEffect } from "react"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupInventorySupplier = props => {
 
-    const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
+    const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState(false)
     const [supplierData,setSupplierData] = useState([])
     const [inputValue, setInputValue] = useState('');
+    const [selectedData,setSelectedData] = useState({})
+
 useEffect(()=>{
   getInventorySupplier()
 },[])
 const getInventorySupplier = async ()=>{
- const response = await api.getInvestmentSupplier_setup()
+ const response = await api.getSetup_Inventory_supplier()
  const {data} = response
  setSupplierData(data)
  console.log(data,"vak")
 }
+const handleEditClick = (data) =>{
+  console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenSetupOperationsDialog(true)
+ }
 
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+         console.log(userConfirmed,"delete");
+ if(userConfirmed){
+       const deleteResponse = await api.deleteSetup_Inventory_supplier(data.id)
+       getInventorySupplier()
+ }else{
+  console.log("cancelled");
+ }
+ }
   const columnDefs = [
     {headerName: 'Item Supplier', field: 'item_supplier'},
     {headerName: 'Contact Person', field: 'contact_person_name'},
     {headerName: 'Address', field: 'address'},
-    {headerName: 'Action', field: 'action'}
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
 
   ]
 
@@ -61,6 +89,15 @@ const getInventorySupplier = async ()=>{
     setInputValue(event.target.value);
   };
 
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
 
   return (
@@ -87,8 +124,9 @@ const getInventorySupplier = async ()=>{
                   rowData={supplierData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupInventorySupplierDialog open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
+                <SetupInventorySupplierDialog getInventorySupplier={getInventorySupplier} selectedData={selectedData} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
                 </div>
             </CardBody>
           </Card>
