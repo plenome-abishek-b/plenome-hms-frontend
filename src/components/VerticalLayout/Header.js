@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 
 // Reactstrap
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap"
+import "./styles.css"
 
 // Import menuDropdown
 import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown"
@@ -138,16 +139,16 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/opd">{props.t("OPD-Out Patient")}</Link>
+                            <Link to="/opd" className="custom-list">{props.t("OPD-Out Patient")}</Link>
                           </li>
                           <li>
-                            <Link to="/ipd">{props.t("IPD-In Patient")}</Link>
+                            <Link to="/ipd" className="custom-list">{props.t("IPD-In Patient")}</Link>
                           </li>
                           <li>
-                            <Link to="/pharmacy">{props.t("Pharmacy")}</Link>
+                            <Link to="/pharmacy" className="custom-list">{props.t("Pharmacy")}</Link>
                           </li>
                           <li>
-                            <Link to="/ambulance">{props.t("Ambulance")}</Link>
+                            <Link to="/ambulance" className="custom-list">{props.t("Ambulance")}</Link>
                           </li>
                         </ul>
                       </Col>
@@ -158,12 +159,12 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/birthrecord">
+                            <Link to="/birthrecord" className="custom-list">
                               {props.t("Birth Records")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/deathrecord">
+                            <Link to="/deathrecord" className="custom-list">
                               {props.t("Death Records")}
                             </Link>
                           </li>
@@ -176,10 +177,10 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/income">{props.t("Income")}</Link>
+                            <Link to="/income" className="custom-list">{props.t("Income")}</Link>
                           </li>
                           <li>
-                            <Link to="/expenses">{props.t("Expenses")}</Link>
+                            <Link to="/expenses" className="custom-list">{props.t("Expenses")}</Link>
                           </li>
                         </ul>
                       </Col>
@@ -193,27 +194,27 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/opdreport">
+                            <Link to="/opdreport" className="custom-list">
                               {props.t("OPD Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/ipdreport">
+                            <Link to="/ipdreport" className="custom-list">
                               {props.t("IPD Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="pathologyreport">
+                            <Link to="pathologyreport" className="custom-list">
                               {props.t("Pathology Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/bloodreport">
+                            <Link to="/bloodreport" className="custom-list">
                               {props.t("Blood Issue Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/radiologyreport">
+                            <Link to="/radiologyreport" className="custom-list">
                               {props.t("Radiology Reports")}
                             </Link>
                           </li>

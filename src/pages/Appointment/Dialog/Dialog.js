@@ -46,8 +46,8 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
     if (formSubmitted) {
       const timeoutId = setTimeout(() => {
         handleClose(); 
-        window.location.reload(); 
-      }, 2500); 
+        // window.location.reload(); 
+      }); 
       return () => clearTimeout(timeoutId); 
     }
   }, [formSubmitted, handleClose]);

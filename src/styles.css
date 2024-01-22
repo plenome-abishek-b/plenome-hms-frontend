@@ -36,15 +36,15 @@
   }
 
   .custom-btn{
-    background: #6070FF
+    background: #7070FF
   }
 
   .custom-card{
-    background: #6070FF;
+    background: #7070FF;
   }
 
   .custom-card-expense{
-    background: #6070FF;
+    background: #59CE8F;
   }
 
   .navbar-header{
@@ -52,9 +52,9 @@
   }
 
   .btn-mod{
-    background-color: #6070FF;
+    background-color: #7070FF;
     height: 35px;
     color: white;
     border-radius: 5px;
-    border: 1px solid #6070FF;
+    border: 1px solid #7070FF;
   }

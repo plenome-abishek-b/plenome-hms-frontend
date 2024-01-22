@@ -131,11 +131,12 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{  borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{  borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/opd">
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="text-white fw-bold">Outpatient Income</p>
+                        <h5 className="mb-0 text-white">₹ 18000.00</h5>
                         <h5 className="mb-0 text-white">{opdIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
@@ -153,7 +154,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{  borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{  borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/ipd">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -175,7 +176,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/pharmacy">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -197,7 +198,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/pathology">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -219,7 +220,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/radiology">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -241,7 +242,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/bloodbank">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -263,7 +264,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card" style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card" style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/ambulance">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -285,7 +286,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card"  style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card"  style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/income">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -307,7 +308,7 @@ const Dashboard = props => {
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="mini-stats-wid card">
-                <div className="card-body custom-card-expense"  style={{ borderRadius: '0 0 10px 10px'  }}>
+                <div className="card-body custom-card-expense"  style={{ borderRadius: '0 0 6px 6px'  }}>
                   <Link to="/expenses">
                     <div className="d-flex">
                       <div className="flex-grow-1">
@@ -318,7 +319,7 @@ const Dashboard = props => {
                         <span className="avatar-title rounded-circle bg-white">
                           <i
                             className="fas fa-rupee-sign fa-lg"
-                            style={{ color: "#6070FF" }}
+                            style={{ color: "#59CE8F" }}
                           ></i>
                         </span>
                       </div>
