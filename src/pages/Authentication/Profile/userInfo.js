@@ -54,7 +54,7 @@ const userInfo = () => {
                   <td></td>
                 </tr>
                 <tr>
-                  <th scope="row">Date of birth :</th>
+                  <th scope="row">rth :</th>
                   <td></td>
                 </tr>
                 <tr>

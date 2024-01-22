@@ -67,7 +67,7 @@ const URL = {
 
   CHARGES_URL: "/setup-hospital-charge-charges",
   CHARGES_CATEGORY_URL: "/setup-hospital-charges-charge-category",
-  CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-module",
+  CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-master",
   SETUP_CHARGE_CATEGORY_URL: "/setup-hospital-charges-charge-category/bytype/",
   SETUP_CHARGE_NAME: "/setup-hospital-charge-charges",
   SETUP_TAX_URL: "/setup-hospital-charges-tax-category",
@@ -364,7 +364,8 @@ const URL = {
   SETUP_HR_LEAVETYPE:'/setup-human-resource-leave-types',
   SETUP_HR_DEPARTMENT:'/setup-human-resource-department',
   SETUP_HR_DESIGNATION:'/setup-human-resource-designation',
-  SETUP_HR_SPECIALIST:'/setup-human-resource-specialist'
+  SETUP_HR_SPECIALIST:'/setup-human-resource-specialist',
+  SETUP_HR_PATIENT:'/setup-patient-new-patient'
 };  
 
 function getStaffcountData(roleId) {
@@ -2455,6 +2456,21 @@ function patchSetupRadiologyParameter(data){
     return http.delete(url)
     
   }
+  function getSetupHR_patient(){
+    return http.get(URL.SETUP_HR_PATIENT)
+  }
+  function postSetupHR_patient(data){
+    return http.post(URL.SETUP_HR_PATIENT,data)
+  }
+  function updateSetupHR_patient(data){
+    const url = `${URL.SETUP_HR_PATIENT}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_patient(id){
+    const url = `${URL.SETUP_HR_PATIENT}/${id}`
+    return http.delete(url)
+  }
+  
 ////////
 
 function createPhrAddress(
@@ -2951,6 +2967,10 @@ const api = {
   postSetupHR_specialist,
   updateSetupHR_specialist,
   deleteSetupHR_specialist,
+  getSetupHR_patient,
+  postSetupHR_patient,
+  updateSetupHR_patient,
+  deleteSetupHR_patient
 };
 
 export default api;

@@ -185,6 +185,7 @@ import Discovercontext from "pages/Carecontext/Discovercontext";
 import Consentrequest from "pages/Carecontext/Consentrequest";
 import SetupSlotAppt from "pages/Setup/SetupComponents/SetupSlotTimeAppt";
 import SetupDoctorShift from "pages/Setup/SetupComponents/SetupDoctorShift";
+import SetupPatient from "pages/Setup/SetupComponents/SetupPatient";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -259,6 +260,7 @@ const authProtectedRoutes = [
   {path: "/medicinedosage",component: SetupMedDosage},
   {path: "/doseinterval", component: SetupDoseInterval},
   {path: "/doseduration", component: SetupMedDoseDuration},
+  {path: "/setupPatient", component: SetupPatient},
   {path: "/setupoperation", component: SetupOperationCategory},
   {path: "/operations", component: SetupOperations},
   {path: "/discharged", component: dischargedPatient},
@@ -293,7 +295,7 @@ const authProtectedRoutes = [
 
   //setup appointment
   {path:"/onlineappointment/globalshift",component:Shift_setupAppointment},
-  {path:"/setupdoctorglobalshift",component:SetupDoctorShift},
+  {path:"/setupdoctorglobalshift",component:DoctorShift_setupAppointment},
   {path:"/admin/onlineappointment",component:Slots_setupAppointment},
   {path: "/alltransactionreport", component: AlltransactionReport},
   {path: "/pharmacybillreport", component: PharmacybillReport},
