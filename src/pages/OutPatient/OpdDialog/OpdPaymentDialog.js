@@ -44,20 +44,20 @@ export default function OpdPaymentDialog({
         maxWidth="lg"
       >
  {console.log(data,"fufu")}
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Payments
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='6' sm='12'>
-             <label>Date</label>
+             <label>Date <span className="text-danger">*</span></label>
              <br />
-             <input type="text" style={{width: '100%', height: '30px'}} id="payment_date" name="payment_date" onChange={e=>onChange(e)} value={data.payment_date}></input>
+             <input type="text" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id="payment_date" name="payment_date" onChange={e=>onChange(e)} value={data.payment_date}></input>
             </Col>
             <Col lg='6' sm='12'> 
-            <label>Amount(₹)</label>
+            <label>Amount(₹) <span className="text-danger">*</span></label>
             <br />
-            <input placeholder="100" style={{width: '100%', height: '30px'}} id="amount" onChange={e=>onChange(e)} value={data.amount}></input>
+            <input placeholder="100" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id="amount" onChange={e=>onChange(e)} value={data.amount}></input>
             </Col>
           </Row>
           <br />
@@ -65,7 +65,7 @@ export default function OpdPaymentDialog({
             <Col lg='6' sm='12'>
                 <label>Payment Mode</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id="payment_mode" name="payment_mode" onChange={e=>onChange(e)} value={data.payment_mode}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id="payment_mode" name="payment_mode" onChange={e=>onChange(e)} value={data.payment_mode}>
                   <option>select</option>
                     <option value="UPI">UPI</option>
                     <option value="Cash">Cash</option>
@@ -80,12 +80,12 @@ export default function OpdPaymentDialog({
            <Col lg='12' sm='12'>
                 <label>Note</label>
                 <br />
-                <textarea style={{width: '100%'}} id="note" onChange={e=>onChange(e)} value={data.note} ></textarea>
+                <textarea style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}} id="note" onChange={e=>onChange(e)} value={data.note} ></textarea>
             </Col>
            </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

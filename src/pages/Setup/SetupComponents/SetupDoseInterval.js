@@ -84,7 +84,7 @@ const [tableData, setTableData] = useState();
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenMedDoseInterval}><i className="fa fa-plus"></i>&nbsp; Add Dosage Interval</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenMedDoseInterval}><i className="fa fa-plus"></i>&nbsp; Add Dosage Interval</button>
             </div>
               <div
                 className="ag-theme-alpine"

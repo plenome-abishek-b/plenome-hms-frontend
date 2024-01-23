@@ -103,7 +103,7 @@ const Pathologyreport = props => {
                   <label>Time Duration</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                     id="timeDuration"
                   >
                     <option>select</option>
@@ -123,7 +123,7 @@ const Pathologyreport = props => {
                 <Col lg='3'>
                   <label>Sample Collected Person Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="collectedBy">
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="collectedBy">
                     <option>select</option>
                     {consdoctor && consdoctor.map((doct) => (
                     <option key={doct.docid} value={doct.id}>
@@ -135,7 +135,7 @@ const Pathologyreport = props => {
                 <Col lg='3'>
                   <label>Category Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="category" >
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="category" >
                     <option>select</option>
                     {category && category.map((categ) => (
                     <option key={categ.id} value={categ.id}>
@@ -147,7 +147,7 @@ const Pathologyreport = props => {
                 <Col lg='3'>
                   <label>Test Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="test" >
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="test" >
                     <option>select</option>
                     {test && test.map((testname) => (
                     <option key={testname.testid} value={testname.id}>
@@ -158,7 +158,7 @@ const Pathologyreport = props => {
                 </Col>
               </Row>
               <div className="mt-2 d-flex justify-content-end">
-                  <button className="btn btn-primary" onClick={getPathologyReportList} >Search</button>
+                  <button className="btn-mod" onClick={getPathologyReportList} >Search</button>
                 </div>
               <br />
               <div className="ag-theme-alpine mt-2" style={{ height: 700 }}>
@@ -166,6 +166,9 @@ const Pathologyreport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
             </CardBody>

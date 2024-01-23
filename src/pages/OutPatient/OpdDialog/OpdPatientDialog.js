@@ -146,7 +146,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
           <DialogContent className="mt-4 ms-2">
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Name</label>
+                <label>Name <span className="text-danger">*</span></label>
                 <br />
                 <input
                   type="text"
@@ -208,7 +208,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                 </select>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Age</label>
+                <label>Age <span className="text-danger">*</span></label> 
                 <br />
                 {isDateSelected ? (
                   <>
@@ -513,7 +513,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft"
+              className="btn-mod bg-soft"
               type="submit"
             >
               Save

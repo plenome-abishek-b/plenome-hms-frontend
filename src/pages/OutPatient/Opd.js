@@ -3,10 +3,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api";
+import "./styles.css"
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -67,7 +68,7 @@ console.log(tableData,"jjijijij")
       headerName: "Patient ID",
       field: "patient_id",
       filter: "agSetColumnFilter",
-      cellStyle: { color: 'red', fontWeight: '500', backgroundColor: '#EEEEEE' },
+      cellStyle: { color: 'red', fontWeight: '900', backgroundColor: '#EEEEEE' },
       cellRenderer: (params) => {
         const pid = params.data.id;
         return (
@@ -90,19 +91,22 @@ console.log(tableData,"jjijijij")
     { headerName: "Gender", field: "gender" },
     { headerName: "Contact", field: "mobileno" },
     { headerName: "Consultant", field: "name" },
-    { headerName: "Last visit", field: "appointment_date" },
+    // { headerName: "Last visit", field: "appointment_date" },
     { headerName: "Age", field: "age" }
     //{ headerName: "Total Recheckup", field: "totalrecheckup" },
   ];
 
-  const defaultColDef = useMemo(
-    () => ({
+  const gridOptions = {
+    domLayout: 'autoHeight', // Set domLayout to autoHeight
+    defaultColDef: {
+      flex: 1, // Set the default flex property for columns
       sortable: true,
       filter: true,
-      flex: 1,
-    }),
-    []
-  );
+    },
+    onFirstDataRendered: (params) => {
+      params.api.autoSizeAllColumns(); // Auto-size all columns on first data render
+    },
+  };
 
   useEffect(() => {
     // getUsers from json
@@ -175,19 +179,23 @@ console.log(tableData,"jjijijij")
               alignItems: "flex-end",
             }}
           >
-            <button className="btn btn-secondary" onClick={handleClickOpen}>
+            <button className="btn-mod bg-soft custom-btn" onClick={handleClickOpen}>
               Add Outpatient
             </button>
           </div>
         </Container>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
+            gridOptions={gridOptions}
           />
         </div>
       </div>

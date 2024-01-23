@@ -20,19 +20,19 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" style={{backgroundColor: '#92A4FF'}} className='text-white fw-bold'>
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#6070FF', height: '60px'}}>
                     Add Medicine details
                 </DialogTitle>
                 <DialogContent className='mt-2'>
                 <br />
                     <Row>
                         <Col lg='3' md='6'sm='12' className='mt-3'>
-                           <label>Medicine Name</label>
+                           <label>Medicine Name <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id='medicine_name' value={data.medicine_name} onChange={e=>onChange(e)}></input> 
                         </Col>
                         <Col lg='3' md='6'sm='12'>
-                            <label>Medicine Category</label>
+                            <label>Medicine Category <span className="text-danger">*</span></label>
                             <br />
                             <select style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id='medicine_category' value={data.medicine_category} onChange={e=>onChange(e)}>
                                 <option>select</option>
@@ -40,12 +40,12 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                             </select>
                         </Col>
                         <Col lg='3' md='6'sm='12'>
-                           <label>Medicine Company</label>
+                           <label>Medicine Company <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id='medicine_company' value={data.medicine_company} onChange={e=>onChange(e)}></input> 
                         </Col>
                         <Col lg='3' md='6'sm='12'>
-                           <label>Medicine Composition</label>
+                           <label>Medicine Composition <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id='medicine_composition' value={data.medicine_composition} onChange={e=>onChange(e)}></input> 
                         </Col>
@@ -53,12 +53,12 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                     <br />
                     <Row>
                         <Col lg='3' md='6'sm='12'>
-                        <label>Medicine Group</label>
+                        <label>Medicine Group <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} id='medicine_group' value={data.medicine_group} onChange={e=>onChange(e)}></input> 
                         </Col>
                         <Col lg='3' md='6'sm='12'>
-                        <label>Unit</label>
+                        <label>Unit <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} type='number' id='unit' value={data.unit} onChange={e=>onChange(e)}></input> 
                         </Col>
@@ -81,7 +81,7 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                            <input placeholder='%' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} type='number'></input> 
                         </Col>
                         <Col lg='4' md='6'sm='12'>
-                        <label>Unit/Packing</label>
+                        <label>Unit/Packing <span className="text-danger">*</span></label>
                            <br />
                            <input placeholder='' style={{width: '100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}} type='number'></input> 
                         </Col>
@@ -107,7 +107,7 @@ export default function AlertDialog({ open, handleClose, data, onChange, handleF
                     <br />
                 </DialogContent>
                 <DialogActions>
-                    <button className='btn btn-primary' onClick={handleFormSubmit} autoFocus>
+                    <button className='btn-mod fw-bold' onClick={handleFormSubmit} autoFocus>
                         Save
                     </button>
                 </DialogActions>

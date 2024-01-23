@@ -8,7 +8,6 @@ import ApptDialog from "../BillingDialog/AppointmentDialog"
 import api from "services/Api"
 //Import Breadcrumb
 import { withTranslation } from "react-i18next"
-import "ag-grid-enterprise"
 import { Link } from "react-router-dom"
 
 //redux
@@ -160,7 +159,7 @@ useEffect(()=>{
             }}
           >
             <button
-              className="btn btn-primary bg-soft"
+              className="btn-mod bg-soft"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
@@ -194,6 +193,9 @@ useEffect(()=>{
             open={open}
             handleClose={handleClose}
             data={formData} 
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>

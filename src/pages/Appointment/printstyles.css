@@ -1,0 +1,33 @@
+/* printStyles.css */
+
+@media print {
+    body * {
+      visibility: hidden;
+    }
+
+    .hide-print-button {
+        display: none;
+      }
+  
+    #alert-dialog-title,
+    #alert-dialog-content,
+    #alert-dialog-actions,
+    #alert-dialog-title *:not(button),
+    #alert-dialog-content *:not(button),
+    #alert-dialog-actions * {
+      visibility: visible;
+    }
+    #alert-dialog-title {
+      color: black;
+    }
+
+    #alert-dialog-content {
+        font-size: 18px;
+    }
+  
+    #alert-dialog-actions {
+    }
+
+    
+  }
+  

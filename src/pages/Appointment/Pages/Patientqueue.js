@@ -78,7 +78,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
           <div className="card p-4">
             <Row className="mt-2 ms-4">
                 <Col lg='3' md='3' sm='3'>
-                    <label style={{fontSize: '15px'}}>Doctor</label>
+                    <label style={{fontSize: '15px'}}>Doctor <span className="text-danger">*</span></label>
                     <br />
                     <select style={{width: '80%', height: '35px', borderRadius: '5px'}}
                     value={selectedDoctor}
@@ -93,7 +93,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                     </select>
                 </Col>
                 <Col lg='3' md='3' sm='3'>
-                    <label style={{fontSize: '15px'}}>shift</label>
+                    <label style={{fontSize: '15px'}}>shift <span className="text-danger">*</span></label>
                     <br />
                     <select style={{width: '80%', height: '35px', borderRadius: '5px'}} onClick={()=>handleShift()} 
                     value={selectedShift}
@@ -105,13 +105,13 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                     </select>
                 </Col>
                 <Col lg='3' md='3' sm='3'>
-                    <label style={{fontSize: '15px'}}>Date</label>
+                    <label style={{fontSize: '15px'}}>Date <span className="text-danger">*</span></label>
                     <br />
                     <input value={selectedDate}
                   onInput={handleDateInput} type="date" style={{width: '80%', height: '35px', borderRadius: '5px', border: '1px solid grey'}}></input>
                 </Col>
                 <Col lg='3' md='3' sm='3'>
-                    <label style={{fontSize: '15px'}}>Slot</label>
+                    <label style={{fontSize: '15px'}}>Slot <span className="text-danger">*</span></label>
                     <br />
                     <select style={{width: '80%', height: '35px', borderRadius: '5px'}}
                     onClick={()=>handleSlot()}
@@ -128,8 +128,8 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
             </Row>
             <br />
             <div style={{display: 'flex', justifyContent: 'flex-end' ,alignItems: 'flex-end'}} className="mt-4">
-            <button className="btn btn-primary bg-soft" style={{marginRight:'10px'}}>Reorder Queue</button>
-                <button className="btn btn-primary bg-soft" onClick={()=>handleSearch()}>Search</button>
+            <button className="btn-mod bg-soft" style={{marginRight:'10px'}}>Reorder Queue</button>
+                <button className="btn-mod bg-soft" onClick={()=>handleSearch()}>Search</button>
 
             </div>
           </div>

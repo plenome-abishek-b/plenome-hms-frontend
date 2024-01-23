@@ -81,7 +81,7 @@ export default function AmbulanceListDialog({ open, handleClose }) {
                 <br />
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={handleClose} autoFocus>
+                    <button className='btn-mod' onClick={handleClose} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

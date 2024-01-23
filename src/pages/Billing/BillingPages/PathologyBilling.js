@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useState , useEffect} from "react";
 import { Link } from 'react-router-dom';
@@ -167,12 +167,15 @@ console.log(fetchData,'fetchdata');
             setFetchData={setFetchData}
           />
 
-          <div className="ag-theme-balham"
+          <div className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}>
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

@@ -75,46 +75,47 @@ const Login = props => {
 
 
   const history = useHistory();
-
   const onLoginUser = async (values) => {
-    try {
-      console.log("onLoginUser called");
-      const response = await api.getRoleBased(values.email);
-      const data = response.data[0].role_name;
-      const updatedData = data; // Store the data in a separate variable
-      console.log(updatedData, 'updateddata');
-      setUserData(updatedData);
-      console.log(userData, 'userdataaaa')
-      // <Sidebar userRole={updatedData} />
-      // dispatch(setRoleName(updatedData))
+    // try {
+    //   console.log("onLoginUser called");
+    //   const response = await api.getRoleBased(values.email);
+    //   const data = response.data[0].role_name;
+    //   const updatedData = data; // Store the data in a separate variable
+    //   console.log(updatedData, 'updateddata');
+    //   setUserData(updatedData);
+    //   console.log(userData, 'userdataaaa');
+    //   await handleVerify(values);
   
-      // if (updatedData === "Doctor") {
-      //   dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Doctor" } });
-      //   toast.success("Logged in as a Doctor", {
-      //     duration: 3000,
-      //     style: {
-      //       width: "300px",
-      //       backgroundColor: "lightblue",
-      //       fontSize: "15px",
-      //     },
-      //   });
-      // } else if (updatedData === "Super Admin") {
-      //   dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Super Admin" } });
-      //   toast.success("Logged in as a Super Admin", {
-      //     duration: 3000,
-      //     style: {
-      //       width: "300px",
-      //       backgroundColor: "lightblue",
-      //       fontSize: "15px",
-      //     },
-      //   });
-      // }
-
+    //   if (updatedData === "Doctor") {
+    //     dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Doctor" } });
+    //     toast.success("Logged in as a Doctor", {
+    //       duration: 3000,
+    //       style: {
+    //         width: "300px",
+    //         backgroundColor: "lightblue",
+    //         fontSize: "15px",
+    //       },
+    //     });
+    //   } else if (updatedData === "Super Admin") {
+    //     dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Super Admin" } });
+    //     toast.success("Logged in as a Super Admin", {
+    //       duration: 1000,
+    //       style: {
+    //         width: "300px",
+    //         backgroundColor: "lightblue",
+    //         fontSize: "15px",
+    //       },
+    //     });
+    //   }
   
-      await handleVerify(values);
-    } catch (error) {
-      console.error(error);
-    }
+    //   // Introduce a delay of 3 seconds before calling handleVerify
+    
+      
+   
+  
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   
 
@@ -124,37 +125,33 @@ const Login = props => {
     }
   }, [userData]);
   
+
   const handleVerify = async (values) => {
     try {
+      console.log("handleVerify called with values:", values);
+  
       const response = await api.postAuthUsers(values);
-      console.log(values, 'values');
-      console.log(response);
-      console.log(response.status,'status');
-      // fakeBackend(values.email, values.password);
+      console.log("API response:", response);
   
-      // Check if the response status is 200
-      if (response.status === 200) {
-        // dispatch(setRoleName(userData));
-        // Authentication successful, navigate to the dashboard page
-        console.log("success");
-      } else if (response.status === 401) {
-        console.log("invalid");
-        // Show a toast message indicating "invalid password"
-        prompt("Invalid");
-      } else {
-        // Handle other status codes if needed
-      }
+      fakeBackend(values.email, values.password);
   
-      // Move the navigation here, outside of the if statement
-      if (response.status === 200) {
+      if (response.status === 401) {
+        prompt("Invalid email or password")
+      } else if (response.status === 200) {
+        console.log("Authentication successful");
+        dispatch(setRoleName(userData));
         history.push("/dashboard");
+      } else {
+        console.log("Other response status:", response.status);
+        // Handle other response statuses if needed
       }
     } catch (error) {
-      console.error(error);
-      // Handle the error and display appropriate message
+      console.error("Error in handleVerify:", error);
     }
   };
   
+
+ 
   
 
   const { error } = useSelector(state => ({
@@ -191,7 +188,18 @@ const Login = props => {
       </div>
       <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft">
         <Container>
-        <Toaster />
+        <Toaster toastOptions={{
+    success: {
+      style: {
+        background: 'green',
+      },
+    },
+    error: {
+      style: {
+        background: 'red',
+      },
+    },
+  }}/>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">

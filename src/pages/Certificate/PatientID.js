@@ -43,32 +43,35 @@ const Patientcard = props => {
               <Col lg='6'>
                 <label>Patient</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}}>
+                <select style={{width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px'}}>
                   <option>select</option>
                 </select>
               </Col>
               <Col lg='6'>
                 <label>ID Card Template</label>
                 <br />
-                <select style={{width: '100%', height: '30px'}}>
+                <select style={{width: '100%', height: '30px',border: '1px solid grey', borderRadius: '5px'}}>
                   <option>select</option>
                 </select>
               </Col>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary">Search</button>
+                <button className="btn-mod">Search</button>
               </div>
             </Row>
           </div>
           </CardBody>
         </Card>
         <div className="d-flex justify-content-end">
-            <button className="btn btn-primary">Generate</button>
+            <button className="btn-mod">Generate</button>
         </div>
         <h4>Patient List</h4>
         <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
             <AgGridReact
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

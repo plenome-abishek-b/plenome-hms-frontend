@@ -74,28 +74,28 @@ export default function OpdMedicationDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Medication Dose
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='12' sm='12'>
-                <label>Date</label>
+                <label>Date <span className="text-danger">*</span></label>
                 <br />
-                <input placeholder="" style={{width: '100%', height: '30px'}} value={data.date} id="date" onChange={e=>onChange(e)}></input>
+                <input placeholder="" style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} value={data.date} id="date" onChange={e=>onChange(e)}></input>
             </Col>
             <Col lg='12' sm='12'>
-                <label>Time</label>
+                <label>Time <span className="text-danger">*</span></label>
                 <br />
-                <input placeholder="" type="time" style={{width: '100%' , height: '30px'}} value={data.time} id="time" onChange={e=>onChange(e)}></input>
+                <input placeholder="" type="time" style={{width: '100%' , height: '30px' , borderRadius: '5px', border: "1px solid grey"}} value={data.time} id="time" onChange={e=>onChange(e)}></input>
             </Col>
           </Row>
           <br />
           <Row>
             <Col lg='12' sm='12'>
-                <label>Medicine Category</label>
+                <label>Medicine Category <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='medicine_category' onChange={e=>onChange(e)} value={data.medicine_category}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='medicine_category' onChange={e=>onChange(e)} value={data.medicine_category}>
                     <option>Select</option>
                     {medCategory && medCategory.map((medicine) => (
                     <option key={medicine.id} value={medicine.id}>
@@ -105,9 +105,9 @@ export default function OpdMedicationDialog({
                 </select>
             </Col>
             <Col lg='12' sm='12'>
-                <label className="mt-3">Medicine Name</label>
+                <label className="mt-3">Medicine Name <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='medicine_name' onChange={e=>onChange(e)} value={data.medicine_name}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='medicine_name' onChange={e=>onChange(e)} value={data.medicine_name}>
                     <option>Select</option>
                     {medName && medName.map((medicine) => (
                     <option key={medicine.id} value={medicine.id}>
@@ -120,9 +120,9 @@ export default function OpdMedicationDialog({
           <br />
           <Row>
           <Col lg='12' sm='12'>
-                <label className="mt-3">Dosage</label>
+                <label className="mt-3">Dosage <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} id='dosage' onChange={e=>onChange(e)} value={data.dosage}>
+                <select style={{width: '100%', height: '30px' , borderRadius: '5px', border: "1px solid grey"}} id='dosage' onChange={e=>onChange(e)} value={data.dosage}>
                     <option>Select</option>
                     {medDosage && medDosage.map((medicine) => (
                     <option key={medicine.id} value={medicine.id}>
@@ -134,13 +134,13 @@ export default function OpdMedicationDialog({
             <Col lg='12' sm='12'>
             <label className="mt-3">Remarks</label>
             <br />
-                <textarea style={{width: '100%'}} id='remark' onChange={e=>onChange(e)} value={data.remark}></textarea>
+                <textarea style={{width: '100%' , borderRadius: '5px', border: "1px solid grey"}} id='remark' onChange={e=>onChange(e)} value={data.remark}></textarea>
             </Col>
           </Row>
           
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

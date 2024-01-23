@@ -8,7 +8,6 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import AlertDialog from "./MedicineDialog";
-import 'ag-grid-enterprise';
 import { Link } from "react-router-dom";
 import api from "services/Api";
 
@@ -117,11 +116,11 @@ const Medicines = props => {
                     {/* Render Breadcrumb */}
                     <h3>Medicines Stock</h3>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                    <Link to='/medicinepage'><button className='btn btn-primary' style={{marginRight: '10px'}}><i className="fas fa-download"></i> Import Medicine</button></Link>
-                    <button className='btn btn-primary' variant="outlined" onClick={handleClickOpen} style={{marginRight: '10px'}}>
+                    <Link to='/medicinepage'><button className='btn-mod custom-btn' style={{marginRight: '10px'}}><i className="fas fa-download"></i> Import Medicine</button></Link>
+                    <button className='btn-mod custom-btn' variant="outlined" onClick={handleClickOpen} style={{marginRight: '10px'}}>
                         <i className="fas fa-capsules"></i>  Add Medicine
                     </button>
-                    <Link to='/medicinepurchase'><button className='btn btn-primary'>Purchase</button></Link>
+                    <Link to='/medicinepurchase'><button className='btn-mod custom-btn'>Purchase</button></Link>
                     </div>
 
                     <AlertDialog
@@ -133,13 +132,15 @@ const Medicines = props => {
                     />
                 </Container>
                 <div className="ag-theme-alpine"
-                    style={{ height: 500, marginTop: "20px" }}>
+                    style={{ height: 600, marginTop: "20px" }}>
                     <AgGridReact
                         rowData={tableData}
                         columnDefs={columnDefs}
                         defaultColDef={defaultColDef}
                         onGridReady={onGridReady}
-
+                        pagination={true}
+                        paginationPageSize={10}
+                        domLayout='autoHeight'
                     />
                 </div>
             </div>

@@ -1090,7 +1090,7 @@ const UserProfile = ({ data }) => {
                           }}
                         >
                           <button
-                            className="btn btn-primary bg-soft"
+                            className="btn-mod bg-soft custom-btn"
                             onClick={handleOpenNurse}
                           >
                             + Add Nurse Note
@@ -1111,7 +1111,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleClickOpen}
                         >
                           + Add Medication Dose
@@ -1131,7 +1131,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenPrescription}
                         >
                           + Add Prescription
@@ -1149,8 +1149,9 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenCr}
+                          style={{marginBottom: '20px'}}
                         >
                           + Consultant Register
                         </button>
@@ -1172,7 +1173,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenOperation}
                         >
                           + Add Operation
@@ -1190,7 +1191,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenCharge}
                         >
                           + Add Charges
@@ -1208,7 +1209,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenPayment}
                         >
                           + Add Payment
@@ -1235,7 +1236,7 @@ const UserProfile = ({ data }) => {
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
                         <button
-                          className="btn btn-primary"
+                          className="btn-mod custom-btn"
                           onClick={handleOpenTimeline}
                         >
                           + Add Timeline

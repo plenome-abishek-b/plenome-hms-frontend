@@ -49,7 +49,7 @@ export default function ReceiveDialog({ open, handleClose, data }) {
           <br />
           <Row>
             <Col>
-              <label>To Title</label>
+              <label>To Title <span className="text-danger">*</span></label>
               <br />
               <input
                 name="to_title"
@@ -177,9 +177,7 @@ export default function ReceiveDialog({ open, handleClose, data }) {
             onChange={handleChange}
             style={{
               width: "100%",
-              height: "30px",
-              border: "1px solid grey",
-              borderRadius: "5px",
+              height: "30px"
             }}
           ></input>
           <br />
@@ -189,7 +187,7 @@ export default function ReceiveDialog({ open, handleClose, data }) {
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

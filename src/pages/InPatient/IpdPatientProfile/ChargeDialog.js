@@ -100,15 +100,15 @@ console.log(formValue,"wwww")
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Charges
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='3' sm='12'>
-                <label>Charge Type</label>
+                <label>Charge Type <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} name="charge_type" onChange={handleChange} value={formValue.charge_type}>
+                <select style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="charge_type" onChange={handleChange} value={formValue.charge_type}>
                   <option>Select</option>
                   {chargeType && chargeType.map((val=>(
                     <option key={val.id} value={val.id}>{val.charge_type}</option>
@@ -116,9 +116,9 @@ console.log(formValue,"wwww")
                 </select>
             </Col>
             <Col lg='3' sm='12'>
-                <label>Charge Category</label>
+                <label>Charge Category <span className="text-danger">*</span></label>
                 <br />
-                <select style={{width: '100%', height: '30px'}} onClick={()=>handleCharge_category()} name="charge_catgory" onChange={handleChange} value={formValue.charge_catgory}>
+                <select style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onClick={()=>handleCharge_category()} name="charge_catgory" onChange={handleChange} value={formValue.charge_catgory}>
                   <option >Select</option>
                   {charge_catgory && charge_catgory.map((val=>(
                     <option key={val.id} value={val.id}>{val.name}</option>
@@ -127,9 +127,9 @@ console.log(formValue,"wwww")
                 </select>
             </Col>
             <Col lg='3' sm='12'>
-                <label>Charge Name</label>
+                <label>Charge Name <span className="text-danger">*</span></label>
                 <br />
-                <select name="charge_id" style={{width: '100%', height: '30px'}} onClick={()=>handleChargeName()} onChange={handleChange} value={formValue.charge_id}>
+                <select name="charge_id" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onClick={()=>handleChargeName()} onChange={handleChange} value={formValue.charge_id}>
                     <option>Select</option>
                     {chargeName && chargeName.map((val=>(
                       <option key={val.id} value={val.id}>{val.name}</option>
@@ -139,17 +139,17 @@ console.log(formValue,"wwww")
             <Col lg='3' sm='12'>
                 <label>Standard Charge(₹)</label>
                 <br />
-                <input placeholder="" name="standard_charge" onChange={handleChange} value={formValue.standard_charge} style={{width: '100%', height: '30px'}}></input>
+                <input placeholder="" name="standard_charge" onChange={handleChange} value={formValue.standard_charge} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='3' sm='12'>
                 <label className="mt-2">TPA Charge(₹)</label>
                 <br />
-                <input name="tpa_charge" onChange={handleChange} value={formValue.tpa_charge} placeholder="" style={{width: '100%', height: '30px'}}></input>
+                <input name="tpa_charge" onChange={handleChange} value={formValue.tpa_charge} placeholder="" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
             <Col lg='3' sm='12'>
-                <label className="mt-2">Qty</label>
+                <label className="mt-2">Qty <span className="text-danger">*</span></label>
                 <br />
-                <input placeholder="" name="qty" onChange={handleChange} value={formValue.qty} style={{width: '100%', height: '30px'}}></input>
+                <input placeholder="" name="qty" onChange={handleChange} value={formValue.qty} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
@@ -158,7 +158,7 @@ console.log(formValue,"wwww")
                 <label>Total(₹)</label>
             </Col>
             <Col>
-                <input type="text" name="apply_charge" onChange={handleChange} value={formValue.apply_charge} style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0"></input>
+                <input type="text" name="apply_charge" onChange={handleChange} value={formValue.apply_charge} style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%', borderRadius: '5px', border: "1px solid grey"}} placeholder="0"></input>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -166,7 +166,7 @@ console.log(formValue,"wwww")
                 <label>Tax(₹)</label>
             </Col>
             <Col>
-                <input type="text" name="tax" onChange={handleChange} value={formValue.tax} style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0"></input>
+                <input type="text" name="tax" onChange={handleChange} value={formValue.tax} style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%', borderRadius: '5px', border: "1px solid grey"}} placeholder="0"></input>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -174,7 +174,7 @@ console.log(formValue,"wwww")
                 <label>Net Amount(₹)</label>
             </Col>
             <Col>
-                <input name="amount" onChange={handleChange} value={formValue.amount} type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%'}} placeholder="0"></input>
+                <input name="amount" onChange={handleChange} value={formValue.amount} type="text" style={{border: 'none', borderBottom: '1px solid gray', textAlign: 'end', width: '100%', borderRadius: '5px', border: "1px solid grey"}} placeholder="0"></input>
             </Col>
             
           </Row>
@@ -183,17 +183,17 @@ console.log(formValue,"wwww")
             <Col lg='9'>
                 <label>Charge Note</label>
                 <br />
-                <textarea name="note" onChange={handleChange} value={formValue.note} style={{width: '100%'}}></textarea>
+                <textarea name="note" onChange={handleChange} value={formValue.note} style={{width: '100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
             <Col lg='3'>
-                <label>Date</label>
+                <label>Date <span className="text-danger">*</span></label>
                 <br />
-                <input name="date" onChange={handleChange} value={formValue.date} placeholder="" type="date" style={{width:'100%', height: '30px'}}></input>
+                <input name="date" onChange={handleChange} value={formValue.date} placeholder="" type="date" style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
         </DialogContent> 
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

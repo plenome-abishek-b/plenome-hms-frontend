@@ -66,7 +66,7 @@ const Expensegroupreport = props => {
                   <label>Time Duration</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                     id="timeDuration"
                   >
                     <option>select</option>
@@ -87,7 +87,7 @@ const Expensegroupreport = props => {
                   <label>Search Expense Head</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                     id="expenseHead"
                   >
                     {expenseHead &&
@@ -100,7 +100,7 @@ const Expensegroupreport = props => {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary" onClick={getExpenses}>Search</button>
+                <button className="btn-mod" onClick={getExpenses}>Search</button>
               </div>
             </CardBody>
           </Card>
@@ -111,6 +111,9 @@ const Expensegroupreport = props => {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

@@ -180,15 +180,15 @@ export default function PrescriptionDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Prescription
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col lg='12' sm='12'>
-                <label>Header Note</label>
+                <label>Header Note </label>
                 <br />
-                <input name="header_note" onChange={handleChange} value={formData.header_note} placeholder="" style={{width: '100%', height: '60px'}}></input>
+                <input name="header_note" onChange={handleChange} value={formData.header_note} placeholder="" style={{width: '100%', height: '60px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
@@ -196,7 +196,7 @@ export default function PrescriptionDialog({
             <Col lg='3'  sm='12'>
                 <label>Finding Category</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="finding_Category" onChange={handleChange} value={formData.finding_Category}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="finding_Category" onChange={handleChange} value={formData.finding_Category}>
                   <option>Select</option>
                   {findingCategory && findingCategory.map((val=>(
                     <option key={val.id} value={val.id}>{val.category}</option>
@@ -206,7 +206,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
                 <label>Findings</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="findings" onClick={()=>getFinding()} onChange={handleChange} value={formData.findings}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="findings" onClick={()=>getFinding()} onChange={handleChange} value={formData.findings}>
                   {findings && findings.map((val=>(
                     <option key={val.name}>{val.name}</option>
                   )))}
@@ -216,12 +216,12 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
                 <label>Finding Prescription</label>
                 <br />
-                <textarea name="finding_description" onChange={handleChange} value={formData.finding_description} style={{width:'100%'}}></textarea>
+                <textarea name="finding_description" onChange={handleChange} value={formData.finding_description} style={{width:'100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
             <Col lg='3' sm='12'>
                 <label>Date</label>
                 <br />
-                <input name="date" type="date" onChange={handleChange} value={formData.finding_description} style={{width:'100%'}}></input>
+                <input name="date" type="date" onChange={handleChange} value={formData.finding_description} style={{width:'100%', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
@@ -229,7 +229,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Medicine Category</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="medine_category" onChange={handleChange} value={formData.medine_category}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="medine_category" onChange={handleChange} value={formData.medine_category}>
                   <option>select one</option>
                   {medicineCategory && medicineCategory.map((val=>(
                  <option key={val.id} value={val.id}>{val.medicine_category}</option>
@@ -239,7 +239,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Medicine</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="pharmacy_id"  onClick={()=>geMedicineName()} onChange={handleChange} value={formData.pharmacy_id}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="pharmacy_id"  onClick={()=>geMedicineName()} onChange={handleChange} value={formData.pharmacy_id}>
                   <option>Select one</option>
                   {medicineName && medicineName.map((val=>(
                       <option key={val.id} value={val.id}>{val.medicine_name}</option>
@@ -249,7 +249,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Dosage</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="dosage" onClick={()=>getDosage()} onChange={handleChange} value={formData.dosage}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="dosage" onClick={()=>getDosage()} onChange={handleChange} value={formData.dosage}>
                   <option>Select</option>
                   {medicineDosage && medicineDosage.map((val=>(
                     <option key={val.id} value={val.id}>{val.dosage}</option>
@@ -259,7 +259,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Dose Interval</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} onChange={handleChange} name="dose_interval_id" onClick={()=>getDosageIntervel()} value={formData.dose_interval_id}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onChange={handleChange} name="dose_interval_id" onClick={()=>getDosageIntervel()} value={formData.dose_interval_id}>
                   <option>Select</option>
                   {dosageIntervel && dosageIntervel.map((val=>(
                     <option key={val.id} value={val.id}>{val.name}</option>
@@ -269,7 +269,7 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Dose Duration</label>
                 <br />
-                <select style={{width:'100%', height: '30px'}} name="dose_duration_id" onClick={()=>getDosageDuration()} onChange={handleChange} value={formData.dose_duration_id}>
+                <select style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} name="dose_duration_id" onClick={()=>getDosageDuration()} onChange={handleChange} value={formData.dose_duration_id}>
                   <option>Select</option>
                   {dosageDuration && dosageDuration.map((val=>(
                     <option key={val.id} value={val.id} >{val.name}</option>
@@ -279,19 +279,19 @@ export default function PrescriptionDialog({
             <Col lg='3' sm='12'>
             <label>Instruction</label>
                 <br />
-                <textarea name="instruction" onChange={handleChange} value={formData.instruction} style={{width: '100%'}}></textarea>
+                <textarea name="instruction" onChange={handleChange} value={formData.instruction} style={{width: '100%', borderRadius: '5px', border: "1px solid grey"}}></textarea>
             </Col>
             <div className="mt-2">
-            {/* <button className="btn btn-primary">+ Add Medicine</button> */}
+            {/* <button className="btn-mod">+ Add Medicine</button> */}
 
             </div>
           </Row>
           <br />
           <Row>
           <Col lg='4'>
-                <label>Prescribe By</label>
+                <label>Prescribe By <span className="text-danger">*</span></label>
                 <br />
-                <select  onChange={handleChange}  style={{width:'100%', height: '30px'}}>
+                <select  onChange={handleChange}  style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}>
                   <option>Select</option>
                   {doctor && doctor.map((value=>(
                     <option key={value.staff_id} value={value.staff_id}>{value.name}</option>
@@ -301,7 +301,7 @@ export default function PrescriptionDialog({
             <Col lg='4'>
                 <label>Pathology</label>
                 <br />
-                <select name="pathology_id" onChange={handleChange} value={formData.pathology_id} style={{width:'100%', height: '30px'}}>
+                <select name="pathology_id" onChange={handleChange} value={formData.pathology_id} style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}>
                   {pathology && pathology.map((val=>(
                     <option key={val.id} value={val.id}>{val.short_name}</option>
                   )))}
@@ -311,7 +311,7 @@ export default function PrescriptionDialog({
             <Col lg='4'>
                 <label>Radiology</label>
                 <br />
-                <select name="radiology_id"  style={{width:'100%', height: '30px'}} onChange={handleChange} value={formData.radiology_id}>
+                <select name="radiology_id"  style={{width:'100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}} onChange={handleChange} value={formData.radiology_id}>
                   {radiology && radiology.map((val=>(
                     <option  key={val.id} value={val.id}>{val.short_name}</option>
                   )))}
@@ -325,7 +325,7 @@ export default function PrescriptionDialog({
             <Col lg='12' sm='12'>
                 <label>Footer Note</label>
                 <br />
-                <input name="footer_note" onChange={handleChange} value={formData.footer_note} placeholder="" style={{width: '100%', height: '60px'}}></input>
+                <input name="footer_note" onChange={handleChange} value={formData.footer_note} placeholder="" style={{width: '100%', height: '60px', borderRadius: '5px', border: "1px solid grey"}}></input>
             </Col>
           </Row>
           <br />
@@ -354,7 +354,7 @@ export default function PrescriptionDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button  className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button  className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

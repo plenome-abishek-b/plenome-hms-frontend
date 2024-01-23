@@ -9,7 +9,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import { style } from "@mui/system";
@@ -45,7 +45,7 @@ const Income = props => {
 
   const columnDefs = [
 
-    { headerName: "Name", field: "name", cellStyle: { color: 'blue', fontWeight: 'bold', backgroundColor: 'rgba(0,0,0,0.1)' } },
+    { headerName: "Name", field: "name", cellStyle: { color: '#6070FF', fontWeight: 'bold', backgroundColor: 'rgba(0,0,0,0.1)' } },
     {
       headerName: "Invoice No",
       field: "invoice_no",
@@ -85,11 +85,8 @@ const Income = props => {
           <Breadcrumbs
             title={props.t("Income")}
             breadcrumbItem={props.t("Income")}
-          /><div>
-
-<input style={{width:'10%'} } onChange={handleChange}></input><button onClick={()=>onSubmit()} className="btn btn-primary bg-soft"  style={{width:'7%'}}>search</button>
-          </div>
-          <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}><button className='btn btn-primary' variant="outlined" onClick={handleClickOpen}>
+          />
+          <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}><button className='btn-mod' variant="outlined" onClick={handleClickOpen}>
             ₹ &nbsp;Add Income
           </button></div>
           <AlertDialog 
@@ -98,7 +95,7 @@ const Income = props => {
           />
         </Container>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 500, marginTop: "20px" }}
         >
           <AgGridReact

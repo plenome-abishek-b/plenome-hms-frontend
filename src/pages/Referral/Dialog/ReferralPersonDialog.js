@@ -144,7 +144,7 @@ export default function Referralpersondialog({ open, handleClose, data , onChang
           <button className="btn btn-danger" onClick={handleClose}>
             Cancel
           </button>
-          <button className="btn btn-primary" autoFocus onClick={() => handleFormSubmit()} >
+          <button className="btn-mod" autoFocus onClick={() => handleFormSubmit()} >
             Save
           </button>
         </DialogActions>

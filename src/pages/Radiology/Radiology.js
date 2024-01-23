@@ -9,7 +9,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 //ag-grid modules
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -46,7 +46,7 @@ const Radiology = props => {
    console.log(data,"data response bill")
   }
   const columnDefs = [
-    { headerName: 'Case ID.', field: 'id' , cellStyle: {backgroundColor: 'rgba(0,0,0,0.2)', fontWeight: 'bold'}},
+    { headerName: 'Case ID.', field: 'id' , cellStyle: {backgroundColor: 'rgba(0,0,0,0.1)', fontWeight: 'bold', color: '#6070FF'}},
     { headerName: 'Bill no.', field: 'id' },
     { headerName: 'Patient Name', field: 'patient_name' },
     { headerName: 'Reference Doctor', field: 'name' },
@@ -73,21 +73,24 @@ const Radiology = props => {
             breadcrumbItem={props.t("Radiology")}
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <Link to='/radiotest'><button className="btn btn-secondary"><i className="fas fa-microscope"></i> &nbsp;Radiology Test</button></Link>
-            <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={handleClickOpen}><i className="fas fa-microscope"></i> &nbsp;Generate Bill</button>
+            <Link to='/radiotest'><button className="btn btn-secondary" style={{backgroundColor: '#6070FF', border: '1px solid #6070FF'}}><i className="fas fa-microscope"></i> &nbsp;Radiology Test</button></Link>
+            <button className="btn-mod custom-btn" style={{ marginLeft: '10px', border: '1px solid #6070FF' }} onClick={handleClickOpen}><i className="fas fa-file"></i> &nbsp;Generate Bill</button>
           </div>
           <RadiologyBillDialog
             open={open}
             handleClose={handleClose}
           />
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact
               rowData={radiologyBill}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

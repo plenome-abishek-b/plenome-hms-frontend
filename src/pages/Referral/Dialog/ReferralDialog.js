@@ -152,7 +152,7 @@ export default function Referraldialog({ open, handleClose,data,onChange,
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' autoFocus onClick={() => handleFormSubmit()} >
+                    <button className='btn-mod' autoFocus onClick={() => handleFormSubmit()} >
                         Save
                     </button>
                 </DialogActions>

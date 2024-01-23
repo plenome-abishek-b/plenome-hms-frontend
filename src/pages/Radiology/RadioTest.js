@@ -9,7 +9,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import RadioDialog from "./RadioDialog";
@@ -73,13 +73,16 @@ const RadioTest = props => {
                         <button className="btn btn-outline-primary" onClick={handleClickOpen}>Add Radiology Test</button>
                     </div>
                     <div
-                        className="ag-theme-balham"
+                        className="ag-theme-alpine"
                         style={{ height: 500, marginTop: "20px" }}
                     >
                     <AgGridReact 
                         rowData={radiologyData}
                         columnDefs={columnDefs}
                         defaultColDef={defaultColDef}
+                        pagination={true}
+                        paginationPageSize={10}
+                        domLayout='autoHeight'
                     />
                     </div>
                     <RadioDialog 

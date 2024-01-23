@@ -120,7 +120,9 @@ const Payment = props => {
 
   return (
         <div>
-          <button className="btn btn-primary" onClick={handleOpenPayment}>+ Add Payment</button>
+          <div className='d-flex justify-content-end'>
+          <button className="btn-mod custom-btn" onClick={handleOpenPayment}>+ Add Payment</button>
+          </div>
             <OpdPaymentDialog open={openPayDialog} handleClose={handleClosePayment} onChange={onChange} data={formData} handleFormSubmit={handleFormSubmit}/>
           <div className="ag-theme-alpine mt-4"
             style={{ height: 700 }}>
@@ -128,6 +130,9 @@ const Payment = props => {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
               // onGridReady={onGridReady}
             />
           </div>

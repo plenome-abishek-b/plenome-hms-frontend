@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 
 // Reactstrap
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap"
+import "./styles.css"
 
 // Import menuDropdown
 import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown"
@@ -103,7 +104,7 @@ const Header = props => {
               className="btn btn-sm px-3 font-size-16 header-item "
               id="vertical-menu-btn"
             >
-              <i className="fa fa-fw fa-bars" />
+              <i className="fa fa-fw fa-bars text-white" />
             </button>
 
             <form className="app-search d-none d-lg-block">
@@ -124,9 +125,9 @@ const Header = props => {
                 setmegaMenu(!megaMenu)
               }}
             >
-              <DropdownToggle className="btn header-item " caret tag="button">
+              <DropdownToggle className="btn header-item text-white" caret tag="button">
                 {" "}
-                {props.t("Mega Menu")} <i className="mdi mdi-chevron-down" />
+                {props.t("Mega Menu")} <i className="mdi mdi-chevron-down text-white" />
               </DropdownToggle>
               <DropdownMenu className="dropdown-megamenu">
                 <Row>
@@ -138,16 +139,16 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/opd">{props.t("OPD-Out Patient")}</Link>
+                            <Link to="/opd" className="custom-list">{props.t("OPD-Out Patient")}</Link>
                           </li>
                           <li>
-                            <Link to="/ipd">{props.t("IPD-In Patient")}</Link>
+                            <Link to="/ipd" className="custom-list">{props.t("IPD-In Patient")}</Link>
                           </li>
                           <li>
-                            <Link to="/pharmacy">{props.t("Pharmacy")}</Link>
+                            <Link to="/pharmacy" className="custom-list">{props.t("Pharmacy")}</Link>
                           </li>
                           <li>
-                            <Link to="/ambulance">{props.t("Ambulance")}</Link>
+                            <Link to="/ambulance" className="custom-list">{props.t("Ambulance")}</Link>
                           </li>
                         </ul>
                       </Col>
@@ -158,12 +159,12 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/birthrecord">
+                            <Link to="/birthrecord" className="custom-list">
                               {props.t("Birth Records")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/deathrecord">
+                            <Link to="/deathrecord" className="custom-list">
                               {props.t("Death Records")}
                             </Link>
                           </li>
@@ -176,10 +177,10 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/income">{props.t("Income")}</Link>
+                            <Link to="/income" className="custom-list">{props.t("Income")}</Link>
                           </li>
                           <li>
-                            <Link to="/expenses">{props.t("Expenses")}</Link>
+                            <Link to="/expenses" className="custom-list">{props.t("Expenses")}</Link>
                           </li>
                         </ul>
                       </Col>
@@ -193,27 +194,27 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/opdreport">
+                            <Link to="/opdreport" className="custom-list">
                               {props.t("OPD Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/ipdreport">
+                            <Link to="/ipdreport" className="custom-list">
                               {props.t("IPD Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="pathologyreport">
+                            <Link to="pathologyreport" className="custom-list">
                               {props.t("Pathology Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/bloodreport">
+                            <Link to="/bloodreport" className="custom-list">
                               {props.t("Blood Issue Reports")}
                             </Link>
                           </li>
                           <li>
-                            <Link to="/radiologyreport">
+                            <Link to="/radiologyreport" className="custom-list">
                               {props.t("Radiology Reports")}
                             </Link>
                           </li>
@@ -245,7 +246,7 @@ const Header = props => {
                 className="btn header-item noti-icon "
                 id="page-header-search-dropdown"
               >
-                <i className="mdi mdi-magnify" />
+                <i className="mdi mdi-magnify text-white" />
               </button>
               <div
                 className={
@@ -265,7 +266,7 @@ const Header = props => {
                         aria-label="Recipient's username"
                       />
                       <div className="input-group-append">
-                        <button className="btn btn-primary" type="submit">
+                        <button className="btn-mod" type="submit">
                           <i className="mdi mdi-magnify" />
                         </button>
                       </div>
@@ -281,21 +282,21 @@ const Header = props => {
               <button 
               className="btn header-item bed-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-bed bx-sm"></i></button>
+              ><i className="bx bx-bed bx-sm text-white"></i></button>
             </div>
 
             <div className="d-none d-lg-inline-block ms-1">
               <button 
               className="btn header-item cal-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-calendar bx-sm"></i></button>
+              ><i className="bx bx-calendar bx-sm text-white"></i></button>
             </div>
 
             <div className="d-none d-lg-inline-block ms-1">
               <button 
               className="btn header-item cal-icon"
                 data-toggle="fullscreen"
-              ><i className="bx bx-check-square bx-sm"></i></button>
+              ><i className="bx bx-check-square bx-sm text-white"></i></button>
             </div>
 
             <Dropdown
@@ -309,7 +310,7 @@ const Header = props => {
                 className="btn header-item noti-icon "
                 tag="button"
               >
-                <i className="fab fa-whatsapp"></i>
+                <i className="fab fa-whatsapp text-white"></i>
               </DropdownToggle>
             </Dropdown>
 
@@ -319,10 +320,11 @@ const Header = props => {
                 onClick={() => {
                   toggleFullscreen()
                 }}
-                className="btn header-item noti-icon "
+                className="btn header-item noti-icon text-white"
                 data-toggle="fullscreen"
+                style={{color: "white"}}
               >
-                <i className="bx bx-fullscreen" />
+                <i className="bx bx-fullscreen text-white" />
               </button>
             </div>
 
@@ -339,9 +341,10 @@ const Header = props => {
             >
               <button
                 type="button"
-                className="btn header-item noti-icon right-bar-toggle "
+                className="btn header-item noti-icon right-bar-toggle text-white"
+                style={{color: 'white'}}
               >
-                <i className="bx bx-cog bx-spin" />
+                <i className="bx bx-cog bx-spin text-white" />
               </button>
             </div>
           </div>

@@ -9,27 +9,77 @@ import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import { useState } from "react"
 import api from "services/Api"
+import { useEffect } from "react"
 
 export default function SetupPathologyDialog({
   open,
   handleClose,
   data,
   onChange,
+  getRadiologyCategory,
+  selectedData
   // handleFormSubmit,
 }) {
+  console.log(selectedData,"select");
   const [formData,setFormData] = useState({
     lab_name:'',
-    created_at:'2012-11-12 11:11:11'
   })
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormData({
+        lab_name: selectedData.lab_name || "",
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormData({
+        lab_name: "",
+      });
+    }
+  }, [selectedData]);
   const handleChange = (event) =>{
+    
     const {value,name} = event.target
-    setFormData({
-     ...formData, [name]:value
-    })
+    // if(selectedData){
+    //   console.log(value,"val");
+    //   selectedData.lab_name = value
+    // }else{
+      setFormData({
+       ...formData, [name]:value
+      })
+    // }
+    
   }
   console.log(formData,"gg")
   const handleFormSubmit = async () =>{
-  const response = await api.postRadiologyCatetegory(formData)
+    try {
+      
+      console.log(formData,"lab");
+      // const data ={
+      //   lab_name:formData.lab_name,
+      //   // id:selectedData.id
+      const response = await api.postSetupRadiologyCategory(formData)
+      window.location.reload()
+      getRadiologyCategory()
+      // }
+    // if(response.data){
+    } catch (error) {
+      window.location.reload()
+
+      console.log(error,"error");
+    }
+  // }
+  }
+  const handleFormSubmitUpdate =async () =>{
+  
+    console.log(formData,selectedData,"kkkk");
+    const data ={
+      lab_name:formData.lab_name,
+      id:selectedData.id
+    }
+    const response = await api.patchSetupRadiologyCategory(data)
+    // window.location.reload()
+  getRadiologyCategory()
   }
 
   return (
@@ -60,9 +110,13 @@ export default function SetupPathologyDialog({
         </Container>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-sm" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
-            Save
-          </button>
+          {selectedData?.lab_name ?
+          <button className="btn-mod bg-soft btn-sm" onClick={()=>handleFormSubmitUpdate(handleClose())} style={{marginRight: '3%'}}>
+            Saves
+          </button> :
+          <button className="btn-mod bg-soft btn-sm" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          Save
+        </button>}
         </DialogActions>
       </Dialog>
     </div>

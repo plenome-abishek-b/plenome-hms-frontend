@@ -95,7 +95,7 @@ const Radiologyreport = props => {
                   <label>Time Duration</label>
                   <br />
                   <select
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
                     id="timeDuration"
                   >
                     <option>select</option>
@@ -115,7 +115,7 @@ const Radiologyreport = props => {
                 <Col lg='3'>
                   <label>Sample Collected Person Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="collectedBy">
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="collectedBy">
                   {collectedBy &&
                       collectedBy.map(collect => (
                         <option key={collect.collectedBy} value={collect.id}>
@@ -127,7 +127,7 @@ const Radiologyreport = props => {
                 <Col lg='3'>
                   <label>Category Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="category">
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="category">
                   {radioName &&
                     radioName.map(radio_name => (
                         <option key={radio_name.test} value={radio_name.id}>
@@ -139,7 +139,7 @@ const Radiologyreport = props => {
                 <Col lg='3'>
                   <label>Test Name</label>
                   <br />
-                  <select  style={{ width: "100%", height: "30px" }} id="test">
+                  <select  style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="test">
                   {testName &&
                     testName.map(test_name => (
                         <option key={test_name.tests} value={test_name.id}>
@@ -149,7 +149,7 @@ const Radiologyreport = props => {
                   </select>
                 </Col>
                 <div className="mt-2 d-flex justify-content-end">
-                  <button className="btn btn-primary" onClick={getRadiologyReport}>Search</button>
+                  <button className="btn-mod" onClick={getRadiologyReport}>Search</button>
                 </div>
               </Row>
               <br />
@@ -158,6 +158,9 @@ const Radiologyreport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
             </CardBody>

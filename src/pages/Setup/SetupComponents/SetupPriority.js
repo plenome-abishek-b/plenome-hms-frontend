@@ -125,7 +125,7 @@ const SetupPriority = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenPriority}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenPriority}>
                     <i className="fa fa-plus"></i>&nbsp; Add Priority
                   </button>
                 </div>

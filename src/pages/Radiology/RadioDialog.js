@@ -82,7 +82,7 @@ export default function RadioDialog({ open, handleClose }) {
       >
         <DialogTitle
           id="alert-dialog-title"
-          style={{ backgroundColor: "#92A4FF" }}
+          style={{ backgroundColor: "#6070FF" }}
           className="text-white fw-bold"
         >
           Add Radiology Details
@@ -91,7 +91,7 @@ export default function RadioDialog({ open, handleClose }) {
           <br />
           <Row>
             <Col lg="6" md="6" sm="12">
-              <label>Test Name</label>
+              <label>Test Name <span className="text-danger">*</span></label>
               <br />
               <input
                 onChange={handleChange}
@@ -108,7 +108,7 @@ export default function RadioDialog({ open, handleClose }) {
               />
             </Col>
             <Col>
-              <label>Short Name</label>
+              <label>Short Name <span className="text-danger">*</span></label>
               <br />
               <input
                 name="short_name"
@@ -145,7 +145,7 @@ export default function RadioDialog({ open, handleClose }) {
               />
             </Col>
             <Col>
-              <label>Charge Category</label>
+              <label>Charge Category <span className="text-danger">*</span></label>
               <br />
               <select
                 name="charge_category_id"
@@ -205,7 +205,7 @@ export default function RadioDialog({ open, handleClose }) {
           <br />
           <Row>
             <Col>
-              <label>Tax</label>
+              <label>Tax <span className="text-danger">*</span></label>
               <br />
               <input
                 onChange={handleChange}
@@ -222,7 +222,7 @@ export default function RadioDialog({ open, handleClose }) {
               />
             </Col>
             <Col>
-              <label>Standard Charge</label>
+              <label>Standard Charge <span className="text-danger">*</span></label>
               <br />
               <input
                 onChange={handleChange}
@@ -242,7 +242,7 @@ export default function RadioDialog({ open, handleClose }) {
           <br />
           <Row>
             <Col>
-              <label>Charge Name</label>
+              <label>Charge Name <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{
@@ -266,7 +266,7 @@ export default function RadioDialog({ open, handleClose }) {
               </select>
             </Col>
             <Col>
-              <label>Category Name</label>
+              <label>Category Name <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{
@@ -294,7 +294,7 @@ export default function RadioDialog({ open, handleClose }) {
           <Row>
             <Col>
               {/* <Col> */}
-              <label>Amount</label>
+              <label>Amount <span className="text-danger">*</span></label>
               <br />
               <input
                 name="amount"
@@ -312,7 +312,7 @@ export default function RadioDialog({ open, handleClose }) {
               {/* </Col> */}
             </Col>
             <Col>
-              <label>Test parameter Name</label>
+              <label>Test parameter Name <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{ width: "100%", height: "30px", border: "1px solid grey",
@@ -367,11 +367,11 @@ export default function RadioDialog({ open, handleClose }) {
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-danger" onClick={handleClose}>
+          <button className="btn btn-danger fw-bold" onClick={handleClose}>
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod fw-bold"
             onClick={() => handleSubmit(handleClose())}
             autoFocus
           >

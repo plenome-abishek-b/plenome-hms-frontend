@@ -127,7 +127,7 @@ const setupFrontOfficeComplainType = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenComplain}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenComplain}>
                     <i className="fa fa-plus"></i>&nbsp; Add Complaint Type
                   </button>
                 </div>

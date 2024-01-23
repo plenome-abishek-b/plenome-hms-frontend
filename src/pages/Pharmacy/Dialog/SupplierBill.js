@@ -34,7 +34,7 @@ export default function SupplierbillDialog({
         <DialogTitle
           id="alert-dialog-title"
           className="text-white fw-bold"
-          style={{ backgroundColor: "#92A4FF" }}
+          style={{ backgroundColor: "#6070FF" }}
         >
           Bill No
         </DialogTitle>
@@ -58,7 +58,7 @@ export default function SupplierbillDialog({
               <Col lg="12">
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Medicine Category</label>
+                    <label>Medicine Category <span className="text-danger">*</span></label>
                     <br />
                     <select
                       style={{
@@ -76,7 +76,7 @@ export default function SupplierbillDialog({
                     </select>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Medicine Name</label>
+                    <label>Medicine Name <span className="text-danger">*</span></label>
                     <br />
                     <select
                       style={{
@@ -94,7 +94,7 @@ export default function SupplierbillDialog({
                     </select>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Batch No</label>
+                    <label>Batch No <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -114,7 +114,7 @@ export default function SupplierbillDialog({
                 <br />
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Expiry Date</label>
+                    <label>Expiry Date <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -128,7 +128,7 @@ export default function SupplierbillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>MRP(₹)</label>
+                    <label>MRP(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -163,7 +163,7 @@ export default function SupplierbillDialog({
 
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Sales Price(₹)</label>
+                    <label>Sales Price(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -194,7 +194,7 @@ export default function SupplierbillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Quantity</label>
+                    <label>Quantity <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -246,7 +246,7 @@ export default function SupplierbillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Purchase Price(₹)</label>
+                    <label>Purchase Price(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -263,7 +263,7 @@ export default function SupplierbillDialog({
                 <br />
                 <Row>
                   <Col lg="4" md="4">
-                    <label>Tax</label>
+                    <label>Tax <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder="%"
@@ -280,7 +280,7 @@ export default function SupplierbillDialog({
                     ></input>
                   </Col>
                   <Col lg="4" md="4">
-                    <label>Amount(₹)</label>
+                    <label>Amount(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input
                       placeholder=""
@@ -329,6 +329,7 @@ export default function SupplierbillDialog({
                             borderBottom: "1px solid black",
                             width: "100%",
                             textAlign: "end",
+                            borderRadius: '5px'
                           }}
                           placeholder="0"
                           id="total"
@@ -351,6 +352,7 @@ export default function SupplierbillDialog({
                             borderBottom: "1px solid black",
                             width: "100%",
                             textAlign: "end",
+                            borderRadius: '5px'
                           }}
                           placeholder="0"
                           id="discount"
@@ -373,6 +375,7 @@ export default function SupplierbillDialog({
                             borderBottom: "1px solid black",
                             width: "100%",
                             textAlign: "end",
+                            borderRadius: '5px'
                           }}
                           placeholder="0"
                           id="tax"
@@ -395,6 +398,7 @@ export default function SupplierbillDialog({
                             borderBottom: "1px solid black",
                             width: "100%",
                             textAlign: "end",
+                            borderRadius: '5px'
                           }}
                           placeholder="0"
                           id="net_amount"
@@ -440,7 +444,7 @@ export default function SupplierbillDialog({
                     </Row>
                   </Container>
                   <div className="mt-4">
-                    <button className="btn btn-primary bg-soft">
+                    <button className="btn-mod bg-soft fw-bold">
                       Calculate
                     </button>
                   </div>
@@ -456,7 +460,7 @@ export default function SupplierbillDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn-mod fw-bold"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

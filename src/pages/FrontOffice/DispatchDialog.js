@@ -47,7 +47,7 @@ export default function DispatchDialog({ open, handleClose ,data}) {
                     <br />
                     <Row>
                         <Col>
-                        <label>To title</label>
+                        <label>To title <span className="text-danger">*</span></label>
                         <br />
                             <input
                                 name='to_title'
@@ -146,7 +146,7 @@ export default function DispatchDialog({ open, handleClose ,data}) {
                     value={formData.image}
                     onChange={handleChange}
                     
-                    style={{width:'100%', height: '30px', border: '1px solid grey', borderRadius: '5px'}}
+                    style={{width:'100%', height: '30px'}}
                     >
                     </input>
                     <br />
@@ -155,7 +155,7 @@ export default function DispatchDialog({ open, handleClose ,data}) {
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={() => handleFormSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod' onClick={() => handleFormSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

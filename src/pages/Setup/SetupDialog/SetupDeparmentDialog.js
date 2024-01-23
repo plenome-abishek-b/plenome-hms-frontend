@@ -9,18 +9,39 @@ import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import { useState } from "react"
 import api from "services/Api"
+import { useEffect } from "react"
 
 export default function SetupDepartmentDialog({
   open,
   handleClose,
-  getDepartments
+  getDepartments,
+  selectedData
 }) {
   const [openSetupBbDialog, setOpenSetupBbDialog] = React.useState(false)
+  const [validate,setValidate] = useState(false)
   const [formData,setFormdata] = useState({
     department_name:'',
     is_active:'yes',
-    created_at:'2023-02-12 11:11:11'
+    // created_at:'2023-02-12 11:11:11'
+    Hospital_id:1
   })
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormdata({
+        department_name: selectedData?.department_name || "",
+        Hospital_id:1,
+        is_active:"yes"
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormdata({
+        department_name:'',
+        Hospital_id:1,
+        is_active:"yes"
+      });
+    }
+  }, [selectedData]);
   const handleClickOpen = () => {
     //dialog open
     setOpenSetupBbDialog(true)
@@ -39,8 +60,32 @@ export default function SetupDepartmentDialog({
     })
   }
   const handleSubmit =async () =>{
-   const response = await api.postHrsetup_Department(formData)
-   getDepartments()
+    if(formData?.department_name === ''){
+      setValidate(true)
+      setTimeout(()=>{
+        setValidate(false)
+      },10000)
+    }else{
+      const response = await api.postSetupHR_department(formData)
+      getDepartments()
+      handleClose()
+    }
+  }
+  const handleUpdate = async () =>{
+    const newData = {
+      ...formData,
+      id:selectedData?.id
+    }
+    if(newData?.department_name === ''){
+      setValidate(true)
+      setTimeout(()=>{
+        setValidate(false)
+      },10000)
+    }else{
+      const resposne = await api.updateSetupHR_department(newData)
+      getDepartments()
+      handleClose()
+    }
   }
 
   return (
@@ -69,18 +114,22 @@ export default function SetupDepartmentDialog({
             <input
             name="department_name"
             onChange={handleChange}
+            placeholder={validate?"enter department name":""}
             value={formData.department_name}
             type="text"
-            style={{height: '30px'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
             >
-
             </input>
             </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+         { selectedData?.department_name ? <button className="btn-mod bg-soft btn-md" onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
             Save
-          </button>
+          </button> :
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
+          Save
+        </button>
+}
         </DialogActions>
       </Dialog>
     </div>

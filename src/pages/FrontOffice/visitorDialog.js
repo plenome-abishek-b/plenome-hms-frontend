@@ -45,7 +45,7 @@ export default function VisitorDialog({
                                 value={data.purpose}
                                 onChange={e => onChange(e)}
                             /> */}
-              <label>Purpose</label>
+              <label>Purpose <span className="text-danger">*</span></label>
               <br />
               <select
                 style={{
@@ -81,7 +81,7 @@ export default function VisitorDialog({
                             />
                         </Col> */}
             <Col>
-              <label>Name</label>
+              <label>Name <span className="text-danger">*</span></label>
               <br />
               <input
                 id="name"
@@ -270,7 +270,7 @@ export default function VisitorDialog({
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit()}
             autoFocus
           >

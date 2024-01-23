@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api";
@@ -175,13 +175,16 @@ console.log(tableData,"jjijijij")
           </div>
         </Container>
         <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 700, marginTop: "20px" }}
         >
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
       </div>

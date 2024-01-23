@@ -72,7 +72,7 @@ const Verifymobileotp = () => {
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
                     
-                      <button className="btn btn-primary" onClick={handleFormSubmit}>
+                      <button className="btn-mod" onClick={handleFormSubmit}>
                         Verify
                       </button>
                    

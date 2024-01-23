@@ -75,7 +75,7 @@ export default function DownloadDialog({ open, handleClose , data,
                     <button className="btn btn-danger" onClick={handleClose}>
                         Cancel
                     </button>
-                    <button className="btn btn-primary" onClick={() => handleFormSubmit()} autoFocus>
+                    <button className="btn-mod" onClick={() => handleFormSubmit()} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

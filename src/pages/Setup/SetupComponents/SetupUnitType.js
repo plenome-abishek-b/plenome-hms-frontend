@@ -65,6 +65,9 @@ const setupUnitType = props => {
     //for posting and getting data at a sametime
     api.postUnitType(formData).then(resp => {
       console.log(resp)
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     })
     handleClose()
 
@@ -87,7 +90,7 @@ const setupUnitType = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn btn-primary bg-soft" onClick={handleOpenUnitType}>
+                  <button className="btn-mod bg-soft" onClick={handleOpenUnitType}>
                     <i className="fa fa-plus"></i>&nbsp; Add Unit Type
                   </button>
                 </div>

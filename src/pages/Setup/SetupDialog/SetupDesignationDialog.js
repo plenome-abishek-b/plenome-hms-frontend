@@ -9,18 +9,22 @@ import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import { useState } from "react"
 import api from "services/Api"
+import { useEffect } from "react"
 
-export default function XSetupDesignationDialog({
+export default function SetupDesignationDialog({
   open,
   handleClose,
-  getDesignation
+  getDesignation,
+  selectedData
 }) {
   const [openSetupBbDialog, setOpenSetupBbDialog] = React.useState(false)
   const [formData,setFormdata] = useState({
     designation:'',
     is_active:'yes',
-    created_at:'2023-02-12 11:11:11'
+    // created_at:'2023-02-12 11:11:11'
+    Hospital_id:1
   })
+  const [validate,setValidate] = useState(false)
   const handleClickOpen = () => {
     //dialog open
     setOpenSetupBbDialog(true)
@@ -30,7 +34,23 @@ export default function XSetupDesignationDialog({
     //dialog close
     setOpenCrDialog(false)
   }
-  
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormdata({
+        designation: selectedData?.designation || "",
+        is_active:"yes",
+        Hospital_id:1,
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormdata({
+        designation:'',
+        Hospital_id:1,
+        is_active:"yes"
+      });
+    }
+  }, [selectedData]);
   const handleChange = (e) =>{
     const {name,value} = e.target
     setFormdata({
@@ -39,8 +59,32 @@ export default function XSetupDesignationDialog({
     })
   }
   const handleSubmit =async () =>{
-   const response = await api.postHrsetup_Designation(formData)
-   getDesignation()
+    if(formData?.designation === ''){
+      setValidate(true)
+      setTimeout(()=>{
+      setValidate(false)
+      },10000)
+    }else{
+      const response = await api.postSetupHR_designation(formData)
+      getDesignation()
+      handleClose()
+    }
+  }
+  const handleUpdate = async () =>{
+    const newData = {
+      ...formData,
+      id:selectedData?.id
+    }
+    if(newData?.designation === ''){
+      setValidate(true)
+      setTimeout(()=>{
+      setValidate(false)
+      },10000)
+    }else{
+      const response = await api.updateSetupHR_designation(newData)
+      getDesignation()
+      handleClose()
+    }
   }
 
   return (
@@ -68,19 +112,26 @@ export default function XSetupDesignationDialog({
         <Label>Name</Label>
             <input
             name="designation"
+            placeholder={validate ? "enter designation":""}
             onChange={handleChange}
             value={formData.designation}
             type="text"
-            style={{height: '30px'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
             >
 
             </input>
             </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          {
+            selectedData?.designation ?
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
             Save
-          </button>
+          </button>:
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
+          Save
+        </button>
+          }
         </DialogActions>
       </Dialog>
     </div>

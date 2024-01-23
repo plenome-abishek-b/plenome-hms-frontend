@@ -1,0 +1,60 @@
+/* styles.css */
+.ag-theme-alpine .ag-header {
+    /* Use a gradient background color */
+    background: #7070FF;;
+    color: white; /* Change this to the desired text color */
+    border-radius: 10px 10px 0 0;
+    border: none;
+  }
+  
+  .ag-theme-alpine .ag-header-cell {
+    border-color: #7070FF; /* Border color for header cells */
+    text-align: center;
+  }
+  
+  .ag-theme-alpine .ag-header .ag-header-cell-label {
+    color: white; /* Change this to the desired text color */
+    font-weight: bold; /* Optional: You can adjust the font-weight as needed */
+    font-family: 'poppins';
+  }
+  
+  /* customAgGridStyles.css */
+  
+  .ag-theme-alpine .ag-header-cell {
+    border-right: 1px solid white; /* Add a white border to the right of each header cell */
+  }
+  
+  .ag-theme-alpine .ag-header-row {
+    border-bottom: 1px solid white; /* Add a white border below the header row */
+  }
+  
+
+  .ag-theme-alpine .ag-root-wrapper {
+
+    border: none;
+
+  }
+
+  .custom-btn{
+    background: #7070FF
+  }
+
+  .custom-card{
+    background: #7070FF;
+  }
+
+  .custom-card-expense{
+    background: #59CE8F;
+  }
+
+  .navbar-header{
+    background: #7070FF;
+  }
+
+  .btn-mod{
+    background-color: #7070FF;
+    height: 35px;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #7070FF;
+  }

@@ -44,50 +44,51 @@ export default function TpaDialog({
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="bg-primary bg-soft text-primary"
+          className="text-white fw-bold" 
+          style={{backgroundColor: '#6070FF'}}
         >
           Add TPA
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row className="p-2">
-            <label>Name</label>
+            <label  >Name <span className="text-danger">*</span></label>
             <br />
-            <input type="text" placeholder="" id="organisation_name" value={data.organisation_name} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="organisation_name" value={data.organisation_name} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }} ></input>
           </Row>
           
           <Row className="p-2">
-            <label>Code</label>
+            <label>Code <span className="text-danger">*</span></label>
             <br />
-            <input type="text" placeholder="" id="code" value={data.code} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="code" value={data.code} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }}></input>
           </Row>
          
           <Row className="p-2">
-            <label>Contact No</label>
+            <label>Contact No <span className="text-danger">*</span></label>
             <br />
-            <input type="text" placeholder="" id="contact_no" value={data.contact_no} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="contact_no" value={data.contact_no} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }}></input>
           </Row>
          
           <Row className="p-2">
-            <label>Address</label>
+            <label>Address <span className="text-danger">*</span></label>
             <br />
-            <input type="text" placeholder="" id="address" value={data.address} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="address" value={data.address} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }}></input>
           </Row>
           
           <Row className="p-2">
             <label>Contact Person Name</label>
             <br />
-            <input type="text" placeholder="" id="contact_person_name" value={data.contact_person_name} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="contact_person_name" value={data.contact_person_name} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }}></input>
           </Row>
          
           <Row className="p-2">
             <label>Contact Person Phone</label>
             <br />
-            <input type="text" placeholder="" id="contact_person_phone" value={data.contact_person_phone} onChange={e=>onChange(e)} ></input>
+            <input type="text" placeholder="" id="contact_person_phone" value={data.contact_person_phone} onChange={e=>onChange(e)} style={{ borderRadius: '5px', border: "1px solid grey" }}></input>
           </Row>
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md fw-bold"
             onClick={() => handleFormSubmit()}
             style={{ marginRight: "3%" }}
           >

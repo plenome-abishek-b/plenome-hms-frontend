@@ -81,16 +81,16 @@ export default function InventoryDialog({ open, handleClose , data,
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
                     Add Item stock
                 </DialogTitle>
                 <br />
                 <DialogContent>
                     <Row>
                         <Col>
-                            <label>Item Category</label>
+                            <label>Item Category <span className="text-danger">*</span></label>
                             <br />
-                            <select style={{width: '100%' , height: '30px'}} value={data.item_category} id="item_category" onChange={e=>onChange(e)} >
+                            <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_category} id="item_category" onChange={e=>onChange(e)} >
                                 <option>select</option>
                                 {itemCategory &&
                 itemCategory.map((cate) => (
@@ -101,9 +101,9 @@ export default function InventoryDialog({ open, handleClose , data,
                             </select>
                         </Col>
                         <Col>
-                        <label>Item</label>
+                        <label>Item <span className="text-danger">*</span></label>
                             <br />
-                            <select style={{width: '100%' , height: '30px'}} value={data.item_id} id="item_id" onChange={e=>onChange(e)} >
+                            <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_id} id="item_id" onChange={e=>onChange(e)} >
                                 <option>select</option>
                                 {item &&
                 item.map((item) => (
@@ -117,9 +117,9 @@ export default function InventoryDialog({ open, handleClose , data,
                     <br />
                     <Row>
                         <Col>
-                        <label>Supplier</label>
+                        <label>Supplier <span className="text-danger">*</span></label>
                             <br />
-                            <select style={{width: '100%' , height: '30px'}} value={data.item_supplier} id="item_supplier" onChange={e=>onChange(e)} >
+                            <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_supplier} id="item_supplier" onChange={e=>onChange(e)} >
                                 <option>select</option>
                                 {itemSupplier &&
                 itemSupplier.map((itemsupplier) => (
@@ -132,7 +132,7 @@ export default function InventoryDialog({ open, handleClose , data,
                         <Col>
                         <label>Store</label>
                             <br />
-                            <select style={{width: '100%' , height: '30px'}} value={data.item_store} id="item_store" onChange={e=>onChange(e)} >
+                            <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_store} id="item_store" onChange={e=>onChange(e)} >
                                 <option>select</option>
                                 {itemStore &&
                 itemStore.map((itemstore) => (
@@ -146,14 +146,14 @@ export default function InventoryDialog({ open, handleClose , data,
                     <br />
                     <Row>
                         <Col>
-                        <label>Quantity</label>
+                        <label>Quantity <span className="text-danger">*</span></label>
                         <br />
-                        <input style={{width: '100%' , height: '30px'}} value={data.quantity} id="quantity" onChange={e=>onChange(e)} ></input>
+                        <input style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.quantity} id="quantity" onChange={e=>onChange(e)} ></input>
                         </Col>
                         <Col>
-                        <label>Purchase price</label>
+                        <label>Purchase price <span className="text-danger">*</span></label>
                         <br />
-                        <input style={{width: '100%' , height: '30px'}} value={data.purchase_price} id="purchase_price" onChange={e=>onChange(e)} ></input>
+                        <input style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.purchase_price} id="purchase_price" onChange={e=>onChange(e)} ></input>
                         </Col>
                     </Row>
                     <br />
@@ -161,12 +161,12 @@ export default function InventoryDialog({ open, handleClose , data,
                         <Col>
                         <label>Date</label>
                         <br />
-                        <input type='date' style={{width: '100%' , height: '30px'}} value={data.date} id="date" onChange={e=>onChange(e)} ></input>
+                        <input type='date' style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.date} id="date" onChange={e=>onChange(e)} ></input>
                         </Col>
                         <Col>
                         <label>Description</label>
                         <br />
-                        <textarea style={{width: '100%' , height: '30px'}} value={data.description} id="description" onChange={e=>onChange(e)} ></textarea>
+                        <textarea style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.description} id="description" onChange={e=>onChange(e)} ></textarea>
                         </Col>
                     </Row>
                     <br />
@@ -177,7 +177,7 @@ export default function InventoryDialog({ open, handleClose , data,
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={() => handleFormSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod' onClick={() => handleFormSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

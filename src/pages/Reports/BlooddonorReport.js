@@ -88,7 +88,7 @@ const Blooddonorreport = props => {
                 <Col lg="4">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration">
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration">
                     <option>select</option>
                     <option value="This Year" >Today</option>
                     <option value="This Week" >This Week</option>
@@ -106,7 +106,7 @@ const Blooddonorreport = props => {
                 <Col lg="4">
                   <label>Blood Group</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="bloodGroup" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodGroup" >
                     <option>select</option>
                     {bloodgroupData && bloodgroupData.map((bloodgroup) => (
                     <option key={bloodgroup.name} value={bloodgroup.id}>
@@ -118,7 +118,7 @@ const Blooddonorreport = props => {
                 <Col lg='4'>
                 <label>Blood Donor</label>
                 <br />
-                <select style={{ width: "100%", height: "30px" }} id="bloodDonor" >
+                <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodDonor" >
                     <option>select</option>
                     {bloodDonorData && bloodDonorData.map((blooddonor) => (
                     <option key={blooddonor.bloodDonorData} value={blooddonor.id}>
@@ -130,7 +130,7 @@ const Blooddonorreport = props => {
               </Row>
               <br />
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getBloodDonorReportList} >Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getBloodDonorReportList} >Search</button>
               </div>
             </CardBody>
           </Card>
@@ -139,6 +139,9 @@ const Blooddonorreport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

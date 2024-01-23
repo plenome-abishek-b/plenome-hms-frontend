@@ -1,37 +1,38 @@
-import * as React from "react"
-import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
-import DialogTitle from "@mui/material/DialogTitle"
-import { TextField } from "@mui/material"
-import { Input, Select } from "@material-ui/core"
-import { Row, Col } from "reactstrap"
-import { useEffect } from "react"
-import api from "services/Api"
-import { useState } from "react"
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { TextField } from "@mui/material";
+import { Input, Select } from "@material-ui/core";
+import { Row, Col } from "reactstrap";
+import { useEffect } from "react";
+import api from "services/Api";
+import { useState } from "react";
 // import { Formik } from "formik"
-import { useFormik } from "formik"
+import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 
 export default function PatientDialog({ open, handleClose, from }) {
-  const [bloodgroupData, setBloodgroupData] = useState("")
+  const [bloodgroupData, setBloodgroupData] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     if (formSubmitted) {
       const timeoutId = setTimeout(() => {
         handleClose(); // Close the dialog
         window.location.reload(); // Refresh the component
-      }, 1000); // 2 seconds
+      }, 2000); // 2 seconds
       return () => clearTimeout(timeoutId); // Clean up the timeout on component unmount
     }
   }, [formSubmitted, handleClose]);
-  
+
   useEffect(() => {
     // handleBloodgroup()
-    handleBloodgroups()
-  }, [])
+    handleBloodgroups();
+  }, []);
 
   // const handleBloodgroup = async () =>{
   //   const response = await  api.getBloodgroups()
@@ -39,7 +40,7 @@ useEffect(() => {
   //   setBloodgroupData(data)
   //   console.log(data,"data")
   // }
-  const [isDateSelected, setIsDateSelected] = useState(false)
+  const [isDateSelected, setIsDateSelected] = useState(false);
 
   const [formValues, setFormValues] = useState({
     patient_name: "",
@@ -67,7 +68,7 @@ useEffect(() => {
     insurence_id: "",
     insurence_validity: "",
     identification_number: "",
-  })
+  });
   // const [bloodgroupDatas, setBloodgroupDatas] = useState([])
 
   // useEffect(() => {
@@ -75,75 +76,75 @@ useEffect(() => {
   // }, [])
 
   const handleBloodgroups = async () => {
-    const response = await api.getBloodgroups()
-    const { data } = response
-    setBloodgroupData(data)
-    console.log(data, "data")
-  }
+    const response = await api.getBloodgroups();
+    const { data } = response;
+    setBloodgroupData(data);
+    console.log(data, "data");
+  };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     // event.preventDefault()
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
-    })
-  }
+    });
+  };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     // event.preventDefault()
-    const response = await api.postPatients(formValues)
-    setFormSubmitted(true)
-    handleClose()
-  }
+    const response = await api.postPatients(formValues);
+    setFormSubmitted(true);
+    handleClose();
+  };
 
-  const handledobChange = event => {
-    const { name, value } = event.target
+  const handledobChange = (event) => {
+    const { name, value } = event.target;
 
     if (name === "dob") {
-      const currentDate = new Date()
-      const selectedDate = new Date(value)
+      const currentDate = new Date();
+      const selectedDate = new Date(value);
 
       // Calculate the age based on the difference in years, months, and days
-      let age = currentDate.getFullYear() - selectedDate.getFullYear()
-      const monthDiff = currentDate.getMonth() - selectedDate.getMonth()
-      const dayDiff = currentDate.getDate() - selectedDate.getDate()
+      let age = currentDate.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = currentDate.getMonth() - selectedDate.getMonth();
+      const dayDiff = currentDate.getDate() - selectedDate.getDate();
 
       // Adjust the age if the current month and day are before the selected month and day
       if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        age--
+        age--;
       }
 
       // Calculate the absolute difference in months and days
-      const absMonthDiff = Math.abs(monthDiff)
-      const absDayDiff = Math.abs(dayDiff)
+      const absMonthDiff = Math.abs(monthDiff);
+      const absDayDiff = Math.abs(dayDiff);
 
       // Handle the special case when the age is -1
       if (age === -1) {
-        setFormValues(prevValues => ({
+        setFormValues((prevValues) => ({
           ...prevValues,
           age: "0",
           month: "0",
           day: "0",
           dob: value,
-        }))
+        }));
       } else {
-        setFormValues(prevValues => ({
+        setFormValues((prevValues) => ({
           ...prevValues,
           age: age.toString(),
           month: absMonthDiff.toString(),
           day: absDayDiff.toString(),
           dob: value,
-        }))
+        }));
       }
 
-      setIsDateSelected(true) // Set isDateSelected to true
+      setIsDateSelected(true); // Set isDateSelected to true
     } else {
-      setFormValues(prevValues => ({
+      setFormValues((prevValues) => ({
         ...prevValues,
         [name]: value,
-      }))
+      }));
     }
-  }
+  };
 
   return (
     <div>
@@ -153,19 +154,28 @@ useEffect(() => {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          maxWidth="xl"
+          sx={{
+            "& .MuiDialog-container": {
+              "& .MuiPaper-root": {
+                width: "100%",
+                maxWidth: "1200px", // Set your width here
+              },
+            },
+          }}
         >
           <DialogTitle
             id="alert-dialog-title"
             className="text-white fw-bold"
-            style={{ backgroundColor: "#92A4FF" }}
+            style={{ backgroundColor: "#6070FF" }}
           >
             Add Patient
           </DialogTitle>
           <DialogContent className="mt-4 ms-2">
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Name</label>
+                <label>
+                  Name <span className="text-danger">*</span>
+                </label>
                 <br />
                 <input
                   type="text"
@@ -248,7 +258,9 @@ useEffect(() => {
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Age</label>
+                <label>
+                  Age <span className="text-danger">*</span>
+                </label>
                 <br />
                 {isDateSelected ? (
                   <>
@@ -316,7 +328,7 @@ useEffect(() => {
                 >
                   <option>Select an field</option>
                   {bloodgroupData &&
-                    bloodgroupData.map(bloodgroup => (
+                    bloodgroupData.map((bloodgroup) => (
                       <option key={bloodgroup.name} value={bloodgroup.name}>
                         {bloodgroup.name}
                       </option>
@@ -521,6 +533,48 @@ useEffect(() => {
                 ></input>
               </Col>
             </Row>
+            <br />
+            <br />
+            <h5 className="fw-bold">Additional Identifiers</h5>
+
+            <br />
+            <Row>
+              <Col>
+                <label>ABHA Address</label>
+                <br />
+                <input
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    borderRadius: "5px",
+                    border: "1px solid grey",
+                  }}
+                ></input>
+              </Col>
+              <Col>
+                <label>ABHA Number</label>
+                <br />
+                <input
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    borderRadius: "5px",
+                    border: "1px solid grey",
+                  }}
+                ></input>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <Row className="d-flex justify-content-center">
+              <Col className="d-flex justify-content-center">
+                <button className="btn-mod fw-bold">Verify ABHA</button>
+                <button className="btn-mod ms-3 fw-bold">Patient Queue</button>
+                <Link to="/account/aadhar">
+                  <button className="btn-mod ms-3 fw-bold">Create ABHA</button>
+                </Link>
+              </Col>
+            </Row>
           </DialogContent>
 
           <DialogActions
@@ -533,7 +587,7 @@ useEffect(() => {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn btn-primary bg-soft"
+              className="btn-mod bg-soft fw-bold"
               type="submit"
             >
               Save
@@ -542,5 +596,5 @@ useEffect(() => {
         </Dialog>
       </form>
     </div>
-  )
+  );
 }

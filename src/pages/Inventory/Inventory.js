@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useEffect , useState} from "react";
 import InventoryDialog from "./InventoryDialog";
@@ -134,7 +134,7 @@ const Inventory = props => {
             breadcrumbItem={props.t("Inventory")}
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleOpenStock}>Add Item Stock</button>
+            <button className="btn-mod" onClick={handleOpenStock}>Add Item Stock</button>
             <Link to="/inventory/issueitem"><button className="btn btn-success" style={{marginLeft: '10px'}}>Issue Item</button></Link>
             <Link to='/items'><button className="btn btn-secondary" style={{marginLeft: '10px'}}><i className="fas fa-align-justify"></i>&nbsp; Item</button></Link>
           </div>
@@ -146,13 +146,16 @@ const Inventory = props => {
             handleFormSubmit={handleFormSubmit}
           />
            <div
-          className="ag-theme-balham"
+          className="ag-theme-alpine"
           style={{ height: 700, marginTop: "20px" }}
         >
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            pagination={true}
+            paginationPageSize={10}
+            domLayout='autoHeight'
           />
         </div>
         </Container>

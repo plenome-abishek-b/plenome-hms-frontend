@@ -117,7 +117,7 @@ const Componentissuereport = props => {
                 <Col lg="3">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration" >
                     <option>select</option>
                     <option value="This Year" >Today</option>
                     <option value="This Week" >This Week</option>
@@ -135,7 +135,7 @@ const Componentissuereport = props => {
                 <Col lg="3">
                   <label>Component Collect By</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="bloodCollectedBy" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodCollectedBy" >
                     <option>select</option>
                     {consdoctor && consdoctor.map((collected) => (
                     <option key={collected.id} value={collected.id}>
@@ -147,7 +147,7 @@ const Componentissuereport = props => {
                 <Col lg='3'>
                 <label>Amount Collect By</label>
                 <br />
-                <select style={{ width: "100%", height: "30px" }} id="amountCollectedBy" >
+                <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="amountCollectedBy" >
                     <option>select</option>
                     {amountCollectedBy && amountCollectedBy.map((collectedamount) => (
                     <option key={collectedamount.id} value={collectedamount.id}>
@@ -159,7 +159,7 @@ const Componentissuereport = props => {
                 <Col lg='3'>
                 <label>Blood Group</label>
                 <br />
-                <select style={{ width: "100%", height: "30px" }} id="bloodGroup" >
+                <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="bloodGroup" >
                     <option>select</option>
                     {bloodgroupData && bloodgroupData.map((bloodgroup) => (
                     <option key={bloodgroup.name} value={bloodgroup.id}>
@@ -176,7 +176,7 @@ const Componentissuereport = props => {
                 <Col lg='3'>
                     <label>Components</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" }} id="components" >
+                    <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="components" >
                         <option>select</option>
                         {component && component.map((comp) => (
                     <option key={comp.bloodComponent} value={comp.id}>
@@ -188,7 +188,7 @@ const Componentissuereport = props => {
               </Row>
               <br />
               <div className="d-flex justify-content-end mt-2">
-                <button className="btn btn-primary btn-sm ms-2" onClick={getComponentIssueReportList} >Search</button>
+                <button className="btn-mod btn-sm ms-2" onClick={getComponentIssueReportList} >Search</button>
               </div>
             </CardBody>
           </Card>
@@ -197,6 +197,9 @@ const Componentissuereport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

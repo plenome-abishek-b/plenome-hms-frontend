@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import api from "services/Api"
@@ -134,18 +134,18 @@ const Frontoffice = props => {
           />
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
             <button className="btn btn-success" style={{marginRight: '10px'}} onClick={handleClickOpen}>Add Visitor</button>
-            <Link to='/calls'><button className="btn btn-outline-secondary" style={{marginRight: '10px'}}><i className="fas fa-align-justify"></i>&nbsp; Phone-call log</button></Link>
+            <Link to='/calls'><button className="btn btn-outline-primary" style={{marginRight: '10px'}}><i className="fas fa-align-justify"></i>&nbsp; Phone-call log</button></Link>
             <select
       style={{ marginRight: '10px', height: '35px', border: '1px solid gray', borderRadius: '5px', width: '120px' }}
       value={selectedOption}
       onChange={handleOptionChange}
     >
-      <option value="">select</option>
+      <option value="" className="btn btn-outline-secondary">select</option>
       <option value="/complain">Receive</option>
       <option value="/dispatch">Dispatch</option>
     </select>
 
-            <Link to='/complain'><button className="btn btn-outline-secondary" style={{marginRight: '10px'}}>Complain</button></Link>
+            <Link to='/complain'><button className="btn btn-danger" style={{marginRight: '10px'}}>Complain</button></Link>
           </div>
           <VisitorDialog 
             open={open}
@@ -154,7 +154,7 @@ const Frontoffice = props => {
             onChange={onChange}
             handleFormSubmit={handleFormSubmit}
           />
-          <div className="ag-theme-balham"
+          <div className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}>
             <AgGridReact
               rowData={tableData}

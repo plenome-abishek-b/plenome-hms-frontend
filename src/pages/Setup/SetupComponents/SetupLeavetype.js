@@ -11,21 +11,48 @@ import SetupOperationsDialog from "../SetupDialog/SetupOperationDialog"
 import SetupLeavetypeDialog from "../SetupDialog/SetupLeavetypeDialog"
 import { useEffect } from "react"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupLeavetypes = props => {
 
     const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
-
+    const [selectedData,setSelectedData] = useState({})
   const [rowData,setrowDate] = useState([])
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenSetupOperationsDialog(true)
+   }
   
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetupHR_leaveType(data.id)
+         getLeavetype()
+   }else{
+    console.log("cancelled");
+   }
+   }
   const columnDefs = [
     {headerName: 'Name', field: 'type'},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    }
   ]
  useEffect(()=>{
   getLeavetype()
  },[])
  const getLeavetype= async () =>{
-  const response = await api.getHrsetup_Leavetype()
+  const response = await api.getSetupHR_leaveType()
   const {data} = response
   setrowDate(data)
   console.log(data,"fd")
@@ -40,6 +67,7 @@ const SetupLeavetypes = props => {
   )
 
   const handleOpenSetupOperations = () => {
+    setSelectedData({})
     setOpenSetupOperationsDialog(true);
   }
 
@@ -47,7 +75,15 @@ const SetupLeavetypes = props => {
     setOpenSetupOperationsDialog(false);
   }
 
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -56,7 +92,7 @@ const SetupLeavetypes = props => {
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-primary bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Leave Type</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Leave Type</button>
             </div>
               <div
                 className="ag-theme-alpine"
@@ -66,8 +102,10 @@ const SetupLeavetypes = props => {
                   rowData={rowData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
+
                 />
-                <SetupLeavetypeDialog getLeavetype={getLeavetype} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
+                <SetupLeavetypeDialog selectedData={selectedData} getLeavetype={getLeavetype} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
                 </div>
             </CardBody>
           </Card>

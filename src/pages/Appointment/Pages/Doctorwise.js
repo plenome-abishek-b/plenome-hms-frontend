@@ -55,7 +55,7 @@ const DoctorWise = props => {
           <div className="card p-4">
             <Row className="ms-4 mt-2">
                 <Col lg='6' md='6' sm='12'>
-                    <label style={{fontSize: '15px'}}>Doctor</label>
+                    <label style={{fontSize: '15px'}}>Doctor <span className="text-danger">*</span></label>
                     <br />
                     <select
                   style={{ width: "80%", height: "35px",borderRadius: '5px', border: '1px solid grey' }}
@@ -72,7 +72,7 @@ const DoctorWise = props => {
                     </select>
                 </Col>
                 <Col Col lg='6' md='6' sm='12'>
-                    <label style={{fontSize: '15px'}}>Date</label>
+                    <label style={{fontSize: '15px'}}>Date <span className="text-danger">*</span></label>
                     <br />
                     <input value={selectedDate}
                   onInput={handleDateInput} type="date" style={{width: '80%', height: '35px', borderRadius: '5px', border: '1px solid grey'}}></input>
@@ -80,7 +80,7 @@ const DoctorWise = props => {
             </Row>
             <br />
             <div style={{display: 'flex', justifyContent: 'flex-end' ,alignItems: 'flex-end'}} className="mt-4">
-                <button className="btn btn-primary bg-soft" onClick={()=>doctorWiseAppointment()}>Search</button>
+                <button className="btn-mod bg-soft" onClick={()=>doctorWiseAppointment()}>Search</button>
             </div>
           </div>
           {doctorwiseData === null || doctorwiseData.length === 0 ?

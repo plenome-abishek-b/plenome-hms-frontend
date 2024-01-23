@@ -47,7 +47,7 @@ const Incomereport = props => {
                                 <Col lg="4">
                                     <label>Time Duration</label>
                                     <br />
-                                    <select style={{ width: "100%", height: "30px" }} id="timeDuration">
+                                    <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration">
                                         <option>select</option>
                                         <option value="today">Today</option>
                                         <option>This Week</option>
@@ -62,7 +62,7 @@ const Incomereport = props => {
                                         <option>Period</option>
                                     </select>
                                     <div className="d-flex justify-content-end mt-2">
-                                        <button className="btn btn-primary" onClick={getIncomes}>Search</button>
+                                        <button className="btn-mod" onClick={getIncomes}>Search</button>
                                     </div>
                                 </Col>
                             </Row>
@@ -75,6 +75,9 @@ const Incomereport = props => {
                         rowData={tableData}
                             columnDefs={columnDefs}
                             defaultColDef={defaultColDef}
+                            pagination={true}
+                            paginationPageSize={10}
+                            domLayout='autoHeight'
                         />
                     </div>
                 </Container>

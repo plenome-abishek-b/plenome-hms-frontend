@@ -69,15 +69,15 @@ export default function IssueItemDialog({ open, handleClose , data,
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
                     Add Issue Item
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent style={{paddingTop: '20px'}}>
                    <Row>
                     <Col>
-                    <label>User Type</label>
+                    <label>User Type <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} value={data.issue_type} id="issue_type" onChange={e=>onChange(e)} >
+                    <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.issue_type} id="issue_type" onChange={e=>onChange(e)} >
                         <option>select</option>
                         {itemUserType &&
                 itemUserType.map((usertype) => (
@@ -88,9 +88,9 @@ export default function IssueItemDialog({ open, handleClose , data,
                     </select>
                     </Col>
                     <Col>
-                    <label>Issue To</label>
+                    <label>Issue To <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{width: '100%', height: '30px'}} value={data.issue_to} id="issue_to" onChange={e=>onChange(e)} >
+                    <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.issue_to} id="issue_to" onChange={e=>onChange(e)} >
                         <option>select</option>
                         {itemIssueTo &&
                 itemIssueTo.map((issueto) => (
@@ -101,36 +101,36 @@ export default function IssueItemDialog({ open, handleClose , data,
                     </select>
                     </Col>
                     <Col>
-                    <label>Issued By</label>
+                    <label>Issued By <span className="text-danger">*</span></label>
                     <br />
-                    <input style={{width: '100%', height: '30px'}} value={data.issue_by} id="issue_by" onChange={e=>onChange(e)} ></input>
+                    <input style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.issue_by} id="issue_by" onChange={e=>onChange(e)} ></input>
                     </Col>
                    </Row>
                     <br />
                     <Row>
                         <Col>
-                        <label>Issue Date</label>
+                        <label>Issue Date <span className="text-danger">*</span></label>
                         <br />
-                        <input type='date' style={{width: '100%', height: '30px'}} value={data.issue_date} id="issue_date" onChange={e=>onChange(e)} ></input>
+                        <input type='date' style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.issue_date} id="issue_date" onChange={e=>onChange(e)} ></input>
                         
                         </Col>
                         <Col>
                         <label>Return Date</label>
                         <br />
-                        <input type='date' style={{width: '100%', height: '30px'}} value={data.return_date} id="return_date" onChange={e=>onChange(e)} ></input>
+                        <input type='date' style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.return_date} id="return_date" onChange={e=>onChange(e)} ></input>
                         </Col>
                         <Col>
                         <label>Note</label>
                         <br />
-                        <textarea style={{width: '100%', height: '30px'}} value={data.note} id="note" onChange={e=>onChange(e)} ></textarea>
+                        <textarea style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.note} id="note" onChange={e=>onChange(e)} ></textarea>
                         </Col>
                     </Row>
                     <br />
                     <Row>
                         <Col>
-                        <label>Item Category</label>
+                        <label>Item Category <span className="text-danger">*</span></label>
                         <br />
-                        <select style={{width: '100%', height: '30px'}} value={data.item_category} id="item_category" onChange={e=>onChange(e)} >
+                        <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_category} id="item_category" onChange={e=>onChange(e)} >
                             <option>select</option>
                             {itemCategory &&
                 itemCategory.map((cate) => (
@@ -141,9 +141,9 @@ export default function IssueItemDialog({ open, handleClose , data,
                         </select>
                         </Col>
                         <Col>
-                        <label>Item</label>
+                        <label>Item <span className="text-danger">*</span></label>
                         <br />
-                        <select style={{width: '100%', height: '30px'}} value={data.item_id} id="item_id" onChange={e=>onChange(e)} >
+                        <select style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.item_id} id="item_id" onChange={e=>onChange(e)} >
                             <option>select</option>
                             {item &&
                 item.map((item) => (
@@ -154,15 +154,15 @@ export default function IssueItemDialog({ open, handleClose , data,
                         </select>
                         </Col>
                         <Col>
-                        <label>Quantity</label>
+                        <label>Quantity <span className="text-danger">*</span></label>
                         <br />
-                        <input style={{width: '100%', height: '30px'}} value={data.quantity} id="quantity" onChange={e=>onChange(e)} ></input>
+                        <input style={{width: '100%', height: '30px' ,borderRadius: '5px', border: "1px solid grey"}} value={data.quantity} id="quantity" onChange={e=>onChange(e)} ></input>
                         </Col>
                     </Row>
                 </DialogContent>
                 <DialogActions>
                     <button className='btn btn-danger' onClick={handleClose}>Cancel</button>
-                    <button className='btn btn-primary' onClick={() => handleFormSubmit(handleClose())} autoFocus>
+                    <button className='btn-mod' onClick={() => handleFormSubmit(handleClose())} autoFocus>
                         Submit
                     </button>
                 </DialogActions>

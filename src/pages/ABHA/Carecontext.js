@@ -62,7 +62,7 @@ const Carecontext = props => {
                     </div>
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
-                    <button className="btn btn-primary">send</button>
+                    <button className="btn-mod">send</button>
                   </div>
                 </CardBody>
               </Card>

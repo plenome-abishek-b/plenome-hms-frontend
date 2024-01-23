@@ -47,6 +47,9 @@ function Medication() {
               rowData={medicationData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
   )

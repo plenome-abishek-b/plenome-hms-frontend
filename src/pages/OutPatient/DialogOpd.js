@@ -74,7 +74,7 @@ export default function OpdDialog({
         maxWidth="lg"
       >
         <DialogTitle id="alert-dialog-title">
-          <Container className="p-3" fluid style={{backgroundColor: '#92A4FF'}}>
+          <Container className="p-3" fluid style={{backgroundColor: '#6070FF'}}>
             {/* <input
               placeholder="Search"
               style={{ height: "35px", fontSize: "18px" }}
@@ -108,8 +108,9 @@ export default function OpdDialog({
             </select>
                 {console.log(listPatient,'list patient')}
             <button
-              className="btn btn-primary bg-soft ms-3"
+              className="btn-mod bg-soft ms-3 fw-bold"
               onClick={handleClickOpen}
+              style={{border: '1px solid white'}}
             >
               + New Patient
             </button>
@@ -282,7 +283,7 @@ export default function OpdDialog({
               >
                 <Row>
                   <Col lg="12">
-                    <label>Appointment Date</label>
+                    <label>Appointment Date <span className="text-danger">*</span></label>
                     <br />
                     <input placeholder="Ex: 2023-01-01 11:11:11" style={{ width: "100%", borderRadius: '5px', border: '1px solid grey' }} id="appointment_date" value={data.appointment_date} onChange={e=>onChange(e)} ></input>
                   </Col>
@@ -335,7 +336,7 @@ export default function OpdDialog({
                 <br />
                 <Row>
                   <Col>
-                    <label>Consultant Doctor</label>
+                    <label>Consultant Doctor <span className="text-danger">*</span></label>
                     <br />
                     <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }} id='cons_doctor' onChange={e=>onChange(e)} value={data.cons_doctor} >
                     <option>select one</option>
@@ -357,7 +358,7 @@ export default function OpdDialog({
                     </select>
                   </Col>
                   <Col>
-                    <label>Charge</label>
+                    <label>Charge <span className="text-danger">*</span></label>
                     <br />
                     <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}>
                       <option>Select</option>
@@ -380,12 +381,12 @@ export default function OpdDialog({
                 <br />
                 <Row>
                   <Col>
-                    <label>Applied Charge(₹)</label>
+                    <label>Applied Charge(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
                   </Col>
                   <Col>
-                    <label>Amount(₹)</label>
+                    <label>Amount(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
                   </Col>
@@ -404,7 +405,7 @@ export default function OpdDialog({
                     </select>
                   </Col>
                   <Col>
-                    <label>Paid Amount(₹)</label>
+                    <label>Paid Amount(₹) <span className="text-danger">*</span></label>
                     <br />
                     <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
                   </Col>
@@ -425,7 +426,7 @@ export default function OpdDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
+          <button className="btn-mod bg-soft btn-md fw-bold" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
             Save
           </button>
         </DialogActions>

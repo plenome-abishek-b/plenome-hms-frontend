@@ -107,7 +107,7 @@ export default function SetupMedDoseDialog({
             </Row>
             <br />
             <div>
-              <button className="btn btn-primary bg-soft">
+              <button className="btn-mod bg-soft">
                 <i className="fa fa-plus"></i>&nbsp;Add
               </button>
             </div>
@@ -115,7 +115,7 @@ export default function SetupMedDoseDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary bg-soft btn-md"
+            className="btn-mod bg-soft btn-md"
             onClick={() => handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 //i18n
 import {  withTranslation } from "react-i18next";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo} from "react";
 import Referralpersondialog from "./Dialog/ReferralPersonDialog";
@@ -116,16 +116,19 @@ const ReferralPerson = props => {
         <Container fluid>
           <h4>Referral Person List</h4>
           <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <button className="btn btn-primary" onClick={handleOpen}>Add Referral Person</button>
+            <button className="btn-mod" onClick={handleOpen}>Add Referral Person</button>
           </div>
           <div
-            className="ag-theme-balham"
+            className="ag-theme-alpine"
             style={{ height: 500, marginTop: "20px" }}
           >
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
           <Referralpersondialog open={open} handleClose={handleClose} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit} />

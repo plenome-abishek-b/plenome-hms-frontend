@@ -126,18 +126,21 @@ function Visits() {
   return (
     <div>
       <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-        <button className='btn btn-primary bg-soft' onClick={handleOpenVisit}>
+        <button className='btn-mod bg-soft custom-btn' onClick={handleOpenVisit}>
        <i className="fas fa-exchange-alt"></i> 
           &nbsp;Visits
         </button>
         <OpdVisitDialog open={openVisit} handleClose={handleCloseVisit} handleFormSubmit={handleFormSubmit} data={data} onChange={onChange} handlePatientId={handlePatientId}/>
       </div>
       <div className="ag-theme-alpine mt-4"
-            style={{ height: 300 }}>
+            style={{ height: 700 }}>
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
     </div>

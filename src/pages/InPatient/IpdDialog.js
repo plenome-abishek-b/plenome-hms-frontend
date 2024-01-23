@@ -77,8 +77,8 @@ const handleConsultant = async () =>{
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title">
-          <Container className="p-3" fluid style={{backgroundColor: '#92A4FF'}}>
+        <DialogTitle id="alert-dialog-title" >
+          <Container className="p-3" fluid style={{backgroundColor: '#6070FF'}}>
           <select
               style={{ width: "20%", height: "30px", border: '1px solid grey', borderRadius: '5px' }}
               id="patient_id"
@@ -93,8 +93,9 @@ const handleConsultant = async () =>{
                 ))}
             </select>
             <button
-              className="ms-3 btn btn-primary"
+              className="ms-3 btn-mod fw-bold"
               onClick={handleClickOpen}
+              style={{border: '1px solid white'}}
             >
               + New Patient
             </button>
@@ -239,7 +240,7 @@ const handleConsultant = async () =>{
               >
                 <Row>
                   <Col lg="12">
-                    <label>Admission Date</label>
+                    <label>Admission Date <span className="text-danger">*</span></label>
                     <br />
                     <input placeholder="Ex: 2023-01-01 00:00:00" style={{ width: "100%",border: '1px solid grey', borderRadius: '5px' }}></input>
                   </Col>
@@ -265,7 +266,7 @@ const handleConsultant = async () =>{
                   </Col>
 
                   <Col>
-                    <label>Consultant</label>
+                    <label>Consultant <span className="text-danger">*</span></label>
                     <br />
                     <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id='cons_doctor' onChange={e=>onChange(e)} value={data.cons_doctor}>
                     <option>select one</option>
@@ -287,7 +288,7 @@ const handleConsultant = async () =>{
                     </select>
                   </Col>
                   <Col>
-                    <label>Credit Limit</label>
+                    <label>Credit Limit <span className="text-danger">*</span></label>
                     <br />
                     <input
                     id="credit_limit"
@@ -311,7 +312,7 @@ const handleConsultant = async () =>{
                 <br />
                 <Row>
                   <Col>
-                    <label>Bed Number</label>
+                    <label>Bed Number <span className="text-danger">*</span></label>
                     <br />
                     <select style={{ width: "100%", height: "30px",border: '1px solid grey', borderRadius: '5px' }}>
                       <option>Select</option>
@@ -334,7 +335,7 @@ const handleConsultant = async () =>{
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md fw-bold" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

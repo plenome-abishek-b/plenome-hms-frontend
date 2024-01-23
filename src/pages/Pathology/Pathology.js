@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Container } from "reactstrap";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo , useState , useEffect} from "react";
 import { Link } from 'react-router-dom';
@@ -164,9 +164,9 @@ console.log(fetchData,'fetchdata');
           />
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <Link to='/pathologytest'>
-              <button className="btn btn-danger"><i className="fas fa-bong"></i>&nbsp; Pathology test</button>
+              <button className="btn custom-btn text-white" style={{backgroundColor: '#6070FF', border: '1px solid #6070FF'}}><i className="fas fa-bong"></i>&nbsp; Pathology test</button>
             </Link>
-            <button className="btn btn-secondary" style={{ marginLeft: '10px' }} onClick={handleClickOpen}><i className="far fa-file"></i>&nbsp; Generate bill</button>
+            <button className="btn btn-secondary custom-btn" style={{ marginLeft: '10px' ,backgroundColor: '#6070FF', border: '1px solid #6070FF'}} onClick={handleClickOpen}><i className="far fa-file"></i>&nbsp; Generate bill</button>
           </div>
           <PathologybillDialog 
             open={open}
@@ -177,12 +177,15 @@ console.log(fetchData,'fetchdata');
             setFetchData={setFetchData}
           />
 
-          <div className="ag-theme-balham"
-            style={{ height: 500, marginTop: "20px" }}>
+          <div className="ag-theme-alpine"
+            style={{ height: 700, marginTop: "20px" }}>
             <AgGridReact
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

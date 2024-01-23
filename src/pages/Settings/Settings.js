@@ -11,7 +11,7 @@ import UserSetting from "./SettingPages/UserSetting"
 import { withTranslation } from "react-i18next"
 
 function Settings() {
-  const [activeSetting, setActiveSetting] = useState(null);
+  const [activeSetting, setActiveSetting] = useState("General");
 
   const handleSettingClick = (settingName) => {
     setActiveSetting(settingName);
@@ -32,49 +32,49 @@ function Settings() {
                   </tr>
                   <tr>
                     <th>
-                    <Link to="#" onClick={() => handleSettingClick("General")}>
+                    <Link to="#" onClick={() => handleSettingClick("General")} className='text-white'>
                         General
                       </Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <Link>System Notification</Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <th>
-                    <Link to="#" onClick={() => handleSettingClick("Email")}>
+                    <Link to="#" onClick={() => handleSettingClick("Email")} className='text-white'>
                         Email Setting
                       </Link>
                     </th>
                   </tr>
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Role")}>Roles & Permissions</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Role")} className='text-white'>Roles & Permissions</Link>
                     </th>
                   </tr>
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Payments")}>Payments</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Payments")} className='text-white'>Payments</Link>
                     </th>
                   </tr>
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Users")}>Users</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Users")} className='text-white'>Users</Link>
                     </th>
                   </tr>
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Sms")}>SMS settings</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Sms")} className='text-white'>SMS settings</Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <Link>Backup / Restore</Link>
                     </th>
-                  </tr>
-                  <tr>
+                  </tr> */}
+                  {/* <tr>
                     <th>
                       <h4>Other settings</h4>
                     </th>
@@ -83,8 +83,8 @@ function Settings() {
                     <th>
                       <Link>Front CMS Settings</Link>
                     </th>
-                  </tr>
-                  <tr>
+                  </tr> */}
+                  {/* <tr>
                     <th>
                       <Link>Languages</Link>
                     </th>
@@ -93,20 +93,20 @@ function Settings() {
                     <th>
                       <Link>Captcha settings</Link>
                     </th>
-                  </tr>
-                  <tr>
+                  </tr> */}
+                  {/* <tr>
                     <th>
                       <Link>Modules</Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <th>
-                    <Link to="#" onClick={() => handleSettingClick("Prefix")}>Prefix settings</Link>
+                    <Link to="#" onClick={() => handleSettingClick("Prefix")} className='text-white'>Prefix settings</Link>
                     </th>
                   </tr>
                   <tr>
                     <th>
-                     <Link to='#'>System Updates</Link>
+                     <Link to='#' className='text-white'>System Updates</Link>
                     </th>
                   </tr>
                 </thead>

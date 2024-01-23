@@ -131,7 +131,7 @@ export default function BloodIssueBillingDialog({
           </div>
           <div className="mt-1 d-flex justify-content-end">
             <button
-              className="btn btn-primary"
+              className="btn-mod"
               style={{
                 marginRight: "48px",
                 position: "fixed",
@@ -335,7 +335,7 @@ export default function BloodIssueBillingDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn btn-primary"
+            className="btn-mod"
             onClick={() => handleFormSubmit(handleClose())}
             autoFocus
           >

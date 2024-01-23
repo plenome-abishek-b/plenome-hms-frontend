@@ -116,15 +116,18 @@ function MedicationTable() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button className="btn btn-primary mb-3" onClick={handleOpenMed}>+ Add Medication</button>
+        <button className="btn-mod mb-3 custom-btn" onClick={handleOpenMed}>+ Add Medication</button>
         <OpdMedicationDialog open={openMedDialog} handleClose={handleCloseMed} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
       </div>
       <div className="ag-theme-alpine"
-        style={{ height: 500 }}>
+        style={{ height: 700 }}>
         <AgGridReact
           rowData={tableData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          pagination={true}
+          paginationPageSize={10}
+          domLayout='autoHeight'
         />
       </div>
     </div>

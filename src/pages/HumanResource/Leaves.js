@@ -63,8 +63,8 @@ const Leaves = props => {
         <Container fluid>
         <h4>My Leaves</h4>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <button className="btn btn-primary" style={{marginRight: '10px'}} onClick={handleOpen}>+&nbsp;Apply Leave</button>
-            <Link to="/hr/leaverequest"><button className="btn btn-primary"><i className="fas fa-bars"></i>&nbsp;Approve Leave Request</button></Link>
+            <button className="btn-mod" style={{marginRight: '10px'}} onClick={handleOpen}>+&nbsp;Apply Leave</button>
+            <Link to="/hr/leaverequest"><button className="btn-mod"><i className="fas fa-bars"></i>&nbsp;Approve Leave Request</button></Link>
         </div>
         <div className="ag-theme-alpine mt-4"
             style={{ height: 100 }}>

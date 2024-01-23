@@ -63,7 +63,7 @@ const Userrecord = props => {
                     </div>
                   </div>
                   <div className="mt-4 d-flex justify-content-center">
-                    <button className="btn btn-primary">Transfer</button>
+                    <button className="btn-mod">Transfer</button>
                   </div>
                 </CardBody>
               </Card>

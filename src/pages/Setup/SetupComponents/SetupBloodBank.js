@@ -87,7 +87,7 @@ const SetupBloodBank = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenBb}>
+                <button className="btn-mod bg-soft" onClick={handleOpenBb}>
                   <i className="fa fa-plus"></i>&nbsp; Add Products
                 </button>
               </div>

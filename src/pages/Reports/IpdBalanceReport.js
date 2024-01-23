@@ -1,42 +1,42 @@
-import PropTypes from "prop-types"
-import React, { useMemo , useState} from "react"
-import { Card, CardBody, Col, Container, Row } from "reactstrap"
+import PropTypes from "prop-types";
+import React, { useMemo, useState } from "react";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb"
+import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 //i18n
-import { withTranslation } from "react-i18next"
+import { withTranslation } from "react-i18next";
 
-import { AgGridReact, AgGridColumn } from "ag-grid-react"
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
-import { useEffect } from "react"
-import api from "services/Api"
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { useEffect } from "react";
+import api from "services/Api";
 
 //redux
-const OpdBalanceReport = props => {
+const OpdBalanceReport = (props) => {
   const [formData, setformData] = useState({
-    timeDuration:'',
-    gender:'',
-    status:'',
-    fromDate:'',
-    toDate:'',
+    timeDuration: "",
+    gender: "",
+    status: "",
+    fromDate: "",
+    toDate: "",
   });
-  const [collectedBy,setCollectedBy] = useState([])
-  const [fromAge,setFromAge] = useState('')
+  const [collectedBy, setCollectedBy] = useState([]);
+  const [fromAge, setFromAge] = useState("");
   const [showDates, setShowDates] = useState(false);
-  
-  const getCollectedBy = async () =>{
-   const response = await api.getAmbulanceCollectedBy()
-   const {data} = response
-   console.log(data,"datgg")
-   setCollectedBy(data)
-  }
+
+  const getCollectedBy = async () => {
+    const response = await api.getAmbulanceCollectedBy();
+    const { data } = response;
+    console.log(data, "datgg");
+    setCollectedBy(data);
+  };
   const handleChange = (e) => {
     const { value, name } = e.target;
     let updatedFormData = { ...formData };
-  
+
     if (name === "fromDate" || name === "toDate") {
       updatedFormData = {
         ...updatedFormData,
@@ -46,44 +46,44 @@ const OpdBalanceReport = props => {
     } else {
       updatedFormData = { ...updatedFormData, [name]: value };
     }
-  
+
     setformData(updatedFormData);
-  
+
     if (updatedFormData.timeDuration === "Period") {
       setShowDates(true);
     } else {
       setShowDates(false);
     }
   };
-  const [toAge, setToAge] = useState('');
-  const [toAgeOptions, setToAgeOptions] = useState(['select']);
-  const [data,setData] = useState([])
+  const [toAge, setToAge] = useState("");
+  const [toAgeOptions, setToAgeOptions] = useState(["select"]);
+  const [data, setData] = useState([]);
   const handleFromAgeChange = (e) => {
     const selectedFromAge = e.target.value;
     setFromAge(selectedFromAge);
 
-    const options = ['select'];
+    const options = ["select"];
     for (let i = Number(selectedFromAge) + 5; i <= 100; i += 5) {
       options.push(String(i));
     }
-    setToAge(''); 
+    setToAge("");
     setToAgeOptions(options);
   };
 
   const columnDefs = [
     { headerName: "IPD No", field: "ipd_id" },
-    { headerName: "Case ID", field: "case_reference_id"},
+    { headerName: "Case ID", field: "case_reference_id" },
     { headerName: "Patient Name", field: "patient_name" },
     { headerName: "Age", field: "patient_age" },
     { headerName: "Gender", field: "gender" },
-    { headerName: "Mobile Number", field: "mobileno"},
+    { headerName: "Mobile Number", field: "mobileno" },
     { headerName: "Guardian Name", field: "guardian_name" },
-    { headerName: "Discharged", field: "discharged"},
+    { headerName: "Discharged", field: "discharged" },
     { headerName: "Patinet Active", field: "is_active" },
     { headerName: "Net Amount", field: "net_amount" },
     { headerName: "Paid Amount", field: "paid_amount" },
-    { headerName: "Balence Amount", field: "balance_amount"},
-  ]
+    { headerName: "Balence Amount", field: "balance_amount" },
+  ];
 
   const defaultColDef = useMemo(
     () => ({
@@ -92,30 +92,30 @@ const OpdBalanceReport = props => {
       flex: 1,
     }),
     []
-  )
+  );
 
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState("");
   const handleToAgeChange = (e) => {
-    console.log(e.target.value,"selc")
+    console.log(e.target.value, "selc");
     const selectedToAge = e.target.value;
     setToAge(selectedToAge);
   };
   const [gridApi, setGridApi] = useState(null);
-  const onGridReady = params => {
-      setGridApi(params.api);
+  const onGridReady = (params) => {
+    setGridApi(params.api);
   };
 
-  const onQuickFilterText = event => {
-      gridApi.setQuickFilter(event.target.value);
+  const onQuickFilterText = (event) => {
+    gridApi.setQuickFilter(event.target.value);
   };
-console.log(formData,toAge,fromAge,"kkkk")
- const handleSearch =async () =>{
-    const response = await api.getIpdBalanceReport(formData,toAge,fromAge)
-    const {data} = response
-    console.log(data,"duta")
-    setData(data)
- }
-return (
+  console.log(formData, toAge, fromAge, "kkkk");
+  const handleSearch = async () => {
+    const response = await api.getIpdBalanceReport(formData, toAge, fromAge);
+    const { data } = response;
+    console.log(data, "duta");
+    setData(data);
+  };
+  return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
@@ -126,45 +126,73 @@ return (
                 <Col lg="3" sm="12">
                   <label>Time Duration</label>
                   <br />
-                  <select name="timeDuration" onChange={handleChange} value={formData.timeDuration} style={{ width: "100%", height: "30px" }}>
-                     <option>select</option>
-                    <option value='today'>Today</option>
-                    <option value='ThisWeek'>This week</option>
+                  <select
+                    name="timeDuration"
+                    onChange={handleChange}
+                    value={formData.timeDuration}
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <option>select</option>
+                    <option value="today">Today</option>
+                    <option value="ThisWeek">This week</option>
                     <option value="LastWeek">Last week</option>
-                    <option value='ThisMonth'>This Month</option>
-                    <option value='LastMonth'>Last Month</option>
-                    <option value='Last3Months'>Last 3 Months</option>
-                    <option value='Last6Months'>Last 6 Months</option>
-                    <option value='Last9Months'>Last 9 Months</option>
-                    <option value='Last12Months'>Last 12 Months</option>
-                    <option value='ThisYear'>This Year</option>
+                    <option value="ThisMonth">This Month</option>
+                    <option value="LastMonth">Last Month</option>
+                    <option value="Last3Months">Last 3 Months</option>
+                    <option value="Last6Months">Last 6 Months</option>
+                    <option value="Last9Months">Last 9 Months</option>
+                    <option value="Last12Months">Last 12 Months</option>
+                    <option value="ThisYear">This Year</option>
                     <option value="LastYear">Last Year</option>
                     <option value="Period">Period</option>
                   </select>
                 </Col>
-               
+
                 <Col lg="3" sm="12">
                   <label>Patient Status</label>
                   <br />
-                  <select name="status" value={formData.status} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select
+                    name="status"
+                    value={formData.status}
+                    onChange={handleChange}
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "5px",
+                    }}
+                  >
                     <option>All</option>
-                    <option key="yes" value="yes">Discharged</option>
-                    <option key="no" value="no">on Bed</option>
+                    <option key="yes" value="yes">
+                      Discharged
+                    </option>
+                    <option key="no" value="no">
+                      on Bed
+                    </option>
                   </select>
                 </Col>
                 <Col lg="3" sm="12">
-
                   <label>From Age</label>
                   <br />
                   <select
-                  name="fromAge"
-        style={{ width: '100%', height: '30px' }}
-        value={formData.fromAge}
-        onChange={handleFromAgeChange}
-      >
-        <option value="select">select</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
+                    name="fromAge"
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "5px",
+                    }}
+                    value={formData.fromAge}
+                    onChange={handleFromAgeChange}
+                  >
+                    <option value="select">select</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                     <option value="25">25</option>
@@ -189,65 +217,93 @@ return (
                   <label>To Age</label>
                   <br />
                   <select
-                  name="toAge"
-        style={{ width: '100%', height: '30px' }}
-        value={toAge}
-        onChange={handleToAgeChange}
-      >
-        {toAgeOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+                    name="toAge"
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "5px",
+                    }}
+                    value={toAge}
+                    onChange={handleToAgeChange}
+                  >
+                    {toAgeOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </Col>
-             
               </Row>
               <br />
               <Row>
-               
-              <Col lg="3" sm="12">
+                <Col lg="3" sm="12">
                   <label>Gender</label>
                   <br />
-                  <select name="gender" value={formData.gender} onChange={handleChange} style={{ width: "100%", height: "30px" }}>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "5px",
+                    }}
+                  >
                     <option>select</option>
-                    <option key="male" value="Male">Male</option>
-                    <option key="female" value="Femail">Female</option>
+                    <option key="male" value="Male">
+                      Male
+                    </option>
+                    <option key="female" value="Femail">
+                      Female
+                    </option>
                   </select>
                 </Col>
                 {showDates && (
-  <>
-    <Col lg="3" sm="12">
-      <label>From Date</label>
-      <br />
-      <input
-        type="date"
-        name="fromDate"
-        value={formData.fromDate}
-        onChange={handleChange}
-        style={{ width: "100%", height: "30px" }}
-      />
-    </Col>
-    <Col lg="3" sm="12">
-      <label>To Date</label>
-      <br />
-      <input
-        type="date"
-        name="toDate"
-        value={formData.toDate}
-        onChange={handleChange}
-        style={{ width: "100%", height: "30px" }}
-      />
-    </Col>
-  </>
-)}
+                  <>
+                    <Col lg="3" sm="12">
+                      <label>From Date</label>
+                      <br />
+                      <input
+                        type="date"
+                        name="fromDate"
+                        value={formData.fromDate}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "30px",
+                          border: "1px solid grey",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    </Col>
+                    <Col lg="3" sm="12">
+                      <label>To Date</label>
+                      <br />
+                      <input
+                        type="date"
+                        name="toDate"
+                        value={formData.toDate}
+                        onChange={handleChange}
+                        style={{
+                          width: "100%",
+                          height: "30px",
+                          border: "1px solid grey",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    </Col>
+                  </>
+                )}
               </Row>
-    
+
               <br />
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <button onClick={handleSearch} className="btn btn-primary"><i className="fas fa-search"></i>&nbsp;Search</button>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button onClick={handleSearch} className="btn-mod">
+                  <i className="fas fa-search"></i>&nbsp;Search
+                </button>
               </div>
-              
 
               <br />
 
@@ -256,6 +312,9 @@ return (
                   rowData={data}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  pagination={true}
+                  paginationPageSize={10}
+                  domLayout="autoHeight"
                 />
               </div>
             </CardBody>
@@ -263,7 +322,7 @@ return (
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default withTranslation()(OpdBalanceReport)
+export default withTranslation()(OpdBalanceReport);

@@ -90,7 +90,7 @@ const Ambulancecallreport = props => {
                 <Col lg="4">
                   <label>Time Duration</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="timeDuration" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="timeDuration" >
                     <option>select</option>
                     <option>Today</option>
                     <option>This Week</option>
@@ -108,7 +108,7 @@ const Ambulancecallreport = props => {
                 <Col lg="4" >
                   <label>Collected By</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="collectedBy" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="collectedBy" >
                     <option>select</option>
                     {collectedBy && collectedBy.map((collect) => (
                     <option key={collect.id} value={collect.id}>
@@ -120,7 +120,7 @@ const Ambulancecallreport = props => {
                 <Col lg="4">
                   <label>Vehicle Model</label>
                   <br />
-                  <select style={{ width: "100%", height: "30px" }} id="vehicleModel" >
+                  <select style={{ width: "100%", height: "30px", border: '1px solid grey', borderRadius: '5px' }} id="vehicleModel" >
                     <option>select </option>
                     {vehicleModel && vehicleModel.map((vehicleMod) => (
                     <option key={vehicleMod.id} value={vehicleMod.id}>
@@ -133,7 +133,7 @@ const Ambulancecallreport = props => {
               </Row>
               <br />
                 <div className="d-flex justify-content-end">
-                  <button className="btn btn-primary" onClick={getAmbulancecall} >Search</button>
+                  <button className="btn-mod" onClick={getAmbulancecall} >Search</button>
                 </div>
             </CardBody>
           </Card>
@@ -142,6 +142,9 @@ const Ambulancecallreport = props => {
             rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              pagination={true}
+              paginationPageSize={10}
+              domLayout='autoHeight'
             />
           </div>
         </Container>

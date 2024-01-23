@@ -532,7 +532,7 @@ const Register = () => {
                         <Col>
                           <div className="mt-3" style={{float:"right"}}>
                             <button
-                              className="btn btn-primary btn-md btn-md"
+                              className="btn-mod btn-md btn-md"
                               type="submit"
                             >
                               Save

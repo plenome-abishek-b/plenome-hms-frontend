@@ -63,7 +63,7 @@ const Leaverequest = props => {
         <Container fluid>
         <h4>Approve Leave Request</h4>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <button className="btn btn-primary" style={{marginRight: '10px'}} onClick={handleOpen}>+&nbsp;Add Leave Request</button>
+            <button className="btn-mod" style={{marginRight: '10px'}} onClick={handleOpen}>+&nbsp;Add Leave Request</button>
         </div>
         <div className="ag-theme-alpine mt-4"
             style={{ height: 100 }}>

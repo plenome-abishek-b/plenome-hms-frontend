@@ -9,22 +9,42 @@ import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import { useState } from "react"
 import api from "services/Api"
+import { useEffect } from "react"
 
 export default function SetupLeavetypeDialog({
   open,
   handleClose,
+  selectedData,
   getLeavetype
 }) {
   const [openSetupBbDialog, setOpenSetupBbDialog] = React.useState(false)
   const [formData,setFormdata] = useState({
    type:'',
-   created_at:'2023-02-12 11:11:11',
+   Hospital_id:1,
    is_active:'yes'
   })
+  const [validate,setValidate] = useState(false)
   const handleClickOpen = () => {
     //dialog open
     setOpenSetupBbDialog(true)
   }
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormdata({
+        type: selectedData?.type || "",
+        Hospital_id:1,
+        is_active:"yes"
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormdata({
+        type:'',
+        Hospital_id:1,
+        is_active:"yes"
+      });
+    }
+  }, [selectedData]);
 
   const handleDialogClose = () => {
     //dialog close
@@ -39,8 +59,32 @@ export default function SetupLeavetypeDialog({
     })
   }
   const handleSubmit =async () =>{
-   const response = await api.postHrsetup_LeaveType(formData)
+    if(formData?.type === ''){
+      setValidate(true)
+      setTimeout(()=>{
+       setValidate(false)
+      },10000)
+     }else{
+   const response = await api.postSetupHR_leaveType(formData)
    getLeavetype()
+   handleClose()
+     }
+  }
+  const handUpdateSubmit =async ()=>{
+    if(formData?.type === ''){
+     setValidate(true)
+     setTimeout(()=>{
+      setValidate(false)
+     },10000)
+    }else{
+      const newData ={
+        ...formData,
+        id:selectedData?.id
+      }
+      const response = await api.updateSetupHR_leaveType(newData)
+      getLeavetype()
+      handleClose()
+    }
   }
 
   return (
@@ -69,18 +113,23 @@ export default function SetupLeavetypeDialog({
             <input
             type='text'
             name="type"
+            placeholder={validate?"enter name":""}
             onChange={handleChange}
             value={formData.type}
-            style={{height: '30px'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
             >
 
             </input>
             </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
-            Save
-          </button>
+          {selectedData?.type ? <button className="btn-mod bg-soft btn-md" onClick={()=>handUpdateSubmit()} style={{marginRight: '3%'}}>
+            Saves
+          </button> :
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
+          Save
+        </button>
+          }
         </DialogActions>
       </Dialog>
     </div>

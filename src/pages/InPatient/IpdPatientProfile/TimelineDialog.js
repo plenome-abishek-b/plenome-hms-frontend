@@ -61,26 +61,26 @@ export default function TimelineDialog({
         aria-describedby="alert-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
+        <DialogTitle id="alert-dialog-title" className="text-white fw-bold" style={{backgroundColor: '#92A4FF', height: '60px'}}>
         Add Timeline
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Row>
-            <label>Title</label>
+            <label>Title <span className="text-danger">*</span></label>
             <br />
-            <input name="title" onChange={handleChange} value={formValue.title} placeholder=""></input>
+            <input name="title" onChange={handleChange} value={formValue.title} placeholder="" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
           </Row>
           <br />
           <Row>
-            <label>Date</label>
+            <label>Date <span className="text-danger">*</span></label>
             <br />
-            <input name="date" onChange={handleChange} value={formValue.date} type="date"></input>
+            <input name="date" onChange={handleChange} value={formValue.date} type="date" style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></input>
           </Row>
           <br />
           <Row>
             <label>Description</label>
             <br />
-            <textarea name="description" onChange={handleChange} value={formValue.description} ></textarea>
+            <textarea name="description" onChange={handleChange} value={formValue.description} style={{width: '100%', height: '30px', borderRadius: '5px', border: "1px solid grey"}}></textarea>
           </Row>
           <br />
           <Row >
@@ -95,7 +95,7 @@ export default function TimelineDialog({
          
         </DialogContent>
         <DialogActions>
-          <button className="btn btn-primary bg-soft btn-md" onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft " onClick={()=>handleSubmit(handleClose())} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

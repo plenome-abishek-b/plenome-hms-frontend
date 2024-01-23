@@ -1,16 +1,21 @@
-import React, { useEffect } from "react"
-import { Button, Container } from "reactstrap"
-import { AgGridReact, AgGridColumn } from "ag-grid-react"
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
-import { useMemo, useState, useCallback, useRef } from "react"
-import AlertDialog from "./Dialog/Dialog"
-import api from "services/Api"
+import React, { useEffect } from "react";
+import { Button, Container } from "reactstrap";
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { useMemo, useState, useCallback, useRef } from "react";
+import AlertDialog from "./Dialog/Dialog";
+import api from "services/Api";
 //Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb"
-import { withTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
-
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import DeleteButtonRenderer from "common/data/delete-button";
+import Patientdetails from "./Dialog/PatientdetailsDialog";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //redux
 
 const initialValue = {
@@ -25,132 +30,224 @@ const initialValue = {
   source: "",
   live: "",
   fees: "",
-  status: ""
-}
+  status: "",
+};
 
-const Appointment = props => {
-  const gridRef = useRef()
+const Appointment = (props) => {
+  const gridRef = useRef();
 
-  const [tableData, setTableData] = useState(null)
+  const [tableData, setTableData] = useState(null);
 
-  const [formData, setFormData] = useState(initialValue)
+  const [formData, setFormData] = useState(initialValue);
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
-  const [datas,setDatas] = useState(null)
+  const [datas, setDatas] = useState(null);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
 
   const handleClickOpen = () => {
     //dialog open
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleClose = () => {
     //dialog close
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
-  const onChange = e => {
+  const onChange = (e) => {
     //catch the parameters when changed.
-    const { value, id } = e.target
-    setFormData({ ...formData, [id]: value })
-  }
+    const { value, id } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const PatientNameLinkRenderer = (props) => {
+    const { value, data } = props;
+
+    const handleClick = async () => {
+      try {
+        const response = await api.getAppointmentbyId(data.id);
+        const { data: appointmentData } = response;
+        setModalData(appointmentData);
+        setModalOpen(true);
+      } catch (error) {
+        console.error("Error fetching appointment details:", error);
+      }
+    };
+
+    return (
+      <Link to="#" onClick={handleClick}>
+        {value}
+      </Link>
+    );
+  };
 
   const columnDefs = [
-    { headerName: "Patient Name", field: "patient_name", filter: "agSetColumnFilter" },
+    {
+      headerName: "Patient Name",
+      field: "patient_name",
+      filter: "agSetColumnFilter",
+      cellRenderer: "patientNameLinkRenderer",
+    },
     {
       headerName: "Appointment No",
       field: "id",
       cellStyle: {
-        color: "blue",
-        fontWeight: "500",
-        backgroundColor: "#D6E4E5",
+        color: "#000",
+        fontWeight: "400",
+      },
+      resizable: true,
+      cellRenderer: (params) => {
+        const appno = params.data.id;
+        return <p>{"APPN" + appno}</p>;
       },
     },
-    { headerName: "Appointment Date", field: "date" },
+    { headerName: "Appointment Date", field: "date", resizable: true },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
-    { headerName: "Priority", field: "priority" },
+    { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
     { headerName: "Status", field: "appointment_status" },
     {
       headerName: "Actions",
-      field: "id",
-      cellRendererFramework: params => (
-        <div>
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(params.value)}
-          >
-            <i className="fas fa-trash"></i>
-          </button>
-        </div>
-      ),
+      field: "actions",
+      cellRenderer: "actionsRenderer",
+      cellRendererParams: {
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+      cellStyle: { color: "red" },
     },
-  ]
-
-  const defaultColDef = useMemo(
-    () => ({
-      sortable: true,
-      filter: true,
-      flex: 1,
-    }),
-    []
-  )
-
-  // useEffect(() => {
-  //   // getUsers from json
-  //   getUsers()
-  // }, [])
-
-  // const getUsers = () => {
-  //   api.getUser().then(res => setTableData(res.data))
-  //   api.http
-  // }
-
-  // function handleFormSubmit() {
-  //   //for posting and getting data at a sametime
-  //   api.postUser(formData).then(resp => {
-  //     console.log(resp)
-  //   })
-  //   handleClose()
-
-  //   api
-  //     .getPatient({ headers: { "content-type": "application/json" } })
-  //     .then(resp => {
-  //       getUsers()
-  //       setFormData(initialValue)
-  //       preventDefault()
-  //     })
-  // }
-
-  // const onGridReady = useCallback(params => {
-  //   api
-  //     .getUser()
-  //     .then(resp => resp.data())
-  //     .then(data => {
-  //       setRowData(data)
-  //     })
-  // }, [])
+  ];
 
   const onBtnExport = useCallback(() => {
-    gridRef.current.api.exportDataAsExcel()
-  }, [])
-useEffect(()=>{
-  getAppointment()
-},[])
-  const getAppointment = async () =>{
-    const response = await api.getAppointment()
-    const {data} = response
-    console.log(data, 'dddddd')
-    setDatas(data)
-  }
+    console.log(gridRef.current); // Log the grid reference
+    gridRef.current.api.exportDataAsCsv();
+  }, []);
 
-  console.log(datas, 'dataaaaaaa')
+  useEffect(() => {
+    getAppointment();
+  }, []);
+  const getAppointment = async () => {
+    try {
+      const response = await api.getAppointment();
+      const { data } = response;
+
+      // Modify the patient_name and date fields in each object in the data array
+      const modifiedData = data.map((patient) => {
+        const modifiedDate = new Date(patient.date);
+        const formattedDate = modifiedDate.toLocaleString(); // Adjust the format as needed
+
+        return {
+          ...patient,
+          patient_name: patient.patient_name.replace("/", ""),
+          date: formattedDate,
+        };
+      });
+
+      console.log(modifiedData, "modifiedData");
+
+      setDatas(modifiedData);
+    } catch (error) {
+      console.error("Error fetching appointment data:", error);
+    }
+  };
+
+  const handleDeleteClick = async (data) => {
+    const userConfirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    console.log(userConfirmed, "delete");
+    if (userConfirmed) {
+      const deleteResponse = await api.deleteAppointment(data.id);
+      const timeoutId = setTimeout(() => {
+        handleClose();
+        window.location.reload();
+      }, 1000);
+      return () => clearTimeout(timeoutId);
+    } else {
+      console.log("cancelled");
+    }
+  };
+
+  const gridOptions = {
+    domLayout: "autoHeight",
+    defaultColDef: {
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    onFirstDataRendered: (params) => {
+      params.api.autoSizeAllColumns();
+    },
+  };
+
+  const onGridReady = (params) => {
+    params.api.sizeColumnsToFit();
+  };
+
+  const autoSizeColumns = (params) => {
+    const colIds = params.columnApi
+      .getAllDisplayedColumns()
+      .map((col) => col.getColId());
+
+    params.columnApi.autoSizeColumns(colIds);
+  };
+
+  const defaultSort = [{ colId: "id", sort: "asc" }];
+
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+    patientNameLinkRenderer: PatientNameLinkRenderer,
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalData(null);
+  };
+
+  const onBtnExportPDF = () => {
+    const filteredColumnDefs = columnDefs.filter(
+      (col) => col.headerName !== "Actions"
+    );
+
+    const columns = filteredColumnDefs.map((col) => ({
+      header: col.headerName,
+      dataKey: col.field,
+    }));
+    const rows = datas.map((data) =>
+      filteredColumnDefs.map((col) => data[col.field])
+    );
+
+    const doc = new jsPDF({ orientation: "landscape" });
+    const columnStyles = {};
+    filteredColumnDefs.forEach((_, index) => {
+      columnStyles[index] = { cellWidth: 30 };
+    });
+
+    doc.autoTable({
+      head: [columns.map((col) => col.header)],
+      body: rows,
+      columnStyles,
+      margin: { top: 20 },
+    });
+
+    doc.save("agGridExport.pdf");
+  };
+
+  console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
+          <ToastContainer />
           <Breadcrumbs
             title={props.t("Appointment")}
             breadcrumbItem={props.t("Appointment")}
@@ -163,32 +260,32 @@ useEffect(()=>{
             }}
           >
             <button
-              className="btn btn-primary bg-soft"
+              className="btn-mod bg-soft custom-btn"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
               + Add Appointment
             </button>
-            <Link to='/doctorwise'>
-            <button
-              className="btn btn-primary bg-soft"
-              style={{ marginRight: "15px" }}
-            >
-            <i className="fas fa-align-justify"></i>
-              &nbsp;&nbsp;Doctor Wise
-            </button>
+            {/* <Link to="/doctorwise">
+              <button
+                className="btn-mod bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-justify"></i>
+                &nbsp;&nbsp;Doctor Wise
+              </button>
             </Link>
-           <Link to='/patientqueue'>
-           <button
-              className="btn btn-primary bg-soft"
-              style={{ marginRight: "15px" }}
-            >
-              <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
-            </button>
-           </Link>
-           
+            <Link to="/patientqueue">
+              <button
+                className="btn-mod bg-soft custom-btn"
+                style={{ marginRight: "15px" }}
+              >
+                <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
+              </button>
+            </Link> */}
+
             <button
-              className="btn btn-outline-primary"
+              className="btn-mod bg-soft custom-btn"
               onClick={() => onBtnExport()}
             >
               <i
@@ -197,29 +294,53 @@ useEffect(()=>{
               ></i>
               Export
             </button>
+            <button
+              className="btn-mod bg-soft custom-btn ms-3"
+              onClick={onBtnExportPDF}
+            >
+              <i
+                className="far fa-file-pdf fa-md"
+                // style={{ padding: "6px" }}
+              ></i>
+              &nbsp; Export as PDF
+            </button>
           </div>
         </Container>
 
         <div
           className="ag-theme-alpine"
-          style={{ height: 500, marginTop: "20px" }}
+          style={{ height: 1000, marginTop: "20px" }}
         >
           <AgGridReact
             ref={gridRef}
             rowData={datas}
             columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            // onGridReady={onGridReady}
+            pagination={true}
+            paginationPageSize={15}
+            domLayout="autoHeight"
+            // defaultColDef={defaultColDef}
+            defaultSort={defaultSort}
+            frameworkComponents={components}
+            gridOptions={gridOptions}
+            onGridReady={onGridReady}
+            onFirstDataRendered={autoSizeColumns}
           />
+
           <AlertDialog
             open={open}
             handleClose={handleClose}
-            data={formData} 
+            data={formData}
+            getAppointment={getAppointment}
+          />
+          <Patientdetails
+            open={modalOpen}
+            handleClose={handleCloseModal}
+            data={modalData}
           />
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default withTranslation()(Appointment)
+export default withTranslation()(Appointment);

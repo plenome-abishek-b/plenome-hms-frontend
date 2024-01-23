@@ -108,7 +108,7 @@ const SetupBedType = props => {
           <Card>
             <CardBody>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button className="btn btn-primary bg-soft" onClick={handleOpenBedtypeDialog}><i className="fa fa-plus"></i>&nbsp; Add Bed Type</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenBedtypeDialog}><i className="fa fa-plus"></i>&nbsp; Add Bed Type</button>
             </div>
               <div
                 className="ag-theme-alpine"

@@ -17,7 +17,7 @@ const Abhacard = props => {
         <Card>
             <CardBody>
                 <h4>Download ABHA Card</h4>
-            <button className="btn btn-primary">Download</button>
+            <button className="btn-mod">Download</button>
             </CardBody>
         </Card>
         

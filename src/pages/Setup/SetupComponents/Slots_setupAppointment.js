@@ -140,7 +140,7 @@ const Slot_setupAppointment = props => {
           <Card>
             <CardBody>
               <Row>
-                <Col lg="4" sm="14">
+                <Col lg="6" sm="14">
                   <label>Doctor</label>
                   <br />
                   <select
@@ -148,7 +148,7 @@ const Slot_setupAppointment = props => {
                     onChange={handleChange}
                     value={formData.doctor}
                     onClick={() => getDoctor()}
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "35px",border: '1px solid grey', borderRadius: '5px' }}
                   >
                     <option>select</option>
                     {doctor &&
@@ -159,7 +159,7 @@ const Slot_setupAppointment = props => {
                       ))}
                   </select>
                 </Col>
-                <Col lg="3" sm="12">
+                <Col lg="6" sm="12">
                   <label>Shift</label>
                   <br />
                   <select
@@ -167,7 +167,7 @@ const Slot_setupAppointment = props => {
                     onChange={handleChange}
                     value={formData.shift}
                     onClick={() => getShift()}
-                    style={{ width: "100%", height: "30px" }}
+                    style={{ width: "100%", height: "35px",border: '1px solid grey', borderRadius: '5px'  }}
                   >
                     <option>select</option>
                     {shift &&
@@ -178,15 +178,17 @@ const Slot_setupAppointment = props => {
                       ))}
                   </select>
                 </Col>
-                <Col>
-                  <button
+              </Row>
+              <div className="d-flex justify-content-end">
+              <button
                     onClick={() => handleSearch()}
                     style={{ margin: "30px" }}
+                    className="btn-mod fw-bold"
                   >
                     search
                   </button>
-                </Col>
-              </Row>
+              </div>
+             
               <br />
               <Row>
                 <Col lg="3" sm="12">
@@ -330,8 +332,8 @@ const Slot_setupAppointment = props => {
                       type="time"
                       value={searchData[0].start_time}
                       style={{
-                        width: "500px",
-                        height: "60px",
+                        width: "400px",
+                        height: "40px",
                         fontSize: "24px",
                         textAlign: "center",
                         border: "2px solid #ccc",
@@ -345,8 +347,8 @@ const Slot_setupAppointment = props => {
                       type="time"
                       value={searchData[0].end_time}
                       style={{
-                        width: "500px",
-                        height: "60px",
+                        width: "400px",
+                        height: "40px",
                         fontSize: "24px",
                         textAlign: "center",
                         border: "2px solid #ccc",
@@ -364,8 +366,8 @@ const Slot_setupAppointment = props => {
                       type="time"
                       value="--:--"
                       style={{
-                        width: "500px",
-                        height: "60px",
+                        width: "400px",
+                        height: "40px",
                         fontSize: "24px",
                         textAlign: "center",
                         border: "2px solid #ccc",
@@ -379,8 +381,8 @@ const Slot_setupAppointment = props => {
                       type="time"
                       value="--:--"
                       style={{
-                        width: "500px",
-                        height: "60px",
+                        width: "400px",
+                        height: "40px",
                         fontSize: "24px",
                         textAlign: "center",
                         border: "2px solid #ccc",
@@ -392,8 +394,12 @@ const Slot_setupAppointment = props => {
                     />
                   </>
                 )}
-                <button className="btn btn-primary">Save</button>
+                
               </div>
+              <div className="d-flex justify-content-center mt-5">
+              <button className="btn-mod" style={{width:'150px', height:'38px'}}>Save</button>
+              </div>
+              
 
               {/* } */}
             </CardBody>
