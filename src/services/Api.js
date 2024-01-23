@@ -369,7 +369,7 @@ const URL = {
 
 function getAppointmentbyId(id){
   const url = `${URL.APPOINTMENT_URL}/${id}`
-  return http.get(url);
+  return http3.get(url);
 }
 
 function getStaffcountData(roleId) {

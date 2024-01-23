@@ -11,7 +11,11 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import DeleteButtonRenderer from "common/data/delete-button";
-
+import Patientdetails from "./Dialog/PatientdetailsDialog";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //redux
 
 const initialValue = {
@@ -40,6 +44,9 @@ const Appointment = (props) => {
 
   const [datas, setDatas] = useState(null);
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
   const handleClickOpen = () => {
     //dialog open
     setOpen(true);
@@ -56,23 +63,48 @@ const Appointment = (props) => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const PatientNameLinkRenderer = (props) => {
+    const { value, data } = props;
+
+    const handleClick = async () => {
+      try {
+        const response = await api.getAppointmentbyId(data.id);
+        const { data: appointmentData } = response;
+        setModalData(appointmentData);
+        setModalOpen(true);
+      } catch (error) {
+        console.error("Error fetching appointment details:", error);
+      }
+    };
+
+    return (
+      <Link to="#" onClick={handleClick}>
+        {value}
+      </Link>
+    );
+  };
 
   const columnDefs = [
     {
       headerName: "Patient Name",
       field: "patient_name",
       filter: "agSetColumnFilter",
+      cellRenderer: "patientNameLinkRenderer",
     },
     {
       headerName: "Appointment No",
       field: "id",
       cellStyle: {
-        color: "#6070FF",
-        fontWeight: "500",
-        backgroundColor: "rgba(0,0,0,0.1)",
+        color: "#000",
+        fontWeight: "400",
+      },
+      resizable: true,
+      cellRenderer: (params) => {
+        const appno = params.data.id;
+        return <p>{"APPN" + appno}</p>;
       },
     },
-    { headerName: "Appointment Date", field: "date" },
+    { headerName: "Appointment Date", field: "date", resizable: true },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
     { headerName: "Priority", field: "priority_status" },
@@ -90,53 +122,11 @@ const Appointment = (props) => {
     },
   ];
 
-  // const defaultColDef = useMemo(
-  //   () => ({
-  //     sortable: true,
-  //     filter: true,
-  //     flex: 1,
-  //   }),
-  //   []
-  // )
-
-  // useEffect(() => {
-  //   // getUsers from json
-  //   getUsers()
-  // }, [])
-
-  // const getUsers = () => {
-  //   api.getUser().then(res => setTableData(res.data))
-  //   api.http
-  // }
-
-  // function handleFormSubmit() {
-  //   //for posting and getting data at a sametime
-  //   api.postUser(formData).then(resp => {
-  //     console.log(resp)
-  //   })
-  //   handleClose()
-
-  //   api
-  //     .getPatient({ headers: { "content-type": "application/json" } })
-  //     .then(resp => {
-  //       getUsers()
-  //       setFormData(initialValue)
-  //       preventDefault()
-  //     })
-  // }
-
-  // const onGridReady = useCallback(params => {
-  //   api
-  //     .getUser()
-  //     .then(resp => resp.data())
-  //     .then(data => {
-  //       setRowData(data)
-  //     })
-  // }, [])
-
   const onBtnExport = useCallback(() => {
-    gridRef.current.api.exportDataAsExcel();
+    console.log(gridRef.current); // Log the grid reference
+    gridRef.current.api.exportDataAsCsv();
   }, []);
+
   useEffect(() => {
     getAppointment();
   }, []);
@@ -145,11 +135,17 @@ const Appointment = (props) => {
       const response = await api.getAppointment();
       const { data } = response;
 
-      // Modify the patient_name field in each object in the datas array
-      const modifiedData = data.map((patient) => ({
-        ...patient,
-        patient_name: patient.patient_name.replace("/", ""),
-      }));
+      // Modify the patient_name and date fields in each object in the data array
+      const modifiedData = data.map((patient) => {
+        const modifiedDate = new Date(patient.date);
+        const formattedDate = modifiedDate.toLocaleString(); // Adjust the format as needed
+
+        return {
+          ...patient,
+          patient_name: patient.patient_name.replace("/", ""),
+          date: formattedDate,
+        };
+      });
 
       console.log(modifiedData, "modifiedData");
 
@@ -176,16 +172,31 @@ const Appointment = (props) => {
     }
   };
 
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    flex: 1,
+  const gridOptions = {
+    domLayout: "autoHeight",
+    defaultColDef: {
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    onFirstDataRendered: (params) => {
+      params.api.autoSizeAllColumns();
+    },
   };
 
-  const defaultSort = [
-    // Define default sorting based on "Appointment No" column
-    { colId: "id", sort: "asc" },
-  ];
+  const onGridReady = (params) => {
+    params.api.sizeColumnsToFit();
+  };
+
+  const autoSizeColumns = (params) => {
+    const colIds = params.columnApi
+      .getAllDisplayedColumns()
+      .map((col) => col.getColId());
+
+    params.columnApi.autoSizeColumns(colIds);
+  };
+
+  const defaultSort = [{ colId: "id", sort: "asc" }];
 
   const components = {
     actionsRenderer: (props) => (
@@ -194,6 +205,41 @@ const Appointment = (props) => {
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
     ),
+    patientNameLinkRenderer: PatientNameLinkRenderer,
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalData(null);
+  };
+
+  const onBtnExportPDF = () => {
+    const filteredColumnDefs = columnDefs.filter(
+      (col) => col.headerName !== "Actions"
+    );
+
+    const columns = filteredColumnDefs.map((col) => ({
+      header: col.headerName,
+      dataKey: col.field,
+    }));
+    const rows = datas.map((data) =>
+      filteredColumnDefs.map((col) => data[col.field])
+    );
+
+    const doc = new jsPDF({ orientation: "landscape" });
+    const columnStyles = {};
+    filteredColumnDefs.forEach((_, index) => {
+      columnStyles[index] = { cellWidth: 30 };
+    });
+
+    doc.autoTable({
+      head: [columns.map((col) => col.header)],
+      body: rows,
+      columnStyles,
+      margin: { top: 20 },
+    });
+
+    doc.save("agGridExport.pdf");
   };
 
   console.log(datas, "dataaaaaaa");
@@ -201,6 +247,7 @@ const Appointment = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
+          <ToastContainer />
           <Breadcrumbs
             title={props.t("Appointment")}
             breadcrumbItem={props.t("Appointment")}
@@ -247,6 +294,16 @@ const Appointment = (props) => {
               ></i>
               Export
             </button>
+            <button
+              className="btn-mod bg-soft custom-btn ms-3"
+              onClick={onBtnExportPDF}
+            >
+              <i
+                className="far fa-file-pdf fa-md"
+                // style={{ padding: "6px" }}
+              ></i>
+              &nbsp; Export as PDF
+            </button>
           </div>
         </Container>
 
@@ -261,12 +318,25 @@ const Appointment = (props) => {
             pagination={true}
             paginationPageSize={15}
             domLayout="autoHeight"
-            defaultColDef={defaultColDef}
+            // defaultColDef={defaultColDef}
             defaultSort={defaultSort}
             frameworkComponents={components}
+            gridOptions={gridOptions}
+            onGridReady={onGridReady}
+            onFirstDataRendered={autoSizeColumns}
           />
 
-          <AlertDialog open={open} handleClose={handleClose} data={formData} />
+          <AlertDialog
+            open={open}
+            handleClose={handleClose}
+            data={formData}
+            getAppointment={getAppointment}
+          />
+          <Patientdetails
+            open={modalOpen}
+            handleClose={handleCloseModal}
+            data={modalData}
+          />
         </div>
       </div>
     </React.Fragment>

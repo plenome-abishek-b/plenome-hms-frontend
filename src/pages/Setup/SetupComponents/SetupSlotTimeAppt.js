@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import api from "services/Api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
@@ -107,10 +109,20 @@ function SetupSlotAppt() {
       end_time,
       Hospital_id
     );
+
+    const { status, data } = response;
+
+    if (status === 201) {
+      toast.success('Appointment slot setup successful!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setFormSubmitted(true);
+    } else {
+      // Handle other response statuses if needed
+      toast.error('Failed to set up appointment slot. Please try again.');
+    }
     console.log(response, "ress");
-    const { data } = response;
     console.log(data, "appointment response");
-    setFormSubmitted(true);
   };
   
 
@@ -122,6 +134,7 @@ function SetupSlotAppt() {
             <Col>
               <Card>
                 <CardBody>
+                <ToastContainer />
                   <Row>
                     <Col lg="4">
                       <label>Day</label>
