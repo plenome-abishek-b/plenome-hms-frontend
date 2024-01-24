@@ -14,7 +14,7 @@ import api from "services/Api"
 const Certificate = props => {
   const [certificateTemp, setCertificateTemp] = useState(null)
   const [tableData, setTableData] = useState(null)
-  const [htmlData, setHtmlData] = useState("");
+  const [htmlData, setHtmlData] = useState(""); 
 
   console.log(certificateTemp,'certtt')
 

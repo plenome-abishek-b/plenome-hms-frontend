@@ -43,8 +43,8 @@ export default function AlertDialog({ open, handleClose, data, handleBill }) {
     if (formSubmitted) {
       const timeoutId = setTimeout(() => {
         handleClose(); // Close the dialog
-        window.location.reload(); // Refresh the component
-      }, 3000); // 2 seconds
+        // window.location.reload(); // Refresh the component
+      }); // 2 seconds
       return () => clearTimeout(timeoutId); // Clean up the timeout on component unmount
     }
   }, [formSubmitted, handleClose]);

@@ -9,7 +9,7 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 const baseNestSetupandMainURL = "http://13.200.35.19:3102";
-const baseNestSetupURL = "http://13.200.35.19:3102";
+const baseNestSetupURL = "http://13.200.35.19:3306";
 
 
 // const http2 = axios.create({
@@ -365,8 +365,15 @@ const URL = {
   SETUP_HR_DEPARTMENT:'/setup-human-resource-department',
   SETUP_HR_DESIGNATION:'/setup-human-resource-designation',
   SETUP_HR_SPECIALIST:'/setup-human-resource-specialist',
-  SETUP_HR_PATIENT:'/setup-patient-new-patient'
+  SETUP_HR_PATIENT:'/setup-patient-new-patient',
+  SETUP_BLOOD_BANK:'/setup-blood-bank-products',
+  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list'
 };  
+
+function getAppointmentbyId(id){
+  const url = `${URL.APPOINTMENT_URL}/${id}`
+  return http.get(url);
+}
 
 function getStaffcountData(roleId) {
   console.log("roleId:", roleId);
@@ -2321,6 +2328,12 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.SETUP_FINDINGS}/${id}`
     http4.delete(url)
   }
+
+  function deleteAppointment(id){
+    const url = `${URL.APPOINTMENT_URL}/${id}`
+    http4.delete(url)
+  }
+
   function getSetup_Finding_Category(){
     return http4.get(URL.SETUP_FINDING_CATEGORY)
   }
@@ -2470,7 +2483,21 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.SETUP_HR_PATIENT}/${id}`
     return http.delete(url)
   }
-  
+  function getByIDSetup_Patient(id){
+    const url = `${URL.SETUP_HR_PATIENT}/${id}`
+    return http.get(url)
+  }
+  function getSetup_bloodBank(){
+    return http.get(URL.SETUP_BLOOD_BANK)
+  }
+  function updateDisable_Patient(data){
+    console.log(data,"loging");
+    const url = `${URL?.SETUP_DISABLE_PATIENT}/${data.id}`
+    return http.patch(url,data)
+  } 
+  function getDisable_Patient(data){
+    return http.get(URL.SETUP_DISABLE_PATIENT)
+  }
 ////////
 
 function createPhrAddress(
@@ -2528,6 +2555,7 @@ http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 const api = {
   getUser,
@@ -2970,7 +2998,13 @@ const api = {
   getSetupHR_patient,
   postSetupHR_patient,
   updateSetupHR_patient,
-  deleteSetupHR_patient
+  deleteSetupHR_patient,
+  deleteAppointment,
+  getAppointmentbyId,
+  getSetup_bloodBank,
+  getByIDSetup_Patient,
+  updateDisable_Patient,
+  getDisable_Patient
 };
 
 export default api;

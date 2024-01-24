@@ -10,6 +10,7 @@ import api from "services/Api";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import DeleteButtonRenderer from "common/data/delete-button";
 
 //redux
 
@@ -55,6 +56,7 @@ const Appointment = (props) => {
     setFormData({ ...formData, [id]: value });
   };
 
+
   const columnDefs = [
     {
       headerName: "Patient Name",
@@ -79,17 +81,12 @@ const Appointment = (props) => {
     { headerName: "Status", field: "appointment_status" },
     {
       headerName: "Actions",
-      field: "id",
-      cellRendererFramework: (params) => (
-        <div>
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(params.value)}
-          >
-            <i className="fas fa-trash"></i>
-          </button>
-        </div>
-      ),
+      field: "actions",
+      cellRenderer: "actionsRenderer",
+      cellRendererParams: {
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+      cellStyle: { color: "red" },
     },
   ];
 
@@ -144,10 +141,39 @@ const Appointment = (props) => {
     getAppointment();
   }, []);
   const getAppointment = async () => {
-    const response = await api.getAppointment();
-    const { data } = response;
-    console.log(data, "dddddd");
-    setDatas(data);
+    try {
+      const response = await api.getAppointment();
+      const { data } = response;
+
+      // Modify the patient_name field in each object in the datas array
+      const modifiedData = data.map((patient) => ({
+        ...patient,
+        patient_name: patient.patient_name.replace("/", ""),
+      }));
+
+      console.log(modifiedData, "modifiedData");
+
+      setDatas(modifiedData);
+    } catch (error) {
+      console.error("Error fetching appointment data:", error);
+    }
+  };
+
+  const handleDeleteClick = async (data) => {
+    const userConfirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    console.log(userConfirmed, "delete");
+    if (userConfirmed) {
+      const deleteResponse = await api.deleteAppointment(data.id);
+      const timeoutId = setTimeout(() => {
+        handleClose();
+        window.location.reload();
+      }, 1000);
+      return () => clearTimeout(timeoutId);
+    } else {
+      console.log("cancelled");
+    }
   };
 
   const defaultColDef = {
@@ -160,6 +186,15 @@ const Appointment = (props) => {
     // Define default sorting based on "Appointment No" column
     { colId: "id", sort: "asc" },
   ];
+
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   console.log(datas, "dataaaaaaa");
   return (
@@ -228,6 +263,7 @@ const Appointment = (props) => {
             domLayout="autoHeight"
             defaultColDef={defaultColDef}
             defaultSort={defaultSort}
+            frameworkComponents={components}
           />
 
           <AlertDialog open={open} handleClose={handleClose} data={formData} />
