@@ -6,10 +6,14 @@ const baseNestURL = "http://localhost:4000";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 // const baseNodeURL = "http://13.200.35.19:3101";
-const baseNodeURL = "http://localhost:5000";
+const baseNodeURL = "http://localhost:4000";
+
 
 const baseNestSetupandMainURL = "http://13.200.35.19:3102";
-const baseNestSetupURL = "http://13.200.35.19:3102";
+const baseNestSetupURL = "http://13.200.35.19:3306";
+
+const baseNestSetupandMainURL = "http://localhost:4000";
+const baseNestSetupURL = "http://localhost:4000";
 
 
 // const http2 = axios.create({
@@ -364,7 +368,10 @@ const URL = {
   SETUP_HR_LEAVETYPE:'/setup-human-resource-leave-types',
   SETUP_HR_DEPARTMENT:'/setup-human-resource-department',
   SETUP_HR_DESIGNATION:'/setup-human-resource-designation',
-  SETUP_HR_SPECIALIST:'/setup-human-resource-specialist'
+  SETUP_HR_SPECIALIST:'/setup-human-resource-specialist',
+  SETUP_HR_PATIENT:'/setup-patient-new-patient',
+  SETUP_BLOOD_BANK:'/setup-blood-bank-products',
+  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list'
 };  
 
 function getAppointmentbyId(id){
@@ -2466,6 +2473,35 @@ function patchSetupRadiologyParameter(data){
     return http.delete(url)
     
   }
+  function getSetupHR_patient(){
+    return http.get(URL.SETUP_HR_PATIENT)
+  }
+  function postSetupHR_patient(data){
+    return http.post(URL.SETUP_HR_PATIENT,data)
+  }
+  function updateSetupHR_patient(data){
+    const url = `${URL.SETUP_HR_PATIENT}/${data.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupHR_patient(id){
+    const url = `${URL.SETUP_HR_PATIENT}/${id}`
+    return http.delete(url)
+  }
+  function getByIDSetup_Patient(id){
+    const url = `${URL.SETUP_HR_PATIENT}/${id}`
+    return http.get(url)
+  }
+  function getSetup_bloodBank(){
+    return http.get(URL.SETUP_BLOOD_BANK)
+  }
+  function updateDisable_Patient(data){
+    console.log(data,"loging");
+    const url = `${URL?.SETUP_DISABLE_PATIENT}/${data.id}`
+    return http.patch(url,data)
+  } 
+  function getDisable_Patient(data){
+    return http.get(URL.SETUP_DISABLE_PATIENT)
+  }
 ////////
 
 function createPhrAddress(
@@ -2963,8 +2999,16 @@ const api = {
   postSetupHR_specialist,
   updateSetupHR_specialist,
   deleteSetupHR_specialist,
+  getSetupHR_patient,
+  postSetupHR_patient,
+  updateSetupHR_patient,
+  deleteSetupHR_patient,
   deleteAppointment,
-  getAppointmentbyId
+  getAppointmentbyId,
+  getSetup_bloodBank,
+  getByIDSetup_Patient,
+  updateDisable_Patient,
+  getDisable_Patient
 };
 
 export default api;

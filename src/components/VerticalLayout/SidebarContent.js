@@ -612,6 +612,23 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
+                {/* ////////// */}
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Patients")}
+                  </Link>
+                  <ul style={{ marginLeft: "-30px" }}>
+                    <li>
+                      <Link to="/setupPatient">
+                        {props.t("Patient list")}
+                      </Link>
+                    </li>
+                    {/* <li>
+                      <Link to="/operations">{props.t("Operation")}</Link>
+                    </li> */}
+                  </ul>
+                </li>
+                {/* ////////////// */}
                 <li>
                   <Link to="/pathologysetup" className="has-arrow">
                     {props.t("Pathology")}

@@ -16,14 +16,23 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import "../printstyles.css";
 import PrintableDetails from "./PrintableDetails";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Patientdetails({ open, handleClose, data }) {
+export default function Patientdetails({
+  open,
+  handleClose,
+  data,
+  getAppointment,
+}) {
   // Inside your component
   useEffect(() => {
     console.log("Data:", data);
   }, [data]);
 
-  console.log(data, "dataaaa");
+  useEffect(() => {
+    getAppointment();
+  }, []);
 
   function formatDateTime(dateTimeString) {
     const options = {
@@ -44,6 +53,64 @@ export default function Patientdetails({ open, handleClose, data }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      const toastId = toast.info(
+        <div>
+          <div className="text-dark">
+            Are you sure you want to delete this item?
+          </div>
+          <div className="d-flex justify-content-end mt-3">
+            {console.log(data[0]?.id, "id")}
+            <button
+              className="btn btn-danger btn-md"
+              onClick={() => handleDeletionConfirmed(data[0]?.id)}
+            >
+              OK
+            </button>
+          </div>
+        </div>,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: false,
+        }
+      );
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
+
+  const handleDeletionConfirmed = async (appointmentId) => {
+    try {
+      await api.deleteAppointment(appointmentId);
+      toast.dismiss();
+
+      toast.success(
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>Item deleted successfully</div>
+          <button
+            className="btn btn-danger btn-sm fw-bold"
+            onClick={() => toast.dismiss()}
+          >
+            X
+          </button>
+        </div>,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          closeButton: false,
+          autoClose: 500,
+        }
+      );
+
+      setTimeout(() => {
+        getAppointment();
+      }, 500);
+      handleClose();
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
   };
 
   return (
@@ -72,10 +139,10 @@ export default function Patientdetails({ open, handleClose, data }) {
               justifyContent: "space-between",
             }}
           >
-          Appointment Details
+            Appointment Details
             <div>
               <button
-                className="btn-sm "
+                className="btn-sm ms-2"
                 style={{
                   backgroundColor: "#7070FF",
                   border: "1px solid white",
@@ -100,62 +167,9 @@ export default function Patientdetails({ open, handleClose, data }) {
           </DialogTitle>
 
           <DialogContent className="mt-4 ms-2" id="alert-dialog-content">
-            {/* <Row>
-              <Col>
-                <label>
-                  Patient Name : {data ? data[0].patient_name : "patient"}
-                </label>
-              </Col>
-              <Col>
-                <label>
-                  Appointment No : {data ? data[0].appointment_no : "patient"}
-                </label>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col>
-                <label>Mobile No : {data ? data[0].mobileno : "patient"}</label>
-              </Col>
-              <Col>
-                <label>
-                  Doctor Name: {data ? data[0].doctor_name : "patient"}
-                </label>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col>
-                <label>
-                  Appointment Date :{" "}
-                  {data ? formatDateTime(data[0].date) : "patient"}
-                </label>
-              </Col>
-              <Col>
-                <label>
-                  Appointment Priority:{" "}
-                  {data ? data[0].priority_status : "patient"}
-                </label>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col>
-                <label>Gender : {data ? data[0].gender : "patient"}</label>
-              </Col>
-              <Col>
-                <label>
-                  Status : {data ? data[0].appointment_status : "patient"}
-                </label>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col>
-                <label>Source : {data ? data[0].source : "patient"}</label>
-              </Col>
-            </Row> */}
-            <PrintableDetails data={data} />
+            
+
+            <PrintableDetails data={data} handleDeleteClick={handleDeleteClick} handleDeletionConfirmed={handleDeletionConfirmed}/>
           </DialogContent>
 
           <DialogActions

@@ -99,7 +99,7 @@ export default function SetupPathologyDialog({
       >
         <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
         Add Radiology Category
-        </DialogTitle>
+        </DialogTitle>  
         <DialogContent className="mt-4 ms-2">   
         <Container className="p-2">
             <Row>
