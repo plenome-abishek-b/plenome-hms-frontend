@@ -96,14 +96,17 @@ console.log(tableData,"jjijijij")
     //{ headerName: "Total Recheckup", field: "totalrecheckup" },
   ];
 
-  const defaultColDef = useMemo(
-    () => ({
+  const gridOptions = {
+    domLayout: 'autoHeight', // Set domLayout to autoHeight
+    defaultColDef: {
+      flex: 1, // Set the default flex property for columns
       sortable: true,
       filter: true,
-      flex: 1,
-    }),
-    []
-  );
+    },
+    onFirstDataRendered: (params) => {
+      params.api.autoSizeAllColumns(); // Auto-size all columns on first data render
+    },
+  };
 
   useEffect(() => {
     // getUsers from json
@@ -188,10 +191,11 @@ console.log(tableData,"jjijijij")
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
+            // defaultColDef={defaultColDef}
             pagination={true}
             paginationPageSize={10}
             domLayout='autoHeight'
+            gridOptions={gridOptions}
           />
         </div>
       </div>
