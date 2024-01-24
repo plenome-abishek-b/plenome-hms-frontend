@@ -20,7 +20,7 @@ import SetupPatientDialog from "../SetupDialog/setupPatinetDialog"
 import SetupPatientDetails from "../SetupDialog/SetupPatientDetails"
 import { Link } from "react-router-dom/cjs/react-router-dom"
 
-const SetupPatient = props => {
+const SetupDisablePatient = props => {
 
     const [openSetupOperationsDialog, setOpenSetupOperationsDialog] = useState()
     const [selectedData,setSelectedData] = useState({})
@@ -32,15 +32,15 @@ const SetupPatient = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
            console.log(userConfirmed,"delete");
    if(userConfirmed){
-         const deleteResponse = await api.deleteSetupHR_specialist(data.id)
-         getSpecialist()
+         const deleteResponse = await api.deleteSetupHR_patient(data.id)
+         getSetup_Patient()
    }else{
     console.log("cancelled");
    }
    }
   const columnDefs = [
     {headerName: 'Patient Name', field: 'patient_name'},
-    {headerName: 'age', field: 'age'},
+    {headerName: 'age', field: 'dob'},
     {headerName: 'Gender', field: 'gender'},
     {headerName: 'phone', field: 'mobileno'},
     {headerName: 'Guardian Name', field: 'guardian_name'},
@@ -68,8 +68,8 @@ const SetupPatient = props => {
 
   const handleOpenSetupOperations = () => {
     // history.pushState('/setupDisablePatient')
-      setSelectedData({})
-      setOpenSetupOperationsDialog(true);
+    setSelectedData({})
+    setOpenSetupOperationsDialog(true);
   }
 
   const handleCloseSetupOperations = async () => {
@@ -95,7 +95,7 @@ const SetupPatient = props => {
     getSetup_Patient()
    },[])
    const getSetup_Patient = async() =>{
-    const response = await api.getSetupHR_patient()
+    const response = await api.getDisable_Patient()
     const {data} = response
     setrowDate(data)
     console.log(data,"fd")
@@ -110,39 +110,21 @@ const SetupPatient = props => {
       </div>
     )
   } 
-  const handlePrint = () => {
-    const printWindow = window.open("", "_blank", "width=800,height=600");
-
-    printWindow.document.write('<html><head><title>Patient List</title></head><body>');
-    printWindow.document.write('<h1>Patient List</h1>');
-    
-    // Copy the table HTML content to the print window
-    const tableHtml = document.querySelector('.ag-theme-alpine .ag-center-cols-container').outerHTML;
-    printWindow.document.write(tableHtml);
-
-    printWindow.document.write('</body></html>');
-
-    // Close the document so it can be printed
-    printWindow.document.close();
-
-    // Trigger the print dialog
-    printWindow.print();
-  };
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <h4>Patient List</h4>
+          <h4>Disable Patient List</h4>
           <Card>
             <CardBody>
             <div className="d-flex justify-content-end">
-                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Patient</button>
-                &nbsp; 
-                <Link to="/setupPatient/import"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Import Patient</button></Link>
-                &nbsp; 
-                <Link to="/setupDisablePatient"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Diabel Patient List</button></Link>
-                &nbsp; 
-                <button className="btn-mod bg-soft" onClick={handlePrint}>&nbsp;print</button>
+                {/* <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Specialist</button>
+                <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Diabel Patient List</button> */}
+                <Link to="/setupPatient">
+                <button className="btn-mod bg-soft">&nbsp; Patient List</button>
+                </Link>
+
+
             </div>
               <div
                 className="ag-theme-alpine"
@@ -155,7 +137,7 @@ const SetupPatient = props => {
                   frameworkComponents={components}
                 />
                 <SetupPatientDialog selectedData={selectedData} getSetup_Patient={getSetup_Patient} open={openSetupOperationsDialog} handleClose={handleCloseSetupOperations}/>
-                <SetupPatientDetails open={open} getSetup_Patient={getSetup_Patient} patientDetail={patientDetail} handleClose={handleClose}/>
+                <SetupPatientDetails location="enable" open={open} getSetup_Patient={getSetup_Patient} patientDetail={patientDetail} handleClose={handleClose}/>
                 </div>
             </CardBody>
           </Card>
@@ -165,4 +147,4 @@ const SetupPatient = props => {
   )
 }
 
-export default withTranslation()(SetupPatient)
+export default withTranslation()(SetupDisablePatient)
