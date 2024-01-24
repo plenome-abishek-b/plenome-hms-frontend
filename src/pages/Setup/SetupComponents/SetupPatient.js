@@ -140,7 +140,7 @@ const SetupPatient = props => {
                 &nbsp; 
                 <Link to="/setupPatient/import"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Import Patient</button></Link>
                 &nbsp; 
-                <Link to="/setupDisablePatient"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Diabel Patient List</button></Link>
+                <Link to="/setupDisablePatient"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Disable Patient List</button></Link>
                 &nbsp; 
                 <button className="btn-mod bg-soft" onClick={handlePrint}>&nbsp;print</button>
             </div>
