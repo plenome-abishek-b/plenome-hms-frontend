@@ -9,11 +9,15 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
+
 const baseNestSetupandMainURL = "http://13.200.35.19:3102";
 const baseNestSetupURL = "http://13.200.35.19:3306";
 
 // const baseNestSetupandMainURL = "http://localhost:4000";
 // const baseNestSetupURL = "http://localhost:4000";
+const baseNestSetupandMainURL = "http://localhost:4000";
+const baseNestSetupURL = "http://localhost:4000";
+
 
 
 // const http2 = axios.create({

@@ -36,8 +36,8 @@ function PrintableDetails({ data,handleDeleteClick }) {
               <button
                 className="btn btn-danger"
                 style={{
-                  border: "1px solid white",
-                  backgroundColor: "#BF3131"
+                  border: "1px solid #FF6868",
+                  backgroundColor: "#FF6868"
                 }}
                 onClick={handleDeleteClick}
               >
