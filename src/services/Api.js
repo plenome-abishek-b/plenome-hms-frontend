@@ -17,7 +17,6 @@ const baseNestSetupURL = "http://localhost:4000";
 // const baseNestSetupURL = "http://localhost:4000";
 
 
-
 // const http2 = axios.create({
 //   baseURL: baseNestURL,
 // });
