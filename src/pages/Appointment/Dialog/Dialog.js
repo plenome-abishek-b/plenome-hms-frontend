@@ -15,6 +15,7 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./styles.css"
 
 export default function AlertDialog({
   open,
@@ -219,6 +220,7 @@ export default function AlertDialog({
     if (status === 201) {
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
+        autoClose: 500,
       });
       setFormSubmitted(true);
       setFormValues({});
@@ -304,6 +306,7 @@ export default function AlertDialog({
               </label>
               <br />
               <select
+              className="select-transition"
                 style={{
                   width: "100%",
                   height: "35px",

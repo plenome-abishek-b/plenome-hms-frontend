@@ -156,19 +156,50 @@ const Appointment = (props) => {
   };
 
   const handleDeleteClick = async (data) => {
-    const userConfirmed = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
-    console.log(userConfirmed, "delete");
-    if (userConfirmed) {
-      const deleteResponse = await api.deleteAppointment(data.id);
-      const timeoutId = setTimeout(() => {
-        handleClose();
-        window.location.reload();
-      }, 1000);
-      return () => clearTimeout(timeoutId);
-    } else {
-      console.log("cancelled");
+    try {
+      // Show a toast message with an OK button for confirmation
+      const toastId = toast.info(
+        <div>
+          <div className="text-dark">Are you sure you want to delete this item?</div>
+          <div className="d-flex justify-content-end mt-3">
+          <button className="btn btn-danger btn-md" onClick={() => handleDeletionConfirmed(data.id)}>OK</button>
+          </div>
+          
+        </div>,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: false,
+        }
+      );
+  
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
+  
+  const handleDeletionConfirmed = async (appointmentId) => {
+    try {
+      await api.deleteAppointment(appointmentId);
+      toast.dismiss();
+  
+      toast.success(
+        <div style={{display: "flex", justifyContent: 'space-between'}}>
+          <div>Item deleted successfully</div>
+          <button className="btn btn-danger btn-sm fw-bold" onClick={() => toast.dismiss()}>X</button>
+        </div>,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          closeButton: false,
+          autoClose: 500, 
+        }
+      );
+  
+      setTimeout(() => {
+        getAppointment();
+      }, 500);
+  
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
     }
   };
 
@@ -336,6 +367,9 @@ const Appointment = (props) => {
             open={modalOpen}
             handleClose={handleCloseModal}
             data={modalData}
+            getAppointment={getAppointment}
+            handleDeleteClick={handleDeleteClick}
+            handleDeletionConfirmed={handleDeletionConfirmed}
           />
         </div>
       </div>

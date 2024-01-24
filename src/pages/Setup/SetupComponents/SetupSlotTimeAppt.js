@@ -15,6 +15,7 @@ function SetupSlotAppt() {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [timeInputs, setTimeInputs] = useState([]);
+
   
 
   const addNewTimeInputRow = () => {
@@ -115,6 +116,7 @@ function SetupSlotAppt() {
     if (status === 201) {
       toast.success('Appointment slot setup successful!', {
         position: toast.POSITION.TOP_RIGHT,
+        autoClose: 500,
       });
       setFormSubmitted(true);
     } else {

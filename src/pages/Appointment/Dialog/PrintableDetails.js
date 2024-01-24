@@ -3,7 +3,14 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-function PrintableDetails({ data }) {
+function PrintableDetails({ data,handleDeleteClick }) {
+
+  console.log(data,'aaaaaa')
+
+  function removeSlash(inputString) {
+    return inputString ? inputString.replace('/', '') : inputString;
+  }
+
   function formatDateTime(dateTimeString) {
     const options = {
       year: "numeric",
@@ -21,12 +28,27 @@ function PrintableDetails({ data }) {
     return formattedDateTime;
   }
 
+  
+
   return (
     <div style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}>
+      <div className="d-flex justify-content-end">
+              <button
+                className="btn btn-danger"
+                style={{
+                  border: "1px solid white",
+                  backgroundColor: "#BF3131"
+                }}
+                onClick={handleDeleteClick}
+              >
+                {" "}
+                <i className="fas fa-trash"></i>
+              </button>
+            </div>
       <Row className="mb-2">
         <Col>
           <label>
-            Patient Name: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].patient_name : "patient"}
+            Patient Name: &nbsp;&nbsp;&nbsp;&nbsp;{data ? removeSlash(data[0].patient_name) : "patient"}
           </label>
         </Col>
         <Col>

@@ -191,7 +191,7 @@ console.log(tableData,"jjijijij")
           <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
+            // defaultColDef={defaultColDef}
             pagination={true}
             paginationPageSize={10}
             domLayout='autoHeight'
