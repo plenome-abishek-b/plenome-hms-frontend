@@ -620,7 +620,7 @@ export default function SetupPatientDialog({
                 <input
                   type="text"
                   name="patient_name"
-                  placeholder={validate?.patient_name ? 'enter patient name' : ''}
+                  placeholder={validate?.patient_name ? 'enter patient name' : 'patient name'}
                   style={{
                     width: "100%",
                     height: "35px",
@@ -644,7 +644,7 @@ export default function SetupPatientDialog({
                   onChange={handleChange}
                   //   onChange={formik.handleChange}
                   // value={formik.values.guardian_name}
-                  placeholder={validate?.guardian_name ? 'enter guardian name' : ''}
+                  placeholder={validate?.guardian_name ? 'enter guardian name' : 'guardian name'}
                   style={{
                     width: "100%",
                     height: "35px",
@@ -713,7 +713,7 @@ export default function SetupPatientDialog({
                   <>
                     <input
                       name="year"
-                      placeholder={validate?.age ? 'enter year' : ''}
+                      placeholder={validate?.age ? 'enter year' : 'year'}
                       value={formData.year}
                       onChange={handleChange}
                       style={{
@@ -728,7 +728,7 @@ export default function SetupPatientDialog({
                       name="month"
                       value={formData.month}
                       onChange={handleChange}
-                      placeholder={validate?.age ? 'enter month' : ''}
+                      placeholder={validate?.age ? 'enter month' : 'month'}
                       style={{
                         width: "80px",
                         height: "35px",
@@ -740,7 +740,7 @@ export default function SetupPatientDialog({
                     />
                     <input
                       name="day"
-                      placeholder={validate?.age ? 'enter day' : ''}
+                      placeholder={validate?.age ? 'enter day' : 'day'}
                       value={formData.day}
                       onChange={handleChange}
                       style={{
@@ -830,7 +830,7 @@ export default function SetupPatientDialog({
                 <label>Phone</label>
                 <br />
                 <input
-                  placeholder={validate?.mobileno ? 'enter number' : ''}
+                  placeholder={validate?.mobileno ? 'enter number' : 'number'}
                   type="number"
                   name="mobileno"
                   value={formData.mobileno}
@@ -855,7 +855,7 @@ export default function SetupPatientDialog({
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.email}
-                  placeholder={validate?.email ? 'enter email' : ''}
+                  placeholder={validate?.email ? 'enter email' : 'email'}
                   style={{
                     width: "100%",
                     height: "35px",
@@ -872,7 +872,7 @@ export default function SetupPatientDialog({
                 <label>Remarks</label>
                 <br />
                 <input
-                  placeholder={validate?.note ? 'enter remark' : ''}
+                  placeholder={validate?.note ? 'enter remark' : 'remarks'}
                   type="text"
                   name="note"
                   value={formData.note}
@@ -898,7 +898,7 @@ export default function SetupPatientDialog({
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.alargies}
-                  placeholder={validate?.known_allergies ? 'enter known allergies' : ''}
+                  placeholder={validate?.known_allergies ? 'enter known allergies' : 'alargies'}
                   style={{
                     width: "100%",
                     height: "35px",
@@ -921,7 +921,7 @@ export default function SetupPatientDialog({
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.address}
-                  placeholder={validate?.address ? 'enter address' : ''}
+                  placeholder={validate?.address ? 'enter address' : 'address'}
                   style={{
                     width: "100%",
                     height: "60px",
@@ -942,7 +942,7 @@ export default function SetupPatientDialog({
                   name="insurance_id"
                   value={formData?.insurance_id}
                   onChange={handleChange}
-                  placeholder={validate?.insurance_id ? 'enter Insurence Id' : ''}
+                  placeholder={validate?.insurance_id ? 'enter Insurence Id' : 'insurence id'}
                   // onChange={formik.handleChange}
                   // value={formik.values.tpaId}
                   style={{
@@ -960,7 +960,7 @@ export default function SetupPatientDialog({
                   name="insurance_validity"
                   value={formData.insurance_validity}
                   onChange={handleChange}
-                  placeholder={validate?.insurance_validity ? 'enter email' : ''}
+                  placeholder={validate?.insurance_validity ? 'enter insurence validity' : 'insurence validity'}
                   // onChange={formik.handleChange}
                   // value={formik.values.tpa_validity}
                   type="date"
@@ -986,7 +986,7 @@ export default function SetupPatientDialog({
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.NIN}
-                  placeholder={validate?.identification_number ? 'enter email' : ''}
+                  placeholder={validate?.identification_number ? 'enter identification number' : 'identification number'}
                   style={{
                     width: "100%",
                     height: "35px",
