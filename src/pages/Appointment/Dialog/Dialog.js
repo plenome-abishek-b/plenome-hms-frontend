@@ -253,9 +253,9 @@ export default function AlertDialog({
           Add New Appointment
           <div>
             <button
-              className="btn text-white ms-3 fw-bold"
+              className="btn text-white ms-5 fw-bold"
               onClick={handleClickOpen}
-              style={{ border: "1px solid white" }}
+              style={{ border: "1px solid white"}}
             >
               + New Patient
             </button>

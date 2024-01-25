@@ -144,8 +144,8 @@ export default function Patientdetails({
               <button
                 className="btn-sm ms-2"
                 style={{
-                  backgroundColor: "#7070FF",
-                  border: "1px solid white",
+                  backgroundColor: "#6895D2",
+                  border: "1px solid #6895D2",
                 }}
                 onClick={handlePrint}
               >
@@ -156,7 +156,7 @@ export default function Patientdetails({
                 className="btn-sm text-white fw-bold ms-2"
                 style={{
                   backgroundColor: "#D04848",
-                  border: "1px solid white",
+                  border: "1px solid #D04848",
                 }}
                 onClick={handleClose}
               >
