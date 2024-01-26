@@ -216,7 +216,9 @@ export default function AlertDialog({
 
   const handleFormSubmit = async () => {
     const response = await api.postAppointment(formValues);
+    console.log(formValues,"form values")
     const { status, data } = response;
+    
     if (status === 201) {
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -270,6 +272,7 @@ export default function AlertDialog({
           <PatientDialog
             open={openpatientDialog}
             handleClose={handleDialogClose}
+            getAllPatient={getAllPatient}
           />
         </DialogTitle>
         <DialogContent className="mt-4">

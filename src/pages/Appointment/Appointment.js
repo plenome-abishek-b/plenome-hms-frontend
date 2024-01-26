@@ -190,7 +190,7 @@ const Appointment = (props) => {
         {
           position: toast.POSITION.TOP_RIGHT,
           closeButton: false,
-          autoClose: 500, 
+          autoClose: 500,
         }
       );
   
@@ -303,7 +303,7 @@ const Appointment = (props) => {
             >
               + Add Appointment
             </button>
-            {/* <Link to="/doctorwise">
+            <Link to="/doctorwise">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -319,7 +319,7 @@ const Appointment = (props) => {
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link> */}
+            </Link>
 
             <button
               className="btn-mod bg-soft custom-btn"

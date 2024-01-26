@@ -9,12 +9,12 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
-const baseNestSetupandMainURL = "http://localhost:4000";
-const baseNestSetupURL = "http://localhost:4000";
+const baseNestSetupandMainURL = "http://13.200.35.19:3102";
+const baseNestSetupURL = "http://13.200.35.19:3102";
 
 
-// const baseNestSetupandMainURL = "http://localhost:4000";
-// const baseNestSetupURL = "http://localhost:4000";
+// const baseNestSetupandMainURL = "http://localhost:5000";
+// const baseNestSetupURL = "http://localhost:5000";
 
 
 // const http2 = axios.create({
@@ -50,7 +50,7 @@ const URL = {
   OPD_URL: "/api/outpatient/opd_details",
   IPD_URL: "/api/ipd_details",
   BLOOD_URL: "/setup-blood-bank-products",
-  CONSULTANT_DOC_URL: "/api/nurse_Roles",
+  CONSULTANT_DOC_URL: "/internal-appointment-staff",
   CALL_LOG_URL: "/api/frontoffice/call_log",
   PHARMACY_BILL_URL: "/api/pharmacyBasicBill",
   PHARMACY_MEDS_URL: "/api/pharmacyMedicine",
@@ -60,13 +60,13 @@ const URL = {
 
   APPOINTMENT_URL: "/add-appointment",
   DOCTOR_WISE_URL: "/api/user_Roles",
-  DOCTOR_APPOINTMENT_URL: "/api/appointment/add_appointment",
-  SHIFT_WISE_URL: "/api/appointmentShift",
+  DOCTOR_APPOINTMENT_URL: "/add-appointment-doctor-wise",
+  SHIFT_WISE_URL: "/setup-appointment-shift",
   APPT_SHIFT_URL: "/internal-appointment-shift",
   APPT_SLOT_URL: "/internal-appointment-slot",
   APPT_SLOT_CHARGE: "/setup_appt_slot_amount",
-  SLOT_WISE_URL: "/api/patienQueueSlot",
-  PATIENT_SEARCH_URL: "/api/appointment/add_patient",
+  SLOT_WISE_URL: "/internal-appointment-slot",
+  PATIENT_SEARCH_URL: "/add-appointment-patient-queue",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
   ADD_APPOINTMENT_URL: "/add-appointment",
 
@@ -547,7 +547,7 @@ function getPatient(doctor, shift, date, slot) {
   const data = {
     params: { doctor: doctor, shift: shift, date: date, slot: slot },
   };
-  return http.get(URL.PATIENT_SEARCH_URL, data);
+  return http4.get(URL.PATIENT_SEARCH_URL, data);
 }
 
 function getOpd(data = {}) {
@@ -627,22 +627,22 @@ function getRole(data = {}) {
 }
 
 function getDoctor(data = {}) {
-  return http.get(URL.CONSULTANT_DOC_URL, data);
+  return http4.get(URL.CONSULTANT_DOC_URL, data);
 }
 function getDoctorwiseAppoinment(doctor, date) {
   const data = { params: { doctor: doctor, date: date } };
-  return http.get(URL.DOCTOR_APPOINTMENT_URL, data);
+  return http4.get(URL.DOCTOR_APPOINTMENT_URL, data);
 }
 
 function getShiftdatas(shiftId) {
   console.log(shiftId, "ssss");
   const data = { params: { shiftId: shiftId } };
-  return http.get(URL.SHIFT_WISE_URL, data);
+  return http4.get(URL.SHIFT_WISE_URL, data);
 }
 function getSlotdatas(doctor, shift) {
   console.log(doctor, shift, "uuuuuuu");
   const data = { params: { staffId: doctor, shift: shift } };
-  return http.get(URL.SLOT_WISE_URL, data);
+  return http4.get(URL.SLOT_WISE_URL, data);
 }
 function getPatients(doctor, shift, date, slot) {
   const data = {
