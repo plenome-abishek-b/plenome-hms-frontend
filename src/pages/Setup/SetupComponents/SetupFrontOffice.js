@@ -10,6 +10,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 
 import SetupPurposeDialog from "../SetupDialog/SetupFrontOfficeDialog"      
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const setupFrontofficePurpose = props => {
 
@@ -24,7 +26,7 @@ const setupFrontofficePurpose = props => {
   const [openPurposeDialog, setOpenPurposeDialog] = useState()
   const [tableData,setTableData] = useState()
   const [formData, setFormData] = useState(initialFrontofficeSetupPurposeValue)
-
+  const [selectedData,setSelectedData] = useState({})
 
   const onChange = e => {
     //catch the parameters when changed.
@@ -41,10 +43,35 @@ const setupFrontofficePurpose = props => {
   //     action: "",
   //   },
   // ]
-
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenPurposeDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetupFrontOffice_purpose(data.id)
+         getFrontSetupPurpose()
+   }else{
+    console.log("cancelled");
+   }
+  
+   }
   const columnDefs = [
     { headerName: "Purpose", field: "visitors_purpose" },
     { headerName: "Description", field: "description" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -57,6 +84,7 @@ const setupFrontofficePurpose = props => {
   )
 
   const handleOpenPurpose = () => {
+    setSelectedData({})
     setOpenPurposeDialog(true)
   }
 
@@ -70,14 +98,10 @@ const setupFrontofficePurpose = props => {
     getFrontSetupPurpose()
   }, [])
 
-  const getFrontSetupPurpose = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getFrontofficeSetupVisitorsPurpose().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  const getFrontSetupPurpose = async () => {
+    const response = await api.getSetupFrontOffice_Porpose()
+    console.log(response.data,"all frontoffice");
+    setTableData(response?.data)
   }
 
   function patientId(e){
@@ -87,38 +111,17 @@ const setupFrontofficePurpose = props => {
   }
 
   function handleFormSubmit(event) {
-
-    // const payload = {
-    //   case_reference_id: "1",
-    //   patient_id: id, // Assign the patient ID to the patient_id field
-    //   generated_by: "1",
-    //   is_ipd_moved: "no",
-    //   discharged: "2023-04-25 14:07:22",
-    //   created_at: ""
-    // };
-  
-    api.postFrontofficeSetupVisitorsPurpose(formData).then(resp => {
-      console.log(resp);
-      console.log(resp.data, 'patient');
-    });
-
-    // api.postOpdVisits(formData).then(resp => {
-    //   console.log(resp);
-    //   console.log(resp.data, 'patient');
-    // });
-  
-    api
-      .getFrontofficeSetupVisitorsPurpose({ headers: { "content-type": "application/json" } })
-      .then(resp => {
-        getFrontSetupPurpose();
-        setFormData(initialFrontofficeSetupPurposeValue);
-        console.log()
-        event.preventDefault();
-      });
-  
     handleClose();
   }
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -140,8 +143,9 @@ const setupFrontofficePurpose = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                    frameworkComponents={components}
                   />
-                  <SetupPurposeDialog open={openPurposeDialog} handleClose={handleClosePurpose} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit} />
+                  <SetupPurposeDialog selectedData={setSelectedData} open={openPurposeDialog} handleClose={handleClosePurpose} getFrontSetupPurpose={getFrontSetupPurpose} />
                 </div>
               </div>
             </CardBody>

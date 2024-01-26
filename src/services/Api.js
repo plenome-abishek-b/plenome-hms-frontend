@@ -9,12 +9,12 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
-const baseNestSetupandMainURL = "http://localhost:4000";
-const baseNestSetupURL = "http://localhost:4000";
-
-
 // const baseNestSetupandMainURL = "http://localhost:4000";
 // const baseNestSetupURL = "http://localhost:4000";
+
+
+const baseNestSetupandMainURL = "http://localhost:4000";
+const baseNestSetupURL = "http://localhost:4000";
 
 
 // const http2 = axios.create({
@@ -372,7 +372,11 @@ const URL = {
   SETUP_HR_SPECIALIST:'/setup-human-resource-specialist',
   SETUP_HR_PATIENT:'/setup-patient-new-patient',
   SETUP_BLOOD_BANK:'/setup-blood-bank-products',
-  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list'
+  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list',
+  SETUP_FRONT_OFFICE_PURPOSE:'/setup-front-office-purpose',
+  SETUP_FRONT_OFFICE_COMPLAINT_TYPE:'/setup-front-office-complain-type',
+  SETUP_FRONT_OFFICE_SOURCE:'/setup-front-office-source',
+  SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority'
 };  
 
 function getAppointmentbyId(id){
@@ -2503,6 +2507,62 @@ function patchSetupRadiologyParameter(data){
   function getDisable_Patient(data){
     return http.get(URL.SETUP_DISABLE_PATIENT)
   }
+  function getSetupFrontOffice_Porpose(){
+    return http.get(URL.SETUP_FRONT_OFFICE_PURPOSE)
+  }
+  function postSetupFrontOffice_Porpose(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_PURPOSE,data)
+  }
+  function updateSetupFrontOffice_purpose(data){
+    const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_purpose(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_complaint_Type(){
+    return http.get(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE)
+  }
+  function postSetupFrontendOffice_complaint_Type(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE,data)
+  }
+  function updateSetupFrontOffice_complaint_Type(data){
+   const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${data?.id}`
+   return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_complaint_Type(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_source(){
+    return http.get(URL.SETUP_FRONT_OFFICE_SOURCE)
+  }
+  function postSetupFrontOffice_source(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_SOURCE,data)
+  }
+  function updateSetupFrontOffice_source(data){
+    const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_source(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_appointmentPriority(){
+    return http.get(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY)
+  }
+  function postSetupFrontOffice_appointmentPriority(data){
+    return http.post(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY,data)
+  }
+  function updateSetupFrontOffice_appointmentPriority(data){
+    const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_appointmentPriority(id){
+    const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${id}`
+    return http.delete(url)
+  }
 ////////
 
 function createPhrAddress(
@@ -3009,7 +3069,22 @@ const api = {
   getSetup_bloodBank,
   getByIDSetup_Patient,
   updateDisable_Patient,
-  getDisable_Patient
+  getDisable_Patient,
+  getSetupFrontOffice_Porpose,
+  postSetupFrontOffice_Porpose,
+  updateSetupFrontOffice_purpose,
+  deleteSetupFrontOffice_purpose,
+  getSetupFrontOffice_complaint_Type,
+  postSetupFrontendOffice_complaint_Type,
+  updateSetupFrontOffice_complaint_Type,
+  deleteSetupFrontOffice_complaint_Type,
+  getSetupFrontOffice_source,
+  postSetupFrontOffice_source,
+  updateSetupFrontOffice_source,
+  deleteSetupFrontOffice_source,
+  getSetupFrontOffice_appointmentPriority,
+  postSetupFrontOffice_appointmentPriority,
+  updateSetupFrontOffice_appointmentPriority,
+  deleteSetupFrontOffice_appointmentPriority
 };
-
 export default api;

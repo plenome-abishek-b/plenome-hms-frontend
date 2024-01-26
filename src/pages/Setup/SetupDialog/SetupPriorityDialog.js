@@ -7,16 +7,25 @@ import { Row, Col, Container, Label, Input, CardBody, Card } from "reactstrap"
 import { TextField } from "@material-ui/core"
 import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
+import { useEffect } from "react"
+import api from "services/Api"
+import { useState } from "react"
 
 export default function SetupPriorityDialog({
   open,
   handleClose,
-  data,
-  onChange,
-  handleFormSubmit,
+  getFrontofficeSetupPrior,
+  selectedData
 }) {
   const [openPriorityDialog, setopenPriorityDialog] = React.useState(false)
-
+  const [formData,setFormData] = useState({
+    priority_status:'',
+    Hospital_id:1
+  })
+  const [validate,setValidate] = useState({
+    priority_status:false,
+    Hospital_id:1
+  })
   const handleClickOpen = () => {
     //dialog open
     setopenPriorityDialog(true)
@@ -26,6 +35,50 @@ export default function SetupPriorityDialog({
     //dialog close
     setopenPriorityDialog(false)
   }
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormData({
+        priority_status:selectedData?.priority_status || '',
+        Hospital_id:1
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormData({
+        priority_status:'',
+        Hospital_id:1
+      });
+    }
+  }, [selectedData]);
+  const handleFormSubmit = async () =>{
+    console.log(formData,"POST");
+    if(formData?.priority_status === ''){
+      setValidate({...validate,priority_status:true})
+      setTimeout(()=>{
+      setValidate({...validate,priority_status:false})
+      },3000)
+    }
+    else{
+      const response = await api.postSetupFrontOffice_appointmentPriority(formData)
+      getFrontofficeSetupPrior()
+      handleClose()
+    }
+  }
+  const handleUpdate = async () =>{
+    const newData = {
+      ...formData,
+      id:selectedData?.id
+    }
+    const response = await api.updateSetupFrontOffice_appointmentPriority(newData)
+    getFrontofficeSetupPrior()
+    handleClose()
+  }
+  const handleChange = async (e) =>{
+    const {id,value} = e.target
+    setFormData({
+     ...formData,[id]:value
+    })
+ }
 
   return (
     <div
@@ -53,19 +106,28 @@ export default function SetupPriorityDialog({
             <Row>
                 <label>Priority</label>
                 <br />
-                <input id='appoint_priority' onChange={e=>onChange(e)} value={data.appoint_priority} ></input>
+                <input id='priority_status' style={{borderColor:validate?.priority_status ? 'red':''}} placeholder={validate?.priority_status ? "enter priority status":"prority status"} onChange={handleChange} value={formData?.priority_status} ></input>
             </Row>
             
           </Container>
         </DialogContent>
         <DialogActions>
-          <button
+         { selectedData?.priority_status ? 
+         <button
             className="btn-mod bg-soft btn-md"
-            onClick={()=>handleFormSubmit(handleClose())}
+            onClick={()=>handleUpdate()}
             style={{ marginRight: "3%" }}
           >
             Save
-          </button>
+          </button> :
+          <button
+          className="btn-mod bg-soft btn-md"
+          onClick={()=>handleFormSubmit()}
+          style={{ marginRight: "3%" }}
+        >
+          Saves
+        </button>
+            }
         </DialogActions>
       </Dialog>
     </div>
