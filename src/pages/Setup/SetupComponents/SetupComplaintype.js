@@ -10,6 +10,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 
 import SetupComplainDialog from "../SetupDialog/SetupComplainDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const setupFrontOfficeComplainType = props => {
 
@@ -23,16 +25,7 @@ const setupFrontOfficeComplainType = props => {
   const [opencomplainDialog, setOpenComplainDialog] = useState()
   const [tableData,setTableData] = useState()
   const [formData, setFormData] = useState(initialFrontofficeSetupComplainTypeValue)
-
-
-  const onChange = e => {
-    //catch the parameters when changed.
-    const { value, id } = e.target
-    setFormData({ ...formData, [id]: value })
-    // setFormData1({ ...formData1, [id]: value })
-  }
-
-
+  const [selectedData,setSelectedData] = useState({})
   // const rowData = [
   //   {
   //     cmptype: " Charges",
@@ -40,10 +33,35 @@ const setupFrontOfficeComplainType = props => {
   //     action: "",
   //   },
   // ]
-
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenComplainDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteSetupFrontOffice_complaint_Type(data.id)
+         getFrontSetupComplainType()
+   }else{
+    console.log("cancelled");
+   }
+  
+   }
   const columnDefs = [
     { headerName: "Complain Type", field: "complaint_type" },
     { headerName: "Description", field: "description" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -56,6 +74,7 @@ const setupFrontOfficeComplainType = props => {
   )
 
   const handleOpenComplain = () => {
+    setSelectedData({})
     setOpenComplainDialog(true)
   }
 
@@ -68,55 +87,20 @@ const setupFrontOfficeComplainType = props => {
     // getUsers from json
     getFrontSetupComplainType()
   }, [])
-
-  const getFrontSetupComplainType = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getFrontofficeSetupComplainType().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  const getFrontSetupComplainType = async () =>{
+   const response = await api?.getSetupFrontOffice_complaint_Type()
+   const {data} = response
+   setTableData(data)
   }
-
-  function patientId(e){
-    console.log(e.target.value,"nameeeeeeeeeeee")
-    const patientId = e.target.value;
-    setId(patientId);
-  }
-
-  function handleFormSubmit(event) {
-
-    // const payload = {
-    //   case_reference_id: "1",
-    //   patient_id: id, // Assign the patient ID to the patient_id field
-    //   generated_by: "1",
-    //   is_ipd_moved: "no",
-    //   discharged: "2023-04-25 14:07:22",
-    //   created_at: ""
-    // };
-  
-    api.postFrontofficeSetupComplainType(formData).then(resp => {
-      console.log(resp);
-      console.log(resp.data, 'patient');
-    });
-
-    // api.postOpdVisits(formData).then(resp => {
-    //   console.log(resp);
-    //   console.log(resp.data, 'patient');
-    // });
-  
-    api
-      .getFrontofficeSetupComplainType({ headers: { "content-type": "application/json" } })
-      .then(resp => {
-        getFrontSetupComplainType();
-        setFormData(initialFrontofficeSetupComplainTypeValue);
-        console.log()
-        event.preventDefault();
-      });
-  
-    handleClose();
-  }
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   return (
     <React.Fragment>
@@ -139,8 +123,9 @@ const setupFrontOfficeComplainType = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                    frameworkComponents={components}
                   />
-                  <SetupComplainDialog open={opencomplainDialog} handleClose={handleCloseComplain} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+                  <SetupComplainDialog selectedData ={selectedData} getFrontSetupComplainType={getFrontSetupComplainType} open={opencomplainDialog} handleClose={handleCloseComplain} />
                 </div>
               </div>
             </CardBody>

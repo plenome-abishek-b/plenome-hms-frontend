@@ -14,6 +14,9 @@ export default function SetupPatientDetails({
 }) {
   console.log(patientDetail, "patientdetails");
   const handleDisable = async () =>{
+    const userConfirmed = window.confirm('Are you sure you want to disable it?');
+    console.log(userConfirmed,"disable");
+if(userConfirmed){
     const newData = {
       id:patientDetail[0].id,
       is_active:'no'
@@ -21,8 +24,12 @@ export default function SetupPatientDetails({
    const response = await api.updateDisable_Patient(newData)
    getSetup_Patient()
   handleClose()
+}
   }
   const handleEnable = async () =>{
+    const userConfirmed = window.confirm('Are you sure you want to enable it?');
+    console.log(userConfirmed,"enable");
+if(userConfirmed){
     const newData = {
       id:patientDetail[0].id,
       is_active:'yes'
@@ -30,6 +37,9 @@ export default function SetupPatientDetails({
    const response = await api.updateDisable_Patient(newData)
    getSetup_Patient()
   handleClose()
+}else{
+  console.log("error");
+}
   }
   return (
     // <div style={{width:'100px',height:'200px',backgroundColor:'black'}}>SetupPatientDetails</div>

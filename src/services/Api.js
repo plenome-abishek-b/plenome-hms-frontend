@@ -9,9 +9,6 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
-const baseNestSetupandMainURL = "http://13.200.35.19:3102";
-const baseNestSetupURL = "http://13.200.35.19:3306";
-
 const baseNestSetupandMainURL = "http://localhost:4000";
 const baseNestSetupURL = "http://localhost:4000";
 
@@ -49,7 +46,7 @@ const URL = {
   OPD_URL: "/api/outpatient/opd_details",
   IPD_URL: "/api/ipd_details",
   BLOOD_URL: "/setup-blood-bank-products",
-  CONSULTANT_DOC_URL: "/api/nurse_Roles",
+  CONSULTANT_DOC_URL: "/internal-appointment-staff",
   CALL_LOG_URL: "/api/frontoffice/call_log",
   PHARMACY_BILL_URL: "/api/pharmacyBasicBill",
   PHARMACY_MEDS_URL: "/api/pharmacyMedicine",
@@ -59,13 +56,13 @@ const URL = {
 
   APPOINTMENT_URL: "/add-appointment",
   DOCTOR_WISE_URL: "/api/user_Roles",
-  DOCTOR_APPOINTMENT_URL: "/api/appointment/add_appointment",
-  SHIFT_WISE_URL: "/api/appointmentShift",
+  DOCTOR_APPOINTMENT_URL: "/add-appointment-doctor-wise",
+  SHIFT_WISE_URL: "/setup-appointment-shift",
   APPT_SHIFT_URL: "/internal-appointment-shift",
   APPT_SLOT_URL: "/internal-appointment-slot",
   APPT_SLOT_CHARGE: "/setup_appt_slot_amount",
-  SLOT_WISE_URL: "/api/patienQueueSlot",
-  PATIENT_SEARCH_URL: "/api/appointment/add_patient",
+  SLOT_WISE_URL: "/internal-appointment-slot",
+  PATIENT_SEARCH_URL: "/add-appointment-patient-queue",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
   ADD_APPOINTMENT_URL: "/add-appointment",
 
@@ -371,7 +368,11 @@ const URL = {
   SETUP_HR_SPECIALIST:'/setup-human-resource-specialist',
   SETUP_HR_PATIENT:'/setup-patient-new-patient',
   SETUP_BLOOD_BANK:'/setup-blood-bank-products',
-  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list'
+  SETUP_DISABLE_PATIENT:'setup-patient-disabled-patient-list',
+  SETUP_FRONT_OFFICE_PURPOSE:'/setup-front-office-purpose',
+  SETUP_FRONT_OFFICE_COMPLAINT_TYPE:'/setup-front-office-complain-type',
+  SETUP_FRONT_OFFICE_SOURCE:'/setup-front-office-source',
+  SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority'
 };  
 
 function getAppointmentbyId(id){
@@ -546,7 +547,7 @@ function getPatient(doctor, shift, date, slot) {
   const data = {
     params: { doctor: doctor, shift: shift, date: date, slot: slot },
   };
-  return http.get(URL.PATIENT_SEARCH_URL, data);
+  return http4.get(URL.PATIENT_SEARCH_URL, data);
 }
 
 function getOpd(data = {}) {
@@ -626,22 +627,22 @@ function getRole(data = {}) {
 }
 
 function getDoctor(data = {}) {
-  return http.get(URL.CONSULTANT_DOC_URL, data);
+  return http4.get(URL.CONSULTANT_DOC_URL, data);
 }
 function getDoctorwiseAppoinment(doctor, date) {
   const data = { params: { doctor: doctor, date: date } };
-  return http.get(URL.DOCTOR_APPOINTMENT_URL, data);
+  return http4.get(URL.DOCTOR_APPOINTMENT_URL, data);
 }
 
 function getShiftdatas(shiftId) {
   console.log(shiftId, "ssss");
   const data = { params: { shiftId: shiftId } };
-  return http.get(URL.SHIFT_WISE_URL, data);
+  return http4.get(URL.SHIFT_WISE_URL, data);
 }
 function getSlotdatas(doctor, shift) {
   console.log(doctor, shift, "uuuuuuu");
   const data = { params: { staffId: doctor, shift: shift } };
-  return http.get(URL.SLOT_WISE_URL, data);
+  return http4.get(URL.SLOT_WISE_URL, data);
 }
 function getPatients(doctor, shift, date, slot) {
   const data = {
@@ -2502,6 +2503,62 @@ function patchSetupRadiologyParameter(data){
   function getDisable_Patient(data){
     return http.get(URL.SETUP_DISABLE_PATIENT)
   }
+  function getSetupFrontOffice_Porpose(){
+    return http.get(URL.SETUP_FRONT_OFFICE_PURPOSE)
+  }
+  function postSetupFrontOffice_Porpose(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_PURPOSE,data)
+  }
+  function updateSetupFrontOffice_purpose(data){
+    const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_purpose(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_complaint_Type(){
+    return http.get(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE)
+  }
+  function postSetupFrontendOffice_complaint_Type(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE,data)
+  }
+  function updateSetupFrontOffice_complaint_Type(data){
+   const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${data?.id}`
+   return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_complaint_Type(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_source(){
+    return http.get(URL.SETUP_FRONT_OFFICE_SOURCE)
+  }
+  function postSetupFrontOffice_source(data){
+    return http.post(URL.SETUP_FRONT_OFFICE_SOURCE,data)
+  }
+  function updateSetupFrontOffice_source(data){
+    const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_source(id){
+    const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${id}`
+    return http.delete(url)
+  }
+  function getSetupFrontOffice_appointmentPriority(){
+    return http.get(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY)
+  }
+  function postSetupFrontOffice_appointmentPriority(data){
+    return http.post(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY,data)
+  }
+  function updateSetupFrontOffice_appointmentPriority(data){
+    const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetupFrontOffice_appointmentPriority(id){
+    const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${id}`
+    return http.delete(url)
+  }
 ////////
 
 function createPhrAddress(
@@ -3008,7 +3065,22 @@ const api = {
   getSetup_bloodBank,
   getByIDSetup_Patient,
   updateDisable_Patient,
-  getDisable_Patient
+  getDisable_Patient,
+  getSetupFrontOffice_Porpose,
+  postSetupFrontOffice_Porpose,
+  updateSetupFrontOffice_purpose,
+  deleteSetupFrontOffice_purpose,
+  getSetupFrontOffice_complaint_Type,
+  postSetupFrontendOffice_complaint_Type,
+  updateSetupFrontOffice_complaint_Type,
+  deleteSetupFrontOffice_complaint_Type,
+  getSetupFrontOffice_source,
+  postSetupFrontOffice_source,
+  updateSetupFrontOffice_source,
+  deleteSetupFrontOffice_source,
+  getSetupFrontOffice_appointmentPriority,
+  postSetupFrontOffice_appointmentPriority,
+  updateSetupFrontOffice_appointmentPriority,
+  deleteSetupFrontOffice_appointmentPriority
 };
-
 export default api;

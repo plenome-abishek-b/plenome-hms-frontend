@@ -10,6 +10,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 
 import SetupPriorityDialog from "../SetupDialog/SetupPriorityDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupPriority = props => {
 
@@ -21,7 +23,7 @@ const SetupPriority = props => {
   const [openPriorityDialog, setOpenPriorityDialog] = useState()
   const [tableData,setTableData] = useState()
   const [formData, setFormData] = useState(initialFrontofficeSetupPriorityValue)
-
+  const [selectedData,setSelectedData] = useState({})
 
   const onChange = e => {
     //catch the parameters when changed.
@@ -39,9 +41,34 @@ const SetupPriority = props => {
 //         priority: " ipd",
 //     },
 //   ]
+const handleEditClick = (data) =>{
+  console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenPriorityDialog(true)
+ }
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+         console.log(userConfirmed,"delete");
+ if(userConfirmed){
+       const deleteResponse = await api.deleteSetupFrontOffice_appointmentPriority(data.id)
+       getFrontofficeSetupPrior()
+ }else{
+  console.log("cancelled");
+ }
 
+ }
   const columnDefs = [
-    { headerName: "Priority", field: "appoint_priority" },
+    { headerName: "Priority", field: "priority_status" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -54,6 +81,7 @@ const SetupPriority = props => {
   )
 
   const handleOpenPriority = () => {
+    setSelectedData({})
     setOpenPriorityDialog(true)
   }
 
@@ -66,56 +94,21 @@ const SetupPriority = props => {
     getFrontofficeSetupPrior()
   }, [])
 
-  const getFrontofficeSetupPrior = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getFrontofficeSetupPriority().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  const getFrontofficeSetupPrior = async () => {
+    const response = await api.getSetupFrontOffice_appointmentPriority()
+    const {data} = response
+    setTableData(data)
   }
 
-  function patientId(e){
-    console.log(e.target.value,"nameeeeeeeeeeee")
-    const patientId = e.target.value;
-    setId(patientId);
-  }
-
-  function handleFormSubmit(event) {
-
-    // const payload = {
-    //   case_reference_id: "1",
-    //   patient_id: id, // Assign the patient ID to the patient_id field
-    //   generated_by: "1",
-    //   is_ipd_moved: "no",
-    //   discharged: "2023-04-25 14:07:22",
-    //   created_at: ""
-    // };
-  
-    api.postFrontofficeSetupPriority(formData).then(resp => {
-      console.log(resp);
-      console.log(resp.data, 'patient');
-    });
-
-    // api.postOpdVisits(formData).then(resp => {
-    //   console.log(resp);
-    //   console.log(resp.data, 'patient');
-    // });
-  
-    api
-      .getFrontofficeSetupPriority({ headers: { "content-type": "application/json" } })
-      .then(resp => {
-        getFrontofficeSetupPrior();
-        setFormData(initialFrontofficeSetupPriorityValue);
-        console.log()
-        event.preventDefault();
-      });
-  
-    handleClose();
-  }
-
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -137,8 +130,9 @@ const SetupPriority = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                    frameworkComponents={components}
                   />
-                  <SetupPriorityDialog open={openPriorityDialog} handleClose={handleClosePriority} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+                  <SetupPriorityDialog open={openPriorityDialog} handleClose={handleClosePriority} getFrontofficeSetupPrior={getFrontofficeSetupPrior} selectedData={selectedData}/>
                 </div>
               </div>
             </CardBody>

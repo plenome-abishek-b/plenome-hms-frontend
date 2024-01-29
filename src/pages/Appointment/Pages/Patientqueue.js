@@ -87,7 +87,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                       <option>Select an option</option>
                     {doctorData && doctorData.map((doctor) => (
                     <option key={doctor.id} value={doctor.id}>
-                      {doctor.name}
+                      {doctor.doctor}
                     </option>
                   ))}
                     </select>

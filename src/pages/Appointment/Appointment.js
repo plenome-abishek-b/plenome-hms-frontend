@@ -190,7 +190,7 @@ const Appointment = (props) => {
         {
           position: toast.POSITION.TOP_RIGHT,
           closeButton: false,
-          autoClose: 500, 
+          autoClose: 500,
         }
       );
   
@@ -248,7 +248,7 @@ const Appointment = (props) => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
     );
-
+  
     const columns = filteredColumnDefs.map((col) => ({
       header: col.headerName,
       dataKey: col.field,
@@ -256,23 +256,29 @@ const Appointment = (props) => {
     const rows = datas.map((data) =>
       filteredColumnDefs.map((col) => data[col.field])
     );
-
+  
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${
+      currentDate.getMonth() + 1
+    }-${currentDate.getDate()}`;
+  
     const doc = new jsPDF({ orientation: "landscape" });
     const columnStyles = {};
     filteredColumnDefs.forEach((_, index) => {
       columnStyles[index] = { cellWidth: 30 };
     });
-
+  
     doc.autoTable({
       head: [columns.map((col) => col.header)],
       body: rows,
       columnStyles,
       margin: { top: 20 },
     });
-
-    doc.save("agGridExport.pdf");
+  
+    const fileName = `AppointmentDetails_${formattedDate}.pdf`;
+    doc.save(fileName);
   };
-
+  
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
@@ -297,7 +303,7 @@ const Appointment = (props) => {
             >
               + Add Appointment
             </button>
-            {/* <Link to="/doctorwise">
+            <Link to="/doctorwise">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -313,7 +319,7 @@ const Appointment = (props) => {
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link> */}
+            </Link>
 
             <button
               className="btn-mod bg-soft custom-btn"
