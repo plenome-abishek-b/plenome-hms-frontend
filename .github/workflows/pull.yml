@@ -3,7 +3,7 @@ name: Pull Code to Local
 on:
   push:
     branches:
-      - main  # Change this to your main branch name
+      - main  # Change this to your branch name
 
 jobs:
   pull-code:
@@ -15,4 +15,11 @@ jobs:
 
     - name: Pull code to local
       run: |
-        git pull origin main  # Change 'main' to your branch name
+        if [[ "$OSTYPE" == "darwin"* || "$OSTYPE" == "linux-gnu" ]]; then
+          ./pull.sh
+        elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+          powershell -ExecutionPolicy Bypass -File pull.ps1
+        else
+          echo "Unsupported OS: $OSTYPE"
+          exit 1
+        fi
