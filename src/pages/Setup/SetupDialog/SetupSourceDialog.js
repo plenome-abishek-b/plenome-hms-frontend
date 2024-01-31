@@ -76,9 +76,23 @@ export default function SetupSourceDialog({
       ...formData,
       id:selectedData?.id
     }
+    if(newData?.source === ''){
+      setValidate({...validate,source:true})
+      setTimeout(()=>{
+      setValidate({...validate,visitors_purpose:false})
+      },3000)
+    }
+    else if(newData?.description === ''){
+      setValidate({...validate,description:true})
+      setTimeout(()=>{
+      setValidate({...validate,description:false})
+      },3000)
+    }
+    else{
     const response = await api.updateSetupFrontOffice_source(newData)
     getFrontSetupSource()
     handleClose()
+    }
   }
   const handleChange = async (e) =>{
     const {id,value} = e.target

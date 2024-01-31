@@ -43,7 +43,6 @@ export default function SetupChargeTypeDialog({
     is_default: "yes",
     is_active: "yes",
     Hospital_id:1,
-    "created_at": "2021-09-24 08:40:32"
   }
   console.log(data,"all datas");
   const responses = await api.postSetup_chargeType_setup(data)
@@ -62,7 +61,7 @@ export default function SetupChargeTypeDialog({
       console.log(datas,"Every data");
      const response = await api.postSetup_ChargeType_module(datas)
      console.log(response,"all response");
-     location.reload()
+    //  location.reload()
     }))
   }
   handleClose()

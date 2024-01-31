@@ -14,7 +14,7 @@ const baseNestSetupURL = "http://13.200.35.19:8000";
 
 
 // const http2 = axios.create({
-//   baseURL: baseNestURL,
+//   baseURL: baseNestURL,  
 // });
 
 const http = axios.create({
@@ -373,7 +373,10 @@ const URL = {
   SETUP_FRONT_OFFICE_PURPOSE:'/setup-front-office-purpose',
   SETUP_FRONT_OFFICE_COMPLAINT_TYPE:'/setup-front-office-complain-type',
   SETUP_FRONT_OFFICE_SOURCE:'/setup-front-office-source',
-  SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority'
+  SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority',
+  SETUP_SYMPTOMS_HEAD:'/setup-symptoms-symptoms-head',
+  SETUP_SYMPTOMS_TYPE:'/setup-symptoms-symptoms-type',
+  OPD_OUT_PATIENT:'/opd-out-patient',
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -450,7 +453,7 @@ function getBloodBank(data = {}) {
   return http.get(URL, BLOOD_URL, data);
 }
 
-function postAuthUsers(data = {}) {
+function postAuthUsers(data = {}){
   return http.post(URL.AUTH_LOGIN_URL, data);
 }
 
@@ -2368,22 +2371,33 @@ function patchSetupRadiologyParameter(data){
     return http.get(URL.SETUP_CHARGE_TYPE_MASTER_MODULE)
   }
   function postSetup_chargeType_setup(data){
-    return http.post(URL.SETUP_CHARGE_TYPE_MASTER,data)
+    return http3.post(URL.SETUP_CHARGE_TYPE_MASTER,data)
   }
   function patchSetup_chargeType_setup(data){
     const url = `${URL.SETUP_CHARGE_TYPE_MASTER}/${data.id}`
-    return http4.patch(URL.SETUP_CHARGE_TYPE_MASTER,data)
+    return http3.patch(URL.SETUP_CHARGE_TYPE_MASTER,data)
   }
   function deleteSetup_chargeType_setup(id){
     const url = `${URL.SETUP_CHARGE_TYPE_MASTER}/${id}`
-    return http4.delete(url)
+    return http3.delete(url)
   }
-
+  function deleteSetup_ChargeType_master(id){
+    const url =`${URL.SETUP_CHARGE_TYPE_MASTER}/${id}`
+    return http3.delete(url)
+  }
   function getSetup_ChargeType_module(){
-    return http4.get(URL.SETUP_CHARGE_TYPE_MODULE)
+    return http.get(URL.SETUP_CHARGE_TYPE_MODULE)
   }
   function postSetup_ChargeType_module(data){
     return http3.post(URL.SETUP_CHARGE_TYPE_MODULE,data)
+  }
+  function updateSetup_ChargeType_modue(data){
+    const url =`${URL.SETUP_CHARGE_TYPE_MODULE}/${data?.typeid}`
+    return http3.patch(url,data)
+  }
+  function deleteSetup_ChargeType_modue(id){
+    const url =`${URL.SETUP_CHARGE_TYPE_MODULE}/${id}`
+    return http3.delete(url)
   }
   function getSetup_Inventory_Category(){
     return http3.get(URL.SETUP_INVENTORY_CATEGORY)
@@ -2505,6 +2519,21 @@ function patchSetupRadiologyParameter(data){
   function getSetup_bloodBank(){
     return http3.get(URL.SETUP_BLOOD_BANK)
   }
+  function getSetup_bloodBankall(){
+    return http.get(`${URL.SETUP_BLOOD_BANK}/all`)
+  }
+  function postSetup_bloodBank(data){
+   return http.post(URL.SETUP_BLOOD_BANK,data)
+  }
+  function updateSetup_bloodBank(data) {
+    const url = `${URL.SETUP_BLOOD_BANK}/${data?.id}`
+    return http.patch(url,data)
+  }
+  function deleteSetup_bloodBank(id){
+    const url = `${URL.SETUP_BLOOD_BANK}/${id}`
+    return http.delete(url)
+  }
+
   function updateDisable_Patient(data){
     console.log(data,"loging");
     const url = `${URL?.SETUP_DISABLE_PATIENT}/${data.id}`
@@ -2569,6 +2598,44 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${id}`
     return http3.delete(url)
   }
+  function getSetupSymptoms_header(){
+    return http3.get(URL?.SETUP_SYMPTOMS_HEAD)
+  }
+  function postSetupSymptoms_header(data){
+   return http3.post(URL?.SETUP_SYMPTOMS_HEAD,data)
+  }
+  function updateSetupSymptoms_header(data){
+    const url = `${URL.SETUP_SYMPTOMS_HEAD}/${data?.id}`
+    return http3.patch(url,data)
+  }
+  function deleteSetupSymptoms_header(id){
+    const url = `${URL.SETUP_SYMPTOMS_HEAD}/${id}`
+    return http3.delete(url)
+  }
+  function getSetupSymptoms_Type(){
+    return http3.get(URL.SETUP_SYMPTOMS_TYPE)
+  }
+  function postSetupSymptoms_Type(data){
+   return http3.post(URL.SETUP_SYMPTOMS_TYPE,data)
+  }
+  function updateSetupSymptoms_Type(data){
+   const url = `${URL.SETUP_SYMPTOMS_TYPE}/${data?.id}`
+   return http3.patch(url,data)
+  }
+  function deleteSetupSymptoms_Type(id){
+   const url = `${URL.SETUP_SYMPTOMS_TYPE}/${id}`
+   return http3.delete(url)
+  }
+
+  function getOpdOutpatient_MainModule() {
+    return http3.get(URL.OPD_OUT_PATIENT)
+  }
+  function postOpdOutpatinet_MainModule(data){
+    return http3.post(URL.OPD_OUT_PATIENT,data)
+  }
+
+ 
+
 ////////
 
 function createPhrAddress(
@@ -3036,8 +3103,11 @@ const api = {
   getSetup_chargeType_setup,
   patchSetup_chargeType_setup,
   deleteSetup_chargeType_setup,
+  deleteSetup_ChargeType_master,
   getSetup_ChargeType_module,
   postSetup_ChargeType_module,
+  updateSetup_ChargeType_modue,
+  deleteSetup_ChargeType_modue,
   getSetup_Inventory_Category,
   postSetup_Inventory_Category,
   patchSetup_Inventory_Category,
@@ -3073,6 +3143,10 @@ const api = {
   deleteAppointment,
   getAppointmentbyId,
   getSetup_bloodBank,
+  getSetup_bloodBankall,
+  postSetup_bloodBank,
+  updateSetup_bloodBank,
+  deleteSetup_bloodBank,
   getByIDSetup_Patient,
   updateDisable_Patient,
   getDisable_Patient,
@@ -3093,5 +3167,15 @@ const api = {
   updateSetupFrontOffice_appointmentPriority,
   deleteSetupFrontOffice_appointmentPriority,
   getSlotTiming
+  getSetupSymptoms_header,
+  postSetupSymptoms_header,
+  updateSetupSymptoms_header,
+  deleteSetupSymptoms_header,
+  getOpdOutpatient_MainModule,
+  postOpdOutpatinet_MainModule,
+  getSetupSymptoms_Type,
+  postSetupSymptoms_Type,
+  updateSetupSymptoms_Type,
+  deleteSetupSymptoms_Type
 };
 export default api;
