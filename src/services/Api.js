@@ -3166,7 +3166,7 @@ const api = {
   postSetupFrontOffice_appointmentPriority,
   updateSetupFrontOffice_appointmentPriority,
   deleteSetupFrontOffice_appointmentPriority,
-  getSlotTiming
+  getSlotTiming,
   getSetupSymptoms_header,
   postSetupSymptoms_header,
   updateSetupSymptoms_header,
