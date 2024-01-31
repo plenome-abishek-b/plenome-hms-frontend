@@ -105,7 +105,7 @@ export default function SetupFindingCategoryDialog({
             <Row>
                 <label>Finding Category&nbsp;<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input type="text" name="category" value={formData?.category} placeholder={validation? "enter categoryname":''} onChange={handleChange} style={{ height: '30px', borderColor: validation ? 'red' : 'inherit'}} className={validation ? 'red-text-input' : ''}></input>
+                <input type="text" name="category" value={formData?.category} placeholder={validation? "enter category name":''} onChange={handleChange} style={{ height: '30px', borderColor: validation ? 'red' : 'inherit', border: '1px solid grey', borderRadius: '5px'}} className={validation ? 'red-text-input' : ''}></input>
 
             </Row>
           </Container>
@@ -116,7 +116,7 @@ export default function SetupFindingCategoryDialog({
             onClick={()=>handleUpdateSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >
-            Saves
+            Save
           </button> :
           <button
           className="btn-mod bg-soft btn-md"

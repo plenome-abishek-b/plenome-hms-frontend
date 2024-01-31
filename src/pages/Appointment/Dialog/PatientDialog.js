@@ -59,6 +59,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
     insurence_id: "",
     insurence_validity: "",
     identification_number: "",
+    ABHA_number: "",
   });
 
   
@@ -543,6 +544,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <label>ABHA Address</label>
                 <br />
                 <input
+                
                   style={{
                     width: "100%",
                     height: "35px",
@@ -555,6 +557,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <label>ABHA Number</label>
                 <br />
                 <input
+                 name="ABHA_number"
+                 value={formValues.ABHA_number}
+                 onChange={handleChange}
                   style={{
                     width: "100%",
                     height: "35px",

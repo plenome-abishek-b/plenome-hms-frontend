@@ -41,7 +41,10 @@ const setupFindings = props => {
            console.log(userConfirmed,"delete");
    if(userConfirmed){
          const deleteResponse = await api.deleteSetup_Findings(data.id)
-         getFindings()
+         setTimeout(() => {
+          getFindings();
+        }, 500);
+        handleClose();
    }else{
     console.log("cancelled");
    }
@@ -49,7 +52,7 @@ const setupFindings = props => {
 
   const columnDefs = [
     {headerName: 'Finding', field: 'name'},
-    {headerName: 'Category', field: 'finding_category_id'},
+    {headerName: 'Category', field: 'category'},
     {headerName: 'Finding Description', field: 'description'},
     {
       headerName: 'Actions',

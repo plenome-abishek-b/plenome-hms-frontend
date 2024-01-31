@@ -32,8 +32,8 @@ const SetupPatient = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
            console.log(userConfirmed,"delete");
    if(userConfirmed){
-         const deleteResponse = await api.deleteSetupHR_specialist(data.id)
-         getSpecialist()
+         const deleteResponse = await api.deleteSetupHR_patient(data.id)
+         getSetup_Patient();
    }else{
     console.log("cancelled");
    }
@@ -138,11 +138,11 @@ const SetupPatient = props => {
             <div className="d-flex justify-content-end">
                 <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Patient</button>
                 &nbsp; 
-                <Link to="/setupPatient/import"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Import Patient</button></Link>
+                <Link to="/setupPatient/import"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fas fa-file-import"></i>&nbsp;Import Patient</button></Link>
                 &nbsp; 
-                <Link to="/setupDisablePatient"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}>&nbsp;Disable Patient List</button></Link>
+                <Link to="/setupDisablePatient"><button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fas fa-power-off"></i>&nbsp;Disable Patient List</button></Link>
                 &nbsp; 
-                <button className="btn-mod bg-soft" onClick={handlePrint}>&nbsp;print</button>
+                <button className="btn-mod bg-soft" onClick={handlePrint}><i className="fas fa-print"></i>&nbsp;print</button>
             </div>
               <div
                 className="ag-theme-alpine"

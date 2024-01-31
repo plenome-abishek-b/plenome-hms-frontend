@@ -9,8 +9,8 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
-const baseNestSetupandMainURL = "http://localhost:4000";
-const baseNestSetupURL = "http://localhost:4000";
+const baseNestSetupandMainURL = "http://13.200.35.19:8000";
+const baseNestSetupURL = "http://13.200.35.19:8000";
 
 
 // const http2 = axios.create({
@@ -65,6 +65,7 @@ const URL = {
   PATIENT_SEARCH_URL: "/add-appointment-patient-queue",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
   ADD_APPOINTMENT_URL: "/add-appointment",
+  SLOT_TIMING: "/setup-appt-slot-timimgs",
 
   CHARGES_URL: "/setup-hospital-charge-charges",
   CHARGES_CATEGORY_URL: "/setup-hospital-charges-charge-category",
@@ -375,6 +376,12 @@ const URL = {
   SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority'
 };  
 
+function getSlotTiming(date,staff,shift, data={}){
+  const url = `${URL.SLOT_TIMING}?day=${date}&staff_id=${staff}&shift_id=${shift}`;
+  return http4.get(url, data);
+}
+
+
 function getAppointmentbyId(id){
   const url = `${URL.APPOINTMENT_URL}/${id}`
   return http3.get(url);
@@ -639,11 +646,14 @@ function getShiftdatas(shiftId) {
   const data = { params: { shiftId: shiftId } };
   return http4.get(URL.SHIFT_WISE_URL, data);
 }
-function getSlotdatas(doctor, shift) {
-  console.log(doctor, shift, "uuuuuuu");
-  const data = { params: { staffId: doctor, shift: shift } };
-  return http4.get(URL.SLOT_WISE_URL, data);
-}
+// function getSlotdatas(doctor, shift, date) {
+//   console.log(doctor, shift, "uuuuuuu");
+//   const data = { params: {day: date , staff_id: doctor, shift_id: shift } };
+//   return http4.get(URL.SLOT_WISE_URL, data);
+// }
+
+
+
 function getPatients(doctor, shift, date, slot) {
   const data = {
     params: { doctor: doctor, shift: shift, date: date, slot: slot },
@@ -2334,8 +2344,8 @@ function patchSetupRadiologyParameter(data){
     http4.delete(url)
   }
 
-  function deleteAppointment(id){
-    const url = `${URL.APPOINTMENT_URL}/${id}`
+  function deleteAppointment(id,hos_id){
+    const url = `${URL.APPOINTMENT_URL}/${id}?hos_id=${hos_id}`
     http4.delete(url)
   }
 
@@ -2373,191 +2383,191 @@ function patchSetupRadiologyParameter(data){
     return http4.get(URL.SETUP_CHARGE_TYPE_MODULE)
   }
   function postSetup_ChargeType_module(data){
-    return http.post(URL.SETUP_CHARGE_TYPE_MODULE,data)
+    return http3.post(URL.SETUP_CHARGE_TYPE_MODULE,data)
   }
   function getSetup_Inventory_Category(){
-    return http.get(URL.SETUP_INVENTORY_CATEGORY)
+    return http3.get(URL.SETUP_INVENTORY_CATEGORY)
   }
   function postSetup_Inventory_Category(data){
-    return http.post(URL.SETUP_INVENTORY_CATEGORY,data)
+    return http3.post(URL.SETUP_INVENTORY_CATEGORY,data)
   }
   function patchSetup_Inventory_Category(data){
     const url = `${URL.SETUP_INVENTORY_CATEGORY}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetup_Inventory_Category(id){
     const url = `${URL.SETUP_INVENTORY_CATEGORY}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetup_Inventory_store(){
-    return http.get(URL.SETUP_INVENTORY_STOER)
+    return http3.get(URL.SETUP_INVENTORY_STOER)
   }
   function postSetup_Inventory_store(data){
-    return http.post(URL.SETUP_INVENTORY_STOER,data)
+    return http3.post(URL.SETUP_INVENTORY_STOER,data)
   }
   function updateSetup_Inventory_store(data){
     const url = `${URL.SETUP_INVENTORY_STOER}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetup_Inventory_store(id){
     const url = `${URL.SETUP_INVENTORY_STOER}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetup_Inventory_supplier(){
-    return http.get(URL.SETUP_INVENTORY_SUPPLIER)
+    return http3.get(URL.SETUP_INVENTORY_SUPPLIER)
   }
   function postSetup_Inventory_supplier(data){
-    return http.post(URL.SETUP_INVENTORY_SUPPLIER,data)
+    return http3.post(URL.SETUP_INVENTORY_SUPPLIER,data)
   }
   function updateSetup_Inventory_supplier(data){
     const url = `${URL.SETUP_INVENTORY_SUPPLIER}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetup_Inventory_supplier(id){
     const url = `${URL.SETUP_INVENTORY_SUPPLIER}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupHR_leaveType(){
-    return http.get(URL.SETUP_HR_LEAVETYPE)
+    return http3.get(URL.SETUP_HR_LEAVETYPE)
   }
   function postSetupHR_leaveType(data){
     console.log(data);
-    return http.post(URL.SETUP_HR_LEAVETYPE,data)
+    return http3.post(URL.SETUP_HR_LEAVETYPE,data)
   }
   function updateSetupHR_leaveType(data){
     const url = `${URL.SETUP_HR_LEAVETYPE}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupHR_leaveType(id){
-    return http.delete(`${URL.SETUP_HR_LEAVETYPE}/${id}`)
+    return http3.delete(`${URL.SETUP_HR_LEAVETYPE}/${id}`)
   }
   function getSetupHR_department(){
-    return http.get(URL.SETUP_HR_DEPARTMENT)
+    return http3.get(URL.SETUP_HR_DEPARTMENT)
   }
   function postSetupHR_department(data){
-    return http.post(URL.SETUP_HR_DEPARTMENT,data)
+    return http3.post(URL.SETUP_HR_DEPARTMENT,data)
   }
   function updateSetupHR_department(data){
     const url = `${URL.SETUP_HR_DEPARTMENT}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupHR_department(id){
     const url = `${URL.SETUP_HR_DEPARTMENT}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupHR_designation(){
-    return http.get(URL.SETUP_HR_DESIGNATION)
+    return http3.get(URL.SETUP_HR_DESIGNATION)
   }
   function postSetupHR_designation(data){
-    return http.post(URL.SETUP_HR_DESIGNATION,data)
+    return http3.post(URL.SETUP_HR_DESIGNATION,data)
   }
   function updateSetupHR_designation(data){
     const url = `${URL.SETUP_HR_DESIGNATION}/${data?.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupHR_designation(id){
     const url = `${URL.SETUP_HR_DESIGNATION}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupHR_specialist(){
-    return http.get(URL.SETUP_HR_SPECIALIST)
+    return http3.get(URL.SETUP_HR_SPECIALIST)
   }
   function postSetupHR_specialist(data){
-    return http.post(URL.SETUP_HR_SPECIALIST,data)
+    return http3.post(URL.SETUP_HR_SPECIALIST,data)
   }
   function updateSetupHR_specialist(data){
     const url = `${URL.SETUP_HR_SPECIALIST}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupHR_specialist(id){
     const url = `${URL.SETUP_HR_SPECIALIST}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
     
   }
   function getSetupHR_patient(){
-    return http.get(URL.SETUP_HR_PATIENT)
+    return http3.get(URL.SETUP_HR_PATIENT)
   }
   function postSetupHR_patient(data){
-    return http.post(URL.SETUP_HR_PATIENT,data)
+    return http3.post(URL.SETUP_HR_PATIENT,data)
   }
   function updateSetupHR_patient(data){
     const url = `${URL.SETUP_HR_PATIENT}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupHR_patient(id){
     const url = `${URL.SETUP_HR_PATIENT}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getByIDSetup_Patient(id){
     const url = `${URL.SETUP_HR_PATIENT}/${id}`
-    return http.get(url)
+    return http3.get(url)
   }
   function getSetup_bloodBank(){
-    return http.get(URL.SETUP_BLOOD_BANK)
+    return http3.get(URL.SETUP_BLOOD_BANK)
   }
   function updateDisable_Patient(data){
     console.log(data,"loging");
     const url = `${URL?.SETUP_DISABLE_PATIENT}/${data.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   } 
   function getDisable_Patient(data){
-    return http.get(URL.SETUP_DISABLE_PATIENT)
+    return http3.get(URL.SETUP_DISABLE_PATIENT)
   }
   function getSetupFrontOffice_Porpose(){
-    return http.get(URL.SETUP_FRONT_OFFICE_PURPOSE)
+    return http3.get(URL.SETUP_FRONT_OFFICE_PURPOSE)
   }
   function postSetupFrontOffice_Porpose(data){
-    return http.post(URL.SETUP_FRONT_OFFICE_PURPOSE,data)
+    return http3.post(URL.SETUP_FRONT_OFFICE_PURPOSE,data)
   }
   function updateSetupFrontOffice_purpose(data){
     const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${data?.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupFrontOffice_purpose(id){
     const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupFrontOffice_complaint_Type(){
-    return http.get(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE)
+    return http3.get(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE)
   }
   function postSetupFrontendOffice_complaint_Type(data){
-    return http.post(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE,data)
+    return http3.post(URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE,data)
   }
   function updateSetupFrontOffice_complaint_Type(data){
    const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${data?.id}`
-   return http.patch(url,data)
+   return http3.patch(url,data)
   }
   function deleteSetupFrontOffice_complaint_Type(id){
     const url = `${URL.SETUP_FRONT_OFFICE_COMPLAINT_TYPE}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupFrontOffice_source(){
-    return http.get(URL.SETUP_FRONT_OFFICE_SOURCE)
+    return http3.get(URL.SETUP_FRONT_OFFICE_SOURCE)
   }
   function postSetupFrontOffice_source(data){
     return http.post(URL.SETUP_FRONT_OFFICE_SOURCE,data)
   }
   function updateSetupFrontOffice_source(data){
     const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${data?.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupFrontOffice_source(id){
     const url = `${URL.SETUP_FRONT_OFFICE_SOURCE}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
   function getSetupFrontOffice_appointmentPriority(){
-    return http.get(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY)
+    return http3.get(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY)
   }
   function postSetupFrontOffice_appointmentPriority(data){
-    return http.post(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY,data)
+    return http3.post(URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY,data)
   }
   function updateSetupFrontOffice_appointmentPriority(data){
     const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${data?.id}`
-    return http.patch(url,data)
+    return http3.patch(url,data)
   }
   function deleteSetupFrontOffice_appointmentPriority(id){
     const url = `${URL?.SETUP_FRONT_OFFICE_APPT_PRIORITY}/${id}`
-    return http.delete(url)
+    return http3.delete(url)
   }
 ////////
 
@@ -2656,7 +2666,7 @@ const api = {
   getDoctor,
   getDoctorwiseAppoinment,
   getShiftdatas,
-  getSlotdatas,
+  // getSlotdatas,
   postConstant,
   getPatients,
   postPatients,
@@ -3081,6 +3091,7 @@ const api = {
   getSetupFrontOffice_appointmentPriority,
   postSetupFrontOffice_appointmentPriority,
   updateSetupFrontOffice_appointmentPriority,
-  deleteSetupFrontOffice_appointmentPriority
+  deleteSetupFrontOffice_appointmentPriority,
+  getSlotTiming
 };
 export default api;
