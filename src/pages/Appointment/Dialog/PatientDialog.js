@@ -15,32 +15,23 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
-export default function PatientDialog({ open, handleClose, from }) {
+export default function PatientDialog({ open, handleClose, getAllPatient }) {
   const [bloodgroupData, setBloodgroupData] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (formSubmitted) {
-      const timeoutId = setTimeout(() => {
-        handleClose(); // Close the dialog
-        window.location.reload(); // Refresh the component
-      }, 2000); // 2 seconds
-      return () => clearTimeout(timeoutId); // Clean up the timeout on component unmount
-    }
-  }, [formSubmitted, handleClose]);
 
   useEffect(() => {
-    // handleBloodgroup()
     handleBloodgroups();
   }, []);
 
-  // const handleBloodgroup = async () =>{
-  //   const response = await  api.getBloodgroups()
-  //   const {data} = response
-  //   setBloodgroupData(data)
-  //   console.log(data,"data")
-  // }
+
   const [isDateSelected, setIsDateSelected] = useState(false);
+
+  const getCurrentDateTime = () => {
+    const currentDate = new Date();
+    return `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
+  };
+
 
   const [formValues, setFormValues] = useState({
     patient_name: "",
@@ -56,7 +47,7 @@ export default function PatientDialog({ open, handleClose, from }) {
     app_key: "",
     is_dead: "no",
     is_active: "yes",
-    created_at: "2023-02-02 11:11:11",
+    created_at: getCurrentDateTime(),
     blood_group: "",
     marital_status: "single",
     mobileno: "",
@@ -68,13 +59,10 @@ export default function PatientDialog({ open, handleClose, from }) {
     insurence_id: "",
     insurence_validity: "",
     identification_number: "",
+    ABHA_number: "",
   });
-  // const [bloodgroupDatas, setBloodgroupDatas] = useState([])
 
-  // useEffect(() => {
-  //   handleBloodgroup()
-  // }, [])
-
+  
   const handleBloodgroups = async () => {
     const response = await api.getBloodgroups();
     const { data } = response;
@@ -83,7 +71,6 @@ export default function PatientDialog({ open, handleClose, from }) {
   };
 
   const handleChange = (event) => {
-    // event.preventDefault()
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
@@ -91,10 +78,24 @@ export default function PatientDialog({ open, handleClose, from }) {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault()
-    const response = await api.postPatients(formValues);
-    setFormSubmitted(true);
-    handleClose();
+    const formattedDateTime = formatDateTime(formValues.insurence_validity);
+    const updatedFormValues = { ...formValues, insurence_validity: formattedDateTime, created_at: getCurrentDateTime() };
+  
+    try {
+      const response = await api.postPatients(updatedFormValues);
+  
+      setFormSubmitted(true);
+      setFormValues({});
+      getAllPatient();
+      handleClose();
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };
+
+  const formatDateTime = (dateTimeString) => {
+    const dateObject = new Date(dateTimeString);
+    return `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')} ${dateObject.getHours().toString().padStart(2, '0')}:${dateObject.getMinutes().toString().padStart(2, '0')}:${dateObject.getSeconds().toString().padStart(2, '0')}`;
   };
 
   const handledobChange = (event) => {
@@ -104,12 +105,10 @@ export default function PatientDialog({ open, handleClose, from }) {
       const currentDate = new Date();
       const selectedDate = new Date(value);
 
-      // Calculate the age based on the difference in years, months, and days
       let age = currentDate.getFullYear() - selectedDate.getFullYear();
       const monthDiff = currentDate.getMonth() - selectedDate.getMonth();
       const dayDiff = currentDate.getDate() - selectedDate.getDate();
 
-      // Adjust the age if the current month and day are before the selected month and day
       if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
         age--;
       }
@@ -231,6 +230,7 @@ export default function PatientDialog({ open, handleClose, from }) {
                   // onChange={formik.handleChange}
                   // value={formik.values.gender}
                 >
+                  <option>select</option>
                   <option value="Male">Male</option>
                   <option valeu="Female">Female</option>
                   <option value="Transgeder">Transgender</option>
@@ -353,6 +353,7 @@ export default function PatientDialog({ open, handleClose, from }) {
                   //  onChange={formik.handleChange}
                   //  value={formik.values.gender}
                 >
+                  <option>select</option>
                   <option value="single">Single</option>
                   <option value="married">Married</option>
                   <option value="widowed">Widowed</option>
@@ -500,7 +501,7 @@ export default function PatientDialog({ open, handleClose, from }) {
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.tpa_validity}
-                  type="text/number"
+                  type="datetime-local"
                   placeholder=""
                   style={{
                     width: "100%",
@@ -543,6 +544,7 @@ export default function PatientDialog({ open, handleClose, from }) {
                 <label>ABHA Address</label>
                 <br />
                 <input
+                
                   style={{
                     width: "100%",
                     height: "35px",
@@ -555,6 +557,9 @@ export default function PatientDialog({ open, handleClose, from }) {
                 <label>ABHA Number</label>
                 <br />
                 <input
+                 name="ABHA_number"
+                 value={formValues.ABHA_number}
+                 onChange={handleChange}
                   style={{
                     width: "100%",
                     height: "35px",

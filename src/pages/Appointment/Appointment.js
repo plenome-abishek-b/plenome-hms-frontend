@@ -179,7 +179,8 @@ const Appointment = (props) => {
   
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
-      await api.deleteAppointment(appointmentId);
+      const hos_id = 1;
+      await api.deleteAppointment(appointmentId,hos_id);
       toast.dismiss();
   
       toast.success(
@@ -190,7 +191,7 @@ const Appointment = (props) => {
         {
           position: toast.POSITION.TOP_RIGHT,
           closeButton: false,
-          autoClose: 500, 
+          autoClose: 500,
         }
       );
   
@@ -217,14 +218,6 @@ const Appointment = (props) => {
 
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit();
-  };
-
-  const autoSizeColumns = (params) => {
-    const colIds = params.columnApi
-      .getAllDisplayedColumns()
-      .map((col) => col.getColId());
-
-    params.columnApi.autoSizeColumns(colIds);
   };
 
   const defaultSort = [{ colId: "id", sort: "asc" }];
@@ -303,7 +296,7 @@ const Appointment = (props) => {
             >
               + Add Appointment
             </button>
-            {/* <Link to="/doctorwise">
+            <Link to="/doctorwise">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -312,7 +305,7 @@ const Appointment = (props) => {
                 &nbsp;&nbsp;Doctor Wise
               </button>
             </Link>
-            <Link to="/patientqueue">
+            {/* <Link to="/patientqueue">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -360,7 +353,6 @@ const Appointment = (props) => {
             frameworkComponents={components}
             gridOptions={gridOptions}
             onGridReady={onGridReady}
-            onFirstDataRendered={autoSizeColumns}
           />
 
           <AlertDialog

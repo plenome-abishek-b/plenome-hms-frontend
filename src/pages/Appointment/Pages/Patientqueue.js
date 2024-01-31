@@ -45,12 +45,25 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
     setShiftData(data)
     console.log(data)
   }
-  const handleSlot = async () =>{
-    const response = await api.getSlotdatas(selectedDoctor,selectedShift)
-    const {data} = response
-    setSlotData(data)
-    console.log(data)
-  }
+
+  
+  
+  // const handleSlot = async () =>{
+  //   const response = await api.getSlotdatas(selectedDate,selectedDoctor,selectedShift)
+  //   const {data} = response
+  //   setSlotData(data)
+  //   console.log(data)
+  // }
+
+  const getSlot = async () => {
+    const response = await api.getSlotTiming(
+      selectedDate,selectedDoctor,selectedShift
+    );
+    const { data } = response;
+    console.log(data, "slot data");
+    setSlotData(data);
+  };
+
   console.log("first",selectedDoctor,selectedShift)
   const handleDoctorChange = (event) => {
     console.log(event.target.value,"selcteddoctor")
@@ -60,11 +73,26 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
     console.log(event.target.value,"selected shift")
     setSelectedShift(event.target.value)
   }
-  const handleDateInput = (event) =>{
-    console.log(event.target.value)
-    setSelectedDate(event.target.value)
-    
-  }
+  const handleDateInput = (event) => {
+    const selectedDateValue = event.target.value;
+    const selectedDay = new Date(selectedDateValue).toLocaleDateString('en-US', { weekday: 'long' });
+  
+    // Map day names to your desired format (Monday, Tuesday, etc.)
+    const dayMapping = {
+      'Sunday': 'Sunday',
+      'Monday': 'Monday',
+      'Tuesday': 'Tuesday',
+      'Wednesday': 'Wednesday',
+      'Thursday': 'Thursday',
+      'Friday': 'Friday',
+      'Saturday': 'Saturday',
+    };
+  
+    // Update the selectedDate state with the mapped day
+    setSelectedDate(dayMapping[selectedDay]);
+  };
+  
+
   const handleSlotChange = (event) =>{
     console.log(event.target.value)
     setSelectedSlot(event.target.value)
@@ -87,7 +115,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                       <option>Select an option</option>
                     {doctorData && doctorData.map((doctor) => (
                     <option key={doctor.id} value={doctor.id}>
-                      {doctor.name}
+                      {doctor.doctor}
                     </option>
                   ))}
                     </select>
@@ -100,7 +128,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                     onChange={handleShiftChange}>
                       <option>select an option</option>
                       {shiftData && shiftData.map((shift)=>(
-                        <option key={shift.id} value={shift.global_shift_id}>{shift.name}</option>
+                        <option key={shift.id} value={shift.id}>{shift.name}</option>
                       ))}
                     </select>
                 </Col>
@@ -114,7 +142,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                     <label style={{fontSize: '15px'}}>Slot <span className="text-danger">*</span></label>
                     <br />
                     <select style={{width: '80%', height: '35px', borderRadius: '5px'}}
-                    onClick={()=>handleSlot()}
+                    onClick={()=>getSlot()}
                     value={selectedSlot}
                     onChange={handleSlotChange}>
                       {}
