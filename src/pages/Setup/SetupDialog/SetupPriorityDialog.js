@@ -69,9 +69,17 @@ export default function SetupPriorityDialog({
       ...formData,
       id:selectedData?.id
     }
+    if(newData?.priority_status === ''){
+      setValidate({...validate,priority_status:true})
+      setTimeout(()=>{
+      setValidate({...validate,priority_status:false})
+      },3000)
+    }
+    else{
     const response = await api.updateSetupFrontOffice_appointmentPriority(newData)
     getFrontofficeSetupPrior()
     handleClose()
+    }
   }
   const handleChange = async (e) =>{
     const {id,value} = e.target

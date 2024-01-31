@@ -69,9 +69,22 @@ export default function SetupPurposeDialog({
       ...formData,
       id:selectedData?.id
     }
+    if(newData?.visitors_purpose === ''){
+      setValidate({...validate,visitors_purpose:true})
+      setTimeout(()=>{
+      setValidate({...validate,visitors_purpose:false})
+      },3000)
+    }
+    else if(newData?.description === ''){
+      setValidate({...validate,description:true})
+      setTimeout(()=>{
+      setValidate({...validate,description:false})
+      },3000)
+    }else{
     const response = await api.updateSetupFrontOffice_purpose(newData)
     getFrontSetupPurpose()
     handleClose()
+    }
   }
   const handleChange = async (e) =>{
      const {id,value} = e.target

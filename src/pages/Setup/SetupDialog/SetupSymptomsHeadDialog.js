@@ -12,26 +12,35 @@ import api from "services/Api"
 export default function SetupSymptomsDialog({
   open,
   handleClose,
-  data,
-  onChange,
-  handleFormSubmit,
+  selectedData,
+  getSymptomsHeadList
 }) {
   const [openSetupSupplierDialog, setOpenSetupSupplierDialog] = React.useState(false)
   const [symptomType,setSymptomType] = useState('')
+  const [formData,setFormData] = useState({
+    symptoms_title:'',
+    description:'',
+    type:'',
+    Hospital_id:1
+  })
 
-  console.log(symptomType, 'sym')
+  useEffect(()=>{
+    if(selectedData){
+      setFormData({
+       symptoms_title:selectedData?.symptoms_title,
+       description:selectedData?.description,
+       type:selectedData?.type
+      })
+    }else{
+      setFormData({
+      symptoms_title:'',
+      description:'',
+      type:'',
+      Hospital_id:1
+    })
+    }
+  },[selectedData])
 
-  useEffect(() => {
-    SymptomType()
-  }, [])
-
-
-  const SymptomType = async () => {
-    const response = await api.getSymptomTypeSetup()
-    const { data } = response
-    console.log(data, "kkkkkkkkkkkkkkkkkkk")
-    setSymptomType(data)
-  }
 
   const handleClickOpen = () => {
     //dialog open
@@ -43,6 +52,34 @@ export default function SetupSymptomsDialog({
    setOpenSetupSupplierDialog(false)
   }
 console.log(symptomType,"type")
+const handleUpdate = async () =>{
+  const newData = {
+    ...formData,
+    id:selectedData?.id
+  }
+  const response = await api?.updateSetupSymptoms_header(newData)
+  handleClose()
+  getSymptomsHeadList()
+}
+const handleFormSubmit = async () =>{
+    console.log(formData);
+    const response = await api?.postSetupSymptoms_header(formData)
+    handleClose()
+    getSymptomsHeadList()
+}
+const getSymptomsType = async () =>{
+  const response = await api?.getSetupSymptoms_Type()
+  const {data} = response
+  console.log(data,":response data");
+  setSymptomType(data)
+
+}
+const handleChange = (e) =>{
+  const {id,value} = e.target
+  setFormData({
+    ...formData,[id]:value
+  })
+}
   return (
     <div
       style={{
@@ -66,18 +103,18 @@ console.log(symptomType,"type")
             <Row>
                 <label>Symptoms Head</label>
                 <br />
-               <input value={data.symptoms_title} id="symptoms_title" onChange={e=>onChange(e)} ></input>
+               <input value={formData?.symptoms_title} id="symptoms_title" onChange={handleChange} ></input>
                 
             </Row>
             <br />
             <Row>
                 <label>Symptoms Type</label>
                 <br />
-                <select style={{height:'30px'}} value={data.type} id="type" onChange={e=>onChange(e)} >
+                <select style={{height:'30px'}} value={formData?.type} id="type" onClick={()=>getSymptomsType()} onChange={handleChange} >
                 <option>select</option>
                 {symptomType &&
                 symptomType.map((head) => (
-                  <option key={head.id} value={head.id}>
+                  <option key={head.id} value={head?.id}>
                     {head.symptoms_type}
                   </option>
                 ))}
@@ -87,14 +124,19 @@ console.log(symptomType,"type")
             <Row>
                 <label>Description</label>
                 <br />
-                <textarea rows={6} value={data.description} id="description" onChange={e=>onChange(e)} ></textarea>
+                <textarea rows={6} value={formData?.description} id="description" onChange={handleChange} ></textarea>
             </Row>
         </Container>
         </DialogContent>
         <DialogActions>
-          <button className="btn-mod bg-soft btn-md" onClick={()=>handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          {selectedData?.symptoms_title ?
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
             Save
-          </button>
+          </button>:
+          <button className="btn-mod bg-soft btn-md" onClick={()=>handleFormSubmit()} style={{marginRight: '3%'}}>
+          Save
+        </button>
+             }
         </DialogActions>
       </Dialog>
     </div>

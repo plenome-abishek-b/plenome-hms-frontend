@@ -96,12 +96,12 @@ export default function OpdDialog({
             <select
               style={{ width: "20%", height: "35px", borderRadius: '5px' }}
               id="patient_id"
-              value={data.patient_id}
+              value={data?.patient_id}
               onChange={e=>onChange(e)}
             >
               {listPatient &&
                 listPatient.map((patient) => (
-                  <option key={patient.id} value={patient.id}>
+                  <option key={patient.id} value={patient?.id}>
                     {patient.patient_name}
                   </option>
                 ))}
@@ -159,7 +159,7 @@ export default function OpdDialog({
               <Col lg='3' md='3' sm='12'>
                 <label>case Reference id</label>
                 <br />
-                <input value={data.case_reference_id} id="case_reference_id" onChange={e=>onChange(e)} type="number" style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}>
+                <input value={data?.case_reference_id} id="case_reference_id" onChange={e=>onChange(e)} type="number" style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}>
                   
                 </input>
               </Col>
@@ -285,7 +285,7 @@ export default function OpdDialog({
                   <Col lg="12">
                     <label>Appointment Date <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="Ex: 2023-01-01 11:11:11" style={{ width: "100%", borderRadius: '5px', border: '1px solid grey' }} id="appointment_date" value={data.appointment_date} onChange={e=>onChange(e)} ></input>
+                    <input placeholder="Ex: 2023-01-01 11:11:11" style={{ width: "100%", borderRadius: '5px', border: '1px solid grey' }} id="appointment_date" value={data?.appointment_date} onChange={e=>onChange(e)} ></input>
                   </Col>
                 </Row>
                 <br />
@@ -338,10 +338,10 @@ export default function OpdDialog({
                   <Col>
                     <label>Consultant Doctor <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }} id='cons_doctor' onChange={e=>onChange(e)} value={data.cons_doctor} >
+                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }} id='cons_doctor' onChange={e=>onChange(e)} value={data?.cons_doctor} >
                     <option>select one</option>
                     {consdoctor && consdoctor.map((doctor) => (
-                    <option key={doctor.id} value={doctor.id}>
+                    <option key={doctor.id} value={doctor?.id}>
                       {doctor.name}
                     </option>
                   ))}

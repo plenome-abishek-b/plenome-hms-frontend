@@ -81,9 +81,23 @@ export default function SetupComplainDialog({
       ...formData,
       id:selectedData?.id
     }
+    if(newData?.complaint_type === ''){
+      setValidate({...validate,complaint_type:true})
+      setTimeout(()=>{
+      setValidate({...validate,visitors_purpose:false})
+      },3000)
+    }
+    else if(newData?.description === ''){
+      setValidate({...validate,description:true})
+      setTimeout(()=>{
+      setValidate({...validate,description:false})
+      },3000)
+    }
+    else{
     const response = await api.updateSetupFrontOffice_complaint_Type(newData)
     getFrontSetupComplainType()
     handleClose()
+    }
   }
   const handleChange = async (e) =>{
     const {id,value} = e.target

@@ -32,8 +32,8 @@ const SetupPatient = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
            console.log(userConfirmed,"delete");
    if(userConfirmed){
-         const deleteResponse = await api.deleteSetupHR_specialist(data.id)
-         getSpecialist()
+         const deleteResponse = await api.deleteSetupHR_patient(data.id)
+         getSetup_Patient()
    }else{
     console.log("cancelled");
    }

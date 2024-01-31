@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Card,
     CardBody,
@@ -25,14 +25,24 @@ import Visits from "./OpdTable/Visits";
 import LabInvest from "./OpdTable/LabInvestigation";
 import Treatment from "./OpdTable/Treatment";
 import OpdVisits from "./OpdTabs/OpdVisits";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const Message = props => {
+    const params = useParams()
+    console.log(params.pid,"params");
+    const pid = params?.pid
     const [activeTab, setactiveTab] = useState("1");
     const toggle = tab => {
         if (activeTab !== tab) {
             setactiveTab(tab);
         }
     };
+    useEffect(()=>{
+     getDetails()
+    },[])
+    const getDetails = async () =>{
+//    const data = 
+    }
     return (
         <React.Fragment>
             <div className="page-content">
