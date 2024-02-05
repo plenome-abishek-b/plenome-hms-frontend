@@ -27,6 +27,7 @@ const SetupChargeType = (props) => {
     opd: false,
     ipd: false,
   });
+  const [selectedData,setSelectedData] = useState({})
   const [chargeData, setChargeData] = useState([]);
   const [data, setData] = useState([]);
   const [appointment, setAppointment] = useState(false);
@@ -34,7 +35,7 @@ const SetupChargeType = (props) => {
     console.log(data, "edit");
     setSelectedData(data);
     // setSelectedData()
-    setOpenFindingCategoryDialog(true);
+    setOpen(true);
   };
 
   const handleDeleteClick = async (data) => {
@@ -96,7 +97,10 @@ const SetupChargeType = (props) => {
   };
 
   const handleOpen = () => {
-    setOpen(true);
+    // if (Object.keys(selectedData).length === 0) {
+      setSelectedData({}); 
+      setOpen(true);
+    // }
   };
 
   const handleClose = () => {
@@ -375,6 +379,7 @@ const SetupChargeType = (props) => {
                 />
                 <SetupChargeTypeDialog
                   getChargeType={getChargeType}
+                  selectedData={selectedData}
                   open={open}
                   handleClose={handleClose}
                   onChange={onChange}

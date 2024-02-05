@@ -16,7 +16,8 @@ export default function SetupChargeTypeDialog({
   data,
   onChange,
   // handleFormSubmit,
-  getChargeType
+  getChargeType,
+  selectedData
 })
 
 {
@@ -29,10 +30,35 @@ export default function SetupChargeTypeDialog({
     radiology:false,
     bloodbank:false
   })
+  useEffect(()=>{
+    if(selectedData){
+      setChargType({
+        name:selectedData?.charge_type
+      })
+    }else{
+      setChargType({
+        name:''
+      })
+    }
+  },[selectedData])
   const handleChanges = async (event) =>{
     const {id,value} = event.target
     console.log(value,"ee");
     setChargType({name:value})
+  }
+  const handleUpdate = async () =>{
+    const data ={
+    charge_type:chargeType.name,
+      is_default:"yes",
+      is_active:"yes",
+      id:selectedData?.id,
+      Hospital_id:1
+    }
+    console.log(data,"yes data");
+   const response = await api?.updateSetup_ChargeType_master(data)
+   console.log(response?.data,"consoling");
+   getChargeType()
+   handleClose()
   }
   const handleSubmit = async () =>{
   console.log(chargeType,"loging",checkCheckbox);
@@ -97,6 +123,7 @@ export default function SetupChargeTypeDialog({
           Add Charge Type
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
+
           <Container>
             <Row>
               <label>Charge Type</label>
@@ -105,6 +132,8 @@ export default function SetupChargeTypeDialog({
             </Row>
             <br />
             <br />
+          {!selectedData?.charge_type  &&
+          <>
             <Row>
               <label>Module</label>
             </Row>
@@ -164,16 +193,26 @@ export default function SetupChargeTypeDialog({
                 </div>
               </Col>
             </Row>
+          </>
+            }
           </Container>
         </DialogContent>
         <DialogActions>
-          <button
+          {selectedData?.charge_type ? <button
             className="btn-mod bg-soft btn-md"
-            onClick={()=>handleSubmit()}
+            onClick={()=>handleUpdate()}
             style={{ marginRight: "3%" }}
           >
-            Save
-          </button>
+            Saves
+          </button>  :
+           <button
+           className="btn-mod bg-soft btn-md"
+           onClick={()=>handleSubmit()}
+           style={{ marginRight: "3%" }}
+         >
+           Save
+         </button>
+          }
         </DialogActions>
       </Dialog>
     </div>

@@ -11,7 +11,7 @@ const baseNodeURL = "http://localhost:4000";
 
 const baseNestSetupandMainURL = "http://13.200.35.19:8000";
 const baseNestSetupURL = "http://13.200.35.19:8000";
-
+const localhost = "http://localhost:4000"
 
 // const http2 = axios.create({
 //   baseURL: baseNestURL,  
@@ -27,7 +27,9 @@ const http3 = axios.create({
 const http4 = axios.create({
   baseURL: baseNestSetupURL,
 });
-
+const http5 = axios.create({
+  baseURL:localhost
+})
 
 // const http4 = axios.create({
 //   baseURL: baseNestMainURL,
@@ -377,6 +379,14 @@ const URL = {
   SETUP_SYMPTOMS_HEAD:'/setup-symptoms-symptoms-head',
   SETUP_SYMPTOMS_TYPE:'/setup-symptoms-symptoms-type',
   OPD_OUT_PATIENT:'/opd-out-patient',
+  HR_MAIN_MODULE_STAFF:'/human-resource-staff',
+  SETTINGS_ROLE_PERMISSION:'/settings-roles-permissions',
+  SETUP_HR_MAIN_MODULE_DESIGNATION:'/setup-human-resource-designation',
+  SETUP_HR_MAIN_MODULE_DEPARTMENT:'/setup-human-resource-department',
+  SETUP_HR_MAIN_MODULE_SPECIALIST:'/setup-human-resource-specialist',
+  SEARCH_HR_SEARCH_BY_ROLE:'/human-resource-staff/role',
+  SEARCH_HR_MAIN_BY_KEYWORK:'/human-resource-staff/keyword',
+  DISABLE_MAIN_HR_MODULE:'/human-resource-staff/disable'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -2385,6 +2395,10 @@ function patchSetupRadiologyParameter(data){
     const url =`${URL.SETUP_CHARGE_TYPE_MASTER}/${id}`
     return http3.delete(url)
   }
+  function updateSetup_ChargeType_master(data){
+    const url =`${URL.SETUP_CHARGE_TYPE_MASTER}/${data?.id}`
+    return http3.patch(url,data)
+  }
   function getSetup_ChargeType_module(){
     return http.get(URL.SETUP_CHARGE_TYPE_MODULE)
   }
@@ -2633,8 +2647,42 @@ function patchSetupRadiologyParameter(data){
   function postOpdOutpatinet_MainModule(data){
     return http3.post(URL.OPD_OUT_PATIENT,data)
   }
-
- 
+  function getHRmainModuleHr_Staff(){
+    return http5.get(URL.HR_MAIN_MODULE_STAFF)
+  }
+  function postHRmainModuleHr_Staff(data){
+    console.log("eeee",data);
+    return http5.post(URL.HR_MAIN_MODULE_STAFF,data)
+  }
+  function getRolePermission(){
+    return http3.get(URL.SETTINGS_ROLE_PERMISSION)
+  }
+  function getHrMainModuleDesignation(){
+    return http5.get(URL.SETUP_HR_MAIN_MODULE_DESIGNATION)
+  }
+  function getHrMainModuleDepartment(){
+    return http5.get(URL.SETUP_HR_MAIN_MODULE_DEPARTMENT)
+  }
+  function getHrMainModuleSpecialist(){
+    return http5.get(URL.SETUP_HR_MAIN_MODULE_SPECIALIST)
+  }
+  function getHrMainModuleSearchByRole(id){
+    const url = `${URL.SEARCH_HR_SEARCH_BY_ROLE}/${id}`
+    return http5.get(url)
+  }
+  function getHrMainModuleSearchByWordpress(name){
+    const url = `${URL.SEARCH_HR_MAIN_BY_KEYWORK}/${name}`
+    return http5.get(url)
+  }
+  function updateHrMainModule(data){
+    const url = `${URL.HR_MAIN_MODULE_STAFF}/${data?.id}`
+    return http5.patch(url,data)
+  }
+  function disableStaff_HR_mainModule(id){
+    const url =`${URL.DISABLE_MAIN_HR_MODULE}/${id}`
+    return http5.post(url)
+  }
+  
 
 ////////
 
@@ -2762,6 +2810,7 @@ const api = {
   getOpdVisits,
   postOpdVisits,
   getOpdPayment,
+  getHrMainModuleSearchByRole,
   postOpdPayment,
   getOpdTimeline,
   postOpdTimeline,
@@ -3104,6 +3153,7 @@ const api = {
   patchSetup_chargeType_setup,
   deleteSetup_chargeType_setup,
   deleteSetup_ChargeType_master,
+  updateSetup_ChargeType_master,
   getSetup_ChargeType_module,
   postSetup_ChargeType_module,
   updateSetup_ChargeType_modue,
@@ -3176,6 +3226,15 @@ const api = {
   getSetupSymptoms_Type,
   postSetupSymptoms_Type,
   updateSetupSymptoms_Type,
-  deleteSetupSymptoms_Type
+  deleteSetupSymptoms_Type,
+  getHRmainModuleHr_Staff,
+  postHRmainModuleHr_Staff,
+  getRolePermission,
+  getHrMainModuleDesignation,
+  getHrMainModuleDepartment,
+  getHrMainModuleSpecialist,
+  getHrMainModuleSearchByWordpress,
+  updateHrMainModule,
+  disableStaff_HR_mainModule
 };
 export default api;
