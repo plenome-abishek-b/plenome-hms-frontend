@@ -370,7 +370,7 @@ const Appointment = (props) => {
             handleDeletionConfirmed={handleDeletionConfirmed}
           />
         </div>
-        <h4>Hiiiii</h4>
+        <h4>Abishek</h4>
       </div>
     </React.Fragment>
   );
