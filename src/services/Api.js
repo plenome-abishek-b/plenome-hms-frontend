@@ -2682,7 +2682,22 @@ function patchSetupRadiologyParameter(data){
     const url =`${URL.DISABLE_MAIN_HR_MODULE}/${id}`
     return http5.post(url)
   }
-  
+  function deleteStaff_HR_mainModule(id){
+    const url = `${URL.HR_MAIN_MODULE_STAFF}/${id}`
+    return http5.delete(url)
+  }
+  function getDisabled_Staffs_HR_mainModule(){
+    return http5.get(`${URL.HR_MAIN_MODULE_STAFF}/disabled/staff`)
+  }
+  function enableStaff_HR_mainModule(id){
+    return http.post(`${URL.HR_MAIN_MODULE_STAFF}/enable/${id}`)
+  }
+  function searchDisableStaffByRole(id){
+    return http.get(`${URL.HR_MAIN_MODULE_STAFF}/disabled/role/${id}`)
+  }
+  function searchDisableStaffBykeyword(keyword){
+    return http.get(`${URL.HR_MAIN_MODULE_STAFF}/keyword/disabledStaff/${keyword}`)
+  }
 
 ////////
 
@@ -3235,6 +3250,11 @@ const api = {
   getHrMainModuleSpecialist,
   getHrMainModuleSearchByWordpress,
   updateHrMainModule,
-  disableStaff_HR_mainModule
+  disableStaff_HR_mainModule,
+  deleteStaff_HR_mainModule,
+  getDisabled_Staffs_HR_mainModule,
+  enableStaff_HR_mainModule,
+  searchDisableStaffBykeyword,
+  searchDisableStaffByRole
 };
 export default api;

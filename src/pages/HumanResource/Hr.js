@@ -31,6 +31,8 @@ const Hr = (props) => {
   const [tableData,setTableData] = useState([])
   const [cardView,setCardView] = useState(true)
   const [listView,setListView] = useState(false)
+  const [listDisabledStaffs,setListDisabledStaffs] = useState(false)
+  const [disabledStaff,setDisabledStaffs] = useState([])
   const history = useHistory()
 
   const handleEditClick = async (data)=>{
@@ -92,6 +94,20 @@ const Hr = (props) => {
       setSearchRoleResult(data)
     }
   }
+  const handleDisableSearch = async (key) =>{
+    if(key === 'role'){
+      const response = await api.searchDisableStaffByRole(searchByRole)
+      const {data} = response
+      console.log(data,"consoling data");
+      setSearchRoleResult(data)
+    }else{
+      console.log(searchBykeyword);
+      const response = await api.searchDisableStaffBykeyword(searchBykeyword)
+      const {data} = response
+      console.log(data,"consoling data");
+      setSearchRoleResult(data)
+    }
+  }
   const gridOptions = {
     domLayout: 'autoHeight', // Set domLayout to autoHeight
     defaultColDef: {
@@ -106,10 +122,12 @@ const Hr = (props) => {
   const makelistView = () =>{
      setListView(true)
      setCardView(false)
+    // setListDisabledStaffs(false)
   }
   const makeCardView =() =>{
     setCardView(true)
     setListView(false)
+    setListDisabledStaffs(false)
   }
   const components = {
     actionsRenderer: (props) => (
@@ -120,6 +138,16 @@ const Hr = (props) => {
       </div>
     )
   }
+  const disabledStaffs = async () =>{
+    setListDisabledStaffs(true)
+    setCardView(true)
+    setListView(false)
+    const response = await api.getDisabled_Staffs_HR_mainModule()
+    const {data} = response
+    console.log(data,"disabled");
+    setDisabledStaffs(data)
+    console.log(listDisabledStaffs,"true");
+  }
   return (
     <React.Fragment>
       <div className="page-content">
@@ -129,9 +157,14 @@ const Hr = (props) => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Link to="/addstaff">
               <button className="btn-mod" style={{ marginRight: "10px" }}>
-                Add Staff&nbsp;<i className="fas fa-caret-down"></i>
+                Add Staff&nbsp;
               </button>
             </Link>
+            {/* <Link to="/addstaff"> */}
+              <button onClick={()=>disabledStaffs()} className="btn-mod" style={{ marginRight: "10px" }}>
+                Disabled staffs&nbsp;
+              </button>
+            {/* </Link> */}
             {/* <Link to="/attendance">
               <button className="btn-mod" style={{ marginRight: "10px" }}>
                 <i className="fas fa-bars"></i>&nbsp;Staff Attendance
@@ -148,7 +181,7 @@ const Hr = (props) => {
               </button>
             </Link> */}
           </div>
-
+         {listDisabledStaffs ?
           <div className="row mt-4">
             <div className="col-md-6">
               <div className="row">
@@ -172,7 +205,7 @@ const Hr = (props) => {
                     </div>
                   </div>
                   <div className="col-sm-10">
-                    <button className="btn-mod btn-sm mt-3" onClick={()=>{handleSearch('role')}}>
+                    <button className="btn-mod btn-sm mt-3" onClick={()=>{handleDisableSearch('role')}}>
                       <i className="fas fa-search"></i>&nbsp; Search
                     </button> 
                   </div>
@@ -195,14 +228,69 @@ const Hr = (props) => {
                     </div>
                   </div>
                   <div className="col-sm-10">
-                    <button className="btn-mod btn-sm mt-3" onClick={()=>{handleSearch()}}>
+                    <button className="btn-mod btn-sm mt-3" onClick={()=>{handleDisableSearch()}}>
                       <i className="fas fa-search"></i>&nbsp; Search
                     </button>
                   </div>
                 {/* </form> */}
               </div>
             </div>
-          </div>
+          </div>  :
+           <div className="row mt-4">
+           <div className="col-md-6">
+             <div className="row">
+               {/* <form> */}
+                 <div className="col-sm-10">
+                   <div className="form-group">
+                     <label>Role</label>
+                     <select
+                       className="form-control"
+                       name="searchByRole"
+                       style={{ width: "100%", height: "32px" }}
+                       onClick={()=>getRoles()}
+                       onChange={(e)=>setSearchByRole(e.target.value)}
+                     >
+                       <option>select</option>
+                       {roles?.map((role)=>(
+                       <option value={Number(role?.id)}>{role.name}</option>
+                       ))}
+                     
+                     </select>
+                   </div>
+                 </div>
+                 <div className="col-sm-10">
+                   <button className="btn-mod btn-sm mt-3" onClick={()=>{handleSearch('role')}}>
+                     <i className="fas fa-search"></i>&nbsp; Search
+                   </button> 
+                 </div>
+               {/* </form> */}
+             </div>
+           </div>
+           <div className="col-md-6">
+             <div className="row">
+               {/* <form> */}
+                 <div className="col-sm-10">
+                   <div className="form-group">
+                     <label>Search by Keyword</label>
+                     <br />
+                     <input
+                       type="text"
+                       placeholder="Search by Staff ID, Name, Role"
+                       style={{ width: "100%", height: "32px" }}
+                       onChange={(e)=>setSearchBykeyword(e.target.value)}
+                     ></input>
+                   </div>
+                 </div>
+                 <div className="col-sm-10">
+                   <button className="btn-mod btn-sm mt-3" onClick={()=>{handleSearch()}}>
+                     <i className="fas fa-search"></i>&nbsp; Search
+                   </button>
+                 </div>
+               {/* </form> */}
+             </div>
+           </div>
+         </div> 
+}
           <br />
           <div className="box border0 mt-2">
             <div className="box-header">
@@ -216,7 +304,7 @@ const Hr = (props) => {
                       data-toggle="tab"
                       href="#tab_content_1"
                     >
-                      <i className="fas fa-newspaper p-1" ></i> Card view
+                      <i className="fas fa-newspaper p-1" ></i> {listDisabledStaffs ? 'Disabled Staffs': 'Card view'}
                     </a>
                   </li>
                   <li className="nav-item ms-3">
@@ -227,7 +315,7 @@ const Hr = (props) => {
                       data-toggle="tab"
                       href="#tab_content_2"
                     >
-                      <i className="fas fa-list p-1" ></i> List view
+                      <i className="fas fa-list p-1" ></i>{ 'List view' }
                     </a>
                   </li>
                 </ul>
@@ -235,37 +323,76 @@ const Hr = (props) => {
                   {cardView && (
                   <>
   {searchRoleResult.length > 0 ? (
-    searchRoleResult.map((staff) => (
+    console.log("sat1"),
+  searchRoleResult.map((staff) => (
+    <Col md={4} key={staff.staffId}>
+      <Card
+        getAllStaff={getAllStaffs}
+        staff={staff}
+        staffname={staff?.staffname}
+        email={staff.email}
+        qualification={staff?.qualification}
+        number={staff?.contact_no}
+        role={staff?.role_name}
+        location="enable"
+      />
+      {/* <FaPencilAlt className="pencil-icon" /> */}
+    </Col>
+  ))
+) :
+ (
+   listDisabledStaffs ? (
+    console.log(listDisabledStaffs,"entering"), 
+
+    disabledStaff.map((staff) => (
       <Col md={4} key={staff.staffId}>
         <Card
+          getAllStaff={getAllStaffs}
           staff={staff}
           staffname={staff?.staffname}
           email={staff.email}
           qualification={staff?.qualification}
           number={staff?.contact_no}
           role={staff?.role_name}
+          location="disable"
         />
-          {/* <FaPencilAlt className="pencil-icon" /> */}
       </Col>
     ))
-  ) : (
+  ) :
+   (
+    console.log("else"),
     staffs.map((staff) => (
       <Col md={4} key={staff.staffId}>
         <Card
+          getAllStaff={getAllStaffs}
           staff={staff}
           staffname={staff?.staffname}
           email={staff.email}
           qualification={staff?.qualification}
           number={staff?.contact_no}
           role={staff?.role_name}
+          location="enable"
         />
       </Col>
     ))
-  )}
+    ))
+}
+
   </>
     )}
     { listView &&
   <div>
+    { listDisabledStaffs ? (
+      <AgGridReact
+      rowData={disabledStaff}
+      columnDefs={columnDefs}
+      // defaultColDef={defaultColDef}
+      pagination={true}
+      paginationPageSize={10}
+      domLayout='autoHeight'
+      frameworkComponents={components}
+      gridOptions={gridOptions}
+    /> ):(
   <AgGridReact
             rowData={tableData}
             columnDefs={columnDefs}
@@ -276,6 +403,8 @@ const Hr = (props) => {
             frameworkComponents={components}
             gridOptions={gridOptions}
           />
+    )
+    }
   </div>
 }
 </Row>
