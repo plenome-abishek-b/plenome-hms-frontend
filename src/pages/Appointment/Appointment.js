@@ -16,6 +16,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EditButtonRenderer from "common/data/update-button"
 //redux
 
 const initialValue = {
@@ -46,6 +47,8 @@ const Appointment = (props) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [selectedData,setSelectedData] = useState([])
+  
 
   const handleClickOpen = () => {
     //dialog open
@@ -116,6 +119,7 @@ const Appointment = (props) => {
       field: "actions",
       cellRenderer: "actionsRenderer",
       cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
         onDeleteClick: (row) => handleDeleteClick(row),
       },
       cellStyle: { color: "red" },
@@ -155,6 +159,13 @@ const Appointment = (props) => {
       console.error("Error fetching appointment data:", error);
     }
   };
+
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpen(true)
+   }
 
   const handleDeleteClick = async (data) => {
     try {
@@ -197,7 +208,7 @@ const Appointment = (props) => {
       );
   
       setTimeout(() => {
-        window.location.reload();
+        getAppointment();
       }, 800);
   
     } catch (error) {
@@ -226,6 +237,7 @@ const Appointment = (props) => {
   const components = {
     actionsRenderer: (props) => (
       <div>
+         <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
@@ -361,6 +373,7 @@ const Appointment = (props) => {
             handleClose={handleClose}
             data={formData}
             getAppointment={getAppointment}
+            selectedData={selectedData}
           />
           <Patientdetails
             open={modalOpen}

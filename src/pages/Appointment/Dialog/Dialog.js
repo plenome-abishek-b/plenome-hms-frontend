@@ -23,6 +23,7 @@ export default function AlertDialog({
   data,
   handleBill,
   getAppointment,
+  selectedData
 }) {
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false);
   const [patients, setPatients] = useState([]);
@@ -62,7 +63,7 @@ export default function AlertDialog({
     global_shift_id: "",
     date: "",
     shift_id: "",
-    priority: "1",
+    priority: "",
     appointment_status: "",
     message: "",
     live_consult: "",
@@ -225,12 +226,51 @@ export default function AlertDialog({
       setTimeout(() => {
         getAppointment();
       }, 1000);
+      handleClose()
     } else {
       // Handle other response statuses if needed
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
-  
+
+  useEffect(() => {
+    // When selectedData changes, update the form data
+    if (selectedData) {
+      setFormData({
+        doctor: selectedData?.doctor_name || "",
+        amount: selectedData?.amount || "",
+        priority: selectedData?.appointment_status || "",
+      });
+    } else {
+      // Reset form data when selectedData is not available (for addition)
+      setFormData({
+        doctor: "",
+        amount: "",
+        priority: "",
+      });
+    }
+  }, [selectedData]);
+  async function handleFormUpdate() {
+    try {
+      const newData = {
+        ...formData,
+        id: selectedData?.id,
+      };
+      const response = await api.updateSetup_Findings(newData);
+      console.log(response, "respo");
+      setTimeout(() => {
+        getAppointment();
+      }, 500);
+      handleClose();
+
+      // Reload the page after a delay of 1 second
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  }
 
   console.log(doctors, "docsss");
   return (
@@ -269,7 +309,7 @@ export default function AlertDialog({
             </button>
             <button
               className="btn text-white ms-3 fw-bold"
-              onClick={handleClickOpen}
+              onClick={handleClose}
               style={{ border: "1px solid white", backgroundColor: "#B2533E" }}
             >
               X
@@ -575,22 +615,23 @@ export default function AlertDialog({
         <DialogActions
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          <button
-            onClick={handleClose}
-            className="btn fw-bold text-white"
-            style={{ backgroundColor: "#B2533E" }}
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              handleFormSubmit(handleClose());
-              generatePdf();
-            }}
-            className="btn-mod bg-soft fw-bold"
-          >
-            SUBMIT
-          </button>
+          {selectedData?.name ? (
+            <button
+              className="btn-mod bg-soft btn-md"
+              onClick={() => handleFormUpdate()}
+              style={{ marginRight: "3%" }}
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              className="btn-mod bg-soft btn-md"
+              onClick={() => handleFormSubmit()}
+              style={{ marginRight: "3%" }}
+            >
+              Save
+            </button>
+          )}
         </DialogActions>
       </Dialog>
     </div>
