@@ -130,6 +130,7 @@ const Appointment = (props) => {
   useEffect(() => {
     getAppointment();
   }, []);
+
   const getAppointment = async () => {
     try {
       const response = await api.getAppointment();
@@ -138,7 +139,7 @@ const Appointment = (props) => {
       // Modify the patient_name and date fields in each object in the data array
       const modifiedData = data.map((patient) => {
         const modifiedDate = new Date(patient.date);
-        const formattedDate = modifiedDate.toLocaleString(); // Adjust the format as needed
+        const formattedDate = modifiedDate.toLocaleString(); 
 
         return {
           ...patient,
@@ -157,7 +158,7 @@ const Appointment = (props) => {
 
   const handleDeleteClick = async (data) => {
     try {
-      // Show a toast message with an OK button for confirmation
+
       const toastId = toast.info(
         <div>
           <div className="text-dark">Are you sure you want to delete this item?</div>
@@ -196,8 +197,8 @@ const Appointment = (props) => {
       );
   
       setTimeout(() => {
-        getAppointment();
-      }, 500);
+        window.location.reload();
+      }, 800);
   
     } catch (error) {
       console.error("Error deleting appointment:", error);

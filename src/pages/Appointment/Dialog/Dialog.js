@@ -15,7 +15,7 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./styles.css"
+import "./styles.css";
 
 export default function AlertDialog({
   open,
@@ -59,17 +59,16 @@ export default function AlertDialog({
   const [formValues, setFormValues] = useState({
     patient_id: "",
     doctor: "",
-    amount: "",
     global_shift_id: "",
     date: "",
     shift_id: "",
-    priority: "",
+    priority: "1",
     appointment_status: "",
     message: "",
     live_consult: "",
     time: "",
-    specialist: "",
-    source: "",
+    specialist: "10",
+    source: "Online",
     is_opd: "yes",
     is_ipd: "yes",
     is_queue: 1,
@@ -93,23 +92,17 @@ export default function AlertDialog({
   };
 
   const handleChange = (event) => {
-    console.log("Before update:", formValues);
-
     const { name, value } = event.target;
-    console.log(name, value, "change");
-
+  
+    // If the input is the time field, append ':00' to include seconds
+    const formattedValue = name === "time" ? `${value}:00` : value;
+  
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
-      [name]: value,
+      [name]: formattedValue,
     }));
-
-    if (name === "doctor") {
-      getApptCharge();
-    }
-
-    console.log("After update:", formValues);
-    // handleClose()
   };
+  
 
   console.log(formValues, "valll");
   const getAllPatient = async () => {
@@ -191,10 +184,10 @@ export default function AlertDialog({
       SetCharge(data);
 
       if (data.length > 0) {
-        const firstChargeAmount = data[0].standard_charge;
+        const firstChargeAmount = data[0].amount;
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
-          standard_charge: firstChargeAmount,
+          amount: firstChargeAmount,
         }));
       }
     } catch (error) {
@@ -216,22 +209,28 @@ export default function AlertDialog({
 
   const handleFormSubmit = async () => {
     const response = await api.postAppointment(formValues);
-    console.log(formValues,"form values")
+    console.log(formValues, "form values");
     const { status, data } = response;
-    
+  
     if (status === 201) {
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
+  
       setFormSubmitted(true);
       setFormValues({});
-      getAppointment();
+  
+      // Delay the execution of getAppointment by one second
+      setTimeout(() => {
+        getAppointment();
+      }, 1000);
     } else {
       // Handle other response statuses if needed
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
+  
 
   console.log(doctors, "docsss");
   return (
@@ -241,7 +240,14 @@ export default function AlertDialog({
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="xl"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "1200px", // Set your width here
+            },
+          },
+        }}
       >
         <DialogTitle
           id="alert-dialog-title"
@@ -257,14 +263,14 @@ export default function AlertDialog({
             <button
               className="btn text-white ms-5 fw-bold"
               onClick={handleClickOpen}
-              style={{ border: "1px solid white"}}
+              style={{ border: "1px solid white" }}
             >
               + New Patient
             </button>
             <button
               className="btn text-white ms-3 fw-bold"
               onClick={handleClickOpen}
-              style={{ border: "1px solid white",backgroundColor: "#B2533E" }}
+              style={{ border: "1px solid white", backgroundColor: "#B2533E" }}
             >
               X
             </button>
@@ -303,13 +309,13 @@ export default function AlertDialog({
           </Row>
           <br />
           <Row>
-            <Col lg="3" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <label>
                 Doctor <span className="text-danger">*</span>
               </label>
               <br />
               <select
-              className="select-transition"
+                className="select-transition"
                 style={{
                   width: "100%",
                   height: "35px",
@@ -332,7 +338,7 @@ export default function AlertDialog({
   ))} */}
               </select>
             </Col>
-            <Col lg="3" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <label>
                 Doctor Fees <span className="text-danger">*</span>
               </label>
@@ -345,7 +351,7 @@ export default function AlertDialog({
                   backgroundColor: "rgba(0,0,0,0.2)",
                 }}
                 name="amount"
-                value={formValues.standard_charge}
+                value={formValues.amount}
                 onChange={handleChange}
                 type="number"
                 readOnly
@@ -363,7 +369,10 @@ export default function AlertDialog({
               value={formValues.specialist}
               onChange={handleChange}
             ></input>
-            <Col lg="3" md="6" sm="12">
+          </Row>
+          <br />
+          <Row>
+            <Col lg="4" md="4" sm="12">
               <label>
                 Shift <span className="text-danger">*</span>
               </label>
@@ -392,7 +401,7 @@ export default function AlertDialog({
                   ))}
               </select>
             </Col>
-            <Col lg="3" md="6" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>
                 Date <span className="text-danger">*</span>
               </label>
@@ -410,9 +419,27 @@ export default function AlertDialog({
                 onChange={handleChange}
               ></input>
             </Col>
+            <Col lg="4" md="4" sm="12">
+              <label>
+                Time <span className="text-danger">*</span>
+              </label>
+              <br />
+              <input
+                type="time"
+                style={{
+                  width: "100%",
+                  height: "35px",
+                  borderRadius: "5px",
+                  border: "1px solid grey",
+                }}
+                name="time"
+                value={formValues.time}
+                onChange={handleChange}
+              ></input>
+            </Col>
           </Row>
           <Row className="mt-4">
-            <Col lg="3" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <label>
                 Slot <span className="text-danger">*</span>
               </label>
@@ -438,7 +465,7 @@ export default function AlertDialog({
                   ))}
               </select>
             </Col>
-            <Col lg="3" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <label>Priority</label>
               <br />
               <select
@@ -458,7 +485,10 @@ export default function AlertDialog({
                 <option value="Very Urgent">Very Urgent</option>
               </select>
             </Col>
-            <Col lg="3" md="6" sm="12">
+          </Row>
+          <br />
+          <Row>
+            <Col lg="6" md="6" sm="12">
               <label>Payment</label>
               <br />
               <select
@@ -478,7 +508,7 @@ export default function AlertDialog({
                 <option value="upi">UPI</option>
               </select>
             </Col>
-            <Col lg="3" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <label>
                 Status <span className="text-danger">*</span>
               </label>
@@ -494,6 +524,7 @@ export default function AlertDialog({
                 value={formValues.appointment_status}
                 onChange={handleChange}
               >
+                <option>select</option>
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
                 <option value="Cancel">Cancel</option>
