@@ -23,7 +23,6 @@ export default function AlertDialog({
   data,
   handleBill,
   getAppointment,
-  selectedData
 }) {
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false);
   const [patients, setPatients] = useState([]);
@@ -233,44 +232,44 @@ export default function AlertDialog({
     }
   };
 
-  useEffect(() => {
-    // When selectedData changes, update the form data
-    if (selectedData) {
-      setFormData({
-        doctor: selectedData?.doctor_name || "",
-        amount: selectedData?.amount || "",
-        priority: selectedData?.appointment_status || "",
-      });
-    } else {
-      // Reset form data when selectedData is not available (for addition)
-      setFormData({
-        doctor: "",
-        amount: "",
-        priority: "",
-      });
-    }
-  }, [selectedData]);
-  async function handleFormUpdate() {
-    try {
-      const newData = {
-        ...formData,
-        id: selectedData?.id,
-      };
-      const response = await api.updateSetup_Findings(newData);
-      console.log(response, "respo");
-      setTimeout(() => {
-        getAppointment();
-      }, 500);
-      handleClose();
+  // useEffect(() => {
+  //   // When selectedData changes, update the form data
+  //   if (selectedData) {
+  //     setFormData({
+  //       doctor: selectedData?.doctor_name || "",
+  //       amount: selectedData?.amount || "",
+  //       priority: selectedData?.appointment_status || "",
+  //     });
+  //   } else {
+  //     // Reset form data when selectedData is not available (for addition)
+  //     setFormData({
+  //       doctor: "",
+  //       amount: "",
+  //       priority: "",
+  //     });
+  //   }
+  // }, [selectedData]);
+  // async function handleFormUpdate() {
+  //   try {
+  //     const newData = {
+  //       ...formData,
+  //       id: selectedData?.id,
+  //     };
+  //     const response = await api.updateSetup_Findings(newData);
+  //     console.log(response, "respo");
+  //     setTimeout(() => {
+  //       getFindings();
+  //     }, 500);
+  //     handleClose();
 
-      // Reload the page after a delay of 1 second
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-  }
+  //     // Reload the page after a delay of 1 second
+  //     // setTimeout(() => {
+  //     //   location.reload();
+  //     // }, 1000);
+  //   } catch (error) {
+  //     console.error("Error updating data:", error);
+  //   }
+  // }
 
   console.log(doctors, "docsss");
   return (
@@ -615,15 +614,7 @@ export default function AlertDialog({
         <DialogActions
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          {selectedData?.name ? (
-            <button
-              className="btn-mod bg-soft btn-md"
-              onClick={() => handleFormUpdate()}
-              style={{ marginRight: "3%" }}
-            >
-              Update
-            </button>
-          ) : (
+            
             <button
               className="btn-mod bg-soft btn-md"
               onClick={() => handleFormSubmit()}
@@ -631,7 +622,7 @@ export default function AlertDialog({
             >
               Save
             </button>
-          )}
+
         </DialogActions>
       </Dialog>
     </div>

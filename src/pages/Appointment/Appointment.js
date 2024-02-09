@@ -47,7 +47,6 @@ const Appointment = (props) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [selectedData,setSelectedData] = useState([])
   
 
   const handleClickOpen = () => {
@@ -160,12 +159,10 @@ const Appointment = (props) => {
     }
   };
 
-  const handleEditClick = (data) =>{
-    console.log(data,"edit");
-    setSelectedData(data)
-    // setSelectedData()
-    setOpen(true)
-   }
+  const handleEditClick = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditDialogOpen(true);
+  };
 
   const handleDeleteClick = async (data) => {
     try {
@@ -373,7 +370,6 @@ const Appointment = (props) => {
             handleClose={handleClose}
             data={formData}
             getAppointment={getAppointment}
-            selectedData={selectedData}
           />
           <Patientdetails
             open={modalOpen}
