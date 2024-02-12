@@ -9,8 +9,8 @@ const baseNestURL = "http://localhost:4000";
 const baseNodeURL = "http://localhost:4000";
 
 
-const baseNestSetupandMainURL = "http://13.200.35.19:8000";
-const baseNestSetupURL = "http://13.200.35.19:8000";
+const baseNestSetupandMainURL = "http://localhost:4000";
+const baseNestSetupURL = "http://localhost:4000";
 const localhost = "http://localhost:4000"
 
 // const http2 = axios.create({
@@ -63,6 +63,7 @@ const URL = {
   APPT_SHIFT_URL: "/internal-appointment-shift",
   APPT_SLOT_URL: "/internal-appointment-slot",
   APPT_SLOT_CHARGE: "/setup_appt_slot_amount",
+  APPT_INTERNAL_SLOT_CHARGE: "/internal-appointment-charges",
   SLOT_WISE_URL: "/internal-appointment-slot",
   PATIENT_SEARCH_URL: "/add-appointment-patient-queue",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
@@ -2109,9 +2110,14 @@ function postSetupApptSlotTime(formData, staff_id, global_shift_id, start_time, 
 function getSetupApptSlotCharge(staff_id) {
   console.log("staff_id:", staff_id);
 
-  const url = `${URL.APPT_SLOT_CHARGE}?staff_id=${staff_id}`;
+  const url = `${URL.APPT_INTERNAL_SLOT_CHARGE}/${staff_id}`;
   console.log("url:", url);
 
+  return http3.get(url);
+}
+
+function getSetupAppointmentSlotChrg(doctor){
+  const url = `${URL.SETUP_APPT_SLOT_CHARGES}?staff_id=${doctor}`
   return http3.get(url);
 }
 
@@ -2565,6 +2571,10 @@ function patchSetupRadiologyParameter(data){
   function updateSetupFrontOffice_purpose(data){
     const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${data?.id}`
     return http3.patch(url,data)
+  }
+
+  function getSetupAppointmentSlotTiming(){
+    const url = `${URL.SLOT_TIMING}`
   }
   function deleteSetupFrontOffice_purpose(id){
     const url = `${URL.SETUP_FRONT_OFFICE_PURPOSE}/${id}`
@@ -3256,5 +3266,6 @@ const api = {
   enableStaff_HR_mainModule,
   searchDisableStaffBykeyword,
   searchDisableStaffByRole
+  getSetupAppointmentSlotChrg
 };
 export default api;

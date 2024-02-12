@@ -16,6 +16,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EditButtonRenderer from "common/data/update-button"
 //redux
 
 const initialValue = {
@@ -46,6 +47,7 @@ const Appointment = (props) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  
 
   const handleClickOpen = () => {
     //dialog open
@@ -116,6 +118,7 @@ const Appointment = (props) => {
       field: "actions",
       cellRenderer: "actionsRenderer",
       cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
         onDeleteClick: (row) => handleDeleteClick(row),
       },
       cellStyle: { color: "red" },
@@ -130,6 +133,7 @@ const Appointment = (props) => {
   useEffect(() => {
     getAppointment();
   }, []);
+
   const getAppointment = async () => {
     try {
       const response = await api.getAppointment();
@@ -138,7 +142,7 @@ const Appointment = (props) => {
       // Modify the patient_name and date fields in each object in the data array
       const modifiedData = data.map((patient) => {
         const modifiedDate = new Date(patient.date);
-        const formattedDate = modifiedDate.toLocaleString(); // Adjust the format as needed
+        const formattedDate = modifiedDate.toLocaleString(); 
 
         return {
           ...patient,
@@ -155,9 +159,14 @@ const Appointment = (props) => {
     }
   };
 
+  const handleEditClick = (rowData) => {
+    setSelectedRowData(rowData);
+    setEditDialogOpen(true);
+  };
+
   const handleDeleteClick = async (data) => {
     try {
-      // Show a toast message with an OK button for confirmation
+
       const toastId = toast.info(
         <div>
           <div className="text-dark">Are you sure you want to delete this item?</div>
@@ -197,7 +206,7 @@ const Appointment = (props) => {
   
       setTimeout(() => {
         getAppointment();
-      }, 500);
+      }, 800);
   
     } catch (error) {
       console.error("Error deleting appointment:", error);
@@ -225,6 +234,7 @@ const Appointment = (props) => {
   const components = {
     actionsRenderer: (props) => (
       <div>
+         <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>

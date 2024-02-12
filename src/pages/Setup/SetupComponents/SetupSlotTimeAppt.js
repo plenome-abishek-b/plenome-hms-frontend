@@ -63,7 +63,7 @@ function SetupSlotAppt() {
   };
 
   const handleSearch = async () => {
-    const response = await api.getApptSlot(
+    const response = await api.getSlotTiming(
       formData.day,
       formData.doctor,
       formData.shift
@@ -83,7 +83,9 @@ function SetupSlotAppt() {
       setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
     }
 
-    const charge_response = await api.getSetupApptSlotCharge(formData.doctor);
+    console.log(formData,'doctor');
+
+    const charge_response = await api.getSetupAppointmentSlotChrg(formData.doctor);
     const { data: data2 } = charge_response;
     setChargeData(data2);
     console.log(chargeData, "chrgggg");
