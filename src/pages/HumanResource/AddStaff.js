@@ -265,6 +265,29 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
       certificates:selectedFiles,
       other_document_name:formData?.other_document_file
     } 
+    // if(datas?.employee_id){
+
+    // }else if(datas?.role_id){
+
+    // }else if(datas?.staff_designation_id){
+
+    // }else if(datas?.department_id){
+
+    // }else if(datas?.specialist){
+
+    // }else if(datas?.first_name){
+
+    // }else if(datas?.surname){
+
+    // }else if(data?.father_name){
+
+    // }else if(data?.mother_name){
+
+    // }else if(data?.gender){
+
+    // }else if(data?.marital_status){
+
+    // }
     console.log(datas,"all datas getting");
     // const filteredObject = Object.fromEntries(
     //   Object.entries(datas).filter(([key, value]) => value !== "")
@@ -1164,7 +1187,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                           style={{ backgroundColor: "#6070FF" }}
                           onClick={handleUpdate}
                         >
-                          Saves
+                          Save
                         </button> :
                         <button
                         className="btn text-white fw-bold"
