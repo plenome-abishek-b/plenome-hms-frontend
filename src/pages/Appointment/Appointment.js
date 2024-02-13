@@ -18,7 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button"
 //redux
-
+ 
 const initialValue = {
   //reset the form to initial value
   patient_name: "",
@@ -33,42 +33,41 @@ const initialValue = {
   fees: "",
   status: "",
 };
-
+ 
 const Appointment = (props) => {
   const gridRef = useRef();
-
+ 
   const [tableData, setTableData] = useState(null);
-
+ 
   const [formData, setFormData] = useState(initialValue);
-
+ 
   const [open, setOpen] = React.useState(false);
-
+ 
   const [datas, setDatas] = useState(null);
-
+ 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [selectedData,setSelectedData] = useState([])
-  
-
+  const [selectedData,setSelectedData] = useState({})
   const handleClickOpen = () => {
     //dialog open
+    setSelectedData({})
     setOpen(true);
   };
-
+ 
   const handleClose = () => {
     //dialog close
     setOpen(false);
   };
-
+ 
   const onChange = (e) => {
     //catch the parameters when changed.
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-
+ 
   const PatientNameLinkRenderer = (props) => {
     const { value, data } = props;
-
+ 
     const handleClick = async () => {
       try {
         const response = await api.getAppointmentbyId(data.id);
@@ -79,14 +78,14 @@ const Appointment = (props) => {
         console.error("Error fetching appointment details:", error);
       }
     };
-
+ 
     return (
       <Link to="#" onClick={handleClick}>
         {value}
       </Link>
     );
   };
-
+ 
   const columnDefs = [
     {
       headerName: "Patient Name",
@@ -122,79 +121,82 @@ const Appointment = (props) => {
         onEditClick: (row) => handleEditClick(row),
         onDeleteClick: (row) => handleDeleteClick(row),
       },
-      cellStyle: { color: "red" },
     },
   ];
-
+ 
   const onBtnExport = useCallback(() => {
     console.log(gridRef.current); // Log the grid reference
     gridRef.current.api.exportDataAsCsv();
   }, []);
-
+ 
   useEffect(() => {
     getAppointment();
   }, []);
-
+ 
   const getAppointment = async () => {
     try {
       const response = await api.getAppointment();
       const { data } = response;
-
+ 
       // Modify the patient_name and date fields in each object in the data array
       const modifiedData = data.map((patient) => {
         const modifiedDate = new Date(patient.date);
-        const formattedDate = modifiedDate.toLocaleString(); 
-
+        const formattedDate = modifiedDate.toLocaleString();
+ 
         return {
           ...patient,
           patient_name: patient.patient_name.replace("/", ""),
           date: formattedDate,
         };
       });
-
+ 
       console.log(modifiedData, "modifiedData");
-
+ 
       setDatas(modifiedData);
     } catch (error) {
       console.error("Error fetching appointment data:", error);
     }
   };
-
-  const handleEditClick = (data) =>{
-    console.log(data,"edit");
-    setSelectedData(data)
-    // setSelectedData()
-    setOpen(true)
-   }
-
+ 
+  // const handleEditClick = (rowData) => {
+  //   setSelectedRowData(rowData);
+  //   setEditDialogOpen(true);
+  // };
+ 
   const handleDeleteClick = async (data) => {
     try {
-
+ 
       const toastId = toast.info(
         <div>
           <div className="text-dark">Are you sure you want to delete this item?</div>
           <div className="d-flex justify-content-end mt-3">
           <button className="btn btn-danger btn-md" onClick={() => handleDeletionConfirmed(data.id)}>OK</button>
           </div>
-          
+         
         </div>,
         {
           position: toast.POSITION.TOP_CENTER,
           closeButton: false,
         }
       );
-  
+ 
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }
   };
-  
+  const handleEditClick = (data) => {
+    console.log(data, "edit");
+    setSelectedData(data);
+    // setSelectedData()
+    setOpen(true);
+  };
+ 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
       const hos_id = 1;
       await api.deleteAppointment(appointmentId,hos_id);
       toast.dismiss();
-  
+ 
       toast.success(
         <div style={{display: "flex", justifyContent: 'space-between'}}>
           <div>Item deleted successfully</div>
@@ -206,16 +208,16 @@ const Appointment = (props) => {
           autoClose: 500,
         }
       );
-  
+ 
       setTimeout(() => {
-        getAppointment();
+        window.location.reload();
       }, 800);
-  
+ 
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }
   };
-
+ 
   const gridOptions = {
     domLayout: "autoHeight",
     defaultColDef: {
@@ -227,13 +229,13 @@ const Appointment = (props) => {
       params.api.autoSizeAllColumns();
     },
   };
-
+ 
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit();
   };
-
+ 
   const defaultSort = [{ colId: "id", sort: "asc" }];
-
+ 
   const components = {
     actionsRenderer: (props) => (
       <div>
@@ -244,17 +246,17 @@ const Appointment = (props) => {
     ),
     patientNameLinkRenderer: PatientNameLinkRenderer,
   };
-
+ 
   const handleCloseModal = () => {
     setModalOpen(false);
     setModalData(null);
   };
-
+ 
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
     );
-  
+ 
     const columns = filteredColumnDefs.map((col) => ({
       header: col.headerName,
       dataKey: col.field,
@@ -262,29 +264,29 @@ const Appointment = (props) => {
     const rows = datas.map((data) =>
       filteredColumnDefs.map((col) => data[col.field])
     );
-  
+ 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
       currentDate.getMonth() + 1
     }-${currentDate.getDate()}`;
-  
+ 
     const doc = new jsPDF({ orientation: "landscape" });
     const columnStyles = {};
     filteredColumnDefs.forEach((_, index) => {
       columnStyles[index] = { cellWidth: 30 };
     });
-  
+ 
     doc.autoTable({
       head: [columns.map((col) => col.header)],
       body: rows,
       columnStyles,
       margin: { top: 20 },
     });
-  
+ 
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
-  
+ 
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
@@ -326,7 +328,7 @@ const Appointment = (props) => {
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
             </Link> */}
-
+ 
             <button
               className="btn-mod bg-soft custom-btn"
               onClick={() => onBtnExport()}
@@ -349,7 +351,7 @@ const Appointment = (props) => {
             </button>
           </div>
         </Container>
-
+ 
         <div
           className="ag-theme-alpine"
           style={{ height: 1000, marginTop: "20px" }}
@@ -367,15 +369,16 @@ const Appointment = (props) => {
             gridOptions={gridOptions}
             onGridReady={onGridReady}
           />
-
+ 
           <AlertDialog
             open={open}
             handleClose={handleClose}
+            selectedData={selectedData}
             data={formData}
             getAppointment={getAppointment}
-            selectedData={selectedData}
           />
           <Patientdetails
+ 
             open={modalOpen}
             handleClose={handleCloseModal}
             data={modalData}
@@ -384,10 +387,10 @@ const Appointment = (props) => {
             handleDeletionConfirmed={handleDeletionConfirmed}
           />
         </div>
-        <h4>Abishek</h4>
+        {/* <h4>Abishek</h4> */}
       </div>
     </React.Fragment>
   );
 };
-
-export default withTranslation()(Appointment);
+ 
+export default withTranslation()(Appointment)

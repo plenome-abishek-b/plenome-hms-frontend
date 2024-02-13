@@ -39,6 +39,7 @@ const http5 = axios.create({
 
 const URL = {
   USERS_URL: "table",
+  APPOINTMENT_INTERNAL_PRIORITY:'/internal-appointment-priority',
   SIGNUP_URL: "Signup",
   LOGIN_URL: "Login",
   // TOKEN_URL: "tokens",
@@ -2752,8 +2753,19 @@ http.interceptors.response.use(
   }
 );
 
+function updateAppointment(data){
+  console.log(data,"rrrr");
+  return http.patch(`${URL.APPOINTMENT_URL}/${data.id}`,data)
+}
+
+function getPriorityAppointment_Mainmodule(){
+  return http5.get(URL.APPOINTMENT_INTERNAL_PRIORITY)
+}
+
 
 const api = {
+  getPriorityAppointment_Mainmodule,
+  updateAppointment,
   getUser,
   postUser,
   postLogin,

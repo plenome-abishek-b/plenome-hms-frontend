@@ -15,38 +15,93 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./styles.css";
-
+// import "./";
+ 
 export default function AlertDialog({
   open,
   handleClose,
-  data,
-  handleBill,
+  // data,
+  // handleBill,
+  selectedData,
   getAppointment,
-  selectedData
 }) {
+  console.log(selectedData, "selected data");
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false);
   const [patients, setPatients] = useState([]);
-
+ 
   const [doctors, setDoctors] = useState([]);
   const [example, setExample] = useState([]);
   const [shift, setShift] = useState([]);
   const [slot, setSlot] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [charge, SetCharge] = useState([]);
-
+  const [priorities, setPriorities] = useState([]);
+ 
   useEffect(() => {
     getAllPatient();
     getAllDoctors();
-
+ 
     //  getShifts()
     //  getSlot()
   }, []);
-
+ 
   useEffect(() => {
     handleStuff();
   }, [doctors]);
-
+ 
+  useEffect(() => {
+    if (selectedData) {
+      const [datePart, timePart] = String(selectedData?.date)?.split(", ");
+      console.log(selectedData?.date, datePart, "dd mm yy");
+      const dateObject = new Date(datePart);
+      // Format the date
+      const formattedDate = dateObject.toLocaleDateString();
+      // Format the time
+      // const formattedTime = dateObject.toLocaleTimeString();
+      const timeWithoutAMPM = dateObject
+        .toLocaleTimeString()
+        .replace(/\s[AaPp][Mm]$/, "");
+      const [month, day, year] = String(formattedDate)?.split("/");
+ 
+      // Rearrange the components to form the desired format
+      const final_date = `${year}-${String(month)?.padStart(2, "0")}-${String(
+        day
+      ).padStart(2, "0")}`;
+      // const final_date = `${String(day).padStart(2, '0')}-${String(month)?.padStart(2, '0')}-${year}`;
+ 
+      console.log(formattedDate);
+      // console.log(formattedDate,formattedTime,"date time");
+      setFormValues({
+        date: final_date,
+        amount: selectedData?.amount,
+        live_consult: selectedData?.live_consult,
+        global_shift_id: String(selectedData?.shift_id),
+        shift_id: String(selectedData?.slot_id),
+        time: timeWithoutAMPM ? timeWithoutAMPM : "12:00:00",
+        // time:selectedData?.time,
+        priority: selectedData?.priorityID,
+        // message:selectedData?.message,
+        appointment_status: selectedData?.appointment_status,
+        source: selectedData?.source,
+        Hospital_id: 1,
+      });
+    } else {
+      setFormValues({
+        date: "",
+        amount: "",
+        live_consult: "",
+        global_shift_id: "",
+        shift_id: "",
+        time: "11:11:11",
+        // time:selectedData?.time,
+        priority: "",
+        // message:selectedData?.message,
+        appointment_status: "",
+        source: "Online",
+        Hospital_id: 1,
+      });
+    }
+  }, [selectedData]);
   // useEffect(() => {
   //   if (formSubmitted) {
   //     const timeoutId = setTimeout(() => {
@@ -56,8 +111,7 @@ export default function AlertDialog({
   //     return () => clearTimeout(timeoutId);
   //   }
   // }, [formSubmitted, handleClose]);
-
-  const [formValues, setFormValues] = useState({
+  const initialValues = {
     patient_id: "",
     doctor: "",
     global_shift_id: "",
@@ -67,8 +121,8 @@ export default function AlertDialog({
     appointment_status: "",
     message: "",
     live_consult: "",
-    time: "",
-    specialist: "10",
+    time: "11:11:11",
+    specialist: "",
     source: "Online",
     is_opd: "yes",
     is_ipd: "yes",
@@ -76,35 +130,35 @@ export default function AlertDialog({
     Hospital_id: 1,
     payment_date: "2023-12-12 11:11:11",
     payment_mode: "",
-  });
-
+  };
+  const [formValues, setFormValues] = useState({ initialValues });
+  const [isEditing, setIsEditing] = useState(true);
   useEffect(() => {
     getApptCharge();
   }, [formValues.doctor]);
-
+ 
   const generatePdf = () => {
     const doc = new jsPDF();
     doc.text("Bill Details", 10, 10);
-    doc.text(`Patient Name: ${formData.patient_name}`, 10, 20);
-    doc.text(`Gender: ${formData.gender}`, 10, 30);
-    doc.text(`Doctor Name: ${formData.doctor}`, 10, 40);
-    doc.text(`Doctor Fees: ${formData.amount}`, 10, 50);
+    doc.text(`Patient Name: ${formValues.patient_name}`, 10, 20);
+    doc.text(`Gender: ${formValues.gender}`, 10, 30);
+    doc.text(`Doctor Name: ${formValues.doctor}`, 10, 40);
+    doc.text(`Doctor Fees: ${formValues.amount}`, 10, 50);
     doc.save("bill.pdf");
   };
-
+ 
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
+ 
     // If the input is the time field, append ':00' to include seconds
     const formattedValue = name === "time" ? `${value}:00` : value;
-  
+ 
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       [name]: formattedValue,
     }));
   };
-  
-
+ 
   console.log(formValues, "valll");
   const getAllPatient = async () => {
     const response = await api.getAllPatients();
@@ -112,17 +166,17 @@ export default function AlertDialog({
     console.log(data, "patients");
     setPatients(data);
   };
-
+ 
   const updatedPatientsData = patients.map((patient) => {
     // Remove "/" from the patient_name property
     const updatedPatient = {
       ...patient,
       patient_name: patient.patient_name.replace("/", ""),
     };
-
+ 
     return updatedPatient;
   });
-
+ 
   const getAllDoctors = async () => {
     const response = await api.getApptDoctor();
     const { data } = response;
@@ -133,11 +187,11 @@ export default function AlertDialog({
   //   console.log("ddddm,m,m,")
   //   if (doctors && doctors.length > 0) {
   //       const exampleArray = await doctors.map(val => ({ staff_id: val.shift_id, name: val.name }));
-
+ 
   //   setExample(exampleArray)
   //   }
   //   else{
-
+ 
   //     console.log("empty")
   //   }
   // }
@@ -153,7 +207,7 @@ export default function AlertDialog({
     }
     return {}; // return an empty object if there are no doctors
   };
-
+ 
   // if(doctors.length > 0){
   //   console.log("first")
   //   handleStuff()
@@ -165,7 +219,7 @@ export default function AlertDialog({
     console.log(data, "shiffffffffffffffff");
     setShift(data);
   };
-
+ 
   const getSlot = async () => {
     const response = await api.getApptSlot(
       formValues.doctor,
@@ -176,18 +230,19 @@ export default function AlertDialog({
     console.log(data, "slot data");
     setSlot(data);
   };
-
+ 
   const getApptCharge = async () => {
     try {
       const response = await api.getSetupApptSlotCharge(formValues.doctor);
       const { data } = response;
       console.log(data, "slot charge data");
       SetCharge(data);
-
+ 
       if (data.length > 0) {
         const firstChargeAmount = data[0].amount;
         setFormValues((prevFormValues) => ({
           ...prevFormValues,
+          // standard_charge: firstChargeAmount,
           amount: firstChargeAmount,
         }));
       }
@@ -195,7 +250,7 @@ export default function AlertDialog({
       console.error("Error fetching slot charge data:", error);
     }
   };
-
+ 
   const handleClickOpen = () => {
     //dialog open
     setOpenpatientDialog(true);
@@ -207,71 +262,91 @@ export default function AlertDialog({
   const handleFetch = (event) => {
     console.log("connection");
   };
-
+ 
   const handleFormSubmit = async () => {
-    const response = await api.postAppointment(formValues);
-    console.log(formValues, "form values");
+    const Data = {
+      ...formValues,
+      time: `12:00:00`,
+    };
+    const response = await api.postAppointment(Data);
     const { status, data } = response;
-  
+    console.log(Data, data, "form values");
+ 
     if (status === 201) {
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
-  
+ 
       setFormSubmitted(true);
+      handleClose();
       setFormValues({});
-  
+ 
       // Delay the execution of getAppointment by one second
       setTimeout(() => {
         getAppointment();
       }, 1000);
-      handleClose()
+      handleClose();
     } else {
       // Handle other response statuses if needed
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
-
-  useEffect(() => {
-    // When selectedData changes, update the form data
-    if (selectedData) {
-      setFormData({
-        doctor: selectedData?.doctor_name || "",
-        amount: selectedData?.amount || "",
-        priority: selectedData?.appointment_status || "",
-      });
-    } else {
-      // Reset form data when selectedData is not available (for addition)
-      setFormData({
-        doctor: "",
-        amount: "",
-        priority: "",
-      });
-    }
-  }, [selectedData]);
-  async function handleFormUpdate() {
-    try {
-      const newData = {
-        ...formData,
-        id: selectedData?.id,
-      };
-      const response = await api.updateSetup_Findings(newData);
-      console.log(response, "respo");
-      setTimeout(() => {
-        getAppointment();
-      }, 500);
-      handleClose();
-
-      // Reload the page after a delay of 1 second
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-  }
-
+  const handleUpdate = async () => {
+    const newData = {
+      ...formValues,
+      id: selectedData?.id,
+    };
+    const response = await api?.updateAppointment(newData);
+    console.log(response, "eeeerespo");
+    handleClose();
+    getAppointment();
+  };
+  const getPriority = async () => {
+    const response = await api.getPriorityAppointment_Mainmodule();
+    const { data } = response;
+    console.log(data, "all priorities");
+    setPriorities(data);
+  };
+  // useEffect(() => {
+  //   // When selectedData changes, update the form data
+  //   if (selectedData) {
+  //     setFormData({
+  //       doctor: selectedData?.doctor_name || "",
+  //       amount: selectedData?.amount || "",
+  //       priority: selectedData?.appointment_status || "",
+  //     });
+  //   } else {
+  //     // Reset form data when selectedData is not available (for addition)
+  //     setFormData({
+  //       doctor: "",
+  //       amount: "",
+  //       priority: "",
+  //     });
+  //   }
+  // }, [selectedData]);
+  // async function handleFormUpdate() {
+  //   try {
+  //     const newData = {
+  //       ...formData,
+  //       id: selectedData?.id,
+  //     };
+  //     const response = await api.updateSetup_Findings(newData);
+  //     console.log(response, "respo");
+  //     setTimeout(() => {
+  //       getFindings();
+  //     }, 500);
+  //     handleClose();
+ 
+  //     // Reload the page after a delay of 1 second
+  //     // setTimeout(() => {
+  //     //   location.reload();
+  //     // }, 1000);
+  //   } catch (error) {
+  //     console.error("Error updating data:", error);
+  //   }
+  // }
+ 
   console.log(doctors, "docsss");
   return (
     <div>
@@ -330,14 +405,18 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="patient_id"
                 value={formValues.patient_id}
                 onChange={handleChange}
               >
-                <option>select</option>
+                <option>
+                  {selectedData?.patient_name
+                    ? selectedData?.patient_name
+                    : "select"}
+                </option>
                 {updatedPatientsData &&
                   updatedPatientsData.map((patient) => (
                     <option key={patient.id} value={patient.id}>
@@ -359,14 +438,18 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="doctor"
                 onChange={handleChange}
                 value={formValues.doctor}
               >
-                <option>select one</option>
+                <option>
+                  {selectedData?.doctor_name
+                    ? selectedData?.doctor_name
+                    : "select one"}
+                </option>
                 {doctors &&
                   doctors.map((doctor) => (
                     <option key={doctor.id} value={doctor.id}>
@@ -386,11 +469,12 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                   backgroundColor: "rgba(0,0,0,0.2)",
                 }}
                 name="amount"
+                // value={formValues.standard_charge}
                 value={formValues.amount}
                 onChange={handleChange}
                 type="number"
@@ -402,8 +486,8 @@ export default function AlertDialog({
               style={{
                 width: "100%",
                 height: "35px",
-                borderRadius: "5px",
-                border: "1px solid grey",
+                border: "1px solid rgba(0,0,0,0.2)",
+                borderRadius: "3px",
               }}
               name="specialist"
               value={formValues.specialist}
@@ -421,8 +505,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 onClick={() => getShifts()}
                 name="global_shift_id"
@@ -446,18 +530,35 @@ export default function AlertDialog({
                 Date <span className="text-danger">*</span>
               </label>
               <br />
-              <input
-                type="date"
-                style={{
-                  width: "100%",
-                  height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
-                }}
-                name="date"
-                value={formValues.date}
-                onChange={handleChange}
-              ></input>
+              {selectedData?.date && isEditing ? (
+                <input
+                  type="text"
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    border: "1px solid rgba(0,0,0,0.2)",
+                    borderRadius: "3px",
+                  }}
+                  name="date"
+                  value={formValues.date}
+                  //  onBlur={() => setIsEditing(false)}
+                  //  onChange={handleChange}
+                  onClick={() => setIsEditing(false)}
+                ></input>
+              ) : (
+                <input
+                  type="date"
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    border: "1px solid rgba(0,0,0,0.2)",
+                    borderRadius: "3px",
+                  }}
+                  name="date"
+                  value={formValues.date}
+                  onChange={handleChange}
+                ></input>
+              )}
             </Col>
             <Col lg="4" md="4" sm="12">
               <label>
@@ -469,8 +570,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="time"
                 value={formValues.time}
@@ -488,8 +589,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 onClick={() => getSlot()}
                 name="shift_id"
@@ -512,17 +613,22 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="priority"
                 value={formValues.priority}
                 onChange={handleChange}
+                onClick={() => getPriority()}
               >
-                <option>select</option>
-                <option value="Normal">Normal</option>
-                <option value="Urgent">Urgent</option>
-                <option value="Very Urgent">Very Urgent</option>
+                <option>
+                  {selectedData?.priority_status
+                    ? selectedData?.priority_status
+                    : "select"}
+                </option>
+                {priorities.map((name) => (
+                  <option value={name?.id}>{name?.priority_status}</option>
+                ))}
               </select>
             </Col>
           </Row>
@@ -535,8 +641,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="payment_mode"
                 value={formValues.payment_mode}
@@ -557,17 +663,17 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="appointment_status"
                 value={formValues.appointment_status}
                 onChange={handleChange}
               >
                 <option>select</option>
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Cancel">Cancel</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="cancel">Cancel</option>
               </select>
             </Col>
           </Row>
@@ -578,8 +684,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "60px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="message"
                 value={formValues.message}
@@ -598,8 +704,8 @@ export default function AlertDialog({
                 style={{
                   width: "100%",
                   height: "35px",
-                  borderRadius: "5px",
-                  border: "1px solid grey",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
                 }}
                 name="live_consult"
                 value={formValues.live_consult}
@@ -615,21 +721,32 @@ export default function AlertDialog({
         <DialogActions
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          {selectedData?.name ? (
+          <button
+            onClick={handleClose}
+            className="btn fw-bold text-white"
+            style={{ backgroundColor: "#B2533E" }}
+          >
+            Cancel
+          </button>
+          {selectedData?.doctor_name ? (
             <button
-              className="btn-mod bg-soft btn-md"
-              onClick={() => handleFormUpdate()}
-              style={{ marginRight: "3%" }}
+              onClick={() => {
+                handleUpdate();
+                generatePdf();
+              }}
+              className="btn-mod bg-soft fw-bold"
             >
-              Update
+              UPDATE
             </button>
           ) : (
             <button
-              className="btn-mod bg-soft btn-md"
-              onClick={() => handleFormSubmit()}
-              style={{ marginRight: "3%" }}
+              onClick={() => {
+                handleFormSubmit();
+                generatePdf();
+              }}
+              className="btn-mod bg-soft fw-bold"
             >
-              Save
+              SUBMIT
             </button>
           )}
         </DialogActions>
@@ -637,3 +754,4 @@ export default function AlertDialog({
     </div>
   );
 }
+ 
