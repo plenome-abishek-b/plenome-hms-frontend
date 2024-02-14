@@ -148,15 +148,15 @@ const SidebarContent = (props) => {
                 <span className="ms-2 fw-bold">IPD-In Patient</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/pharmacy">
                 <i className="fas fa-mortar-pestle"></i>
                 <span className="ms-2 fw-bold">Pharmacy</span>
               </Link>
-            </li>
+            </li> */}
             {/* </ul> */}
 
-            <li>
+            {/* <li>
               <Link to="/pathology">
                 <i className="fas fa-flask"></i>
                 <span className="ms-2 fw-bold">Pathology</span>
@@ -201,20 +201,20 @@ const SidebarContent = (props) => {
                   <Link to="/deathrecord">{props.t("Death Record")}</Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             <li>
               <Link to="/hr">
                 <i className="fas fa-sitemap"></i>
                 <span className="ms-2 fw-bold">Human Resource</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/tpa">
                 <i className="fas fa-umbrella"></i>
                 <span className="ms-2 fw-bold">TPA Management</span>
               </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-money-bill"></i>
                 <span className="ms-2 fw-bold">Finance</span>
@@ -227,8 +227,8 @@ const SidebarContent = (props) => {
                   <Link to="/expenses">{props.t("Expenses")}</Link>
                 </li>
               </ul>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link
                 to="#"
                 className="has-arrow"
@@ -270,7 +270,7 @@ const SidebarContent = (props) => {
                 <i className="fas fa-users"></i>
                 <span className="ms-2 fw-bold">Referral</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-print"></i>
@@ -427,7 +427,7 @@ const SidebarContent = (props) => {
                 </li>
               </ul>
             </li>
-            <li>
+            {/* <li>
               <Link to="/inventory">
                 <i className="fas fa-luggage-cart"></i>
                 <span className="ms-2 fw-bold">Inventory</span>
@@ -450,7 +450,7 @@ const SidebarContent = (props) => {
                 <i className="fas fa-download"></i>
                 <span className="ms-2 fw-bold">Download</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/account/aadhar">
               <i class="fas fa-address-card"></i>
