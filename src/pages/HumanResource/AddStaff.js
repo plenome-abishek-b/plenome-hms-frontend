@@ -27,228 +27,238 @@ const AddStaff = () => {
   const history = useHistory();
   const location = useLocation();
   const { staff } = location.state || {};
-  console.log(staff,"props");
-  const [certificates, setCertificates] = useState([{ id: 1, file: null, fileName: '', fileType: '', date: '' }]);
-  const [staffRole,setStaffRole] = useState([])
-  const [designation,setDesignation] = useState([])
-  const [department,setDepartment] = useState([])
-  const [specialist,setSpecialist] = useState([])
-  const [bloodGroup,setBloodGroup] = useState([])
-  const [formData,setFormData] = useState({
-    employee_id:'',
-    role_id:'',
-    specialization:'',
-    staff_designation_id:'',
-    department_id:'',
-    specialist:'',
-    surname:'',
-    first_name:'',
-    father_name:'',
-    mother_name:'',
-    gender:'',
-    password:'',
-    marital_status:'',
-    dob:'',
-    date_of_joining:'',
-    contact_no:'',
-    emergency_contact_no:'',
-    email:'',
-    local_address:'',
-    permanent_address:'',
-    local_identification_number:'',
-    identification_number:'',
-    pan_number:'',
-    note:'',
-    pan_number:'',
-    epf_no:'',
-    location:'',
-    basic_salary:'',
-    contract_type:'',
-    qualification:'',
-    epf_no:'',
-    shift:'',
-    contract_type:'',
-    bank_account_no:'',
-    account_title:'',
-    bank_name:'',
-    ifsc_code:'',
-    bank_branch:'',
-    facebook:'',
-    twitter:'',
-    linkedin:'',
-    zoom_api_key:'',
-    zoom_api_secret:'',
-    instagram:'',
-    work_exp:'',
-    image:'',
-    other_document_file:'',
-    joining_letter:'',
-    resignation_letter:'',
-    resume:'',
-    blood_group:'',
+  console.log(staff, "props");
+  const [certificates, setCertificates] = useState([
+    { id: 1, file: null, fileName: "", fileType: "", date: "" },
+  ]);
+  const [staffRole, setStaffRole] = useState([]);
+  const [designation, setDesignation] = useState([]);
+  const [department, setDepartment] = useState([]);
+  const [specialist, setSpecialist] = useState([]);
+  const [bloodGroup, setBloodGroup] = useState([]);
+  const [formData, setFormData] = useState({
+    employee_id: "",
+    role_id: "",
+    specialization: "",
+    staff_designation_id: "",
+    department_id: "",
+    specialist: "",
+    surname: "",
+    first_name: "",
+    father_name: "",
+    mother_name: "",
+    gender: "",
+    password: "",
+    marital_status: "",
+    dob: "",
+    date_of_joining: "",
+    contact_no: "",
+    emergency_contact_no: "",
+    email: "",
+    local_address: "",
+    permanent_address: "",
+    local_identification_number: "",
+    identification_number: "",
+    pan_number: "",
+    note: "",
+    pan_number: "",
+    epf_no: "",
+    location: "",
+    basic_salary: "",
+    contract_type: "",
+    qualification: "",
+    epf_no: "",
+    shift: "",
+    contract_type: "",
+    bank_account_no: "",
+    account_title: "",
+    bank_name: "",
+    ifsc_code: "",
+    bank_branch: "",
+    facebook: "",
+    twitter: "",
+    linkedin: "",
+    zoom_api_key: "",
+    zoom_api_secret: "",
+    instagram: "",
+    work_exp: "",
+    image: "",
+    other_document_file: "",
+    joining_letter: "",
+    resignation_letter: "",
+    resume: "",
+    blood_group: "",
     lang_id: 4,
     user_id: 0,
     is_active: 1,
-    verification_code:'',
+    verification_code: "",
     payscale: "medium",
-    other_document_name:'',
+    other_document_name: "",
     languagesKnown: "[4,59]",
-    hospital_id:1
+    hospital_id: 1,
     // certificates:''
-  })
+  });
 
-  useEffect(()=>{
-   if(staff){
-    var dob = new Date(staff?.dob);
-    const joindate = new Date(staff?.date_of_joining)
-    var DobOnly = dob.toISOString().split('T')[0];
-// Extract the date portion
-var JoindateOnly = joindate.toISOString().split('T')[0];
-  setFormData({
-    employee_id:staff?.employee_id,
-    specialization:staff?.specialization,
-    role_id:staff?.taffRoleID,
-    role:staff?.role_name,
-    staff_designation_id:staff?.staff_designation_id,
-    department_id:staff?.department_id,
-    department:staff?.department_name,
-    specialist:String(staff?.specialist),
-    surname:staff?.surname,
-    first_name:staff?.name,
-    father_name:staff?.father_name,
-    mother_name:staff?.mother_name,
-    gender:staff?.gender,
-    password:staff?.password,
-    marital_status:staff?.marital_status,
-    dob:DobOnly,
-    date_of_joining:JoindateOnly,
-    contact_no:staff?.contact_no,
-    emergency_contact_no:staff?.emergency_contact_no,
-    email:staff?.email,
-    local_address:staff?.local_address,
-    permanent_address:staff?.permanent_address,
-    local_identification_number:staff?.local_identification_number,
-    identification_number:staff?.identification_number,
-    pan_number:staff?.pan_number,
-    note:staff?.note,
-    // // pan_number:'',
-    epf_no:staff?.epf_no,
-    location:staff?.location,
-    basic_salary:staff?.basic_salary,
-    contract_type:staff?.contract_type,
-    qualification:staff?.qualification,
-    // // epf_no:'',
-    shift:staff?.shift,
-    contract_type:staff?.contract_type,
-    bank_account_no:staff?.bank_account_no,
-    account_title:staff?.account_title,
-    bank_name:staff?.bank_name,
-    ifsc_code:staff?.ifsc_code,
-    bank_branch:staff?.bank_branch,
-    facebook:staff?.facebook,
-    twitter:staff?.twitter,
-    linkedin:staff?.linkedin,
-    zoom_api_key:staff?.zoom_api_key,
-    zoom_api_secret:staff?.zoom_api_secret,
-    instagram:staff?.instagram,
-    work_exp:staff?.work_exp,
-    image:staff?.image,
-    other_document_file:staff?.other_document_file,
-    joining_letter:staff?.joining_letter,
-    resignation_letter:staff?.resignation_letter,
-    resume:staff?.resume,
-      name:staff?.name,
-      blood_group:staff?.blood_group,
-      date_of_leaving:null,
-      designation:staff?.designation,
-    lang_id: 4,
-    user_id: 0,
-    is_active: 1,
-    verification_code:'',
-    payscale: "medium",
-    other_document_name:staff?.other_document_name,
-    languagesKnown: "[4,59]",
-    hospital_id:1
-  })
-   }else{
-    setFormData({
-      employee_id:'',
-      specialization:'',
-    role_id:'',
-    staff_designation_id:'',
-    department_id:'',
-    specialist:'',
-    surname:'',
-    first_name:'',
-    father_name:'',
-    mother_name:'',
-    gender:'',
-    password:'',
-    marital_status:'',
-    dob:'',
-    date_of_joining:'',
-    contact_no:'',
-    emergency_contact_no:'',
-    email:'',
-    local_address:'',
-    permanent_address:'',
-    local_identification_number:'',
-    identification_number:'',
-    pan_number:'',
-    note:'',
-    pan_number:'',
-    epf_no:'',
-    location:'',
-    basic_salary:'',
-    contract_type:'',
-    qualification:'',
-    epf_no:'',
-    shift:'',
-    contract_type:'',
-    bank_account_no:'',
-    account_title:'',
-    bank_name:'',
-    ifsc_code:'',
-    bank_branch:'',
-    facebook:'',
-    twitter:'',
-    linkedin:'',
-    zoom_api_key:'',
-    zoom_api_secret:'',
-    instagram:'',
-    work_exp:'',
-    image:'',
-    other_document_file:'',
-    joining_letter:'',
-    resignation_letter:'',
-    resume:'',
-    blood_group:'',
-    lang_id: 4,
-    user_id: 0,
-    is_active: 1,
-    verification_code:'',
-    payscale: "medium",
-    other_document_name:'',
-    languagesKnown: "[4,59]",
-    hospital_id:1
-    })
-   }
-  },[])
+  useEffect(() => {
+    if (staff) {
+      var dob = new Date(staff?.dob);
+      const joindate = new Date(staff?.date_of_joining);
+      var DobOnly = dob.toISOString().split("T")[0];
+      // Extract the date portion
+      var JoindateOnly = joindate.toISOString().split("T")[0];
+      setFormData({
+        employee_id: staff?.employee_id,
+        specialization: staff?.specialization,
+        role_id: staff?.taffRoleID,
+        role: staff?.role_name,
+        staff_designation_id: staff?.staff_designation_id,
+        department_id: staff?.department_id,
+        department: staff?.department_name,
+        specialist: String(staff?.specialist),
+        surname: staff?.surname,
+        first_name: staff?.name,
+        father_name: staff?.father_name,
+        mother_name: staff?.mother_name,
+        gender: staff?.gender,
+        password: staff?.password,
+        marital_status: staff?.marital_status,
+        dob: DobOnly,
+        date_of_joining: JoindateOnly,
+        contact_no: staff?.contact_no,
+        emergency_contact_no: staff?.emergency_contact_no,
+        email: staff?.email,
+        local_address: staff?.local_address,
+        permanent_address: staff?.permanent_address,
+        local_identification_number: staff?.local_identification_number,
+        identification_number: staff?.identification_number,
+        pan_number: staff?.pan_number,
+        note: staff?.note,
+        // // pan_number:'',
+        epf_no: staff?.epf_no,
+        location: staff?.location,
+        basic_salary: staff?.basic_salary,
+        contract_type: staff?.contract_type,
+        qualification: staff?.qualification,
+        // // epf_no:'',
+        shift: staff?.shift,
+        contract_type: staff?.contract_type,
+        bank_account_no: staff?.bank_account_no,
+        account_title: staff?.account_title,
+        bank_name: staff?.bank_name,
+        ifsc_code: staff?.ifsc_code,
+        bank_branch: staff?.bank_branch,
+        facebook: staff?.facebook,
+        twitter: staff?.twitter,
+        linkedin: staff?.linkedin,
+        zoom_api_key: staff?.zoom_api_key,
+        zoom_api_secret: staff?.zoom_api_secret,
+        instagram: staff?.instagram,
+        work_exp: staff?.work_exp,
+        image: staff?.image,
+        other_document_file: staff?.other_document_file,
+        joining_letter: staff?.joining_letter,
+        resignation_letter: staff?.resignation_letter,
+        resume: staff?.resume,
+        name: staff?.name,
+        blood_group: staff?.blood_group,
+        date_of_leaving: null,
+        designation: staff?.designation,
+        lang_id: 4,
+        user_id: 0,
+        is_active: 1,
+        verification_code: "",
+        payscale: "medium",
+        other_document_name: staff?.other_document_name,
+        languagesKnown: "[4,59]",
+        hospital_id: 1,
+      });
+    } else {
+      setFormData({
+        employee_id: "",
+        specialization: "",
+        role_id: "",
+        staff_designation_id: "",
+        department_id: "",
+        specialist: "",
+        surname: "",
+        first_name: "",
+        father_name: "",
+        mother_name: "",
+        gender: "",
+        password: "",
+        marital_status: "",
+        dob: "",
+        date_of_joining: "",
+        contact_no: "",
+        emergency_contact_no: "",
+        email: "",
+        local_address: "",
+        permanent_address: "",
+        local_identification_number: "",
+        identification_number: "",
+        pan_number: "",
+        note: "",
+        pan_number: "",
+        epf_no: "",
+        location: "",
+        basic_salary: "",
+        contract_type: "",
+        qualification: "",
+        epf_no: "",
+        shift: "",
+        contract_type: "",
+        bank_account_no: "",
+        account_title: "",
+        bank_name: "",
+        ifsc_code: "",
+        bank_branch: "",
+        facebook: "",
+        twitter: "",
+        linkedin: "",
+        zoom_api_key: "",
+        zoom_api_secret: "",
+        instagram: "",
+        work_exp: "",
+        image: "",
+        other_document_file: "",
+        joining_letter: "",
+        resignation_letter: "",
+        resume: "",
+        blood_group: "",
+        lang_id: 4,
+        user_id: 0,
+        is_active: 1,
+        verification_code: "",
+        payscale: "medium",
+        other_document_name: "",
+        languagesKnown: "[4,59]",
+        hospital_id: 1,
+      });
+    }
+  }, []);
   const onChange = (id, event) => {
     const selectedFile = event.target.files[0];
     const fileName = selectedFile.name;
     const fileType = selectedFile.type;
-    const date = new Date().toLocaleDateString(); 
+    const date = new Date().toLocaleDateString();
 
     setCertificates((prevCertificates) => {
       return prevCertificates.map((cert) =>
-        cert.id === id ? { ...cert, file: selectedFile, fileName, fileType, date } : cert
+        cert.id === id
+          ? { ...cert, file: selectedFile, fileName, fileType, date }
+          : cert
       );
     });
   };
 
   const addCertificate = () => {
-    const newCertificate = { id: certificates.length + 1, file: null, fileName: '', fileType: '', date: '' };
+    const newCertificate = {
+      id: certificates.length + 1,
+      file: null,
+      fileName: "",
+      fileType: "",
+      date: "",
+    };
     setCertificates([...certificates, newCertificate]);
   };
 
@@ -258,66 +268,67 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
       fileType: cert.fileType,
       date: cert.date,
     }));
-    console.log(' ',selectedFiles);
-    const datas ={
+    console.log(" ", selectedFiles);
+    const datas = {
       ...formData,
-      name:`${formData?.first_name}`,
-      certificates:selectedFiles,
-      other_document_name:formData?.other_document_file
-    } 
-    console.log(datas,"all datas getting");
+      name: `${formData?.first_name}`,
+      certificates: selectedFiles,
+      other_document_name: formData?.other_document_file,
+    };
+    console.log(datas, "all datas getting");
     // const filteredObject = Object.fromEntries(
     //   Object.entries(datas).filter(([key, value]) => value !== "")
     // );
     const response = await api?.postHRmainModuleHr_Staff(datas);
-    console.log(response,"consoling");
-    const {data} = response
-    console.log(data,"consoling");
-    history.push('/hr')
+    console.log(response, "consoling");
+    const { data } = response;
+    console.log(data, "consoling");
+    history.push("/hr");
   };
-  const handleChange = (e) =>{
-   const {name,value} = e.target
-   setFormData({
-    ...formData,[name]:value
-   })
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-  const getStaffs = async () =>{
-   const response = await api.getRolePermission()
-   const {data} = response;
-   console.log(data,"role");
-   setStaffRole(data)
-  }
-  const getHrDesignation = async () =>{
-   const response = await api?.getHrMainModuleDesignation()
-   const {data} = response
-   setDesignation(data)
-  }
-  const getDepartment = async () =>{
-    const response = await api?.getHrMainModuleDepartment()
-    const {data} = response
-    setDepartment(data)
-  }
-  const getSpecialist = async () =>{
-    const response = await api?.getHrMainModuleSpecialist()
-    const {data} = response
-    setSpecialist(data)
-  }
-  const getBloodgroup = async () =>{
-    const response = await api?.getSetup_bloodBank()
-    const {data} = response
-    setBloodGroup(data)
-  }
-  const handleUpdate = async () =>{
-   console.log(formData);
-   const newdata = {
-    ...formData,
-    id:staff?.id
-   }
-   const response = await api.updateHrMainModule(newdata)
-   console.log(response,"gettign ye");
-   history.push('/hr')
-  }
+  const getStaffs = async () => {
+    const response = await api.getRolePermission();
+    const { data } = response;
+    console.log(data, "role");
+    setStaffRole(data);
+  };
+  const getHrDesignation = async () => {
+    const response = await api?.getHrMainModuleDesignation();
+    const { data } = response;
+    setDesignation(data);
+  };
+  const getDepartment = async () => {
+    const response = await api?.getHrMainModuleDepartment();
+    const { data } = response;
+    setDepartment(data);
+  };
+  const getSpecialist = async () => {
+    const response = await api?.getHrMainModuleSpecialist();
+    const { data } = response;
+    setSpecialist(data);
+  };
+  const getBloodgroup = async () => {
+    const response = await api?.getSetup_bloodBank();
+    const { data } = response;
+    setBloodGroup(data);
+  };
+  const handleUpdate = async () => {
+    console.log(formData);
+    const newdata = {
+      ...formData,
+      id: staff?.id,
+    };
+    const response = await api.updateHrMainModule(newdata);
+    console.log(response, "gettign ye");
+    history.push("/hr");
+  };
 
   return (
     <React.Fragment>
@@ -325,11 +336,14 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
         <Container fluid>
           {/* Render Breadcrumb */}
           <h4 className="text-primary">Basic Information</h4>
+          <p className="text-danger d-flex justify-content-end">Fill all the Mandatory details( * )</p>
           <Card>
             <CardBody>
               <Row>
                 <Col lg="3">
-                  <label>Staff ID</label>
+                  <label>
+                    Staff ID<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <input
                     placeholder=""
@@ -345,7 +359,9 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Role</label>
+                  <label>
+                    Role<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <select
                     style={{
@@ -356,11 +372,13 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     }}
                     name="role_id"
                     onChange={handleChange}
-                    onClick={()=>getStaffs()}
+                    onClick={() => getStaffs()}
                     value={formData?.role_id}
                   >
-                    <option>{formData?.role ? formData?.role : 'select'}</option>
-                    {staffRole.map((role)=>(
+                    <option>
+                      {formData?.role ? formData?.role : "select"}
+                    </option>
+                    {staffRole.map((role) => (
                       <option value={Number(role?.id)}>{role?.name}</option>
                     ))}
                   </select>
@@ -377,14 +395,17 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     }}
                     name="staff_designation_id"
                     onChange={handleChange}
-                    onClick={()=>getHrDesignation()}
+                    onClick={() => getHrDesignation()}
                     value={formData?.staff_designation_id}
                   >
-                    <option>{formData?.designation ? formData?.designation : 'select'}</option>
-                    {designation.map((des)=>(
-                    <option value={Number(des?.id)}>{des?.designation}</option>
-                    ))
-                 }
+                    <option>
+                      {formData?.designation ? formData?.designation : "select"}
+                    </option>
+                    {designation.map((des) => (
+                      <option value={Number(des?.id)}>
+                        {des?.designation}
+                      </option>
+                    ))}
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
@@ -399,13 +420,17 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     }}
                     name="department_id"
                     onChange={handleChange}
-                    onClick={()=>getDepartment()}
+                    onClick={() => getDepartment()}
                     value={formData?.department_id}
                   >
-                    <option>{formData?.department ? formData?.department : 'select'}</option>
-                   {department.map((dep)=>(
-                    <option value={Number(dep?.id)}>{dep?.department_name}</option>
-                   ))}
+                    <option>
+                      {formData?.department ? formData?.department : "select"}
+                    </option>
+                    {department.map((dep) => (
+                      <option value={Number(dep?.id)}>
+                        {dep?.department_name}
+                      </option>
+                    ))}
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12" className="mt-3">
@@ -420,20 +445,26 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     }}
                     name="specialist"
                     onChange={handleChange}
-                    onClick={()=>{getSpecialist()}}
+                    onClick={() => {
+                      getSpecialist();
+                    }}
                     value={formData?.specialist}
                   >
                     <option>select</option>
-                  {specialist.map((staff)=>(
-                    <option value={String(staff?.id)}>{staff?.specialist_name}</option>
-                  ))}
+                    {specialist.map((staff) => (
+                      <option value={String(staff?.id)}>
+                        {staff?.specialist_name}
+                      </option>
+                    ))}
                   </select>
                 </Col>
               </Row>
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>First Name</label>
+                  <label>
+                    First Name<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <input
                     style={{
@@ -462,21 +493,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     value={formData?.surname}
                   ></input>
                 </Col>
-                <Col lg="3" md="12" sm="12">
-                  <label>Password</label>
-                  <br />
-                  <input
-                    style={{
-                      width: "100%",
-                      height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
-                    }}
-                    name="password"
-                    onChange={handleChange}
-                    value={formData?.password}
-                  ></input>
-                </Col>
+
                 <Col lg="3" md="12" sm="12">
                   <label>Father Name</label>
                   <br />
@@ -511,7 +528,9 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>Gender</label>
+                  <label>
+                    Gender<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <select
                     style={{
@@ -525,12 +544,14 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     value={formData.gender}
                   >
                     <option>Select</option>
-                    <option value='Male'>Male</option>
-                    <option value='Female'>Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Marital Status</label>
+                  <label>
+                    Marital Status<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <select
                     style={{
@@ -544,11 +565,11 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     value={formData?.marital_status}
                   >
                     <option>Select</option>
-                    <option value='Single'>Single</option>
-                    <option value='Married'>Married</option>
-                    <option value='Widowed'>Widowed</option>
-                    <option value='Separated'>Separated</option>
-                    <option value='Not specified'>Not Specified</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                    <option value="Separated">Separated</option>
+                    <option value="Not specified">Not Specified</option>
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
@@ -563,17 +584,19 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                     }}
                     name="blood_group"
                     onChange={handleChange}
-                    onClick={()=>getBloodgroup()}
+                    onClick={() => getBloodgroup()}
                     value={formData?.blood_group}
                   >
                     <option>Select</option>
-                   {bloodGroup.map((blood)=>(
-                    <option value={blood?.id}>{blood?.name}</option>
-                   ))}
+                    {bloodGroup.map((blood) => (
+                      <option value={blood?.id}>{blood?.name}</option>
+                    ))}
                   </select>
                 </Col>
                 <Col>
-                  <label>Date of Birth</label>
+                  <label>
+                    Date of Birth<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <input
                     type="date"
@@ -608,7 +631,9 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Phone</label>
+                  <label>
+                    Phone<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <input
                     style={{
@@ -638,22 +663,9 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Email</label>
-                  <br />
-                  <input
-                    style={{
-                      width: "100%",
-                      height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
-                    }}
-                    name="email"
-                    onChange={handleChange}
-                    value={formData?.email}
-                  ></input>
-                </Col>
-                <Col lg="3" md="12" sm="12" className="mt-3">
-                  <label>Photo</label>
+                  <label>
+                    Photo<span className="text-danger">*</span>
+                  </label>
                   <br />
                   <input
                     type="file"
@@ -670,6 +682,42 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                 </Col>
               </Row>
               <br />
+              <Row>
+                <Col lg="3" md="12" sm="12">
+                  <label>
+                    Email<span className="text-danger">*</span>
+                  </label>
+                  <br />
+                  <input
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "8px",
+                    }}
+                    name="email"
+                    onChange={handleChange}
+                    value={formData?.email}
+                  ></input>
+                </Col>
+                <Col lg="3" md="12" sm="12">
+                  <label>
+                    Password<span className="text-danger">*</span>
+                  </label>
+                  <br />
+                  <input
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid grey",
+                      borderRadius: "8px",
+                    }}
+                    name="password"
+                    onChange={handleChange}
+                    value={formData?.password}
+                  ></input>
+                </Col>
+              </Row>
               {/* <Row>
                 <Col lg="6" md="12" sm="12">
                   <label>Current Address</label>
@@ -943,14 +991,12 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                                   border: "1px solid grey",
                                   borderRadius: "8px",
                                 }}
-                              
                               ></input>
                             </Col>
-                          
                           </Row>
                           <br />
                           {/* <Row> */}
-                          
+
                           <br />
                           <Row>
                             <div className="bg-primary bg-soft p-2 mb-3">
@@ -973,7 +1019,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                                 value={formData?.account_title}
                               ></input>
                             </Col>
-                           
+
                             <Col lg="4">
                               <label>Bank Account No.</label>
                               <br />
@@ -1114,19 +1160,35 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                             </div>
                             <Col lg="4">
                               <p>1. Resume</p>
-                              <input type="file" name="resume" onChange={handleChange}></input>
+                              <input
+                                type="file"
+                                name="resume"
+                                onChange={handleChange}
+                              ></input>
                             </Col>
                             <Col lg="4">
                               <p>3.Joining Letter</p>
-                              <input type="file" name="joining_letter" onChange={handleChange}></input>
+                              <input
+                                type="file"
+                                name="joining_letter"
+                                onChange={handleChange}
+                              ></input>
                             </Col>
                             <Col lg="4">
                               <p>3.Resignation Letter</p>
-                              <input type="file" name="resignation_letter" onChange={handleChange}></input>
+                              <input
+                                type="file"
+                                name="resignation_letter"
+                                onChange={handleChange}
+                              ></input>
                             </Col>
                             <Col lg="4">
                               <p>4.Other Documents</p>
-                              <input name="other_document_file" onChange={handleChange} type="file"></input>
+                              <input
+                                name="other_document_file"
+                                onChange={handleChange}
+                                type="file"
+                              ></input>
                             </Col>
                           </Row>
                           <br />
@@ -1140,17 +1202,22 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                                   <div>
                                     <br />
                                     <input
-                                     name="certificates"
-                                      onChange={handleChange} 
+                                      name="certificates"
+                                      onChange={handleChange}
                                       type="file"
-                                      onChange={(event) => onChange(certificate.id, event)}
+                                      onChange={(event) =>
+                                        onChange(certificate.id, event)
+                                      }
                                       // value={formData?.cirt}
                                     />
-                                  </div>  
+                                  </div>
                                 </div>
                               ))}
                               <br />
-                              <button onClick={addCertificate}className="btn btn-primary btn-sm">
+                              <button
+                                onClick={addCertificate}
+                                className="btn btn-primary btn-sm"
+                              >
                                 Add Certificate
                               </button>
                               {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
@@ -1159,20 +1226,23 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                         </CardBody>
                       </Card>
                       <div className="d-flex justify-content-end">
-                       {staff ? <button
-                          className="btn text-white fw-bold"
-                          style={{ backgroundColor: "#6070FF" }}
-                          onClick={handleUpdate}
-                        >
-                          Saves
-                        </button> :
-                        <button
-                        className="btn text-white fw-bold"
-                        style={{ backgroundColor: "#6070FF" }}
-                        onClick={handleSubmit}
-                      >
-                        Save
-                      </button>}
+                        {staff ? (
+                          <button
+                            className="btn text-white fw-bold"
+                            style={{ backgroundColor: "#6070FF" }}
+                            onClick={handleUpdate}
+                          >
+                            Saves
+                          </button>
+                        ) : (
+                          <button
+                            className="btn text-white fw-bold"
+                            style={{ backgroundColor: "#6070FF" }}
+                            onClick={handleSubmit}
+                          >
+                            Save
+                          </button>
+                        )}
                       </div>
                     </UncontrolledCollapse>
                   </div>
