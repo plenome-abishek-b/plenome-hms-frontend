@@ -58,9 +58,9 @@ export default function SetupUnitTypeDialog({
         <DialogContent className="mt-4 ms-2">
           <Container>
             <Row>
-                <label>Unit</label>
+                <label>Unit<span className="text-danger ms-1">*</span></label>
                 <br />
-                <input type="text" placeholder="" id="unit" value={data.unit} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
+                <input type="text" placeholder="" id="unit" value={data.unit} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}></input>
             </Row>
           </Container>
         </DialogContent>

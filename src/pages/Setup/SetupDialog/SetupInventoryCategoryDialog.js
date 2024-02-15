@@ -111,12 +111,12 @@ export default function SetupInventoryCategoryDialog({
             <Row className="p-2">
                 <label>Item Category<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="item_category" placeholder={validate?.item_category ? "enter item category":""} value={formData?.item_category} onChange={handleChange}  style={{height: '30px',width:'100%',borderColor :validate?.item_category ? 'red':'inherit'}}></input>
+                <input name="item_category" placeholder={validate?.item_category ? "enter item category":""} value={formData?.item_category} onChange={handleChange}  style={{height: '30px',width:'100%',borderColor :validate?.item_category ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Description<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="description" placeholder={validate?.description ? "enter description":""} value={formData?.description} onChange={handleChange} style={{height: '70px',borderColor :validate?.description ? 'red':'inherit'}}></input>
+                <input name="description" placeholder={validate?.description ? "enter description":""} value={formData?.description} onChange={handleChange} style={{height: '70px',borderColor :validate?.description ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
         </DialogContent>
         <DialogActions>

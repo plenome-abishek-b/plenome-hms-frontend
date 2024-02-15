@@ -109,14 +109,14 @@ export default function SetupSpecialistDialog({
        
         <br />
         <Row className="p-2">
-        <Label>Name</Label>
+        <Label>Name<span className="text-danger">*</span></Label>
             <input
             name="specialist_name"
             placeholder={validate ? "enter specialist name":""}
             onChange={handleChange}
             value={formData.specialist_name}
             type="text"
-            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}
             >
 
             </input>

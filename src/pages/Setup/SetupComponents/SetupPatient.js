@@ -94,12 +94,18 @@ const SetupPatient = props => {
   useEffect(()=>{
     getSetup_Patient()
    },[])
-   const getSetup_Patient = async() =>{
+   
+   const getSetup_Patient = async() => {
     const response = await api.getSetupHR_patient()
     const {data} = response
-    setrowDate(data)
-    console.log(data,"fd")
-   }
+    // Remove "/" from patient_name
+    const updatedData = data.map(item => ({
+        ...item,
+        patient_name: item.patient_name.replace("/", " ")
+    }));
+    setrowDate(updatedData)
+    console.log(updatedData, "fd")
+}
 
   const components = {
     actionsRenderer: (props) => (

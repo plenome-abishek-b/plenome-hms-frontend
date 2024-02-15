@@ -171,48 +171,48 @@ export default function SetupInventorySupplierDialog({
             <Row className="p-2">
                 <label>Name<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input placeholder={validate?.item_supplier ? "enter item supplier":""} name="item_supplier" onChange={handleChange} value={formData.item_supplier}  style={{height: '30px',width:'100%',borderColor :validate?.item_supplier ? 'red':'inherit'}}></input>
+                <input placeholder={validate?.item_supplier ? "enter item supplier":""} name="item_supplier" onChange={handleChange} value={formData.item_supplier}  style={{height: '30px',width:'100%',borderColor :validate?.item_supplier ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Phone<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="phone" placeholder={validate?.phone? "enter phone number":""} onChange={handleChange} value={formData.phone} style={{height: '30px',width:'100%',borderColor :validate?.phone ? 'red':'inherit'}}></input>
+                <input name="phone" placeholder={validate?.phone? "enter phone number":""} onChange={handleChange} value={formData.phone} style={{height: '30px',width:'100%',borderColor :validate?.phone ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Email<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="email" placeholder={validate?.email ? "enter email":""} onChange={handleChange} value={formData.email} style={{height: '30px',width:'100%',borderColor :validate?.email ? 'red':'inherit'}}></input>
+                <input name="email" placeholder={validate?.email ? "enter email":""} onChange={handleChange} value={formData.email} style={{height: '30px',width:'100%',borderColor :validate?.email ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Contact Person Name<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="contact_person_name" placeholder={validate?.contact_person_name ? "enter contact persone name":""} onChange={handleChange} value={formData.contact_person_name} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_name ? 'red':'inherit'}}></input>
+                <input name="contact_person_name" placeholder={validate?.contact_person_name ? "enter contact persone name":""} onChange={handleChange} value={formData.contact_person_name} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_name ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Address <span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="address" placeholder={validate?.address ? "enter address":""} onChange={handleChange} value={formData.address} style={{height: '70px',borderColor :validate?.contact_person_name ? 'red':'inherit',borderColor :validate?.address ? 'red':'inherit'}}></input>
+                <input name="address" placeholder={validate?.address ? "enter address":""} onChange={handleChange} value={formData.address} style={{height: '70px',borderColor :validate?.contact_person_name ? 'red':'inherit',borderColor :validate?.address ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Contact Person Phone<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="contact_person_phone" placeholder={validate?.contact_person_phone ? "enter contact person phone":""} onChange={handleChange} value={formData.contact_person_phone} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_phone ? 'red':'inherit'}}></input>
+                <input name="contact_person_phone" placeholder={validate?.contact_person_phone ? "enter contact person phone":""} onChange={handleChange} value={formData.contact_person_phone} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_phone ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Contact Person Email<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="contact_person_email" onChange={handleChange} placeholder={validate?.contact_person_email? "enter contact person email":""} value={formData.contact_person_email} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_email ? 'red':'inherit'}}></input>
+                <input name="contact_person_email" onChange={handleChange} placeholder={validate?.contact_person_email? "enter contact person email":""} value={formData.contact_person_email} style={{height: '30px',width:'100%',borderColor :validate?.contact_person_email ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Description <span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input name="description" placeholder={validate?.description ? "enter descripiton":""} onChange={handleChange} value={formData.description} style={{height: '70px',borderColor :validate?.description ? 'red':'inherit'}}></input>
+                <input name="description" placeholder={validate?.description ? "enter descripiton":""} onChange={handleChange} value={formData.description} style={{height: '70px',borderColor :validate?.description ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
         </DialogContent>
         <DialogActions>
           {selectedData?.item_supplier ? 
           <button className="btn-mod bg-soft btn-md" onClick={()=>handleUpdateSubmit()} style={{marginRight: '3%'}}>
-            Saves
+            update
           </button>: 
           <button className="btn-mod bg-soft btn-md" onClick={()=>handleFormSubmit()} style={{marginRight: '3%'}}>
           Save
