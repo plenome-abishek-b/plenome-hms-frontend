@@ -70,7 +70,7 @@ export default function SetupShiftDialog({ open, handleClose }) {
         </DialogTitle>
         <DialogContent className="mt-2 ms-2">
           <Row className="p-2">
-            <label>Name</label>
+            <label>Name<span className="text-danger">*</span></label>
             <input
               name="name"
               onChange={handleChange}
@@ -79,14 +79,14 @@ export default function SetupShiftDialog({ open, handleClose }) {
               style={{
                 height: "30px",
                 width: "100%",
-                border: "1px solid grey",
-                borderRadius: "5px",
+                border: "1px solid rgba(0,0,0,0.2)",
+                borderRadius: "3px",
               }}
             ></input>
           </Row>
           <br />
           <Row className="p-2">
-            <label>Time From</label>
+            <label>Time From<span className="text-danger">*</span></label>
             <input
               name="start_time"
               onChange={handleChange}
@@ -95,14 +95,14 @@ export default function SetupShiftDialog({ open, handleClose }) {
               style={{
                 height: "30px",
                 width: "100%",
-                border: "1px solid grey",
-                borderRadius: "5px",
+                border: "1px solid rgba(0,0,0,0.2)",
+                borderRadius: "3px",
               }}
             ></input>
           </Row>
           <br />
           <Row className="p-2">
-            <label>Time To</label>
+            <label>Time To<span className="text-danger">*</span></label>
             <input
               name="end_time"
               onChange={handleChange}
@@ -111,8 +111,8 @@ export default function SetupShiftDialog({ open, handleClose }) {
               style={{
                 height: "30px",
                 width: "100%",
-                border: "1px solid grey",
-                borderRadius: "5px",
+                border: "1px solid rgba(0,0,0,0.2)",
+                borderRadius: "3px",
               }}
             ></input>
           </Row>

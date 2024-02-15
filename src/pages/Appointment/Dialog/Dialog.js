@@ -149,15 +149,16 @@ export default function AlertDialog({
  
   const handleChange = (event) => {
     const { name, value } = event.target;
- 
+  
     // If the input is the time field, append ':00' to include seconds
     const formattedValue = name === "time" ? `${value}:00` : value;
- 
+  
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       [name]: formattedValue,
     }));
   };
+  
  
   console.log(formValues, "valll");
   const getAllPatient = async () => {
@@ -266,22 +267,23 @@ export default function AlertDialog({
   const handleFormSubmit = async () => {
     const Data = {
       ...formValues,
-      time: `12:00:00`,
+      // Remove this line to use the actual time value from the form
+      // time: `12:00:00`,
     };
     const response = await api.postAppointment(Data);
     const { status, data } = response;
     console.log(Data, data, "form values");
- 
+  
     if (status === 201) {
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
- 
+  
       setFormSubmitted(true);
       handleClose();
       setFormValues({});
- 
+  
       // Delay the execution of getAppointment by one second
       setTimeout(() => {
         getAppointment();
@@ -292,6 +294,7 @@ export default function AlertDialog({
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
+  
   const handleUpdate = async () => {
     const newData = {
       ...formValues,
@@ -376,7 +379,7 @@ export default function AlertDialog({
           Add New Appointment
           <div>
             <button
-              className="btn text-white ms-5 fw-bold"
+              className="btn text-white ms-5 fw-bold btn-cust"
               onClick={handleClickOpen}
               style={{ border: "1px solid white" }}
             >

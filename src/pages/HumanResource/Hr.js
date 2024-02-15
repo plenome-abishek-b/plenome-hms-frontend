@@ -159,7 +159,7 @@ const Hr = (props) => {
                       <select
                         className="form-control"
                         name="searchByRole"
-                        style={{ width: "100%", height: "32px" }}
+                        style={{ width: "100%", height: "32px", border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}
                         onClick={()=>getRoles()}
                         onChange={(e)=>setSearchByRole(e.target.value)}
                       >
@@ -189,7 +189,7 @@ const Hr = (props) => {
                       <input
                         type="text"
                         placeholder="Search by Staff ID, Name, Role"
-                        style={{ width: "100%", height: "32px" }}
+                        style={{ width: "100%", height: "32px", border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}
                         onChange={(e)=>setSearchBykeyword(e.target.value)}
                       ></input>
                     </div>

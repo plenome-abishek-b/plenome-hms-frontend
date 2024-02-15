@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import api from "services/Api";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
@@ -16,15 +16,12 @@ function SetupSlotAppt() {
 
   const [timeInputs, setTimeInputs] = useState([]);
 
-  
-
   const addNewTimeInputRow = () => {
     setTimeInputs((prevTimeInputs) => [
       ...prevTimeInputs,
       { startTime: "", endTime: "" },
     ]);
   };
-
 
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
@@ -83,9 +80,11 @@ function SetupSlotAppt() {
       setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
     }
 
-    console.log(formData,'doctor');
+    console.log(formData, "doctor");
 
-    const charge_response = await api.getSetupAppointmentSlotChrg(formData.doctor);
+    const charge_response = await api.getSetupAppointmentSlotChrg(
+      formData.doctor
+    );
     const { data: data2 } = charge_response;
     setChargeData(data2);
     console.log(chargeData, "chrgggg");
@@ -95,15 +94,15 @@ function SetupSlotAppt() {
     console.log(formData, "formdata");
     const staff_id = formData.doctor;
     console.log(staff_id, "staffid");
-  
+
     const global_shift_id = formData.shift;
     console.log(global_shift_id, "shiftid");
 
-    const Hospital_id = '1';
-  
+    const Hospital_id = "1";
+
     const start_time = timeInputs[0]?.startTime || "";
     const end_time = timeInputs[0]?.endTime || "";
-  
+
     const response = await api.postSetupApptSlotTime(
       formData,
       staff_id,
@@ -116,19 +115,18 @@ function SetupSlotAppt() {
     const { status, data } = response;
 
     if (status === 201) {
-      toast.success('Appointment slot setup successful!', {
+      toast.success("Appointment slot setup successful!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
       setFormSubmitted(true);
     } else {
       // Handle other response statuses if needed
-      toast.error('Failed to set up appointment slot. Please try again.');
+      toast.error("Failed to set up appointment slot. Please try again.");
     }
     console.log(response, "ress");
     console.log(data, "appointment response");
   };
-  
 
   return (
     <React.Fragment>
@@ -138,10 +136,10 @@ function SetupSlotAppt() {
             <Col>
               <Card>
                 <CardBody>
-                <ToastContainer />
+                  <ToastContainer />
                   <Row>
                     <Col lg="4">
-                      <label>Day</label>
+                      <label>Day<span className="text-danger ms-1">*</span></label>
                       <br />
                       <select
                         name="day"
@@ -150,8 +148,8 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                       >
                         <option>select</option>
@@ -164,7 +162,7 @@ function SetupSlotAppt() {
                       </select>
                     </Col>
                     <Col lg="4">
-                      <label>Doctor</label>
+                      <label>Doctor<span className="text-danger ms-1">*</span></label>
                       <br />
                       <select
                         name="doctor"
@@ -174,24 +172,21 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                       >
                         <option>select</option>
                         {doctors &&
                           doctors.map((doctors) => (
-                            <option
-                              key={doctors.id}
-                              value={doctors.id}
-                            >
+                            <option key={doctors.id} value={doctors.id}>
                               {doctors.doctor}
                             </option>
                           ))}
                       </select>
                     </Col>
                     <Col lg="4" sm="12">
-                      <label>Shift</label>
+                      <label>Shift<span className="text-danger ms-1">*</span></label>
                       <br />
                       <select
                         name="shift"
@@ -201,14 +196,17 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                       >
                         <option>select</option>
                         {shift &&
                           shift.map((shiftname) => (
-                            <option key={shiftname.global_shift_id} value={shiftname.global_shift_id}>
+                            <option
+                              key={shiftname.global_shift_id}
+                              value={shiftname.global_shift_id}
+                            >
                               {shiftname.shift_name}
                             </option>
                           ))}
@@ -228,8 +226,8 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                         value={chargeData[0]?.consult_duration}
                       ></input>
@@ -241,8 +239,8 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                         onChange={handleChange}
                       >
@@ -261,8 +259,8 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                         onChange={handleChange}
                       >
@@ -280,8 +278,8 @@ function SetupSlotAppt() {
                         style={{
                           width: "100%",
                           height: "35px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                           backgroundColor: "#f0f0f0",
                         }}
                         value={chargeData[0]?.standard_charge}
@@ -304,8 +302,8 @@ function SetupSlotAppt() {
                           style={{
                             width: "70%",
                             height: "35px",
-                            border: "1px solid grey",
-                            borderRadius: "5px",
+                            border: "1px solid rgba(0,0,0,0.2)",
+                            borderRadius: "3px",
                             backgroundColor: "#f0f0f0",
                           }}
                           value={
@@ -328,8 +326,8 @@ function SetupSlotAppt() {
                           style={{
                             width: "70%",
                             height: "35px",
-                            border: "1px solid grey",
-                            borderRadius: "5px",
+                            border: "1px solid rgba(0,0,0,0.2)",
+                            borderRadius: "3px",
                             backgroundColor: "#f0f0f0",
                           }}
                           value={

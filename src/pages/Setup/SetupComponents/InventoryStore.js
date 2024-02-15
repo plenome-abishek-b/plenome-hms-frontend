@@ -104,9 +104,9 @@ const SearchValue  = async ()=>{
           {/* <select style={{width:'15%'}}>
     <option>select</option>
 </select> */}
-<input id="myInput" placeholder="search"  name="search" value={inputValue} onChange={handleInputChange} />
-        <button onClick={()=>SearchValue()}>Search</button>
-          <Card>
+<input id="myInput" placeholder="search"  name="search" value={inputValue} onChange={handleInputChange} style={{width: '300px',height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}/>
+        <button onClick={()=>SearchValue()} className="btn btn-primary ms-3">Search</button>
+          <Card className="mt-3">
             <CardBody>
             <div className="d-flex justify-content-end">
                 <button className="btn-mod bg-soft" onClick={handleOpenSetupOperations}><i className="fa fa-plus"></i>&nbsp; Add Item Store</button>

@@ -109,14 +109,14 @@ export default function SetupLeavetypeDialog({
        
         <br />
         <Row className="p-2">
-        <Label>Name</Label>
+        <Label>Name<span className="text-danger">*</span></Label>
             <input
             type='text'
             name="type"
             placeholder={validate?"enter name":""}
             onChange={handleChange}
             value={formData.type}
-            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}
             >
 
             </input>
@@ -124,7 +124,7 @@ export default function SetupLeavetypeDialog({
         </DialogContent>
         <DialogActions>
           {selectedData?.type ? <button className="btn-mod bg-soft btn-md" onClick={()=>handUpdateSubmit()} style={{marginRight: '3%'}}>
-            Saves
+            Update
           </button> :
           <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
           Save

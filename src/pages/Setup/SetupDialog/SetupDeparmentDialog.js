@@ -110,21 +110,21 @@ export default function SetupDepartmentDialog({
        
         <br />
         <Row className="p-2">
-        <Label>Name</Label>
+        <Label>Name<span className="text-danger">*</span></Label>
             <input
             name="department_name"
             onChange={handleChange}
             placeholder={validate?"enter department name":""}
             value={formData.department_name}
             type="text"
-            style={{height: '30px',borderColor:validate ? 'red':'inherit'}}
+            style={{height: '30px',borderColor:validate ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}
             >
             </input>
             </Row>
         </DialogContent>
         <DialogActions>
          { selectedData?.department_name ? <button className="btn-mod bg-soft btn-md" onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
-            Save
+            update
           </button> :
           <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
           Save

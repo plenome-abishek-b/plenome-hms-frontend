@@ -534,9 +534,9 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/setupbloodbank">{props.t("Blood Bank")}</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/setupbed" className="has-arrow">
                     {props.t("Bed")}
@@ -571,7 +571,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Pharmacy")}
                   </Link>
@@ -596,7 +596,7 @@ const SidebarContent = (props) => {
                       <Link to="/doseduration">{props.t("Dose Duration")}</Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Operations")}
@@ -629,7 +629,7 @@ const SidebarContent = (props) => {
                   </ul>
                 </li>
                 {/* ////////////// */}
-                <li>
+                {/* <li>
                   <Link to="/pathologysetup" className="has-arrow">
                     {props.t("Pathology")}
                   </Link>
@@ -645,8 +645,8 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Radiology")}
                   </Link>
@@ -665,7 +665,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Symptoms")}
@@ -711,7 +711,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Front Office")}
                   </Link>
@@ -737,7 +737,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Inventory")}
