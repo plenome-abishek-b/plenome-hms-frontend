@@ -336,7 +336,9 @@ const AddStaff = () => {
         <Container fluid>
           {/* Render Breadcrumb */}
           <h4 className="text-primary">Basic Information</h4>
-          <p className="text-danger d-flex justify-content-end">Fill all the Mandatory details( * )</p>
+          <p className="text-danger d-flex justify-content-end fw-bold">
+            Fill all the Mandatory details( * )
+          </p>
           <Card>
             <CardBody>
               <Row>
@@ -351,8 +353,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     onChange={handleChange}
                     value={formData?.employee_id}
@@ -367,8 +369,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="role_id"
                     onChange={handleChange}
@@ -390,8 +392,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="staff_designation_id"
                     onChange={handleChange}
@@ -415,8 +417,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="department_id"
                     onChange={handleChange}
@@ -440,8 +442,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="specialist"
                     onChange={handleChange}
@@ -470,8 +472,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="first_name"
                     onChange={handleChange}
@@ -485,8 +487,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="surname"
                     onChange={handleChange}
@@ -501,8 +503,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="father_name"
                     onChange={handleChange}
@@ -516,8 +518,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="mother_name"
                     onChange={handleChange}
@@ -536,8 +538,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="gender"
                     onChange={handleChange}
@@ -557,8 +559,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="marital_status"
                     onChange={handleChange}
@@ -579,8 +581,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="blood_group"
                     onChange={handleChange}
@@ -603,8 +605,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="dob"
                     onChange={handleChange}
@@ -621,8 +623,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     type="date"
                     name="date_of_joining"
@@ -639,8 +641,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="contact_no"
                     onChange={handleChange}
@@ -654,8 +656,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="emergency_contact_no"
                     onChange={handleChange}
@@ -672,8 +674,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="image"
                     onChange={handleChange}
@@ -692,8 +694,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="email"
                     onChange={handleChange}
@@ -709,8 +711,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="password"
                     onChange={handleChange}
@@ -757,8 +759,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="qualification"
                     onChange={handleChange}
@@ -772,8 +774,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="work_exp"
                     onChange={handleChange}
@@ -787,8 +789,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="specialization"
                     onChange={handleChange}
@@ -802,8 +804,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="note"
                     onChange={handleChange}
@@ -820,8 +822,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="pan_number"
                     onChange={handleChange}
@@ -835,8 +837,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="identification_number"
                     onChange={handleChange}
@@ -850,8 +852,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="local_identification_number"
                     onChange={handleChange}
@@ -899,8 +901,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="epf_no"
                                 onChange={handleChange}
@@ -914,8 +916,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="basic_salary"
                                 onChange={handleChange}
@@ -929,8 +931,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="contract_type"
                                 onChange={handleChange}
@@ -951,8 +953,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="shift"
                                 onChange={handleChange}
@@ -966,8 +968,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="location"
                                 value={formData?.location}
@@ -988,8 +990,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                               ></input>
                             </Col>
@@ -1011,8 +1013,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="account_title"
                                 onChange={handleChange}
@@ -1027,8 +1029,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_account_no"
                                 onChange={handleChange}
@@ -1045,8 +1047,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_name"
                                 onChange={handleChange}
@@ -1060,8 +1062,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="ifsc_code"
                                 onChange={handleChange}
@@ -1075,8 +1077,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_branch"
                                 onChange={handleChange}
@@ -1096,8 +1098,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="facebook"
                                 onChange={handleChange}
@@ -1111,8 +1113,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="twitter"
                                 onChange={handleChange}
@@ -1129,8 +1131,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="linkedin"
                                 onChange={handleChange}
@@ -1144,8 +1146,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="instagram"
                                 onChange={handleChange}

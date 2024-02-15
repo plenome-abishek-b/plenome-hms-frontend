@@ -165,14 +165,14 @@ export default function SetupChargeDialog({
           <Container>
             <Row className="p-1">
               <Col lg="3" md="3" sm="12">
-                <label>Charge Type</label>
+                <label>Charge Type<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="charge_type"
                   value={data.charge_type}
@@ -188,14 +188,14 @@ export default function SetupChargeDialog({
                 </select>
               </Col>
               <Col lg="3" md="3" sm="12">
-                <label>Charge Category</label>
+                <label>Charge Category<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="charge_category_id"
                   value={data.charge_category_id}
@@ -214,7 +214,7 @@ export default function SetupChargeDialog({
                 </select>
               </Col>
               <Col lg="3" md="3" sm="12">
-                <label>Charge Name</label>
+                <label>Charge Name<span className="text-danger ms-1">*</span></label>
                 <br />
                 <input
                   id="name"
@@ -223,20 +223,20 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                 ></input>
               </Col>
               <Col lg="3" md="3" sm="12">
-                <label>Unit Type</label>
+                <label>Unit Type<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                 >
                   <option>select</option>
@@ -252,14 +252,14 @@ export default function SetupChargeDialog({
             <br />
             <Row>
               <Col lg="3" md="3" sm="12">
-                <label>Tax Category</label>
+                <label>Tax Category<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="tax_category_id"
                   value={selectedTaxCategoryId}
@@ -284,8 +284,8 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   value={percentage}
                   readOnly
@@ -329,15 +329,15 @@ export default function SetupChargeDialog({
             <br />
             <Row style={{ position: "relative", bottom: "210px" }}>
               <Col lg="6" md="6" sm="6">
-                <label>Standard Charge(₹)</label>
+                <label>Standard Charge(₹)<span className="text-danger ms-1">*</span></label>
                 <br />
                 <input
                   type="number"
                   style={{
                     width: "100%",
                     height: "30px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="standard_charge"
                   value={data.standard_charge}
@@ -354,8 +354,8 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "50px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="description"
                   value={data.description}
@@ -371,8 +371,8 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "50px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    border: '1px solid rgba(0,0,0,0.2)', 
+                    borderRadius: '3px'
                   }}
                   id="date"
                   value={data.date}

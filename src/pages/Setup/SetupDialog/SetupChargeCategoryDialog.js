@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -50,9 +50,9 @@ export default function SetupChargeCategoryDialog({
   //   setChargename(data);
   // };
 
-  console.log(chargetypes,'chargetype')
+  console.log(chargetypes, "chargetype");
 
-console.log(data, 'dataaaaaaa')
+  console.log(data, "dataaaaaaa");
 
   return (
     <div
@@ -76,21 +76,27 @@ console.log(data, 'dataaaaaaa')
           },
         }}
       >
-        <DialogTitle
-          id="alert-dialog-title"
-          className="bg-primary text-white"
-        >
+        <DialogTitle id="alert-dialog-title" className="bg-primary text-white">
           Add Charges
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Container className="p-2">
             <Row>
-              <label>Charge Type</label>
+              <label>Charge Type<span className="text-danger ms-1">*</span></label>
               <br />
-              <select style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }} id="charge_type_id" value={data.charge_type_id} onChange={e => onChange(e)}>
+              <select
+                style={{
+                  height: "35px",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
+                }}
+                id="charge_type_id"
+                value={data.charge_type_id}
+                onChange={(e) => onChange(e)}
+              >
                 <option>select</option>
                 {chargetypes &&
-                  chargetypes.map(charge_type => (
+                  chargetypes.map((charge_type) => (
                     <option key={charge_type.id} value={charge_type.id}>
                       {charge_type.charge_type}
                     </option>
@@ -99,15 +105,33 @@ console.log(data, 'dataaaaaaa')
             </Row>
             <br />
             <Row>
-              <label>Name</label>
+              <label>Name<span className="text-danger ms-1">*</span></label>
               <br />
-              <input id='name' value={data.name} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
+              <input
+                id="name"
+                value={data.name}
+                onChange={(e) => onChange(e)}
+                style={{
+                  height: "35px",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
+                }}
+              ></input>
             </Row>
             <br />
             <Row>
-              <label>Description</label>
+              <label>Description<span className="text-danger ms-1">*</span></label>
               <br />
-              <textarea style={{ height: '50px', border: '1px solid grey', borderRadius: '5px' }} id="description" value={data.description} onChange={e => onChange(e)} ></textarea>
+              <textarea
+                style={{
+                  height: "50px",
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
+                }}
+                id="description"
+                value={data.description}
+                onChange={(e) => onChange(e)}
+              ></textarea>
             </Row>
           </Container>
         </DialogContent>

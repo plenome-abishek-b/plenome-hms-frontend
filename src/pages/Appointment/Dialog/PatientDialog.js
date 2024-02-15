@@ -14,24 +14,45 @@ import { useState } from "react";
 // import { Formik } from "formik"
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import * as yup from "yup";
 
 export default function PatientDialog({ open, handleClose, getAllPatient }) {
   const [bloodgroupData, setBloodgroupData] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-
   useEffect(() => {
     handleBloodgroups();
   }, []);
-
 
   const [isDateSelected, setIsDateSelected] = useState(false);
 
   const getCurrentDateTime = () => {
     const currentDate = new Date();
-    return `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    return `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${currentDate
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${currentDate
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${currentDate
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}:${currentDate
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`;
   };
 
+  const validationSchema = yup.object().shape({
+    mobileno: yup
+      .string()
+      .matches(/^[0-9]+$/, "Phone number must contain only digits")
+      .min(10, "Phone number must be at least 10 digits")
+      .required("Phone number is required *"),
+    email: yup.string().email("Invalid email").required("Email is required *"),
+  });
 
   const [formValues, setFormValues] = useState({
     patient_name: "",
@@ -62,7 +83,6 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
     ABHA_number: "",
   });
 
-  
   const handleBloodgroups = async () => {
     const response = await api.getBloodgroups();
     const { data } = response;
@@ -79,23 +99,41 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
 
   const handleSubmit = async (event) => {
     const formattedDateTime = formatDateTime(formValues.insurence_validity);
-    const updatedFormValues = { ...formValues, insurence_validity: formattedDateTime, created_at: getCurrentDateTime() };
-  
+    const updatedFormValues = {
+      ...formValues,
+      insurence_validity: formattedDateTime,
+      created_at: getCurrentDateTime(),
+    };
+
     try {
       const response = await api.postPatients(updatedFormValues);
-  
+
       setFormSubmitted(true);
       setFormValues({});
       getAllPatient();
       handleClose();
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
 
   const formatDateTime = (dateTimeString) => {
     const dateObject = new Date(dateTimeString);
-    return `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')} ${dateObject.getHours().toString().padStart(2, '0')}:${dateObject.getMinutes().toString().padStart(2, '0')}:${dateObject.getSeconds().toString().padStart(2, '0')}`;
+    return `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${dateObject
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${dateObject
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${dateObject
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}:${dateObject
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const handledobChange = (event) => {
@@ -145,6 +183,12 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
     }
   };
 
+  const formik = useFormik({
+    initialValues: formValues,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
     <div>
       <form>
@@ -183,8 +227,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   value={formValues.patient_name}
                   onChange={handleChange}
@@ -206,8 +250,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -221,8 +265,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="gender"
                   value={formValues.gender}
@@ -249,8 +293,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -271,8 +315,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
                       }}
                     />
                     <input
@@ -282,8 +326,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
                       }}
                       className="ms-3"
                     />
@@ -294,8 +338,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
                       }}
                       className="ms-3"
                     />
@@ -317,8 +361,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="blood_group"
                   value={formValues.blood_group}
@@ -344,8 +388,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="marital_status"
                   value={formValues.marital_status}
@@ -376,17 +420,20 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <input
                   type="number"
                   name="mobileno"
-                  value={formValues.mobileno}
-                  onChange={handleChange} // onChange={formik.handleChange}
-                  // value={formik.values.number}
+                  value={formik.values.mobileno}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder=""
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
-                ></input>
+                />
+                {formik.touched.mobileno && formik.errors.mobileno ? (
+                  <div className="text-danger">{formik.errors.mobileno}</div>
+                ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
                 <label>Email</label>
@@ -394,18 +441,20 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <input
                   type="email"
                   name="email"
-                  value={formValues.email}
-                  onChange={handleChange}
-                  // onChange={formik.handleChange}
-                  // value={formik.values.email}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder=""
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
-                ></input>
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="error">{formik.errors.email}</div>
+                ) : null}
               </Col>
             </Row>
             <br />
@@ -424,8 +473,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -443,8 +492,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -465,8 +514,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "60px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></textarea>
               </Col>
@@ -487,8 +536,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -506,8 +555,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -528,8 +577,8 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -544,12 +593,11 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <label>ABHA Address</label>
                 <br />
                 <input
-                
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -557,14 +605,14 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <label>ABHA Number</label>
                 <br />
                 <input
-                 name="ABHA_number"
-                 value={formValues.ABHA_number}
-                 onChange={handleChange}
+                  name="ABHA_number"
+                  value={formValues.ABHA_number}
+                  onChange={handleChange}
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
