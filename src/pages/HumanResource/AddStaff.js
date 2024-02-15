@@ -592,7 +592,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Blood Group</label>
+                  <label>Blood Group<span className="text-danger"> *</span></label>
                   <br />
                   <select
                     style={{
@@ -613,7 +613,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   </select>
                 </Col>
                 <Col>
-                  <label>Date of Birth</label>
+                  <label>Date of Birth<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     type="date"
@@ -632,7 +632,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>Date of Joining</label>
+                  <label>Date of Joining<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -648,7 +648,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Phone</label>
+                  <label>Phone<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -663,7 +663,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Emergency Contact</label>
+                  <label>Emergency Contact<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -678,7 +678,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Email</label>
+                  <label>Email<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -693,7 +693,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12" className="mt-3">
-                  <label>Photo</label>
+                  <label>Photo<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     type="file"
@@ -743,7 +743,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>Qualification</label>
+                  <label>Qualification<span className="text-danger"> *</span></label>
                   <br />
                   <textarea
                     style={{
@@ -758,7 +758,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Work Experience</label>
+                  <label>Work Experience<span className="text-danger"> *</span></label>
                   <br />
                   <textarea
                     style={{
@@ -773,7 +773,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Specialization</label>
+                  <label>Specialization<span className="text-danger"> *</span></label>
                   <br />
                   <textarea
                     style={{
@@ -788,7 +788,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Note</label>
+                  <label>Note<span className="text-danger"> *</span></label>
                   <br />
                   <textarea
                     style={{
@@ -806,7 +806,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>PAN Number</label>
+                  <label>PAN Number<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -821,7 +821,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>National Identification Number</label>
+                  <label>National Identification Number<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
@@ -836,7 +836,7 @@ var JoindateOnly = joindate.toISOString().split('T')[0];
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Local Identification Number</label>
+                  <label>Local Identification Number<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
