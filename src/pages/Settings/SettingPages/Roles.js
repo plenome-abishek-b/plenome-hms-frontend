@@ -4,15 +4,62 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import api from "services/Api"
+import DeleteButtonRenderer from "common/data/delete-button";
+import EditButtonRenderer from "common/data/update-button";
+import { ToastContainer, toast } from "react-toastify";
+import { getRoles } from "@testing-library/react"
 
 function RoleSetting() {
   const initialRoleValue = {
     name: '',
-    created_at: '2023-11-11 10:11:12'
+    slug:"aad",
+    is_active :1,
+    is_system:1,
+    is_superadmin:1,
+    hospital_id:1
   }
 
   const [tableData,setTableData] = useState()
   const [formData,setFormData] = useState(initialRoleValue)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const [selectedData, setSelectedData] = useState({});
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    //dialog open
+    setSelectedData({});
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    //dialog close
+    setOpen(false);
+  };
+
+  const RoleNameLinkRenderer = (props) => {
+    const { value, data } = props;
+
+    const handleClick = async () => {
+      try {
+        const response = await api.getRolebyId(data.id);
+        const { data: roleData } = response;
+        console.log(data,'role resss')
+        setModalData(roleData);
+        setModalOpen(true);
+      } catch (error) {
+        console.error("Error fetching Role details:", error);
+      }
+    };
+  
+
+  return (
+    <Link to="#" onClick={handleClick}>
+      {value}
+    </Link>
+  );
+}
+
 
   const columnDefs = [
     { headerName: "Role", field: "name" },
@@ -21,6 +68,15 @@ function RoleSetting() {
       field: "is_system",
       cellRendererFramework: (params) => {
         return params.value === 0 || params.value === 1 ? "system" : "";
+      },
+    },
+    {
+      headerName: "Actions",
+      field: "actions",
+      cellRenderer: "actionsRenderer",
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
       },
     },
   ];
@@ -39,6 +95,79 @@ function RoleSetting() {
     console.log(e.target.value,"lllll")
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
+  };
+
+  const handleDeleteClick = async (data) => {
+    try {
+      const toastId = toast.info(
+        <div>
+          <div className="text-dark">
+            Are you sure you want to delete this item?
+          </div>
+          <div className="d-flex justify-content-end mt-3">
+            <button
+              className="btn btn-danger btn-md"
+              onClick={() => handleDeletionConfirmed(data.id)}
+            >
+              OK
+            </button>
+          </div>
+        </div>,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: false,
+        }
+      );
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
+  const handleEditClick = (data) => {
+    console.log(data, "edit");
+    setSelectedData(data);
+    // setSelectedData()
+    setOpen(true);
+  };
+
+  const handleDeletionConfirmed = async (roleId) => {
+    try {
+      await api.deleteRole(roleId);
+      toast.dismiss();
+
+      toast.success(
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>Item deleted successfully</div>
+          <button
+            className="btn btn-danger btn-sm fw-bold"
+            onClick={() => toast.dismiss()}
+          >
+            X
+          </button>
+        </div>,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          closeButton: false,
+          autoClose: 500,
+        }
+      );
+
+      setTimeout(() => {
+        getRoles()
+      }, 800);
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
+
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+    RoleNameLinkRenderer: RoleNameLinkRenderer,
   };
    
   useEffect(() => {
@@ -62,9 +191,7 @@ function RoleSetting() {
       .then(resp => {
         getSetupRoles()
         setFormData(initialRoleValue)
-        preventDefault()
       })
-      handleClose()
   }
 
   // const onGridReady = useCallback(params => {
@@ -78,6 +205,7 @@ function RoleSetting() {
 
   return (
     <React.Fragment>
+        <ToastContainer />
       <h4>Role</h4>
       <Row>
         <Col lg="4">
@@ -105,6 +233,7 @@ function RoleSetting() {
               rowData={tableData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
+              frameworkComponents={components}
             />
           </div>
             </CardBody>

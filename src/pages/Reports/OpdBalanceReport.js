@@ -125,8 +125,8 @@ const OpdBalanceReport = (props) => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                   >
                     <option>select</option>
@@ -153,8 +153,8 @@ const OpdBalanceReport = (props) => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     value={formData.fromAge}
                     onChange={handleFromAgeChange}
@@ -190,8 +190,8 @@ const OpdBalanceReport = (props) => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     value={toAge}
                     onChange={handleToAgeChange}
@@ -213,8 +213,8 @@ const OpdBalanceReport = (props) => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                   >
                     <option>select</option>
@@ -239,8 +239,8 @@ const OpdBalanceReport = (props) => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                   >
                     <option>select</option>
@@ -265,8 +265,8 @@ const OpdBalanceReport = (props) => {
                         style={{
                           width: "100%",
                           height: "30px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                       />
                     </Col>
@@ -281,8 +281,8 @@ const OpdBalanceReport = (props) => {
                         style={{
                           width: "100%",
                           height: "30px",
-                          border: "1px solid grey",
-                          borderRadius: "5px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
                         }}
                       />
                     </Col>

@@ -79,13 +79,13 @@ function UserSetting() {
   )
 
   const staff_columnDefs = [
-    {headerName: 'Staff ID', field: 'employee_id'},
-    {headerName: 'Name', field: 'staff_name'},
+    {headerName: 'Staff ID', field: 'staff_ID'},
+    {headerName: 'Name', field: 'name'},
     {headerName: 'Email', field: 'email'},
-    {headerName: 'Role', field: 'role_name'},
+    {headerName: 'Role', field: 'role'},
     {headerName: 'Designation', field: 'designation'},
     {headerName: 'Department', field: 'department_name'},
-    {headerName: 'Phone', field: 'contact_no'},
+    {headerName: 'Phone', field: 'phone'},
     {headerName: 'Action', field: ''}
   ]
 
