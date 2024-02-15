@@ -52,6 +52,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
       .min(10, "Phone number must be at least 10 digits")
       .required("Phone number is required *"),
     email: yup.string().email("Invalid email").required("Email is required *"),
+    patient_name: yup.string().required("Patient Name is required *"),
+    gender: yup.string().required("Gender is required *"),
+    dob: yup.string().required("Date of Birth is required *"),
   });
 
   const [formValues, setFormValues] = useState({
@@ -232,9 +235,13 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   }}
                   value={formValues.patient_name}
                   onChange={handleChange}
+                  onBlur={formik.handleBlur}
                   //   onChange={formik.handleChange}
                   // value={formik.values.name}
                 ></input>
+                {formik.touched.patient_name && formik.errors.patient_name ? (
+                  <div className="text-danger">{formik.errors.patient_name}</div>
+                ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
                 <label>Guardian Name</label>
@@ -259,7 +266,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Gender</label>
+                <label>Gender<span className="text-danger"> *</span></label>
                 <br />
                 <select
                   style={{
@@ -271,6 +278,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   name="gender"
                   value={formValues.gender}
                   onChange={handleChange}
+                  onBlur={formik.handleBlur}
                   // onChange={formik.handleChange}
                   // value={formik.values.gender}
                 >
@@ -279,6 +287,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   <option valeu="Female">Female</option>
                   <option value="Transgeder">Transgender</option>
                 </select>
+                {formik.touched.gender && formik.errors.gender ? (
+                  <div className="text-danger">{formik.errors.gender}</div>
+                ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
                 <label>Date of Birth</label>
@@ -297,6 +308,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                     border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
+                {formik.touched.patient_name && formik.errors.patient_name ? (
+                  <div className="text-danger">{formik.errors.patient_name}</div>
+                ) : null}
               </Col>
             </Row>
             <br />
@@ -415,7 +429,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Phone</label>
+                <label>Phone<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="number"
@@ -436,7 +450,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Email</label>
+                <label>Email<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="email"

@@ -1,9 +1,10 @@
+// import HrDetailDialog from 'pages/Setup/SetupDialog/HrDetailDialog';
 import HrDetailDialog from 'pages/Setup/SetupDialog/HrDetailDialog';
 import { useState } from 'react';
 import { FaEye, FaPencilAlt } from 'react-icons/fa';
 import { useHistory } from "react-router-dom"
-
-const Card = ({ staff, staffname, email, qualification, number, role }) => {
+ 
+const Card = ({getAllStaff, staff, staffname, email, qualification, number, role ,location }) => {
   const history = useHistory()
   const [isHovered, setIsHovered] = useState(false);
   const [open,setOpen] = useState(false)
@@ -51,12 +52,12 @@ const Card = ({ staff, staffname, email, qualification, number, role }) => {
             />
           </>
         )}
-
-
+ 
+ 
       </div>
-      <HrDetailDialog open={open} handleClose={handleClose} staffDetail={staff}/>
+      <HrDetailDialog location={location} getAllStaff={getAllStaff} open={open} handleClose={handleClose} staffDetail={staff}/>
     </div>
   );
 };
-
+ 
 export default Card;

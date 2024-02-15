@@ -303,7 +303,7 @@ const SidebarContent = (props) => {
                     {props.t("IPD Discharged Report")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/bloodreport">{props.t("Blood Issue Report")}</Link>
                 </li>
                 <li>
@@ -335,8 +335,8 @@ const SidebarContent = (props) => {
                   <Link to="/patientbillreport">
                     {props.t("Patient Bill Report")}
                   </Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to="/incomereport">{props.t("Income Report")}</Link>
                 </li>
                 <li>
@@ -393,7 +393,7 @@ const SidebarContent = (props) => {
                   <Link to="/audittrailreport">
                     {props.t("Audit Trail Report")}
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/incomegroupreport">
                     {props.t("Income Group Report")}
@@ -404,12 +404,12 @@ const SidebarContent = (props) => {
                     {props.t("Expense Group Report")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/tpareport">{props.t("TPA Report")}</Link>
                 </li>
                 <li>
                   <Link to="/referralreport">{props.t("Referral Report")}</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/patientvisitreport">
                     {props.t("Patient Visit Report")}
@@ -420,11 +420,11 @@ const SidebarContent = (props) => {
                     {props.t("Patient Login Credentials")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/ambulancereport">
                     {props.t("Ambulance Call Report")}
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
             {/* <li>
