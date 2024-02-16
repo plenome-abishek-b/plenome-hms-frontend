@@ -41,13 +41,7 @@ const SetupBed = props => {
   }, [])
 
   const getBedStatusList = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getBedStatusSetup().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  
   }
 
   return (
