@@ -7,50 +7,57 @@ import { withTranslation } from "react-i18next"
 import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
-import SetupBedGroupDialog from "../SetupDialog/SetupBedGroupDialog"
+//redux
+import SetupBedListDialog from "../SetupDialog/SetupBedDialog"
 import api from "services/Api"
 import EditButtonRenderer from "common/data/update-button"
 import DeleteButtonRenderer from "common/data/delete-button"
-//redux
 
-const SetupBedGroup = props => {
+const SetupBedLists = props => {
 
-  const initialSetupBedGroupValue = {
+  const initialSetupBedValue = {
     name: "",
-    color: "",
-    description: "",
-    floor: "",
+    bed_type_id: "",
+    bed_group_id: "",
     is_active: "1",
     created_at: "2023-02-02 11:11:11"
   }
-  
-  const [openSetupBedgroupDialog, setOpenSetupBedgroupDialog] = useState()
-  const [tableData,setTableData] = useState()
-  const [formData,setFormData] = useState(initialSetupBedGroupValue)
-  const [selectedData,setSelectedData] = useState({})
+
+    const [openSetupBedDialog, setOpenSetupBedDialog] = useState()
+    const [tableData,setTableData] = useState()
+    const [formData,setFormData] = useState(initialSetupBedValue)
+    const [selectedData,setSelectedData] = useState({})
   // const rowData = [
-  //   {name: 'VIP Ward', floor: 'Ground Floor', description: 'The operating room (OR) is where both inpatient and outpatient surgeries are performed.', action: ''}
+  //   {name: 'GS-101', type: 'Standard', group: 'VIP Ward', used: 'true'},
+  //   {name: 'GS-101', type: 'Standard', group: 'VIP Ward', used: 'true'}
   // ]
   const handleEditClick = (data) =>{
     console.log(data,"edit");
     setSelectedData(data)
     // setSelectedData()
-    setOpenSetupBedgroupDialog(true)
+    setOpenSetupBedDialog(true)
    }
    const handleDeleteClick = async (data) =>{
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
     console.log(userConfirmed,"delete");
 if(userConfirmed){
-  const response = await api.deleteSetup_bedType(data?.id)
-  getBedTypeList()
+  const response = await api.deleteSetup_Bed(data?.id)
+  getBedStatusList()
 }else{
   console.log("else");
 }
    }
   const columnDefs = [
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Floor', field: 'floor_name'},
-    {headerName: 'Description', field: 'description'},
+    { headerName: "Name", field: "name" },
+    { headerName: "Bed Type", field: "Bed_Type" },
+    { headerName: "Bed Group", field: "bed_group" },
+    {
+      headerName: "Used",
+      field: "used",
+      cellRendererFramework: (props) => (
+        <input type="checkbox" readOnly checked={props.value === "yes"} />
+      ),
+    },
     {
       headerName: 'Actions',
       field: 'actions',
@@ -60,7 +67,9 @@ if(userConfirmed){
         onDeleteClick: (row) => handleDeleteClick(row),
       },
     },
-  ]
+  ];
+  
+  
 
   const defaultColDef = useMemo(
     () => ({
@@ -71,27 +80,30 @@ if(userConfirmed){
     []
   )
 
-  const handleOpenBedGroup = () => {
-    setOpenSetupBedgroupDialog(true);
+  const handleOpenBedDialog = () => {
+    setSelectedData({})
+    setOpenSetupBedDialog(true);
   }
 
-  const handleCloseBedGroup = () => {
-    setOpenSetupBedgroupDialog(false);
+  const handleCloseBedDialog = () => {
+    setOpenSetupBedDialog(false);
   }
 
-  
   useEffect(() => {
     // getUsers from json
-    getBedGroupList()
+    getBedStatusList()
   }, [])
 
-  const getBedGroupList = async () => {
-   const response = await api.getSetup_bed_group()
-   const {data} = response
-   console.log(data,"getting");
-   setTableData(data)
+  const getBedStatusList =async () => {
+     const response = await api.getSetup_Bed() 
+     const {data} = response
+     console.log(data,"consoling data");
+     setTableData(data)
   }
 
+
+
+ 
   const components = {
 
     actionsRenderer: (props) => (
@@ -103,18 +115,20 @@ if(userConfirmed){
     ),
   };
 
+  
+
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <h4>Bed Group List</h4>
+          <h4>Bed List</h4>
           <Card>
             <CardBody>
-            <div className="d-flex justify-content-end">
-                <button className="btn-mod bg-soft" onClick={handleOpenBedGroup}><i className="fa fa-plus"></i>&nbsp; Add Bed Group</button>
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <button className="btn-mod bg-soft" onClick={handleOpenBedDialog}><i className="fa fa-plus"></i>&nbsp; Add Bed</button>
             </div>
               <div
-                className="ag-theme-alpine"
+                className="ag-theme-alpine" 
                 style={{ height: 800, marginTop: "20px" }}
               >
                 <AgGridReact
@@ -123,8 +137,8 @@ if(userConfirmed){
                   defaultColDef={defaultColDef}
                   frameworkComponents={components}
                 />
+                <SetupBedListDialog selectedData={selectedData} getBedStatusList={getBedStatusList} open={openSetupBedDialog} handleClose={handleCloseBedDialog} data={formData}/>
                 </div>
-                <SetupBedGroupDialog selectedData={selectedData} open={openSetupBedgroupDialog} handleClose={handleCloseBedGroup} data={formData}/>
             </CardBody>
           </Card>
         </Container>
@@ -133,4 +147,4 @@ if(userConfirmed){
   )
 }
 
-export default withTranslation()(SetupBedGroup)
+export default withTranslation()(SetupBedLists)

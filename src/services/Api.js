@@ -2752,10 +2752,10 @@ function patchSetupRadiologyParameter(data){
   }
   function postSetup_Bed(data){
     return http6.post(URL.SETUP_BED,data)
-  }
+  }   
   function updateSetup_Bed(data) {
     const url = `${URL.SETUP_BED}/${data?.id}`
-    return http6.patch(url)
+    return http6.patch(url,data)
   }
   function deleteSetup_Bed(id){
     const url = `${URL.SETUP_BED}/${id}`
@@ -2769,7 +2769,7 @@ function patchSetupRadiologyParameter(data){
   }
   function updateSetup_bed_Type(data){
     const url = `${URL.SETUP_BED_TYPE}/${data?.id}`
-    return http6.patch(url)
+    return http6.patch(url,data)
   }
   function deleteSetup_bedType(id){
     const url = `${URL.SETUP_BED_TYPE}/${id}`

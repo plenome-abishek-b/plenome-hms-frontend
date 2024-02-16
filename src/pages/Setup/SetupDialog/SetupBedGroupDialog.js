@@ -12,35 +12,42 @@ import api from "services/Api"
 export default function SetupBedGroupDialog({
   open,
   handleClose,
-  data,
-  onChange,
-  handleFormSubmit,
+  selectedData
 }) {
-  const [openSetupBedgroupDialog, setOpenSetupBedgroupDialog] = React.useState(false)
-  const [bedFloor, setbedFloor] = useState('')
 
-  useEffect(() => {
-    getFloorCate()
-  }, [])
+  const [bedFloor, setbedFloor] = useState('')
+  const [formData,setFormData] = useState({
+        name: "",
+        color: "",
+        description: "",
+        floor: "",
+        is_active: 0,
+        Hospital_id:1
+  })
+ 
 
 
   const getFloorCate = async () => {
-    const response = await api.getBedFloorSetup()
+    const response = await api.getSetup_bed_floor()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
     setbedFloor(data)
   }
+   useEffect(()=>{
+    if(selectedData){
+      setFormData({
+        name:selectedData?.name,
+        color:selectedData?.color,
+        description:selectedData?.description,
+        floor:selectedData?.floor,
+        Hospital_id:1
+      })
+    }else{
+      
+    }
+   },[selectedData])
 
-
-  const handleClickOpen = () => {
-    //dialog open
-    setOpenSetupBedgroupDialog(true)
-  }
-
-  const handleDialogClose = () => {
-    //dialog close
-    setOpenSetupBedgroupDialog(false)
-  }
+ 
 
   return (
     <div
@@ -64,13 +71,13 @@ export default function SetupBedGroupDialog({
         <Row className="p-2">
             <label>Name<span style={{color: 'red'}}>*</span></label>
             <br />
-            <input type="text" style={{height: '30px'}} value={data.name} id="name" onChange={e=>onChange(e)} ></input>
+            <input type="text" style={{height: '30px'}} value={formData.name} id="name" onChange={e=>onChange(e)} ></input>
         </Row>
         <br />
         <Row className="p-2">
             <label>Floor</label>
             <br />
-            <select  style={{height: '30px'}} value={data.floor} id="floor" onChange={e=>onChange(e)} >
+            <select  style={{height: '30px'}} value={formData.floor} id="floor" onChange={e=>onChange(e)} >
             <option>select</option>
             {bedFloor &&
                 bedFloor.map((floorSet) => (
@@ -84,18 +91,18 @@ export default function SetupBedGroupDialog({
         <Row className="p-2">
             <label>Color</label>
             <br />
-            <input type="color"  style={{height: '30px'}} value={data.color} id="color" onChange={e=>onChange(e)} ></input>
+            <input type="color"  style={{height: '30px'}} value={formData.color} id="color" onChange={e=>onChange(e)} ></input>
 
         </Row>
         <br />
         <Row className="p-2">
             <label>Description</label>
             <br />
-            <textarea style={{height: '50px'}} value={data.description} id="description" onChange={e=>onChange(e)} ></textarea>
+            <textarea style={{height: '50px'}} value={formData.description} id="description" onChange={e=>onChange(e)} ></textarea>
         </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit()} style={{marginRight: '3%'}}>
             Save
           </button>
         </DialogActions>

@@ -7,16 +7,20 @@ import { Row, Col, Container, Label, Input } from "reactstrap"
 import { TextField } from "@material-ui/core"
 import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
+import { select } from "redux-saga/effects"
+import api from "services/Api"
 
 export default function SetupBedTypeDialog({
   open,
   handleClose,
-  data,
-  onChange,
-  handleFormSubmit,
+ selectedData,
+ getBedTypeList
 }) {
   const [openSetupBedtypeDialog, setOpenSetupBedtypeDialog] = React.useState(false)
-
+  const [formData,setFormData] = useState({
+    name:''
+  })
+  const [validate,setValidate] = useState(false)
   const handleClickOpen = () => {
     //dialog open
     setOpenSetupBedtypeDialog(true)
@@ -26,7 +30,49 @@ export default function SetupBedTypeDialog({
     //dialog close
     setOpenSetupBedtypeDialog(false)
   }
-
+  useEffect(()=>{
+   if(selectedData){
+    setFormData({
+      name:selectedData?.name
+    })
+   }else{
+    setFormData({
+      name:''
+    })
+   }
+  },[selectedData])
+  const handleChange = (e) =>{
+  const {id,value} = e.target
+  console.log(id,value,"loging");
+  setFormData({
+   ...formData,[id]:value
+  })
+  } 
+  const handleFormSubmit =async () =>{
+    console.log(formData,"formData");
+    if(formData?.name === undefined){
+     setValidate(true)
+     setTimeout(()=>{
+      setValidate(false)
+     },3000)
+    }else{
+      const response = await api?.postSetupBedType(formData)
+      const {data} = response
+      console.log(data,"submitting");
+      getBedTypeList()
+      handleClose()
+    }
+  }
+  const handleUpdate = async () =>{
+    const data ={
+      ...formData,
+      id:selectedData?.id
+    }
+    console.log(data,"updateing");
+    const response = await api.updateSetup_bed_Type(data)
+    getBedTypeList()
+    handleClose()
+  }
   return (
     <div
       style={{
@@ -49,13 +95,20 @@ export default function SetupBedTypeDialog({
             <Row className="p-2">
                 <label>Name <span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input style={{height: '30px'}} type="text" value={data.name} id="name" onChange={e=>onChange(e)} ></input>
+                <input style={{height: '30px',borderColor:validate?'red':''}} placeholder={validate? 'Enter name':''} type="text" value={formData.name} id="name" onChange={handleChange} ></input>
             </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
-            Save
+          {selectedData?.name ? (
+          <button className="btn-mod bg-soft btn-md" onClick={() => handleUpdate()} style={{marginRight: '3%'}}>
+     Save
           </button>
+          ):(
+            <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit()} style={{marginRight: '3%'}}>
+     Save
+          </button>
+          )}
+           
         </DialogActions>
       </Dialog>
     </div>
