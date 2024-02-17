@@ -3355,7 +3355,7 @@ const api = {
   deleteSetup_bed_group,
   getSetup_Bed,
   postSetup_Bed,
-  updateSetup_Bed,
+  updateSetup_Bed, 
   deleteSetup_Bed,
   getSetup_bed_type,
   postSetupBedType,

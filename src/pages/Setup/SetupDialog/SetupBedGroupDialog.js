@@ -14,7 +14,7 @@ export default function SetupBedGroupDialog({
   handleClose,
   selectedData
 }) {
-
+//new
   const [bedFloor, setbedFloor] = useState('')
   const [formData,setFormData] = useState({
         name: "",
