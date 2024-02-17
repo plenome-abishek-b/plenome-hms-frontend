@@ -144,17 +144,17 @@ export default function SetupInventoryStoreDialog({
             <Row className="p-2">
                 <label>Item Store Name<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input placeholder={validate?.item_store ? "enter item store":""} onChange={handleChange} name="item_store" value={formValue.item_store} style={{height: '30px',width:'100%',borderColor :validate?.item_store ? 'red':'inherit'}}></input>
+                <input placeholder={validate?.item_store ? "enter item store":""} onChange={handleChange} name="item_store" value={formValue.item_store} style={{height: '30px',width:'100%',borderColor :validate?.item_store ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>Item Store Code<span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input placeholder={validate?.code ? "enter code":""} onChange={handleChange} name="code" value={formValue.code} style={{height: '30px',width:'100%',borderColor :validate?.code ? 'red':'inherit'}}></input>
+                <input placeholder={validate?.code ? "enter code":""} onChange={handleChange} name="code" value={formValue.code} style={{height: '30px',width:'100%',borderColor :validate?.code ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
             <Row className="p-2">
                 <label>description <span style={{color: 'red'}}>*</span></label>
                 <br />
-                <input placeholder={validate?.description ? "enter discription":""} onChange={handleChange} name="description" value={formValue.description}  style={{height: '70px',borderColor :validate?.description ? 'red':'inherit'}}></input>
+                <input placeholder={validate?.description ? "enter discription":""} onChange={handleChange} name="description" value={formValue.description}  style={{height: '70px',borderColor :validate?.description ? 'red':'inherit', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}}></input>
             </Row>
         </DialogContent>
         <DialogActions>

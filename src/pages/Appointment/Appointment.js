@@ -16,9 +16,9 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EditButtonRenderer from "common/data/update-button"
+import EditButtonRenderer from "common/data/update-button";
 //redux
- 
+
 const initialValue = {
   //reset the form to initial value
   patient_name: "",
@@ -33,41 +33,41 @@ const initialValue = {
   fees: "",
   status: "",
 };
- 
+
 const Appointment = (props) => {
   const gridRef = useRef();
- 
+
   const [tableData, setTableData] = useState(null);
- 
+
   const [formData, setFormData] = useState(initialValue);
- 
+
   const [open, setOpen] = React.useState(false);
- 
+
   const [datas, setDatas] = useState(null);
- 
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [selectedData,setSelectedData] = useState({})
+  const [selectedData, setSelectedData] = useState({});
   const handleClickOpen = () => {
     //dialog open
-    setSelectedData({})
+    setSelectedData({});
     setOpen(true);
   };
- 
+
   const handleClose = () => {
     //dialog close
     setOpen(false);
   };
- 
+
   const onChange = (e) => {
     //catch the parameters when changed.
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
   };
- 
+
   const PatientNameLinkRenderer = (props) => {
     const { value, data } = props;
- 
+
     const handleClick = async () => {
       try {
         const response = await api.getAppointmentbyId(data.id);
@@ -78,14 +78,14 @@ const Appointment = (props) => {
         console.error("Error fetching appointment details:", error);
       }
     };
- 
+
     return (
       <Link to="#" onClick={handleClick}>
         {value}
       </Link>
     );
   };
- 
+
   const columnDefs = [
     {
       headerName: "Patient Name",
@@ -123,63 +123,80 @@ const Appointment = (props) => {
       },
     },
   ];
- 
+
   const onBtnExport = useCallback(() => {
     console.log(gridRef.current); // Log the grid reference
     gridRef.current.api.exportDataAsCsv();
   }, []);
- 
+
   useEffect(() => {
     getAppointment();
   }, []);
- 
+
   const getAppointment = async () => {
     try {
       const response = await api.getAppointment();
       const { data } = response;
- 
-      // Modify the patient_name and date fields in each object in the data array
+
       const modifiedData = data.map((patient) => {
-        const modifiedDate = new Date(patient.date);
-        const formattedDate = modifiedDate.toLocaleString();
- 
+
+        const trimmedDate = patient.date.split("T")[0];
+
+        const combinedDateTime = `${trimmedDate} ${patient.time}`;
+
+        const formattedDateTime = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }).format(new Date(combinedDateTime));
+
+        const modifiedName = patient.patient_name.replace(/\//g, "");
+
         return {
           ...patient,
-          patient_name: patient.patient_name.replace("/", ""),
-          date: formattedDate,
+          patient_name: modifiedName,
+          date: formattedDateTime,
         };
       });
- 
+
       console.log(modifiedData, "modifiedData");
- 
+
       setDatas(modifiedData);
     } catch (error) {
       console.error("Error fetching appointment data:", error);
     }
   };
- 
+
   // const handleEditClick = (rowData) => {
   //   setSelectedRowData(rowData);
   //   setEditDialogOpen(true);
   // };
- 
+
   const handleDeleteClick = async (data) => {
     try {
- 
       const toastId = toast.info(
         <div>
-          <div className="text-dark">Are you sure you want to delete this item?</div>
-          <div className="d-flex justify-content-end mt-3">
-          <button className="btn btn-danger btn-md" onClick={() => handleDeletionConfirmed(data.id)}>OK</button>
+          <div className="text-dark">
+            Are you sure you want to delete this item?
           </div>
-         
+          <div className="d-flex justify-content-end mt-3">
+            <button
+              className="btn btn-danger btn-md"
+              onClick={() => handleDeletionConfirmed(data.id)}
+            >
+              OK
+            </button>
+          </div>
         </div>,
         {
           position: toast.POSITION.TOP_CENTER,
           closeButton: false,
         }
       );
- 
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }
@@ -190,17 +207,22 @@ const Appointment = (props) => {
     // setSelectedData()
     setOpen(true);
   };
- 
+
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
       const hos_id = 1;
-      await api.deleteAppointment(appointmentId,hos_id);
+      await api.deleteAppointment(appointmentId, hos_id);
       toast.dismiss();
- 
+
       toast.success(
-        <div style={{display: "flex", justifyContent: 'space-between'}}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>Item deleted successfully</div>
-          <button className="btn btn-danger btn-sm fw-bold" onClick={() => toast.dismiss()}>X</button>
+          <button
+            className="btn btn-danger btn-sm fw-bold"
+            onClick={() => toast.dismiss()}
+          >
+            X
+          </button>
         </div>,
         {
           position: toast.POSITION.TOP_RIGHT,
@@ -208,16 +230,15 @@ const Appointment = (props) => {
           autoClose: 500,
         }
       );
- 
+
       setTimeout(() => {
         window.location.reload();
       }, 800);
- 
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }
   };
- 
+
   const gridOptions = {
     domLayout: "autoHeight",
     defaultColDef: {
@@ -226,37 +247,37 @@ const Appointment = (props) => {
       filter: true,
     },
     onFirstDataRendered: (params) => {
-      params.api.autoSizeAllColumns();
+      // params.api.autoSizeAllColumns();
     },
   };
- 
+
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit();
   };
- 
+
   const defaultSort = [{ colId: "id", sort: "asc" }];
- 
+
   const components = {
     actionsRenderer: (props) => (
       <div>
-         <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
     ),
     patientNameLinkRenderer: PatientNameLinkRenderer,
   };
- 
+
   const handleCloseModal = () => {
     setModalOpen(false);
     setModalData(null);
   };
- 
+
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
     );
- 
+
     const columns = filteredColumnDefs.map((col) => ({
       header: col.headerName,
       dataKey: col.field,
@@ -264,29 +285,29 @@ const Appointment = (props) => {
     const rows = datas.map((data) =>
       filteredColumnDefs.map((col) => data[col.field])
     );
- 
+
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
       currentDate.getMonth() + 1
     }-${currentDate.getDate()}`;
- 
+
     const doc = new jsPDF({ orientation: "landscape" });
     const columnStyles = {};
     filteredColumnDefs.forEach((_, index) => {
       columnStyles[index] = { cellWidth: 30 };
     });
- 
+
     doc.autoTable({
       head: [columns.map((col) => col.header)],
       body: rows,
       columnStyles,
       margin: { top: 20 },
     });
- 
+
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
- 
+
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
@@ -320,15 +341,15 @@ const Appointment = (props) => {
                 &nbsp;&nbsp;Doctor Wise
               </button>
             </Link>
-            {/* <Link to="/patientqueue">
+            <Link to="/patientqueue">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link> */}
- 
+            </Link>
+
             <button
               className="btn-mod bg-soft custom-btn"
               onClick={() => onBtnExport()}
@@ -351,7 +372,7 @@ const Appointment = (props) => {
             </button>
           </div>
         </Container>
- 
+
         <div
           className="ag-theme-alpine"
           style={{ height: 1000, marginTop: "20px" }}
@@ -369,7 +390,7 @@ const Appointment = (props) => {
             gridOptions={gridOptions}
             onGridReady={onGridReady}
           />
- 
+
           <AlertDialog
             open={open}
             handleClose={handleClose}
@@ -378,7 +399,6 @@ const Appointment = (props) => {
             getAppointment={getAppointment}
           />
           <Patientdetails
- 
             open={modalOpen}
             handleClose={handleCloseModal}
             data={modalData}
@@ -392,5 +412,5 @@ const Appointment = (props) => {
     </React.Fragment>
   );
 };
- 
-export default withTranslation()(Appointment)
+
+export default withTranslation()(Appointment);

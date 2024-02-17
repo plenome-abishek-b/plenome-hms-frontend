@@ -94,7 +94,7 @@ export default function OpdDialog({
             </select> */}
             {console.log(data)}
             <select
-              style={{ width: "20%", height: "35px", borderRadius: '5px' }}
+              style={{ width: "20%", height: "35px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
               id="patient_id"
               value={data?.patient_id}
               onChange={e=>onChange(e)}
@@ -108,7 +108,7 @@ export default function OpdDialog({
             </select>
                 {console.log(listPatient,'list patient')}
             <button
-              className="btn-mod bg-soft ms-3 fw-bold"
+              className="btn btn-primary bg-soft ms-3 fw-bold"
               onClick={handleClickOpen}
               style={{border: '1px solid white'}}
             >
@@ -169,7 +169,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}
                   ></input>
                 </Col>
                 <Col lg='3' md='3' sm='12'>
@@ -178,7 +178,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey' }}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                   ></input>
                 </Col>
                 <Col lg='3' md='3' sm='12'>
@@ -187,7 +187,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}
                   ></input>
                 </Col>
                
@@ -200,7 +200,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey' }}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                   ></input>
                 </Col>
                 <Col lg='4' md='4' sm='12'>
@@ -209,7 +209,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey' }}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                   ></input>
                 </Col>
                 <Col lg='4' md='4' sm='12'> 
@@ -218,7 +218,7 @@ export default function OpdDialog({
                   <input
                     type="number"
                     placeholder=""
-                    style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}
+                    style={{ height: "30px", width: '100%', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}
                   ></input>
                 </Col>
               </Row>
@@ -232,7 +232,7 @@ export default function OpdDialog({
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
+                        style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                       ></input>
                     </Col>
                     <Col lg="4" md="4" sm="12">
@@ -241,7 +241,7 @@ export default function OpdDialog({
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
+                        style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                       ></input>
                     </Col>
                     <Col lg="4" md="4" sm="12">
@@ -250,7 +250,7 @@ export default function OpdDialog({
                       <input
                         type="text"
                         placeholder=""
-                        style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
+                        style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                       ></input>
                     </Col>
                   </Row>
@@ -263,7 +263,7 @@ export default function OpdDialog({
                   <br />
                   <textarea
                     maxLength="infinity"
-                    style={{ width: "100%", height: '50px', borderRadius: '5px', border: '1px solid grey' }}
+                    style={{ width: "100%", height: '50px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                   ></textarea>
                 </Col>
                 <Col lg="6" md="6" sm="12">
@@ -271,7 +271,7 @@ export default function OpdDialog({
                   <br />
                   <textarea
                     maxLength="infinity"
-                    style={{ width: "100%", height: '50px', borderRadius: '5px', border: '1px solid grey' }}
+                    style={{ width: "100%", height: '50px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                   ></textarea>
                 </Col>
               </Row>
@@ -285,7 +285,7 @@ export default function OpdDialog({
                   <Col lg="12">
                     <label>Appointment Date <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="Ex: 2023-01-01 11:11:11" style={{ width: "100%", borderRadius: '5px', border: '1px solid grey' }} id="appointment_date" value={data?.appointment_date} onChange={e=>onChange(e)} ></input>
+                    <input placeholder="Ex: 2023-01-01 11:11:11" style={{ width: "100%", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }} id="appointment_date" value={data?.appointment_date} onChange={e=>onChange(e)} ></input>
                   </Col>
                 </Row>
                 <br />
@@ -293,7 +293,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Case</label>
                     <br />
-                    <input placeholder="" style={{ width: "100%", borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="" style={{ width: "100%", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                 </Row>
                 <br />
@@ -301,7 +301,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Casualty</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
                       <option>No</option>
                       <option>Yes</option>
                     </select>
@@ -309,7 +309,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Old Patient</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
                       <option>No</option>
                       <option>Yes</option>
                     </select>
@@ -320,7 +320,7 @@ export default function OpdDialog({
                   <Col>
                     <label>TPA</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}>
                       <option>select</option>
                     </select>
                   </Col>
@@ -329,7 +329,7 @@ export default function OpdDialog({
                     <br />
                     <input
                       placeholder=""
-                      style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}
+                      style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}
                     ></input>
                   </Col>
                 </Row>
@@ -338,7 +338,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Consultant Doctor <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }} id='cons_doctor' onChange={e=>onChange(e)} value={data?.cons_doctor} >
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }} id='cons_doctor' onChange={e=>onChange(e)} value={data?.cons_doctor} >
                     <option>select one</option>
                     {consdoctor && consdoctor.map((doctor) => (
                     <option key={doctor.id} value={doctor?.id}>
@@ -353,14 +353,14 @@ export default function OpdDialog({
                   <Col>
                     <label>Charge Category</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px" , borderRadius: '5px', border: '1px solid grey'}}>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}>
                       <option>Select</option>
                     </select>
                   </Col>
                   <Col>
                     <label>Charge <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
                       <option>Select</option>
                     </select>
                   </Col>
@@ -370,12 +370,12 @@ export default function OpdDialog({
                   <Col>
                     <label>Tax</label>
                     <br />
-                    <input placeholder="%" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="%" style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                   <Col>
                     <label>Standard Charge(₹)</label>
                     <br />
-                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                 </Row>
                 <br />
@@ -383,12 +383,12 @@ export default function OpdDialog({
                   <Col>
                     <label>Applied Charge(₹) <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                   <Col>
                     <label>Amount(₹) <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                 </Row>
                 <br />
@@ -396,7 +396,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Payment Mode</label>
                     <br />
-                    <select style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
                       <option>Cash</option>
                       <option>UPI</option>
                       <option>Cheque</option>
@@ -407,7 +407,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Paid Amount(₹) <span className="text-danger">*</span></label>
                     <br />
-                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}></input>
+                    <input placeholder="" style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}></input>
                   </Col>
                 </Row>
                 <br />
@@ -415,7 +415,7 @@ export default function OpdDialog({
                   <Col>
                     <label>Live Consultation</label>
                     <br />
-                    <select style={{ width: '100%', height: '30px', borderRadius: '5px', border: '1px solid grey' }}>
+                    <select style={{ width: '100%', height: '30px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
                       <option>No</option>
                       <option>Yes</option>
                     </select>

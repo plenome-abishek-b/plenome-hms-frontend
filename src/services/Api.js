@@ -254,11 +254,11 @@ const URL = {
   SETUP_SMS_SETTING_URL: "/api/sms_settings",
   SETUP_PAYMENT_SETTING_URL: "/api/paymentSetting",
   SETUP_ROLE_SETTING_URL: "/api/rolesetting",
-  SETUP_ROLE_URL: "/api/role_setup",
+  SETUP_ROLE_URL: "/settings-roles-permissions",
   EMAIL_SETTING_URL: "/api/email_settings",
-  USER_PATIENT_SETTING_URL: "/api/userpatientsetting",
-  USER_STAFF_SETTING_URL: "/api/userstaffsetting",
-  PREFIX_SETTING_URL: "/api/prefixsetting",
+  USER_PATIENT_SETTING_URL: "/settings-users-patients",
+  USER_STAFF_SETTING_URL: "/settings-users-staffs",
+  PREFIX_SETTING_URL: "/setting-prefix-setting",
 
   PATIENT_CREDS_URL: "/api/patientcredsreport",
   BIRTH_REPORT_URL: "/api/birthreport",
@@ -1118,6 +1118,11 @@ function getInvestmentSupplier_setup(inputValue) {
   return http.get(URL.INVENTORY_SETUP_SUPPLIER, data);
 }
 
+function getRolebyId(id){
+  const url = `${URL.SETUP_ROLE_URL}/${id}`
+  return http3.get(url);
+}
+
 //setup Front office
 
 function getFrontofficeSetupVisitorsPurpose() {
@@ -1298,6 +1303,34 @@ function getOpdDischargedReport(data, toAge, fromAge) {
   const datas = { params: Object.keys(params).length > 0 ? params : null };
   return http.get(URL.OPD_DISCHARGED_REPORT_URL, datas);
 }
+
+// function disableStaff_HR_mainModule(id){
+//   const url =`${URL.DISABLE_MAIN_HR_MODULE}/${id}`
+//   return http5.post(url)
+// }
+function deleteStaff_HR_mainModule(id){
+  const url = `${URL.HR_MAIN_MODULE_STAFF}/${id}`
+  return http5.delete(url)
+}
+function getDisabled_Staffs_HR_mainModule(){
+  return http5.get(`${URL.HR_MAIN_MODULE_STAFF}/disabled/staff`)
+}
+function enableStaff_HR_mainModule(id){
+  return http.post(`${URL.HR_MAIN_MODULE_STAFF}/enable/${id}`)
+}
+
+function searchDisableStaffByRole(id){
+  return http.get(`${URL.HR_MAIN_MODULE_STAFF}/disabled/role/${id}`)
+}
+function searchDisableStaffBykeyword(keyword){
+  return http.get(`${URL.HR_MAIN_MODULE_STAFF}/keyword/disabledStaff/${keyword}`)
+}
+
+function changePasswordHR(id,data){
+  const url =`${URL.HR_MAIN_MODULE_STAFF}/password/${id}`
+  return http.patch(url,data)
+}
+
 function getOpdBalanceReport(data, toAge, fromAge) {
   const params = {};
 
@@ -2843,8 +2876,14 @@ function getPriorityAppointment_Mainmodule(){
   return http5.get(URL.APPOINTMENT_INTERNAL_PRIORITY)
 }
 
+function deleteRole(id){
+const url =`${URL.SETUP_ROLE_URL}/${id}`
+  return http3.delete(url)
+}
+
 
 const api = {
+  deleteRole,
   getPriorityAppointment_Mainmodule,
   updateAppointment,
   getUser,
@@ -3361,5 +3400,13 @@ const api = {
   postSetupBedType,
   updateSetup_bed_Type,
   deleteSetup_bedType
+  getRolebyId,
+  disableStaff_HR_mainModule,
+deleteStaff_HR_mainModule,
+getDisabled_Staffs_HR_mainModule,
+enableStaff_HR_mainModule,
+searchDisableStaffByRole,
+searchDisableStaffBykeyword,
+changePasswordHR
 };
 export default api;

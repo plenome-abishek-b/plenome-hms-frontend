@@ -26,13 +26,12 @@ const PatientQueue = props => {
   useEffect(()=>{
    handleDoctor()
   },[])
-const handleSearch =async () =>{
-  const response = await api.getPatients(selectedDoctor,selectedShift,selectedDate,selectedSlot)
-  console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot,"poooo")
-  const {data} = response
-  console.log(data)
-  setSearchedResult(data)
-}
+  const handleSearch = async () => {
+    const response = await api.getPatients(selectedDoctor, selectedShift, selectedDate.fullDate, selectedSlot);
+    const { data } = response;
+    setSearchedResult(data);
+  };
+  
 console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
   const handleDoctor =async () =>{
  const response = await api.getDoctor()
@@ -46,21 +45,10 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
     console.log(data)
   }
 
-  
-  
-  // const handleSlot = async () =>{
-  //   const response = await api.getSlotdatas(selectedDate,selectedDoctor,selectedShift)
-  //   const {data} = response
-  //   setSlotData(data)
-  //   console.log(data)
-  // }
 
   const getSlot = async () => {
-    const response = await api.getSlotTiming(
-      selectedDate,selectedDoctor,selectedShift
-    );
+    const response = await api.getSlotTiming(selectedDate.day, selectedDoctor, selectedShift);
     const { data } = response;
-    console.log(data, "slot data");
     setSlotData(data);
   };
 
@@ -76,27 +64,20 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
   const handleDateInput = (event) => {
     const selectedDateValue = event.target.value;
     const selectedDay = new Date(selectedDateValue).toLocaleDateString('en-US', { weekday: 'long' });
-  
-    // Map day names to your desired format (Monday, Tuesday, etc.)
-    const dayMapping = {
-      'Sunday': 'Sunday',
-      'Monday': 'Monday',
-      'Tuesday': 'Tuesday',
-      'Wednesday': 'Wednesday',
-      'Thursday': 'Thursday',
-      'Friday': 'Friday',
-      'Saturday': 'Saturday',
-    };
-  
-    // Update the selectedDate state with the mapped day
-    setSelectedDate(dayMapping[selectedDay]);
+    setSelectedDate({
+      fullDate: selectedDateValue,
+      day: selectedDay,
+    });
   };
+  
   
 
   const handleSlotChange = (event) =>{
-    console.log(event.target.value)
+    console.log(event.target.value,'slot change')
     setSelectedSlot(event.target.value)
   }
+
+  console.log(selectedSlot,'slotttt')
   return (
     <React.Fragment>
       <div className="page-content">
@@ -108,7 +89,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                 <Col lg='3' md='3' sm='3'>
                     <label style={{fontSize: '15px'}}>Doctor <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{width: '80%', height: '35px', borderRadius: '5px'}}
+                    <select style={{width: '80%', height: '35px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}
                     value={selectedDoctor}
                     onChange={handleDoctorChange}
                     >
@@ -123,7 +104,7 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                 <Col lg='3' md='3' sm='3'>
                     <label style={{fontSize: '15px'}}>shift <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{width: '80%', height: '35px', borderRadius: '5px'}} onClick={()=>handleShift()} 
+                    <select style={{width: '80%', height: '35px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}} onClick={()=>handleShift()} 
                     value={selectedShift}
                     onChange={handleShiftChange}>
                       <option>select an option</option>
@@ -136,19 +117,19 @@ console.log(selectedDoctor,selectedShift,selectedDate,selectedSlot)
                     <label style={{fontSize: '15px'}}>Date <span className="text-danger">*</span></label>
                     <br />
                     <input value={selectedDate}
-                  onInput={handleDateInput} type="date" style={{width: '80%', height: '35px', borderRadius: '5px', border: '1px solid grey'}}></input>
+                  onInput={handleDateInput} type="date" style={{width: '80%', height: '35px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}></input>
                 </Col>
                 <Col lg='3' md='3' sm='3'>
                     <label style={{fontSize: '15px'}}>Slot <span className="text-danger">*</span></label>
                     <br />
-                    <select style={{width: '80%', height: '35px', borderRadius: '5px'}}
+                    <select style={{width: '80%', height: '35px', borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)'}}
                     onClick={()=>getSlot()}
                     value={selectedSlot}
                     onChange={handleSlotChange}>
                       {}
                         <option>select an option</option>
                             {slotData && slotData.map((slot)=>(
-                        <option key={slot.id} value={slot.slotId}>{slot.start_time} - {slot.end_time}</option>
+                        <option key={slot.id} value={slot.id}>{slot.start_time} - {slot.end_time}</option>
                       ))}
 
                     </select>

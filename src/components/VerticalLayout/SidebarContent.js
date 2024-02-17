@@ -303,7 +303,7 @@ const SidebarContent = (props) => {
                     {props.t("IPD Discharged Report")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/bloodreport">{props.t("Blood Issue Report")}</Link>
                 </li>
                 <li>
@@ -335,8 +335,8 @@ const SidebarContent = (props) => {
                   <Link to="/patientbillreport">
                     {props.t("Patient Bill Report")}
                   </Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to="/incomereport">{props.t("Income Report")}</Link>
                 </li>
                 <li>
@@ -393,7 +393,7 @@ const SidebarContent = (props) => {
                   <Link to="/audittrailreport">
                     {props.t("Audit Trail Report")}
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/incomegroupreport">
                     {props.t("Income Group Report")}
@@ -404,12 +404,12 @@ const SidebarContent = (props) => {
                     {props.t("Expense Group Report")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/tpareport">{props.t("TPA Report")}</Link>
                 </li>
                 <li>
                   <Link to="/referralreport">{props.t("Referral Report")}</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/patientvisitreport">
                     {props.t("Patient Visit Report")}
@@ -420,11 +420,11 @@ const SidebarContent = (props) => {
                     {props.t("Patient Login Credentials")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/ambulancereport">
                     {props.t("Ambulance Call Report")}
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
             {/* <li>
@@ -534,9 +534,9 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/setupbloodbank">{props.t("Blood Bank")}</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/setupbed" className="has-arrow">
                     {props.t("Bed")}
@@ -571,7 +571,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Pharmacy")}
                   </Link>
@@ -596,7 +596,7 @@ const SidebarContent = (props) => {
                       <Link to="/doseduration">{props.t("Dose Duration")}</Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Operations")}
@@ -629,7 +629,7 @@ const SidebarContent = (props) => {
                   </ul>
                 </li>
                 {/* ////////////// */}
-                <li>
+                {/* <li>
                   <Link to="/pathologysetup" className="has-arrow">
                     {props.t("Pathology")}
                   </Link>
@@ -645,8 +645,8 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Radiology")}
                   </Link>
@@ -665,7 +665,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Symptoms")}
@@ -711,7 +711,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Front Office")}
                   </Link>
@@ -737,7 +737,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Inventory")}
