@@ -64,7 +64,7 @@ const Ipd = props => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => { 
+  const handleClickOpen = () => {
     setOpen(true);
   };
 console.log(formData,"jjjjjjjjj")
@@ -72,7 +72,11 @@ console.log(formData,"jjjjjjjjj")
     setOpen(false);
   };
 
- 
+  function patientId(e){
+    console.log(e.target.value,"nameeeeeeeeeeee")
+    const patientId = e.target.value;
+    setId(patientId);
+  }
 
 const columnDefs = [
   { headerName: "IPD No.", field: "id", filter: "agSetColumnFilter", cellStyle: {color: 'blue', fontWeight: '500', backgroundColor: '#EEEEEE'},cellRenderer: (params) => {
@@ -84,12 +88,12 @@ const columnDefs = [
     );
   }},
   
-    {headerName: "Case ID", field: "Case_ID"},
-    { headerName: "Name", field: "patientName" },
+    {headerName: "Case ID", field: "case_reference_id"},
+    { headerName: "Name", field: "patient_name" },
     { headerName: "Gender", field: "gender" },
     { headerName: "Contact", field: "mobileno" },
-    { headerName: "Consultant", field: "staffname" },
-    { headerName: "Bed", field: "Bed_name"},
+    { headerName: "Consultant", field: "cons_doctor" },
+    { headerName: "Bed", field: "bed" },
     { headerName: "Credit Limit", field: "credit_limit" },
     
   ];
@@ -105,15 +109,30 @@ const columnDefs = [
 console.log(formData,"Ddddddddd")
   
   useEffect(() => {
+    // getUsers from json
     getIpdUsers()
   }, [])
-  const getIpdUsers = async () => {
-    const response = await api?.getIPDpatient()
-    const {data} = response;
-    console.log(data,"completedata");
-    setTableData(data)
-   }
-  
+
+  const getIpdUsers = () => {
+    api.getIpdUser().then(res => setTableData(res.data))
+    api.http
+  }
+
+  function handleFormSubmit() {
+    api.postIpdUser(formData).then(resp => {
+      console.log(resp)
+    })
+   
+
+    api
+      .getIpdUser({ headers: { "content-type": "application/json" } })
+      .then(resp => {
+        getIpdUsers()
+        setFormData(initialIpdValue)
+        preventDefault()
+      })
+      handleClose()
+  }
 
   const onGridReady = useCallback(params => {
     api
@@ -134,7 +153,7 @@ console.log(formData,"Ddddddddd")
             title={props.t("IPD")}
             breadcrumbItem={props.t("In Patient")}
           />
-          <IpdDialog open={open} handleClose={handleClose} onChange={onChange} data={formData} setFetchData={setFetchData} fetchData={fetchData} handlePatientId={handlePatientId}/>
+          <IpdDialog open={open} handleClose={handleClose} onChange={onChange} data={formData} handleFormSubmit={handleFormSubmit} setFetchData={setFetchData} patientId={patientId} fetchData={fetchData} handlePatientId={handlePatientId}/>
         </Container>
         <div
           style={{
