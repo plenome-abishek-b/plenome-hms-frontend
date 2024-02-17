@@ -12,16 +12,28 @@ import api from "services/Api"
 export default function SetupBedListDialog({
   open,
   handleClose,
-  data,
-  onChange,
-  handleFormSubmit,
+  getBedStatusList,
+  selectedData
 }) {
 
 
   const [openSetupBedDialog, setOpenSetupBedDialog] = React.useState(false)
   const [bedType, setBedType] = useState('')
   const [bedGroup, setBedGroup] = useState('')
-
+  const [formData,setFormData] = useState({
+        name: "",
+        bed_type_id:"",
+        bed_group_id: "",
+        is_active: "no",
+        Hospital_id:1
+  })
+  const [validate,setValidate] = useState({
+    name: false,
+    bed_type_id:false,
+    bed_group_id: false,
+    is_active: false,
+  })
+ 
   console.log(bedType, 'bed type');
   console.log(bedGroup, 'bed grp');
 
@@ -32,28 +44,114 @@ export default function SetupBedListDialog({
 
 
   const getTypeBed = async () => {
-    const response = await api.getBedTypeSetup()
+    const response = await api.getSetup_bed_type()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
     setBedType(data)
   }
 
   const getGroupBed = async () => {
-    const response = await api.getBedGroupSetup()
+    const response = await api.getSetup_bed_group()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
     setBedGroup(data)
   }
 
-  const handleClickOpen = () => {
-    //dialog open
-    setOpenSetupBedDialog(true)
+  const handleChange = (e) => {
+    const { id, value, checked, type } = e.target;
+    console.log(typeof(value), id, "jj");
+  
+    setFormData((prevFormData) => {
+      if (id === 'is_active') {
+        return { ...prevFormData, is_active: type === 'checkbox' ? (checked ? 'yes' : 'no') : (value === 'on' ? 'yes' : 'no') };
+      } else {
+        console.log(id, value, "eew");
+        return { ...prevFormData, [id]: value };
+      }
+    });
+  };
+  
+ const handleSubmit = async () =>{
+  console.log(formData,"FF");
+  if(formData?.name == undefined){
+    setValidate({...validate,name:true})
+    setTimeout(()=>{
+      setValidate({...validate,name:false})
+    },3000)
+  }else if(formData?.bed_type_id == undefined){
+    setValidate({...validate,bed_type_id:true})
+    setTimeout(()=>{
+      setValidate({...validate,bed_type_id:false})
+    },3000)
+  }else if(formData?.bed_group_id == undefined){
+    setValidate({...validate,bed_group_id:true})
+    setTimeout(()=>{
+      setValidate({...validate,bed_group_id:false})
+    },3000)
+  }else{
+    const response = await api.postSetup_Bed(formData)
+    const {data} = response
+    console.log(data,"submitted");
+    getBedStatusList()
+    handleClose()
   }
+ }
+ const handleUpdate = async () =>{
 
-  const handleDialogClose = () => {
-    //dialog close
-    setOpenSetupBedDialog(false)
+  const data = {
+    ...formData,
+    id:selectedData?.id
   }
+  console.log(data,"la la la");
+  if(data?.name == ''){
+    setValidate({...validate,name:true})
+    setTimeout(()=>{
+      setValidate({...validate,name:false})
+    },3000)
+  }else if(data?.bed_type_id == ''){
+    setValidate({...validate,bed_type_id:true})
+    setTimeout(()=>{
+      setValidate({...validate,bed_type_id:false})
+    },3000)
+  }else if(data?.bed_group_id == ''){
+    setValidate({...validate,bed_group_id:true})
+    setTimeout(()=>{
+      setValidate({...validate,bed_group_id:false})
+    },3000)
+  }else{
+  console.log(data,"dataf");
+  const response = await api.updateSetup_Bed(data)
+  getBedStatusList()
+  handleClose()
+  }
+ }
+ const handleChangeCheckbox = () => {
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    is_active: prevFormData.is_active === 'yes' ? 'no' : 'yes'
+  }));
+};
+
+ useEffect(()=>{
+  if(selectedData){
+    console.log(selectedData,"selected");
+    setFormData({
+      name:selectedData?.name,
+      bed_type_id:selectedData?.bed_type_id,
+      bed_group_id:selectedData?.bed_group_id,
+      is_active:selectedData?.used,
+      Hospital_id:1
+    })
+  }else{
+    setFormData({
+      name: "",
+      bed_type_id:"",
+      bed_group_id: "",
+      is_active: "no",
+      Hospital_id:1
+    })
+  }
+ },[selectedData])
 
   return (
     <div
@@ -71,14 +169,14 @@ export default function SetupBedListDialog({
         maxWidth="lg"
       >
         <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
-        Add Products
+        Add Bed
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">   
         <Row className="p-2">
         <Label>Name</Label>
             <input
             type="text"
-            style={{height: '30px'}} value={data.name} id="name" onChange={e=>onChange(e)}
+            style={{height: '30px',borderColor:validate?.name ? 'red':''}} placeholder={validate?.name ? 'enter name':''} value={formData?.name} id="name"  onChange={handleChange}
             >
             </input>
         </Row>
@@ -86,8 +184,8 @@ export default function SetupBedListDialog({
         <Row className="p-2">
         <label>Bed Type</label>
         <br />
-            <select style={{height: '30px'}} value={data.bed_type_id} id="bed_type_id" onChange={e=>onChange(e)} >
-                <option>select</option>
+            <select style={{height: '30px',borderColor:validate?.bed_type_id ? 'red':''}} placeholder={validate?.bed_type_id ? 'select bed type':''} value={formData?.bed_type_id} id="bed_type_id" onChange={handleChange} onClick={()=>getTypeBed()}>
+                <option>{selectedData?.bed_group ? selectedData?.bed_group : 'select'}</option>
                 {bedType &&
                 bedType.map((type) => (
                   <option key={type.id} value={type.id}>
@@ -100,24 +198,32 @@ export default function SetupBedListDialog({
         <Row className="p-2">
         <label>Bed Group</label>
         <br />
-            <select style={{height: '30px'}} value={data.bed_group_id} id="bed_group_id" onChange={e=>onChange(e)} >
-            <option>select</option>
+            <select style={{height: '30px',borderColor:validate?.bed_group_id ? 'red':''}} value={formData?.bed_group_id} id="bed_group_id" placeholder={validate?.name ? 'select bed group':''} onClick={()=>getGroupBed()} onChange={handleChange} >
+            <option>{selectedData?.Bed_Type ? selectedData?.Bed_Type :'select'}</option>
             {bedGroup &&
                 bedGroup.map((group) => (
                   <option key={group.id} value={group.id}>
-                    {group.bed_group_name}
+                    {group.name}
                   </option>
                 ))}
             </select>
         </Row>
         <br />
-        <input type="checkbox"></input>
+        <input type="checkbox" id="is_active" checked={formData?.is_active === 'yes'} value={formData?.is_active} onClick={()=>handleChangeCheckbox()}></input>
         &nbsp; <label>Mark as unused</label>
         </DialogContent>
         <DialogActions>
-          <button className="btn-mod bg-soft btn-md" onClick={() => handleFormSubmit(handleClose())} style={{marginRight: '3%'}}>
+          {selectedData?.bed_type_id ?(
+
+            <button className="btn-mod bg-soft btn-md"  onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
+                Save
+          </button>
+          ):(
+            <button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
             Save
           </button>
+          )}
+          
         </DialogActions>
       </Dialog>
     </div>

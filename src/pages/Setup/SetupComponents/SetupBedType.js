@@ -10,25 +10,51 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 //redux
 import SetupBedTypeDialog from "../SetupDialog/SetupBedTypeDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const SetupBedType = props => {
 
 
   const initialSetupBedTypeValue = {
     name: "",
-    created_at: "2023-02-02 11:11:11"
-  }
+    Hospital_id:1
+    }
 
     const [openSetupBedtypeDialog, setOpenSetupBedtypeDialog] = useState()
     const [tableData,setTableData] = useState()
     const [formData,setFormData] = useState(initialSetupBedTypeValue)
-
+    const [selectedData,setSelectedData] = useState({})
   // const rowData = [
   // {purpose: 'Standard', action: ''}
   // ]
-
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenSetupBedtypeDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+    console.log(userConfirmed,"delete");
+if(userConfirmed){
+  const response = await api.deleteSetup_bedType(data?.id)
+  getBedTypeList()
+}else{
+  console.log("else");
+}
+   }
   const columnDefs = [
-    { headerName: "Purpose", field: "name" }
+    { headerName: "Purpose", field: "name" },
+    {
+    headerName: 'Actions',
+    field: 'actions',
+    cellRenderer: 'actionsRenderer',
+    cellRendererParams: {
+      onEditClick: (row) => handleEditClick(row),
+      onDeleteClick: (row) => handleDeleteClick(row),
+    },
+  },
   ];
   
   
@@ -43,6 +69,7 @@ const SetupBedType = props => {
   )
 
   const handleOpenBedtypeDialog = () => {
+    setSelectedData({})
     setOpenSetupBedtypeDialog(true);
   }
 
@@ -50,55 +77,29 @@ const SetupBedType = props => {
     setOpenSetupBedtypeDialog(false);
   }
 
-  const onChange = e => {
-    //catch the parameters when changed.
-    const { value, id } = e.target
-    setFormData({ ...formData, [id]: value })
-    // setFormData1({ ...formData1, [id]: value })
-  }
 
   useEffect(() => {
     // getUsers from json
     getBedTypeList()
   }, [])
 
-  const getBedTypeList = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getBedTypeSetup().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  const getBedTypeList = async () => {
+    const response = await api?.getSetup_bed_type()
+    const {data} = response
+    console.log(data,"bedtype");
+    setTableData(data)
   }
 
-  function handleFormSubmit(event) {
+  const components = {
 
-    // const payload = {
-    //   case_reference_id: "1",
-    //   patient_id: id, // Assign the patient ID to the patient_id field
-    //   generated_by: "1",
-    //   is_ipd_moved: "no",
-    //   discharged: "2023-04-25 14:07:22",
-    //   created_at: ""
-    // };
-  
-    api.postBedTypeSetup(formData).then(resp => {
-      console.log(resp);
-      console.log(resp.data, 'ressss');
-    });
-  
-    api
-      .getBedTypeSetup({ headers: { "content-type": "application/json" } })
-      .then(resp => {
-        getBedTypeList();
-        setFormData(initialSetupBedTypeValue);
-        console.log()
-        event.preventDefault();
-      });
-  
-    handleClose();
-  }
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   return (
     <React.Fragment>
@@ -118,10 +119,9 @@ const SetupBedType = props => {
                   rowData={tableData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupBedTypeDialog open={openSetupBedtypeDialog} handleClose={handleCloseBedtypeDialog} data={formData}
-            onChange={onChange}
-            handleFormSubmit={handleFormSubmit} />
+                <SetupBedTypeDialog getBedTypeList={getBedTypeList} open={openSetupBedtypeDialog} selectedData={selectedData} handleClose={handleCloseBedtypeDialog}/>
                 </div>
             </CardBody>
           </Card>

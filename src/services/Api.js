@@ -12,6 +12,7 @@ const baseNodeURL = "http://localhost:4000";
 const baseNestSetupandMainURL = "http://localhost:4000";
 const baseNestSetupURL = "http://localhost:4000";
 const localhost = "http://localhost:4000"
+const localhost2= "http://localhost:5000"
 
 // const http2 = axios.create({
 //   baseURL: baseNestURL,  
@@ -29,6 +30,9 @@ const http4 = axios.create({
 });
 const http5 = axios.create({
   baseURL:localhost
+})
+const http6 = axios.create({
+  baseURL:localhost2
 })
 
 // const http4 = axios.create({
@@ -388,7 +392,13 @@ const URL = {
   SETUP_HR_MAIN_MODULE_SPECIALIST:'/setup-human-resource-specialist',
   SEARCH_HR_SEARCH_BY_ROLE:'/human-resource-staff/role',
   SEARCH_HR_MAIN_BY_KEYWORK:'/human-resource-staff/keyword',
-  DISABLE_MAIN_HR_MODULE:'/human-resource-staff/disable'
+  DISABLE_MAIN_HR_MODULE:'/human-resource-staff/disable',
+  IPD_DETATILS:'/ipd-main-module',
+  SETUP_BED_FLOOR:'/setup-bed-floor',
+  SETUP_BED_STATUS:'/setup-bed-bed-status',
+  SETUP_BED:'/setup-bed-bed',
+  SETUP_BED_GROUP:'/setup-bed-bed-group',
+  SETUP_BED_TYPE:'/setup-bed-bed-type'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -2726,7 +2736,78 @@ function patchSetupRadiologyParameter(data){
     const url =`${URL.DISABLE_MAIN_HR_MODULE}/${id}`
     return http5.post(url)
   }
-  
+  function getIPDpatient(){
+    return http5.get(URL.IPD_DETATILS) 
+  }
+  function getSetup_bed_floor(){
+    return http6.get(URL.SETUP_BED_FLOOR)
+  }
+  function postSetup_bed_floor(data){
+    return http6.post(data)
+  }
+  function updateSetup_bed_floor(data){
+    const url = `${URL.SETUP_BED_FLOOR}/${data?.id}`
+    return http6.patch(url,data)
+  }
+  function deleteSetup_bed_floor(id){
+  return http6.delete(`${URL.SETUP_BED_FLOOR}`)
+  }
+  function getSetup_bed_Status(){
+    return http6.get(URL.SETUP_BED_STATUS)
+  }
+  function postSetup_bed_Status(data){
+    return http6.post(URL.SETUP_BED_STATUS,data)
+  }
+  function updateSetup_bed_Status(data){
+    const url = `${URL.SETUP_BED_STATUS}/${data?.id}`
+    return http6.patch(url,data)
+  }
+  function deleteSetup_bed_Status(id){
+    const url = `${URL.SETUP_BED_STATUS}/${id}`
+    return http6.delete(url)
+  }
+  function getSetup_bed_group(){
+    return http6.get(`${URL.SETUP_BED_GROUP}`)
+  }
+  function postSetup_bed_group(data){
+    return http6.post(URL.SETUP_BED_GROUP,data)
+  }
+  function updateSetup_bed_group(data){
+    const url = `${URL.SETUP_BED_GROUP}/${data?.id}`
+    return http6.patch(url,data)
+  }
+  function deleteSetup_bed_group(id){
+    const url = `${URL.SETUP_BED_GROUP}/${id}`
+    return http6.delete(url)
+  }
+  function getSetup_Bed(){
+    return http6.get(URL.SETUP_BED)
+  }
+  function postSetup_Bed(data){
+    return http6.post(URL.SETUP_BED,data)
+  }   
+  function updateSetup_Bed(data) {
+    const url = `${URL.SETUP_BED}/${data?.id}`
+    return http6.patch(url,data)
+  }
+  function deleteSetup_Bed(id){
+    const url = `${URL.SETUP_BED}/${id}`
+    return http6.delete(url)
+  }
+  function getSetup_bed_type(){
+    return http6.get(URL.SETUP_BED_TYPE)
+  }
+  function postSetupBedType(data){
+    return http6.post(URL.SETUP_BED_TYPE,data)
+  }
+  function updateSetup_bed_Type(data){
+    const url = `${URL.SETUP_BED_TYPE}/${data?.id}`
+    return http6.patch(url,data)
+  }
+  function deleteSetup_bedType(id){
+    const url = `${URL.SETUP_BED_TYPE}/${id}`
+    return http6.delete(url)
+  }
 
 ////////
 
@@ -3298,6 +3379,27 @@ const api = {
   updateHrMainModule,
   disableStaff_HR_mainModule,
   getSetupAppointmentSlotChrg,
+  getIPDpatient,
+  getSetup_bed_floor,
+  postSetup_bed_floor,
+  updateSetup_bed_floor,
+  deleteSetup_bed_floor,
+  getSetup_bed_Status,
+  postSetup_bed_Status,
+  updateSetup_bed_Status,
+  deleteSetup_bed_Status,
+  getSetup_bed_group,
+  postSetup_bed_group,
+  updateSetup_bed_group,
+  deleteSetup_bed_group,
+  getSetup_Bed,
+  postSetup_Bed,
+  updateSetup_Bed, 
+  deleteSetup_Bed,
+  getSetup_bed_type,
+  postSetupBedType,
+  updateSetup_bed_Type,
+  deleteSetup_bedType
   getRolebyId,
   disableStaff_HR_mainModule,
 deleteStaff_HR_mainModule,

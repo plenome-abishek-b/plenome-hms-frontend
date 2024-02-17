@@ -188,6 +188,8 @@ import SetupDoctorShift from "pages/Setup/SetupComponents/SetupDoctorShift";
 import SetupPatient from "pages/Setup/SetupComponents/SetupPatient";
 import SetupDisablePatient from "pages/Setup/SetupComponents/SetupDisablePatient";
 import SetupPatientImport from "pages/Setup/SetupComponents/SetupPatientImport";
+import SetupExample from "pages/Setup/SetupComponents/SetupBedLisNew";
+import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -251,8 +253,8 @@ const authProtectedRoutes = [
   {path: "/taxcategory", component: SetupTaxCategory},
   {path: "/unittype", component: SetupUnitType},
   {path: "/setupbed", component: SetupBed},
-  {path: "/bed", component: SetupBedList},
-  {path: "/bedtype", component: SetupBedType},
+  {path: "/bed", component: SetupBedLisNew},
+  {path: "/bedtype", component:SetupBedType},
   {path: "/bedgroup", component: SetupBedGroup},
   {path: "/floor", component: SetupFloor},
   {path: "/findings", component: SetupFindings},
