@@ -240,6 +240,7 @@ export default function SetupPatientDialog({
     //   getSpecialist()
     //   handleClose()
     // }
+    setFormdata({})
   };
   const handleUpdate = async () => {
     const newData = {
@@ -258,334 +259,7 @@ export default function SetupPatientDialog({
     }
   };
 
-  // return (
-  //   <div
-  //     style={{
-  //       display: "flex",
-  //       alignItems: "flex-end",
-  //       justifyContent: "flex-end",
-  //     }}
-  //   >
-  //     <Dialog
-  //       open={open}
-  //       onClose={handleClose}
-  //       aria-labelledby="alert-dialog-title"
-  //       aria-describedby="alert-dialog-description"
-  //       maxWidth="lg"
-  //       PaperProps={{
-  //         style: {
-  //           width: "85%", // adjust the width as needed
-  //           height: "auto", // adjust the height as needed
-  //           maxHeight: "90vh", // adjust the max height as needed
-  //         },
-  //       }}
-  //     >
-  //       <DialogTitle
-  //         id="alert-dialog-title"
-  //         className="bg-primary bg-soft text-primary"
-  //       >
-  //         Add Patient
-  //       </DialogTitle>
-  //       <DialogContent className="mt-4 ms-2">
-  //         <br />
-  //         <Row className="p-2 flex-start">
-  //           <Col>
-  //             <Label>Patient name</Label>
-  //             <br />
-  //             <input
-  //               name="patient_name"
-  //               placeholder={validate ? "enter specialist name" : ""}
-  //               onChange={handleChange}
-  //               value={formData.patient_name}
-  //               type="text"
-  //               style={{
-  //                 height: "30px",
-  //                 width: "300px",
-  //                 borderRadius: "10px",
-  //                 borderColor: validate ? "red" : "inherit",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Guardian name</Label>
-  //             <br />
-  //             <input
-  //               name="guardian_name"
-  //               placeholder={validate ? "enter specialist name" : ""}
-  //               onChange={handleChange}
-  //               value={formData.guardian_name}
-  //               type="text"
-  //               style={{
-  //                 height: "30px",
-  //                 borderRadius: "10px",
-  //                 width: "300px",
-  //                 borderColor: validate ? "red" : "inherit",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <Label>Gender</Label>
-  //             <br />
-  //             <select
-  //               onChange={handleChange}
-  //               value={formData?.gender}
-  //               name="gender"
-  //               style={{ width: "70px", borderRadius: "10px" }}
-  //             >
-  //               Gender
-  //               <option value="Male">Male</option>
-  //               <option value="Female">Female</option>
-  //             </select>
-  //           </Col>
-  //           <Col>
-  //             <Label>Date of birth</Label>
-  //             <br />
-  //             <input
-  //               onChange={handleChange}
-  //               value={formData?.dob}
-  //               name="dob"
-  //               type="date"
-  //               style={{ width: "120px", height: "35px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-
-  //           {/* <div style={{display:'flex'}}> */}
-  //           <Col>
-  //             <Label></Label>
-  //             <br />
-  //             <input
-  //               onChange={handleChange}
-  //               type="number"
-  //               value={formData?.year}
-  //               placeholder="year"
-  //               name="year"
-  //               style={{
-  //                 marginLeft: "100px",
-  //                 marginTop: "8px",
-  //                 width: "80px",
-  //                 height: "35px",
-  //                 borderRadius: "10px",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Age(yy-mm-dd)</Label>
-  //             <br />
-  //             <input
-  //               onChange={handleChange}
-  //               type="number"
-  //               name="month"
-  //               value={formData?.month}
-  //               placeholder="month"
-  //               style={{
-  //                 marginLeft: "50px",
-  //                 width: "80px",
-  //                 height: "35px",
-  //                 borderRadius: "10px",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <br />
-  //             <input
-  //               type="number"
-  //               onChange={handleChange}
-  //               placeholder="day"
-  //               name="day"
-  //               value={formData?.day}
-  //               style={{
-  //                 marginRight: "40px",
-  //                 marginTop: "8px",
-  //                 width: "80px",
-  //                 height: "35px",
-  //                 borderRadius: "10px",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Bloodgroup</Label>
-  //             <br />
-  //             <select
-  //               onClick={() => getBloodGroups()}
-  //               name="blood_group"
-  //               onChange={handleChange}
-  //               style={{ width: "70px", borderRadius: "10px" }}
-  //             >
-  //               <option>select</option>
-  //               {bloodBank &&
-  //                 bloodBank.map((val) => (
-  //                   <option key={val.name} value={val?.name}>
-  //                     {val.name}
-  //                   </option>
-  //                 ))}
-  //               {/* <option>Female</option> */}
-  //             </select>
-  //           </Col>
-
-  //           {/* </div> */}
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <Label>Marital status</Label>
-  //             <br />
-  //             <select
-  //               name="marital_status"
-  //               onChange={handleChange}
-  //               style={{ width: "200px", borderRadius: "10px" }}
-  //             >
-  //               <option>select</option>
-  //               <option value="single">Single</option>
-  //               <option value="married">Married</option>
-  //               <option value="widowed">Widowed</option>
-  //               <option value="separated">Separated</option>
-  //               <option value="not specified">Not Specified</option>
-  //             </select>
-  //           </Col>
-  //           <Col>
-  //             <Label>Patient photo</Label>
-  //             <br />
-  //             <input
-  //               type="file"
-  //               name="image"
-  //               onChange={handleChange}
-  //               style={{
-  //                 marginRight: "40px",
-  //                 marginTop: "8px",
-  //                 width: "220px",
-  //                 height: "35px",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <Label>Number</Label>
-  //             <br />
-  //             <input
-  //               // type="number"
-  //               placeholder="number"
-  //               name="mobileno"
-  //               onChange={handleChange}
-  //               value={formData?.mobileno}
-  //               style={{
-  //                 height: "30px",
-  //                 width: "150px",
-  //                 borderRadius: "10px",
-  //                 display: "flex",
-  //                 justifyContent: "center",
-  //               }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Email</Label>
-  //             <br />
-  //             <input
-  //               type="email"
-  //               placeholder="email"
-  //               name="email"
-  //               onChange={handleChange}
-  //               value={formData?.email}
-  //               style={{ height: "30px", width: "200px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Address</Label>
-  //             <br />
-  //             <input
-  //               type="text"
-  //               name="address"
-  //               onChange={handleChange}
-  //               value={formData?.address}
-  //               placeholder="address"
-  //               style={{ height: "30px", width: "250px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <Label>Remark</Label>
-  //             <br></br>
-  //             <input
-  //               type="text"
-  //               placeholder="remark"
-  //               onChange={handleChange}
-  //               value={formData?.note}
-  //               name="note"
-  //               style={{ height: "50px", width: "350px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>Any known alergies</Label>
-  //             <br></br>
-  //             <input
-  //               type="text"
-  //               name="known_allergies"
-  //               value={formData?.known_allergies}
-  //               onChange={handleChange}
-  //               placeholder="any know alergies"
-  //               style={{ height: "50px", width: "350px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <Label>TPA Id</Label>
-  //             <br />
-  //             <input
-  //               type="text"
-  //               name="insurance_id"
-  //               value={formData?.insurance_id}
-  //               onChange={handleChange}
-  //               placeholder="tpa id"
-  //               style={{ height: "50px", width: "180px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <br />
-  //             <Label>TPA Validity</Label>
-  //             <br />
-  //             <input
-  //               type="date"
-  //               name="insurance_validity"
-  //               onChange={handleChange}
-  //               value={formData?.insurance_validity}
-  //               placeholder="tpa validity"
-  //               style={{ height: "50px", width: "180px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //           <Col>
-  //             <Label>National Identification Number</Label>
-  //             <br />
-  //             <input
-  //               type="number"
-  //               name="identification_number"
-  //               onChange={handleChange}
-  //               value={formData?.identification_number}
-  //               placeholder="national identification number"
-  //               style={{ height: "50px", width: "210px", borderRadius: "10px" }}
-  //             ></input>
-  //           </Col>
-  //         </Row>
-  //       </DialogContent>
-  //       <DialogActions>
-  //         {/* {selectedData?.specialist_name ? */}
-  //         <button
-  //           className="btn-mod bg-soft btn-md"
-  //           onClick={() => handleSubmit()}
-  //           style={{ marginRight: "3%" }}
-  //         >
-  //           Saves
-  //         </button>
-  //         {/* :<button className="btn-mod bg-soft btn-md" onClick={()=>handleSubmit()} style={{marginRight: '3%'}}>
-  //         Save
-  //       </button>
-  //          } */}
-  //       </DialogActions>
-  //     </Dialog>
-  //   </div>
-  // );
+  
   return (
     <div>
       <form>
@@ -624,8 +298,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.patient_name ? 'red' : ''
                   }}
                   value={formData.patient_name}
@@ -635,7 +309,7 @@ export default function SetupPatientDialog({
                 ></input>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Guardian Name</label>
+                <label>Guardian Name<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="text"
@@ -648,8 +322,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.guardian_name ? 'red' : ''
                   }}
                 ></input>
@@ -658,15 +332,15 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Gender</label>
+                <label>Gender<span className="text-danger"> *</span></label>
                 <br />
                 <select
                 
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.gender ? 'red' : ''
                   }}
                   name="gender"
@@ -682,7 +356,7 @@ export default function SetupPatientDialog({
                 </select>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Date of Birth</label>
+                <label>Date of Birth<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="date"
@@ -695,8 +369,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.dob ? 'red' : ''
                   }}
                 ></input>
@@ -706,7 +380,7 @@ export default function SetupPatientDialog({
             <Row>
               <Col lg="6" md="6" sm="12">
                 <label>
-                  Age <span className="text-danger">*</span>
+                  Age <span className="text-danger"> *</span>
                 </label>
                 <br />
                  {/* ( */}
@@ -719,8 +393,8 @@ export default function SetupPatientDialog({
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                         borderColor:validate?.age ? 'red' : ''
                       }}
                     />
@@ -732,8 +406,8 @@ export default function SetupPatientDialog({
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
                         borderColor:validate?.age ? 'red' : ''
                       }}
                       className="ms-3"
@@ -746,8 +420,8 @@ export default function SetupPatientDialog({
                       style={{
                         width: "80px",
                         height: "35px",
-                        borderRadius: "5px",
-                        border: "1px solid grey",
+                        borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                         borderColor:validate?.age ? 'red' : ''
                       }}
                       className="ms-3"
@@ -764,15 +438,15 @@ export default function SetupPatientDialog({
             </Row> */}
 
               <Col lg="6" md="6" sm="12">
-                <label>Blood Group</label>
+                <label>Blood Group<span className="text-danger"> *</span></label>
                 <br />
                 <select
                 onClick={()=>getBloodGroups()}
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.blood_group ? 'red' : ''
                   }}
                   name="blood_group"
@@ -794,13 +468,13 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Marital Status</label>
+                <label>Marital Status<span className="text-danger"> *</span></label>
                 <select
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.marital_status ? 'red' : ''
                   }}
                   name="marital_status"
@@ -809,6 +483,7 @@ export default function SetupPatientDialog({
                   //  onChange={formik.handleChange}
                   //  value={formik.values.gender}
                 >
+                  <option>select</option>
                   <option value="single">Single</option>
                   <option value="married">Married</option>
                   <option value="widowed">Widowed</option>
@@ -827,7 +502,7 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Phone</label>
+                <label>Phone<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   placeholder={validate?.mobileno ? 'enter number' : 'number'}
@@ -839,14 +514,21 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.mobileno ? 'red' : ''
+                  }}
+                  maxLength={10}
+                  onInput={(e) => {
+                    if (e.target.value.length > 10) {
+                      e.target.value = e.target.value.slice(0, 10);
+                      handleChange(e);
+                    }
                   }}
                 ></input>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Email</label>
+                <label>Email<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="email"
@@ -859,8 +541,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.email ? 'red' : ''
                   }}
                 ></input>
@@ -869,7 +551,7 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Remarks</label>
+                <label>Remarks<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   placeholder={validate?.note ? 'enter remark' : 'remarks'}
@@ -882,14 +564,14 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.note ? 'red' : ''
                   }}
                 ></input>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Any know Allergies</label>
+                <label>Any know Allergies<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="text"
@@ -902,8 +584,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.known_allergies ? 'red' : ''
                   }}
                 ></input>
@@ -912,7 +594,7 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="12" md="12" sm="12">
-                <label>Address</label>
+                <label>Address<span className="text-danger"> *</span></label>
                 <br />
                 <textarea
                   type="text"
@@ -925,8 +607,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "60px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.address ? 'red' : ''
                   }}
                 ></textarea>
@@ -935,7 +617,7 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>TPA ID</label>
+                <label>TPA ID<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="text/number"
@@ -948,13 +630,13 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>TPA Validity</label>
+                <label>TPA Validity<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   name="insurance_validity"
@@ -967,8 +649,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.insurance_validity ? 'red' : ''
                   }}
                 ></input>
@@ -977,7 +659,7 @@ export default function SetupPatientDialog({
             <br />
             <Row>
               <Col lg="12" md="12" sm="12">
-                <label>National Identification Number</label>
+                <label>National Identification Number<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="text/number"
@@ -990,8 +672,8 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                     borderColor:validate?.identification_number ? 'red' : ''
                   }}
                 ></input>
@@ -1010,20 +692,20 @@ export default function SetupPatientDialog({
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
               <Col>
-                <label>ABHA Number</label>
+                <label>ABHA Number<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   style={{
                     width: "100%",
                     height: "35px",
-                    borderRadius: "5px",
-                    border: "1px solid grey",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>

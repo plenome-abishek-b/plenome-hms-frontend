@@ -162,6 +162,7 @@ const Hr = (props) => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Link to="/addstaff">
               <button className="btn-mod" style={{ marginRight: "10px" }}>
+              <i className="fas fa-user-plus"></i>&nbsp;
                 Add Staff&nbsp;
               </button>
             </Link>
@@ -171,7 +172,8 @@ const Hr = (props) => {
               className="btn-mod"
               style={{ marginRight: "10px" }}
             >
-              Disabled staffs&nbsp;
+              <i className="fas fa-ban"></i>
+              &nbsp;Disabled staffs&nbsp;
             </button>
             {/* </Link> */}
             {/* <Link to="/attendance">

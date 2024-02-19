@@ -1,7 +1,7 @@
 import React from 'react';
 
 const EditButtonRenderer = ({ onClick }) => (
-  <span onClick={onClick} style={{ cursor: 'pointer' }}>
+  <span onClick={onClick} style={{ cursor: 'pointer', color: '#362FD9', marginRight: '5px' }}>
     <i className="fas fa-pencil-alt"></i> 
   </span>
 );
