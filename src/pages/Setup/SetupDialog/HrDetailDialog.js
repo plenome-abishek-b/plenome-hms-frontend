@@ -36,6 +36,10 @@ export default function HrDetailDialog({
       const response = await api.deleteStaff_HR_mainModule(id);
       getAllStaff();
       handleClose();
+      history.push("/hr#tab_content_1");
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } else {
       console.log("no no");
     }
@@ -46,6 +50,9 @@ export default function HrDetailDialog({
     getAllStaff();
     handleClose();
     history.push("/hr");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   //   const specialistNameConcat = staffDetail['group_concat(DISTINCT specialist.specialist_name)'];
   var dob = new Date(staffDetail?.dob);
@@ -173,9 +180,9 @@ export default function HrDetailDialog({
                 <>
                   <div className="ms-3">
                     <button
-                      className="btn btn-success btn-md text-white"
+                      className="btn btn-md text-white fw-bold"
                       onClick={() => handleEnable(staffDetail?.id)}
-                      style={{ padding: "7px" }}
+                      style={{ padding: "7px" , backgroundColor: "#5BB318"}}
                     >
                       <i className="fas fa-lock-open"></i>
                       &nbsp;Enable

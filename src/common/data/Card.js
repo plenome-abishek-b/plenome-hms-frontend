@@ -34,7 +34,9 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
         <div className="row">
           <div className="col-md-4 col-sm-6" >
             {/* QR Code */}
-            <QRCode value={staffDetails} bgColor="#ffffff" fgColor="#000000" style={{border: '9px solid #419197',borderRadius: '5px', padding: '9px'}}/>
+            <div onClick={handleOpen}>
+              <QRCode value={staffDetails} bgColor="#ffffff" fgColor="#000000" style={{border: '9px solid #419197',borderRadius: '5px', padding: '9px', cursor: 'pointer'}}/>
+            </div>
           </div>
           <div className="col-md-8 col-sm-6">
             <h5 className="card-title">{staffname}</h5>

@@ -112,14 +112,14 @@ const Hr = (props) => {
     }
   };
   const gridOptions = {
-    domLayout: "autoHeight", // Set domLayout to autoHeight
+    domLayout: "autoHeight", 
     defaultColDef: {
-      flex: 1, // Set the default flex property for columns
+      flex: 1, 
       sortable: true,
       filter: true,
     },
     onFirstDataRendered: (params) => {
-      params.api.autoSizeAllColumns(); // Auto-size all columns on first data render
+      params.api.autoSizeAllColumns();
     },
   };
   const makelistView = () => {
@@ -152,7 +152,6 @@ const Hr = (props) => {
     console.log(listDisabledStaffs, "true");
   };
 
-  
   return (
     <React.Fragment>
       <div className="page-content">
@@ -162,8 +161,7 @@ const Hr = (props) => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Link to="/addstaff">
               <button className="btn-mod" style={{ marginRight: "10px" }}>
-              <i className="fas fa-user-plus"></i>&nbsp;
-                Add Staff&nbsp;
+                <i className="fas fa-user-plus"></i>&nbsp; Add Staff&nbsp;
               </button>
             </Link>
             {/* <Link to="/addstaff"> */}
@@ -203,7 +201,12 @@ const Hr = (props) => {
                       <select
                         className="form-control"
                         name="searchByRole"
-                        style={{ width: "100%", height: "32px", border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}
+                        style={{
+                          width: "100%",
+                          height: "32px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
+                        }}
                         onClick={() => getRoles()}
                         onChange={(e) => setSearchByRole(e.target.value)}
                       >
@@ -237,7 +240,12 @@ const Hr = (props) => {
                       <input
                         type="text"
                         placeholder="Search by Staff ID, Name, Role"
-                        style={{ width: "100%", height: "32px", border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}
+                        style={{
+                          width: "100%",
+                          height: "32px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
+                        }}
                         onChange={(e) => setSearchBykeyword(e.target.value)}
                       ></input>
                     </div>
@@ -301,7 +309,12 @@ const Hr = (props) => {
                       <input
                         type="text"
                         placeholder="Search by Staff ID, Name, Role"
-                        style={{ width: "100%", height: "32px", border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}
+                        style={{
+                          width: "100%",
+                          height: "32px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
+                        }}
                         onChange={(e) => setSearchBykeyword(e.target.value)}
                       ></input>
                     </div>
