@@ -345,7 +345,7 @@ const AddStaff = () => {
       console.log(error,"error");
     }
     
-  };
+  }; //handlechange function with correct set of data
 
   const getStaffs = async () => {
     const response = await api.getRolePermission();
