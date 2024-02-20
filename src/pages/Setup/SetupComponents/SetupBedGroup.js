@@ -41,8 +41,8 @@ const SetupBedGroup = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
     console.log(userConfirmed,"delete");
 if(userConfirmed){
-  const response = await api.deleteSetup_bedType(data?.id)
-  getBedTypeList()
+  const response = await api.deleteSetup_bed_group(data?.id)
+  getBedGroupList()
 }else{
   console.log("else");
 }
@@ -72,6 +72,7 @@ if(userConfirmed){
   )
 
   const handleOpenBedGroup = () => {
+    setSelectedData({})
     setOpenSetupBedgroupDialog(true);
   }
 
@@ -124,7 +125,7 @@ if(userConfirmed){
                   frameworkComponents={components}
                 />
                 </div>
-                <SetupBedGroupDialog selectedData={selectedData} open={openSetupBedgroupDialog} handleClose={handleCloseBedGroup} data={formData}/>
+                <SetupBedGroupDialog getBedGroupList={getBedGroupList} selectedData={selectedData} open={openSetupBedgroupDialog} handleClose={handleCloseBedGroup} data={formData}/>
             </CardBody>
           </Card>
         </Container>

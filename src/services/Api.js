@@ -2710,14 +2710,14 @@ function patchSetupRadiologyParameter(data){
     return http6.get(URL.SETUP_BED_FLOOR)
   }
   function postSetup_bed_floor(data){
-    return http6.post(data)
+    return http6.post(URL.SETUP_BED_FLOOR,data)
   }
   function updateSetup_bed_floor(data){
     const url = `${URL.SETUP_BED_FLOOR}/${data?.id}`
     return http6.patch(url,data)
   }
   function deleteSetup_bed_floor(id){
-  return http6.delete(`${URL.SETUP_BED_FLOOR}`)
+  return http6.delete(`${URL.SETUP_BED_FLOOR}/${id}`)
   }
   function getSetup_bed_Status(){
     return http6.get(URL.SETUP_BED_STATUS)
