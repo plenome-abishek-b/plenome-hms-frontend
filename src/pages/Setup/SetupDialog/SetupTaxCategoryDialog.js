@@ -58,15 +58,19 @@ export default function SetupTaxCategoryDialog({
         <DialogContent className="mt-4 ms-2">
           <Container>
             <Row>
-                <label>Name</label>
+                <label>Name<span className="text-danger">*</span></label>
                 <br />
-                <input type="text" placeholder="" id="name" value={data.name} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
+                <input type="text" placeholder="" id="name" value={data.name} onChange={e=>onChange(e)} style={{ height: '35px',
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px", }}></input>
             </Row>
             <br />
             <Row>
-                <label>Percentage</label>
+                <label>Percentage<span className="text-danger">*</span></label>
                 <br />
-                <input type="number" placeholder="%" id="percentage" value={data.percentage} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid grey', borderRadius: '5px' }}></input>
+                <input type="number" placeholder="%" id="percentage" value={data.percentage} onChange={e=>onChange(e)} style={{ height: '35px',
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "3px",}}></input>
             </Row>
           </Container>
         </DialogContent>

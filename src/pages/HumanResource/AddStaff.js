@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 import React, { useState, useRef } from "react";
 import {
   Row,
@@ -20,6 +20,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { format } from "prettier";
 import { useEffect } from "react";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 //redux
 
@@ -36,6 +38,7 @@ const AddStaff = () => {
   const [department, setDepartment] = useState([]);
   const [specialist, setSpecialist] = useState([]);
   const [bloodGroup, setBloodGroup] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     employee_id: "",
     role_id: "",
@@ -114,7 +117,7 @@ const AddStaff = () => {
         staff_designation_id: staff?.staff_designation_id,
         department_id: staff?.department_id,
         department: staff?.department_name,
-        specialist: String(staff?.specialist),
+        specialist: staff?.specialist,
         surname: staff?.surname,
         first_name: staff?.name,
         father_name: staff?.father_name,
@@ -179,7 +182,7 @@ const AddStaff = () => {
         role_id: "",
         staff_designation_id: "",
         department_id: "",
-        specialist: "",
+        specialist: [],
         surname: "",
         first_name: "",
         father_name: "",
@@ -251,6 +254,22 @@ const AddStaff = () => {
     });
   };
 
+  const validationSchema = yup.object().shape({
+    contact_no: yup
+      .string()
+      .matches(/^[0-9]+$/, "Phone number must contain only digits")
+      .min(10, "Phone number must be at least 10 digits")
+      .required("Phone number is required *"),
+    email: yup.string().email("Invalid email").required("Email is required *"),
+    employee_id: yup.string().required("Staff ID is required *"),
+    first_name: yup.string().required("First Name is required *"),
+    marital_status: yup.string().required("Marital status is required *"),
+    dob: yup.string().required("Date of Birth is required *"),
+    image: yup.string().required("Photo is required *"),
+    password: yup.string().required("Password is required *"),
+    role_id: yup.string().required("Role is required *"),
+  });
+
   const addCertificate = () => {
     const newCertificate = {
       id: certificates.length + 1,
@@ -275,6 +294,29 @@ const AddStaff = () => {
       certificates: selectedFiles,
       other_document_name: formData?.other_document_file,
     };
+    // if(datas?.employee_id){
+
+    // }else if(datas?.role_id){
+
+    // }else if(datas?.staff_designation_id){
+
+    // }else if(datas?.department_id){
+
+    // }else if(datas?.specialist){
+
+    // }else if(datas?.first_name){
+
+    // }else if(datas?.surname){
+
+    // }else if(data?.father_name){
+
+    // }else if(data?.mother_name){
+
+    // }else if(data?.gender){
+
+    // }else if(data?.marital_status){
+
+    // }
     console.log(datas, "all datas getting");
     // const filteredObject = Object.fromEntries(
     //   Object.entries(datas).filter(([key, value]) => value !== "")
@@ -287,11 +329,23 @@ const AddStaff = () => {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    console.log(name,typeof(value),"both");
+    try {
+       if (name === "specialist") {
+      setFormData({...formData, specialist: JSON.stringify([parseInt(value)])});
+    }
+      else{
+        console.log("here");
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      }
+    } catch (error) {
+      console.log(error,"error");
+    }
+    
+  }; //handlechange function with correct set of data
 
   const getStaffs = async () => {
     const response = await api.getRolePermission();
@@ -330,19 +384,28 @@ const AddStaff = () => {
     history.push("/hr");
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const formik = useFormik({
+    initialValues: formData,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
           <h4 className="text-primary">Basic Information</h4>
-          <p className="text-danger d-flex justify-content-end">Fill all the Mandatory details( * )</p>
           <Card>
             <CardBody>
               <Row>
                 <Col lg="3">
                   <label>
-                    Staff ID<span className="text-danger">*</span>
+                    Staff ID<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <input
@@ -351,29 +414,36 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     onChange={handleChange}
                     value={formData?.employee_id}
+                    onBlur={formik.handleBlur}
                   ></input>
+                  {formik.touched.employee_id && formik.errors.employee_id ? (
+                    <div className="text-danger">
+                      {formik.errors.employee_id}
+                    </div>
+                  ) : null}
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    Role<span className="text-danger">*</span>
+                    Role<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="role_id"
                     onChange={handleChange}
                     onClick={() => getStaffs()}
                     value={formData?.role_id}
+                    onBlur={formik.handleBlur}
                   >
                     <option>
                       {formData?.role ? formData?.role : "select"}
@@ -382,16 +452,21 @@ const AddStaff = () => {
                       <option value={Number(role?.id)}>{role?.name}</option>
                     ))}
                   </select>
+                  {formik.touched.role_id && formik.errors.role_id ? (
+                    <div className="text-danger">{formik.errors.role_id}</div>
+                  ) : null}
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Designation</label>
+                  <label>
+                    Designation<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="staff_designation_id"
                     onChange={handleChange}
@@ -409,14 +484,16 @@ const AddStaff = () => {
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Department</label>
+                  <label>
+                    Department<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="department_id"
                     onChange={handleChange}
@@ -434,14 +511,16 @@ const AddStaff = () => {
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12" className="mt-3">
-                  <label>Specialist</label>
+                  <label>
+                    Specialist<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="specialist"
                     onChange={handleChange}
@@ -463,61 +542,87 @@ const AddStaff = () => {
               <Row>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    First Name<span className="text-danger">*</span>
+                    First Name<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="first_name"
                     onChange={handleChange}
                     value={formData?.first_name}
                   ></input>
+                  {formik.touched.first_name && formik.errors.first_name ? (
+                    <div className="text-danger">
+                      {formik.errors.first_name}
+                    </div>
+                  ) : null}
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Last Name</label>
+                  <label>
+                    Last Name<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="surname"
                     onChange={handleChange}
                     value={formData?.surname}
                   ></input>
                 </Col>
-
-                <Col lg="3" md="12" sm="12">
-                  <label>Father Name</label>
+                {/* <Col lg="3" md="12" sm="12">
+                  <label>Password<span className="text-danger"> *</span></label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
+                    }}
+                    name="password"
+                    onChange={handleChange}
+                    value={formData?.password}
+                  ></input>
+                </Col> */}
+                <Col lg="3" md="12" sm="12">
+                  <label>
+                    Father Name<span className="text-danger"> *</span>
+                  </label>
+                  <br />
+                  <input
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="father_name"
                     onChange={handleChange}
                     value={formData?.father_name}
+                    onBlur={formik.handleBlur}
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Mother Name</label>
+                  <label>
+                    Mother Name<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="mother_name"
                     onChange={handleChange}
@@ -529,15 +634,15 @@ const AddStaff = () => {
               <Row>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    Gender<span className="text-danger">*</span>
+                    Gender<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="gender"
                     onChange={handleChange}
@@ -550,15 +655,15 @@ const AddStaff = () => {
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    Marital Status<span className="text-danger">*</span>
+                    Marital Status<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="marital_status"
                     onChange={handleChange}
@@ -573,14 +678,16 @@ const AddStaff = () => {
                   </select>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Blood Group</label>
+                  <label>
+                    Blood Group<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <select
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="blood_group"
                     onChange={handleChange}
@@ -595,7 +702,7 @@ const AddStaff = () => {
                 </Col>
                 <Col>
                   <label>
-                    Date of Birth<span className="text-danger">*</span>
+                    Date of Birth<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <input
@@ -603,8 +710,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="dob"
                     onChange={handleChange}
@@ -615,14 +722,16 @@ const AddStaff = () => {
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>Date of Joining</label>
+                  <label>
+                    Date of Joining<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     type="date"
                     name="date_of_joining"
@@ -632,30 +741,39 @@ const AddStaff = () => {
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    Phone<span className="text-danger">*</span>
+                    Phone<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="contact_no"
                     onChange={handleChange}
                     value={formData?.contact_no}
+                    onBlur={formik.handleBlur}
+                    type="number"
                   ></input>
+                  {formik.touched.contact_no && formik.errors.contact_no ? (
+                    <div className="text-danger">
+                      {formik.errors.contact_no}
+                    </div>
+                  ) : null}
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Emergency Contact</label>
+                  <label>
+                    Emergency Contact<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="emergency_contact_no"
                     onChange={handleChange}
@@ -664,7 +782,65 @@ const AddStaff = () => {
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
-                    Photo<span className="text-danger">*</span>
+                    Email<span className="text-danger"> *</span>
+                  </label>
+                  <br />
+                  <input
+                    style={{
+                      width: "100%",
+                      height: "30px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
+                    }}
+                    name="email"
+                    onChange={handleChange}
+                    value={formData?.email}
+                    onBlur={formik.handleBlur}
+                  ></input>
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="text-danger">{formik.errors.email}</div>
+                  ) : null}
+                </Col>
+                <Col lg="3" md="12" sm="12" className="mt-3">
+                  <label>
+                    Password<span className="text-danger"> *</span>
+                  </label>
+                  <br />
+                  <div style={{ position: "relative" }}>
+                    <input
+                      style={{
+                        width: "calc(100% - 40px)",
+                        height: "30px",
+                        border: "1px solid rgba(0,0,0,0.2)",
+                        borderRadius: "3px",
+                        paddingRight: "40px",
+                      }}
+                      name="password"
+                      onChange={handleChange}
+                      value={formData.password}
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <button
+                      type="button"
+                      style={{
+                        position: "absolute",
+                        right: "30px",
+                        top: "0px",
+                        border: "none",
+                        background: "none",
+                        cursor: "pointer",
+                      }}
+                      
+                      onClick={togglePasswordVisibility}
+                    >
+                      
+                      {showPassword ? <i class="fas fa-eye-slash"></i> : <i class="fas fa-eye"></i>}
+                    </button>
+                  </div>
+                </Col>
+                <Col lg="3" md="12" sm="12" className="mt-3">
+                  <label>
+                    Photo<span className="text-danger"> *</span>
                   </label>
                   <br />
                   <input
@@ -672,8 +848,8 @@ const AddStaff = () => {
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="image"
                     onChange={handleChange}
@@ -682,42 +858,6 @@ const AddStaff = () => {
                 </Col>
               </Row>
               <br />
-              <Row>
-                <Col lg="3" md="12" sm="12">
-                  <label>
-                    Email<span className="text-danger">*</span>
-                  </label>
-                  <br />
-                  <input
-                    style={{
-                      width: "100%",
-                      height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
-                    }}
-                    name="email"
-                    onChange={handleChange}
-                    value={formData?.email}
-                  ></input>
-                </Col>
-                <Col lg="3" md="12" sm="12">
-                  <label>
-                    Password<span className="text-danger">*</span>
-                  </label>
-                  <br />
-                  <input
-                    style={{
-                      width: "100%",
-                      height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
-                    }}
-                    name="password"
-                    onChange={handleChange}
-                    value={formData?.password}
-                  ></input>
-                </Col>
-              </Row>
               {/* <Row>
                 <Col lg="6" md="12" sm="12">
                   <label>Current Address</label>
@@ -751,14 +891,16 @@ const AddStaff = () => {
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>Qualification</label>
+                  <label>
+                    Qualification<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <textarea
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="qualification"
                     onChange={handleChange}
@@ -766,14 +908,16 @@ const AddStaff = () => {
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Work Experience</label>
+                  <label>
+                    Work Experience<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <textarea
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="work_exp"
                     onChange={handleChange}
@@ -781,14 +925,16 @@ const AddStaff = () => {
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Specialization</label>
+                  <label>
+                    Specialization<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <textarea
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="specialization"
                     onChange={handleChange}
@@ -796,14 +942,16 @@ const AddStaff = () => {
                   ></textarea>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Note</label>
+                  <label>
+                    Note<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <textarea
                     style={{
                       width: "100%",
                       height: "50px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="note"
                     onChange={handleChange}
@@ -814,14 +962,16 @@ const AddStaff = () => {
               <br />
               <Row>
                 <Col lg="3" md="12" sm="12">
-                  <label>PAN Number</label>
+                  <label>
+                    PAN Number<span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="pan_number"
                     onChange={handleChange}
@@ -829,14 +979,17 @@ const AddStaff = () => {
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>National Identification Number</label>
+                  <label>
+                    National Identification Number
+                    <span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="identification_number"
                     onChange={handleChange}
@@ -844,14 +997,17 @@ const AddStaff = () => {
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
-                  <label>Local Identification Number</label>
+                  <label>
+                    Local Identification Number
+                    <span className="text-danger"> *</span>
+                  </label>
                   <br />
                   <input
                     style={{
                       width: "100%",
                       height: "30px",
-                      border: "1px solid grey",
-                      borderRadius: "8px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "3px",
                     }}
                     name="local_identification_number"
                     onChange={handleChange}
@@ -899,8 +1055,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="epf_no"
                                 onChange={handleChange}
@@ -914,8 +1070,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="basic_salary"
                                 onChange={handleChange}
@@ -929,8 +1085,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="contract_type"
                                 onChange={handleChange}
@@ -951,8 +1107,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="shift"
                                 onChange={handleChange}
@@ -966,8 +1122,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="location"
                                 value={formData?.location}
@@ -988,8 +1144,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                               ></input>
                             </Col>
@@ -1011,8 +1167,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="account_title"
                                 onChange={handleChange}
@@ -1027,8 +1183,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_account_no"
                                 onChange={handleChange}
@@ -1045,8 +1201,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_name"
                                 onChange={handleChange}
@@ -1060,8 +1216,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="ifsc_code"
                                 onChange={handleChange}
@@ -1075,8 +1231,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="bank_branch"
                                 onChange={handleChange}
@@ -1096,8 +1252,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="facebook"
                                 onChange={handleChange}
@@ -1111,8 +1267,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="twitter"
                                 onChange={handleChange}
@@ -1129,8 +1285,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="linkedin"
                                 onChange={handleChange}
@@ -1144,8 +1300,8 @@ const AddStaff = () => {
                                 style={{
                                   width: "100%",
                                   height: "30px",
-                                  border: "1px solid grey",
-                                  borderRadius: "8px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
                                 }}
                                 name="instagram"
                                 onChange={handleChange}
@@ -1232,7 +1388,7 @@ const AddStaff = () => {
                             style={{ backgroundColor: "#6070FF" }}
                             onClick={handleUpdate}
                           >
-                            Saves
+                            Save
                           </button>
                         ) : (
                           <button
