@@ -8,20 +8,49 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import SetupFloorDialog from "../SetupDialog/SetupFloorDialog"
+import { useEffect } from "react"
+import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 //redux
 
 const SetupFloor = props => {
 
     const [openSetupFloorDialog, setOpenSetupFloorDialog] = useState()
-
-  const rowData = [
-    {name: '3rd Floor', desc: 'Neonatal intensive care units (NICUs) which provide care for newborn infants.', action:''}    
-]
+    const [rowData,setRowdata] = useState([])
+    const [selectedData,setSelectedData] = useState({})
+//   const rowData = [
+//     {name: '3rd Floor', desc: 'Neonatal intensive care units (NICUs) which provide care for newborn infants.', action:''}    
+// ]
+const handleEditClick = (data) =>{
+  console.log(data,"edit");
+  setSelectedData(data)
+  // setSelectedData()
+  setOpenSetupFloorDialog(true)
+ }
+ const handleDeleteClick = async (data) =>{
+  const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+  console.log(userConfirmed,"delete");
+if(userConfirmed){
+const response = await api.deleteSetup_bed_floor(data?.id)
+getBedFloor()
+}else{
+console.log("else");
+}
+ }
 
   const columnDefs = [
     {headerName: 'Name', field: 'name'},
-    {headerName: 'Description', field: 'desc'},
-    {headerName: 'Action', field: 'action'}
+    {headerName: 'Description', field: 'description'},
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -32,6 +61,15 @@ const SetupFloor = props => {
     }),
     []
   )
+  useEffect(()=>{
+   getBedFloor()
+  },[])
+  const getBedFloor = async () =>{
+    const response = await api.getSetup_bed_floor()
+    const {data} = response
+    console.log(data,"all data");
+    setRowdata(data)
+  }
 
   const handleOpenFloorDialog = () => {
     setOpenSetupFloorDialog(true);
@@ -41,7 +79,16 @@ const SetupFloor = props => {
     setOpenSetupFloorDialog(false);
   }
 
+  const components = {
 
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -60,15 +107,17 @@ const SetupFloor = props => {
                   rowData={rowData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                 />
-                <SetupFloorDialog open={openSetupFloorDialog} handleClose={handleCloseFloorDialog}/>
+                <SetupFloorDialog getBedFloor={getBedFloor} selectedData={selectedData} open={openSetupFloorDialog} handleClose={handleCloseFloorDialog}/>
                 </div>
             </CardBody>
           </Card>
         </Container>
       </div>
     </React.Fragment>
-  )
+  ) 
 }
 
 export default withTranslation()(SetupFloor)
+ 
