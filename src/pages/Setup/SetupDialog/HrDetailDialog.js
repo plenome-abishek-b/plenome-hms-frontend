@@ -167,7 +167,7 @@ export default function HrDetailDialog({
                 // Enable button for right side
                 <div className="ms-3">
                   <button
-                    className="btn bg-soft btn-md text-white fw-bold"
+                    className="btn bg-soft btn-sm text-white fw-bold"
                     onClick={() => handleDisable(staffDetail?.id)}
                     style={{ padding: "7px", backgroundColor: '#FFA732' }}
                   >
@@ -180,7 +180,7 @@ export default function HrDetailDialog({
                 <>
                   <div className="ms-3">
                     <button
-                      className="btn btn-md text-white fw-bold"
+                      className="btn btn-sm text-white fw-bold"
                       onClick={() => handleEnable(staffDetail?.id)}
                       style={{ padding: "7px" , backgroundColor: "#5BB318"}}
                     >
@@ -192,7 +192,7 @@ export default function HrDetailDialog({
               )}
               <div className="ms-3">
                 <button
-                  className="btn bg-soft btn-md text-white fw-bold"
+                  className="btn bg-soft btn-sm text-white fw-bold"
                   onClick={() => handleDelete(staffDetail?.id)}
                   style={{ padding: "7px", marginRight: "10px", backgroundColor: "#B80000" }}
                 >
