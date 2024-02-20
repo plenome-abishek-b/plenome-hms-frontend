@@ -260,7 +260,7 @@ const Appointment = (props) => {
   const components = {
     actionsRenderer: (props) => (
       <div>
-        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)}/>
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>

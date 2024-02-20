@@ -1,0 +1,9 @@
+.edit-div{
+    position: absolute;
+    right: 20px;
+    bottom: 25px;
+}
+
+.card:hover{
+    transition: transform 0.5s ease;
+}

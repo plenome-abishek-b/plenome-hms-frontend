@@ -3399,7 +3399,7 @@ const api = {
   getSetup_bed_type,
   postSetupBedType,
   updateSetup_bed_Type,
-  deleteSetup_bedType
+  deleteSetup_bedType,
   getRolebyId,
   disableStaff_HR_mainModule,
 deleteStaff_HR_mainModule,

@@ -36,16 +36,23 @@ export default function HrDetailDialog({
       const response = await api.deleteStaff_HR_mainModule(id);
       getAllStaff();
       handleClose();
+      history.push("/hr#tab_content_1");
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } else {
       console.log("no no");
     }
   };
   const handleEnable = async (id) => {
-    // Your existing code...
     const response = await api.enableStaff_HR_mainModule(id);
     console.log(response, "response");
     getAllStaff();
     handleClose();
+    history.push("/hr");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   //   const specialistNameConcat = staffDetail['group_concat(DISTINCT specialist.specialist_name)'];
   var dob = new Date(staffDetail?.dob);
@@ -65,23 +72,21 @@ export default function HrDetailDialog({
         PaperProps={{
           style: {
             display: "flex",
-            flexDirection: "row", // Flex direction set to row
+            flexDirection: "row", 
             width: "100%",
           },
         }}
       >
-        {/* Left side content (15%) */}
         <div
           style={{
-            flex: "0 0 25%", // 15% width
+            flex: "0 0 25%", 
             backgroundColor: "#fff",
             padding: "20px",
-            borderRight: "1px solid #ccc", // Border for separation
+            borderRight: "1px solid #ccc", 
           }}
         >
-          <div className="bg-primary text-white p-4 text-center">
+          <div className="text-white p-4 text-start" style={{backgroundColor: '#7070FF'}}>
             <h4 className="fw-bold">{staffDetail?.name}</h4>
-            {/* Your left side content here */}
             <hr />
             <div>
               <h6>Staff ID: {staffDetail?.employee_id}</h6>
@@ -145,25 +150,29 @@ export default function HrDetailDialog({
         >
           <DialogTitle
             id="alert-dialog-title"
-            className="bg-primary text-white fw-bold"
+            className="text-primary fw-bold bg-dark bg-soft"
           >
             Staff Details
             <div
               style={{
                 display: "flex",
-                flexDirection: "row-reverse",
+                justifyContent: "end",
                 marginLeft: "20px",
+                position: 'absolute',
+                right: '20px',
+                top: '30px'
               }}
             >
               {location === "enable" ? (
                 // Enable button for right side
                 <div className="ms-3">
                   <button
-                    className="btn btn-primary bg-soft btn-md"
+                    className="btn bg-soft btn-md text-white fw-bold"
                     onClick={() => handleDisable(staffDetail?.id)}
-                    style={{ padding: "7px" }}
+                    style={{ padding: "7px", backgroundColor: '#FFA732' }}
                   >
-                    Disable
+                    <i className="fas fa-user-slash"></i>
+                    &nbsp;Disable
                   </button>
                 </div>
               ) : (
@@ -171,28 +180,30 @@ export default function HrDetailDialog({
                 <>
                   <div className="ms-3">
                     <button
-                      className="btn btn-success bg-soft btn-md"
+                      className="btn btn-md text-white fw-bold"
                       onClick={() => handleEnable(staffDetail?.id)}
-                      style={{ padding: "7px" }}
+                      style={{ padding: "7px" , backgroundColor: "#5BB318"}}
                     >
-                      Enable
+                      <i className="fas fa-lock-open"></i>
+                      &nbsp;Enable
                     </button>
                   </div>
                 </>
               )}
               <div className="ms-3">
                 <button
-                  className="btn btn-danger bg-soft btn-md"
+                  className="btn bg-soft btn-md text-white fw-bold"
                   onClick={() => handleDelete(staffDetail?.id)}
-                  style={{ padding: "7px", marginRight: "10px" }}
+                  style={{ padding: "7px", marginRight: "10px", backgroundColor: "#B80000" }}
                 >
-                  Delete
+                  <i className="fas fa-trash"></i>
+                  &nbsp;Delete
                 </button>
               </div>
             </div>
             {/* )} */}
           </DialogTitle>
-          <DialogContent className="mt-4 ms-2" style={{ padding: "20px" }}>
+          <DialogContent className=" ms-2" style={{ padding: "20px" }}>
             {/* Your right side content here */}
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div style={{ flex: "0 0 50%", marginRight: "20px" }}>
@@ -201,78 +212,78 @@ export default function HrDetailDialog({
                   <p>{staffDetail?.contact_no}</p>
                 </div>
                 <hr
-                  style={{ width: "280%", margin: "0", marginBottom: "20px" }}
+                  style={{ width: "280%", margin: "0", marginBottom: "20px", color: 'rgba(0,0,0,0.2)' }}
                 />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Emergency Contact No:</h6>
                   <p>{staffDetail?.emergency_contact_no}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Email:</h6>
                   <p>{staffDetail?.email}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Gender:</h6>
                   <p>{staffDetail?.gender}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Blood Group:</h6>
                   <p>{staffDetail?.bloodgroup}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Date Of Birth:</h6>
                   <p>{DobOnly}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Marital Status:</h6>
                   <p>{staffDetail?.marital_status}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Father Name:</h6>
                   <p>{staffDetail?.father_name}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Mother Name:</h6>
                   <p>{staffDetail?.mother_name}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Qualification:</h6>
                   <p>{staffDetail?.qualification}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Work Experience:</h6>
                   <p>{staffDetail?.work_exp}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Specialization:</h6>
                   <p>{staffDetail?.specialization}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Note:</h6>
                   <p>{staffDetail?.note}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Pan Card:</h6>
                   <p>{staffDetail?.pan_card}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Pan Card:</h6>
                   <p>{staffDetail?.pan_number}</p>
                 </div>
-                <hr style={{ width: "280%" }} />
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
 
                 <div style={{ marginBottom: "10px" }}>
                   <h6>National Identification Number:</h6>
