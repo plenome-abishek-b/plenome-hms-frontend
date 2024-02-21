@@ -9,6 +9,8 @@ import SmsSetting from "./SettingPages/SmsSetting"
 import PrefixSetting from "./SettingPages/PrefixSetting"
 import UserSetting from "./SettingPages/UserSetting"
 import { withTranslation } from "react-i18next"
+import ModuleSettingsPage from "./SettingPages/ModuleToggleSettings"
+import ModuleToggleSettings from "./SettingPages/ModuleToggleSettings"
 
 function Settings() {
   const [activeSetting, setActiveSetting] = useState("General");
@@ -94,11 +96,11 @@ function Settings() {
                       <Link>Captcha settings</Link>
                     </th>
                   </tr> */}
-                  {/* <tr>
+                  <tr>
                     <th>
-                      <Link>Modules</Link>
+                      <Link to="#" onClick={() => handleSettingClick("modules")} className='text-white'>Modules</Link>
                     </th>
-                  </tr> */}
+                  </tr>
                   <tr>
                     <th>
                     <Link to="#" onClick={() => handleSettingClick("Prefix")} className='text-white'>Prefix settings</Link>
@@ -123,6 +125,7 @@ function Settings() {
             {activeSetting === "Sms" && <SmsSetting />}
             {activeSetting === "Prefix" && <PrefixSetting />}
             {activeSetting === "Users" && <UserSetting />}
+            {activeSetting === "modules" && <ModuleToggleSettings />}
           </Card>
         </Col>
       </Row>

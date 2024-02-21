@@ -8,15 +8,15 @@ import { TextField } from "@material-ui/core"
 import TextareaAutosize from "@mui/base/TextareaAutosize"
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
 import api from "services/Api"
-
+ 
 export default function SetupBedListDialog({
   open,
   handleClose,
   getBedStatusList,
   selectedData
 }) {
-
-
+ 
+ 
   const [openSetupBedDialog, setOpenSetupBedDialog] = React.useState(false)
   const [bedType, setBedType] = useState('')
   const [bedGroup, setBedGroup] = useState('')
@@ -36,31 +36,31 @@ export default function SetupBedListDialog({
  
   console.log(bedType, 'bed type');
   console.log(bedGroup, 'bed grp');
-
+ 
   useEffect(() => {
     getTypeBed()
     getGroupBed()
   }, [])
-
-
+ 
+ 
   const getTypeBed = async () => {
     const response = await api.getSetup_bed_type()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
     setBedType(data)
   }
-
+ 
   const getGroupBed = async () => {
     const response = await api.getSetup_bed_group()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
     setBedGroup(data)
   }
-
+ 
   const handleChange = (e) => {
     const { id, value, checked, type } = e.target;
     console.log(typeof(value), id, "jj");
-  
+ 
     setFormData((prevFormData) => {
       if (id === 'is_active') {
         return { ...prevFormData, is_active: type === 'checkbox' ? (checked ? 'yes' : 'no') : (value === 'on' ? 'yes' : 'no') };
@@ -70,7 +70,7 @@ export default function SetupBedListDialog({
       }
     });
   };
-  
+ 
  const handleSubmit = async () =>{
   console.log(formData,"FF");
   if(formData?.name == undefined){
@@ -97,7 +97,7 @@ export default function SetupBedListDialog({
   }
  }
  const handleUpdate = async () =>{
-
+ 
   const data = {
     ...formData,
     id:selectedData?.id
@@ -131,7 +131,7 @@ export default function SetupBedListDialog({
     is_active: prevFormData.is_active === 'yes' ? 'no' : 'yes'
   }));
 };
-
+ 
  useEffect(()=>{
   if(selectedData){
     console.log(selectedData,"selected");
@@ -152,7 +152,7 @@ export default function SetupBedListDialog({
     })
   }
  },[selectedData])
-
+ 
   return (
     <div
       style={{
@@ -171,7 +171,7 @@ export default function SetupBedListDialog({
         <DialogTitle id="alert-dialog-title" className="bg-primary bg-soft text-primary">
         Add Bed
         </DialogTitle>
-        <DialogContent className="mt-4 ms-2">   
+        <DialogContent className="mt-4 ms-2">  
         <Row className="p-2">
         <Label>Name</Label>
             <input
@@ -214,7 +214,7 @@ export default function SetupBedListDialog({
         </DialogContent>
         <DialogActions>
           {selectedData?.bed_type_id ?(
-
+ 
             <button className="btn-mod bg-soft btn-md"  onClick={()=>handleUpdate()} style={{marginRight: '3%'}}>
                 Save
           </button>
@@ -223,7 +223,7 @@ export default function SetupBedListDialog({
             Save
           </button>
           )}
-          
+         
         </DialogActions>
       </Dialog>
     </div>

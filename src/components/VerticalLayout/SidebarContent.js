@@ -18,7 +18,7 @@ const SidebarContent = (props) => {
     { id: 'dashboard', name: 'Dashboard', enabled: true },
     { id: 'billing', name: 'Billing', enabled: true },
   ]);
-
+  
 
   const handleToggle = (moduleId) => {
     setModules((prevModules) =>
@@ -29,13 +29,18 @@ const SidebarContent = (props) => {
   };
 
   // console.log(props,"prop")
-  const location = useLocation();
+  const location = useLocation(); 
   const userData = location.state ? location.state.userData : null;
 
-  console.log(userData, "userdata");
+  // console.log(userData, "userdata");
 
   const ref = useRef();
-  // Use ComponentDidMount and ComponentDidUpdate method symultaniously
+
+  useEffect(() => {
+    ref.current.recalculate();
+  });
+
+  
   useEffect(() => {
     const pathName = props.location.pathname;
 
@@ -118,7 +123,7 @@ const SidebarContent = (props) => {
             {/* <li className="menu-title">{props.t("Menu")} </li> */}
 
             <li>
-              <Link to="/#">
+              <Link to="/dashboard">
                 <i className="fas fa-desktop"></i>
                 <span className="ms-2 fw-bold">Dashboard</span>
               </Link>

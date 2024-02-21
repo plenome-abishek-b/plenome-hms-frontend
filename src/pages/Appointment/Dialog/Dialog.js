@@ -51,26 +51,25 @@ export default function AlertDialog({
  
   useEffect(() => {
     if (selectedData) {
+      console.log(selectedData.date,'data here')
       const [datePart, timePart] = String(selectedData?.date)?.split(", ");
       console.log(selectedData?.date, datePart, "dd mm yy");
       const dateObject = new Date(datePart);
-      // Format the date
       const formattedDate = dateObject.toLocaleDateString();
-      // Format the time
-      // const formattedTime = dateObject.toLocaleTimeString();
+      console.log(selectedData.time,'time value here')
+      console.log(formattedDate,'formatted date');
+
       const timeWithoutAMPM = dateObject
         .toLocaleTimeString()
         .replace(/\s[AaPp][Mm]$/, "");
       const [month, day, year] = String(formattedDate)?.split("/");
- 
-      // Rearrange the components to form the desired format
+      
+      console.log(timeWithoutAMPM,'set time')
       const final_date = `${year}-${String(month)?.padStart(2, "0")}-${String(
         day
       ).padStart(2, "0")}`;
-      // const final_date = `${String(day).padStart(2, '0')}-${String(month)?.padStart(2, '0')}-${year}`;
  
-      console.log(formattedDate);
-      // console.log(formattedDate,formattedTime,"date time");
+      console.log(final_date,'final date');
       setFormValues({
         date: final_date,
         amount: selectedData?.amount,
@@ -253,11 +252,9 @@ export default function AlertDialog({
   };
  
   const handleClickOpen = () => {
-    //dialog open
     setOpenpatientDialog(true);
   };
   const handleDialogClose = () => {
-    //dialog close
     setOpenpatientDialog(false);
   };
   const handleFetch = (event) => {

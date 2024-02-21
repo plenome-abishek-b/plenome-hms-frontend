@@ -19,29 +19,14 @@ import OpdDialog from "./DialogOpd";
 //redux
 
 const Opd = props => {
-  const initialOpdValue = {
-    case_reference_id: "",
-    patient_id: "",
-    generated_by: "1",
-    is_ipd_moved: "0",
-    discharged: "no",
-    case_type: "",
-    payment_mode: "",
-    can_delete: "yes",
-    opd_details_id: "36",
-    organisation_id: "1",
-    cons_doctor: "",
-    patient_charge_id: "1",
-    transaction_id: "19",
-    created_at: "2023-09-08 11:11:11",
-  }
+
   const [id, setId] = useState('')
 
 const [fetchData,setFetchData] = useState('')
 console.log(fetchData,'fetchdata');
   const [open, setOpen] = useState(false);
   const [tableData, setTableData] = useState(null)
-  const [formData, setFormData] = useState(initialOpdValue)
+  const [formData, setFormData] = useState()
   console.log(formData,'formdata')
 
   // {console.log(tableData,'data')}
@@ -83,7 +68,8 @@ console.log(tableData,"jjijijij")
         );
       }
     },
-    { headerName: "id", field: "id"},
+    { headerName: "Patient ID", field: "id"},
+    {headerName: "Guardian Name", field: "guardian_name"},
     { headerName: "Gender", field: "gender" },
     { headerName: "Contact", field: "mobileno" },
     { headerName: "Consultant", field: "doctor" },
@@ -107,12 +93,16 @@ console.log(tableData,"jjijijij")
  useEffect(()=>{
   getOPDpatient()
  },[])
- const getOPDpatient = async () =>{
- const response = await api.getOpdOutpatient_MainModule()
- console.log(response.data,"wwwwwwww");
- setTableData(response.data)
- }
-  
+ const getOPDpatient = async () => {
+  const response = await api.getOpdOutpatient_MainModule();
+  const modifiedData = response.data.map(patient => ({
+      ...patient,
+      patient_name: patient.patient_name.replace('/', ' ')
+  }));
+  console.log(modifiedData, "wwwwwwww");
+  setTableData(modifiedData);
+}
+
    return (
     <React.Fragment>
       <div className="page-content">

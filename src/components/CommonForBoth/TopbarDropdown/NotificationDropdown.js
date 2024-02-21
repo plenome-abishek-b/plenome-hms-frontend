@@ -14,7 +14,7 @@ import { withTranslation } from "react-i18next";
 const NotificationDropdown = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-  console.log(alert)
+  // console.log(alert)
 
   return (
     <React.Fragment>
