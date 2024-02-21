@@ -383,6 +383,7 @@ const URL = {
   SETUP_FRONT_OFFICE_SOURCE:'/setup-front-office-source',
   SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority',
   SETUP_SYMPTOMS_HEAD:'/setup-symptoms-symptoms-head',
+  SETUP_SYMPTOM_TITLE_BYID:'/ipd-main-module/symptoms',
   SETUP_SYMPTOMS_TYPE:'/setup-symptoms-symptoms-type',
   OPD_OUT_PATIENT:'/opd-out-patient',
   HR_MAIN_MODULE_STAFF:'/human-resource-staff',
@@ -2563,7 +2564,7 @@ function patchSetupRadiologyParameter(data){
     
   }
   function getSetupHR_patient(){
-    return http3.get(URL.SETUP_HR_PATIENT)
+    return http6.get(URL.SETUP_HR_PATIENT)
   }
   function postSetupHR_patient(data){
     return http3.post(URL.SETUP_HR_PATIENT,data)
@@ -2681,7 +2682,7 @@ function patchSetupRadiologyParameter(data){
     return http3.delete(url)
   }
   function getSetupSymptoms_Type(){
-    return http3.get(URL.SETUP_SYMPTOMS_TYPE)
+    return http6.get(URL.SETUP_SYMPTOMS_TYPE)
   }
   function postSetupSymptoms_Type(data){
    return http3.post(URL.SETUP_SYMPTOMS_TYPE,data)
@@ -2738,6 +2739,15 @@ function patchSetupRadiologyParameter(data){
   }
   function getIPDpatient(){
     return http5.get(URL.IPD_DETATILS) 
+  }
+  function postIPDpatient(data){
+    return http5.post(URL.IPD_DETATILS,data) 
+  }
+  function getSymptomeDescriptionByTitleId(id){
+    return http5.get(`${URL.IPD_DETATILS}/symptomDescription/${id}`)
+  }
+  function getIPDBedByBedgroup(id){
+    return http5.get(`${URL.IPD_DETATILS}/bed/${id}`)
   }
   function getSetup_bed_floor(){
     return http6.get(URL.SETUP_BED_FLOOR)
@@ -2807,6 +2817,10 @@ function patchSetupRadiologyParameter(data){
   function deleteSetup_bedType(id){
     const url = `${URL.SETUP_BED_TYPE}/${id}`
     return http6.delete(url)
+  }
+  function getIPD_syptomsTitle(id) {
+    const url = `${URL.SETUP_SYMPTOM_TITLE_BYID}/${id}`
+    return http5.get(url)
   }
 
 ////////
@@ -3380,6 +3394,7 @@ const api = {
   disableStaff_HR_mainModule,
   getSetupAppointmentSlotChrg,
   getIPDpatient,
+  postIPDpatient,
   getSetup_bed_floor,
   postSetup_bed_floor,
   updateSetup_bed_floor,
@@ -3407,6 +3422,9 @@ getDisabled_Staffs_HR_mainModule,
 enableStaff_HR_mainModule,
 searchDisableStaffByRole,
 searchDisableStaffBykeyword,
-changePasswordHR
+changePasswordHR,
+getIPD_syptomsTitle,
+getSymptomeDescriptionByTitleId,
+getIPDBedByBedgroup
 };
 export default api;

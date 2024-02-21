@@ -20,10 +20,10 @@ const SetupBed = props => {
 
   const columnDefs = [
     {headerName: 'Name', field: 'name'},
-    {headerName: 'Bed Type', field: 'bed_type_name'},
-    {headerName: 'Bed Group', field: 'bed_group_name'},
-    {headerName: 'Floor', field: 'floor_name'},
-    {headerName: 'Status', field: 'is_active_flag'}
+    {headerName: 'Bed Type', field: 'bed_type'},
+    {headerName: 'Bed Group', field: 'bed_group'},
+    {headerName: 'Floor', field: 'floor'},
+    {headerName: 'Status', field: 'status'}
   ]
 
   const defaultColDef = useMemo(
@@ -37,17 +37,14 @@ const SetupBed = props => {
 
   useEffect(() => {
     // getUsers from json
-    getBedStatusList()
+    getBedStatus()
   }, [])
 
-  const getBedStatusList = () => {
-    
-    // api.getPatient().then(res => setTableData(res.data))
-    api.getBedStatusSetup().then(res => {
-      console.log(res,'response');
-      setTableData(res.data)})
-    
-    api.http
+  const getBedStatus = async () => {
+    const response = await api?.getSetup_bed_Status()
+    const {data} = response;
+    console.log(data,"log-data");
+    setTableData(data)
   }
 
   return (
