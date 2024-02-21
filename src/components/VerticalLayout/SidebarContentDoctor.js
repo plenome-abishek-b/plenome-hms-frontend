@@ -328,6 +328,7 @@ const SidebarContentDoctor = props => {
                         {props.t("Bed")}
                       </Link>
                       <ul style={{ marginLeft: "-30px" }}>
+                      
                         <li>
                           <Link to="/bed">{props.t("Bed List")}</Link>
                         </li>
