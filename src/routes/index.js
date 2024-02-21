@@ -190,6 +190,7 @@ import SetupDisablePatient from "pages/Setup/SetupComponents/SetupDisablePatient
 import SetupPatientImport from "pages/Setup/SetupComponents/SetupPatientImport";
 import SetupExample from "pages/Setup/SetupComponents/SetupBedLisNew";
 import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
+import ModuleSettingsPage from "pages/Settings/SettingPages/ModuleToggleSettings";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -287,6 +288,7 @@ const authProtectedRoutes = [
   {path:'/setupinventorystore',component:InventoryStore},
 
   {path: "/setting/email", component: EmailSetting},
+  {path: "/", component: ModuleSettingsPage},
 {path:'/opdbalancereport',component:OpdBalanceReport},
   {path:'/ipdbalancereport',component:IpdBalanceReport},
   {path: '/dailytransactionreport', component: Dailytransactionreport},

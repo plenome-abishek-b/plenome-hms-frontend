@@ -256,10 +256,11 @@ const AddStaff = () => {
 
   const validationSchema = yup.object().shape({
     contact_no: yup
-      .string()
-      .matches(/^[0-9]+$/, "Phone number must contain only digits")
-      .min(10, "Phone number must be at least 10 digits")
-      .required("Phone number is required *"),
+    .string()
+    .matches(/^[0-9]+$/, "Phone number must contain only digits")
+    .min(10, "Phone number must be at least 10 digits")
+    .max(10, "Phone number must not exceed 10 digits")
+    .required("Phone number is required *"),
     email: yup.string().email("Invalid email").required("Email is required *"),
     employee_id: yup.string().required("Staff ID is required *"),
     first_name: yup.string().required("First Name is required *"),
@@ -269,6 +270,7 @@ const AddStaff = () => {
     password: yup.string().required("Password is required *"),
     role_id: yup.string().required("Role is required *"),
   });
+
 
   const addCertificate = () => {
     const newCertificate = {
@@ -329,12 +331,14 @@ const AddStaff = () => {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,typeof(value),"both");
+    console.log(name, typeof value, "both");
     try {
-       if (name === "specialist") {
-      setFormData({...formData, specialist: JSON.stringify([parseInt(value)])});
-    }
-      else{
+      if (name === "specialist") {
+        setFormData({
+          ...formData,
+          specialist: JSON.stringify([parseInt(value)]),
+        });
+      } else {
         console.log("here");
         setFormData({
           ...formData,
@@ -342,9 +346,8 @@ const AddStaff = () => {
         });
       }
     } catch (error) {
-      console.log(error,"error");
+      console.log(error, "error");
     }
-    
   }; //handlechange function with correct set of data
 
   const getStaffs = async () => {
@@ -402,6 +405,9 @@ const AddStaff = () => {
           <h4 className="text-primary">Basic Information</h4>
           <Card>
             <CardBody>
+              <p className="text-danger d-flex justify-content-end fw-bold">
+                Fill All the Mandatoty Details (*)
+              </p>
               <Row>
                 <Col lg="3">
                   <label>
@@ -419,13 +425,13 @@ const AddStaff = () => {
                     }}
                     onChange={handleChange}
                     value={formData?.employee_id}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                   ></input>
-                  {formik.touched.employee_id && formik.errors.employee_id ? (
+                  {/* {formik.touched.employee_id && formik.errors.employee_id ? (
                     <div className="text-danger">
                       {formik.errors.employee_id}
                     </div>
-                  ) : null}
+                  ) : null} */}
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
@@ -443,7 +449,7 @@ const AddStaff = () => {
                     onChange={handleChange}
                     onClick={() => getStaffs()}
                     value={formData?.role_id}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                   >
                     <option>
                       {formData?.role ? formData?.role : "select"}
@@ -452,9 +458,9 @@ const AddStaff = () => {
                       <option value={Number(role?.id)}>{role?.name}</option>
                     ))}
                   </select>
-                  {formik.touched.role_id && formik.errors.role_id ? (
+                  {/* {formik.touched.role_id && formik.errors.role_id ? (
                     <div className="text-danger">{formik.errors.role_id}</div>
-                  ) : null}
+                  ) : null} */}
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
@@ -556,11 +562,11 @@ const AddStaff = () => {
                     onChange={handleChange}
                     value={formData?.first_name}
                   ></input>
-                  {formik.touched.first_name && formik.errors.first_name ? (
+                  {/* {formik.touched.first_name && formik.errors.first_name ? (
                     <div className="text-danger">
                       {formik.errors.first_name}
                     </div>
-                  ) : null}
+                  ) : null} */}
                 </Col>
                 <Col lg="3" md="12" sm="12">
                   <label>
@@ -609,7 +615,7 @@ const AddStaff = () => {
                     name="father_name"
                     onChange={handleChange}
                     value={formData?.father_name}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                   ></input>
                 </Col>
                 <Col lg="3" md="12" sm="12">
@@ -755,7 +761,8 @@ const AddStaff = () => {
                     onChange={handleChange}
                     value={formData?.contact_no}
                     onBlur={formik.handleBlur}
-                    type="number"
+                    maxLength={10}
+                    type="tel"
                   ></input>
                   {formik.touched.contact_no && formik.errors.contact_no ? (
                     <div className="text-danger">
@@ -795,11 +802,11 @@ const AddStaff = () => {
                     name="email"
                     onChange={handleChange}
                     value={formData?.email}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                   ></input>
-                  {formik.touched.email && formik.errors.email ? (
+                  {/* {formik.touched.email && formik.errors.email ? (
                     <div className="text-danger">{formik.errors.email}</div>
-                  ) : null}
+                  ) : null} */}
                 </Col>
                 <Col lg="3" md="12" sm="12" className="mt-3">
                   <label>
@@ -809,7 +816,7 @@ const AddStaff = () => {
                   <div style={{ position: "relative" }}>
                     <input
                       style={{
-                        width: "calc(100% - 40px)",
+                        width: "100%",
                         height: "30px",
                         border: "1px solid rgba(0,0,0,0.2)",
                         borderRadius: "3px",
@@ -824,17 +831,20 @@ const AddStaff = () => {
                       type="button"
                       style={{
                         position: "absolute",
-                        right: "30px",
+                        right: "0px",
                         top: "0px",
                         border: "none",
                         background: "none",
                         cursor: "pointer",
+                        color: "grey",
                       }}
-                      
                       onClick={togglePasswordVisibility}
                     >
-                      
-                      {showPassword ? <i class="fas fa-eye-slash"></i> : <i class="fas fa-eye"></i>}
+                      {showPassword ? (
+                        <i class="fas fa-eye-slash"></i>
+                      ) : (
+                        <i class="fas fa-eye"></i>
+                      )}
                     </button>
                   </div>
                 </Col>

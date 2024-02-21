@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// const baseNestURL = "http://13.200.35.19:310";
-const baseNestURL = "http://localhost:4000";
+const baseNestURL = "http://3.108.145.57:3003";
+// const baseNestURL = "http://localhost:4000";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 // const baseNodeURL = "http://13.200.35.19:3101";
@@ -14,9 +14,9 @@ const baseNestSetupURL = "http://localhost:4000";
 const localhost = "http://localhost:4000"
 const localhost2= "http://localhost:4000"
 
-// const http2 = axios.create({
-//   baseURL: baseNestURL,  
-// });
+const http2 = axios.create({
+  baseURL: baseNestURL,  
+});
 
 const http = axios.create({
   baseURL: baseNodeURL,
@@ -70,7 +70,7 @@ const URL = {
   APPT_SLOT_CHARGE: "/setup_appt_slot_amount",
   APPT_INTERNAL_SLOT_CHARGE: "/internal-appointment-charges",
   SLOT_WISE_URL: "/internal-appointment-slot",
-  PATIENT_SEARCH_URL: "/add-appointment-patient-queue",
+  PATIENT_SEARCH_URL: "/setup-patient-new-patient",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
   ADD_APPOINTMENT_URL: "/add-appointment",
   SLOT_TIMING: "/setup-appt-slot-timimgs",
@@ -573,7 +573,7 @@ function getComplaint(data = {}) {
 // }
 
 function postPatient(data = {}) {
-  return http.post(URL.PATIENT_URL, data);
+  return http3.post(URL.PATIENT_URL, data);
 }
 
 function getPatient(doctor, shift, date, slot) {
