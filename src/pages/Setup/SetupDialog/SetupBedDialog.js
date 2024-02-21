@@ -24,7 +24,7 @@ export default function SetupBedListDialog({
         name: "",
         bed_type_id:"",
         bed_group_id: "",
-        is_active: "no",
+        is_active: "yes",
         Hospital_id:1
   })
   const [validate,setValidate] = useState({
@@ -126,7 +126,9 @@ export default function SetupBedListDialog({
   }
  }
  const handleChangeCheckbox = () => {
-  setFormData((prevFormData) => ({
+  setFormData((prevFormData) => (
+    console.log(prevFormData.is_active,"is active"),{
+
     ...prevFormData,
     is_active: prevFormData.is_active === 'yes' ? 'no' : 'yes'
   }));
@@ -147,7 +149,7 @@ export default function SetupBedListDialog({
       name: "",
       bed_type_id:"",
       bed_group_id: "",
-      is_active: "no",
+      is_active: "yes",
       Hospital_id:1
     })
   }
