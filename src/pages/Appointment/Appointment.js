@@ -126,7 +126,7 @@ const Appointment = (props) => {
   ];
 
   const onBtnExport = useCallback(() => {
-    console.log(gridRef.current); // Log the grid reference
+    console.log(gridRef.current); 
     gridRef.current.api.exportDataAsCsv();
   }, []);
 
@@ -233,8 +233,8 @@ const Appointment = (props) => {
       );
 
       setTimeout(() => {
-        window.location.reload();
-      }, 800);
+        getAppointment();
+      }, 1500);
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }

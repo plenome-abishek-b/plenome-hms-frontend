@@ -58,12 +58,12 @@ const Login = props => {
     enableReinitialize: false,
 
     initialValues: {
-      email: "",
-      password: ""
+      Username: "",
+      Password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Username / Email"),
-      password: Yup.string().required("Please Enter Your Password"),
+      Username: Yup.string().required("Please Enter Your Username / Email"),
+      Password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: values => {
       dispatch(loginUser(values, props.history))
@@ -137,7 +137,7 @@ const Login = props => {
   
       if (response.status === 401) {
         prompt("Invalid email or password")
-      } else if (response.status === 200) {
+      } else if (response.status === 201) {
         console.log("Authentication successful");
         dispatch(setRoleName(userData));
         history.push("/dashboard");
@@ -170,13 +170,15 @@ const Login = props => {
 
   const handleFormSubmit = async (values) => {
     try {
+      const Hospital_id = 
       validation.handleSubmit();
       await onLoginUser(values);
-      await handleVerify(values);
+      await handleVerify(values, Hospital_id);
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <React.Fragment>
@@ -233,7 +235,7 @@ const Login = props => {
                       <div className="mb-3">
                         <Label className="form-label">Username / Email</Label>
                         <Input
-                          name="email"
+                          name="Username"
                           className="form-control"
                           placeholder="Enter Username or email"
                           type="email"
@@ -241,9 +243,9 @@ const Login = props => {
                           // onChange={e => setEmail(e.target.value)}
                           // value={email}
                           onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
+                          value={validation.values.Username || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email
+                            validation.touched.Username && validation.errors.Username
                               ? true
                               : false
                           }
@@ -258,7 +260,7 @@ const Login = props => {
                       <div className="mb-3">
                         <Label className="form-label">Password</Label>
                         <Input
-                          name="password"
+                          name="Password"
                           // value={password}
                           type="password"
                           placeholder="Enter Password"
@@ -266,8 +268,8 @@ const Login = props => {
                           // onChange={e => setPassword(e.target.value)}
                           onBlur={validation.handleBlur}
                           invalid={
-                            validation.touched.password &&
-                            validation.errors.password
+                            validation.touched.Password &&
+                            validation.errors.Password
                               ? true
                               : false
                           }

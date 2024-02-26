@@ -14,6 +14,11 @@ const baseNestSetupURL = "http://localhost:4000";
 const localhost = "http://localhost:4000"
 const localhost2= "http://localhost:4000"
 
+const sms_gateway = "http://13.200.35.19:3500"
+const email_gateway = "https://control.msg91.com/api/v5"
+
+const baseAuthUrl = "http://13.200.35.19:6001"
+
 const http2 = axios.create({
   baseURL: baseNestURL,  
 });
@@ -35,6 +40,17 @@ const http6 = axios.create({
   baseURL:localhost2
 })
 
+const sms_http = axios.create({
+  baseURL:sms_gateway
+})
+
+const email_http = axios.create({
+  baseURL: email_gateway
+})
+
+const auth_http = axios.create({
+  baseURL: baseAuthUrl
+})
 // const http4 = axios.create({
 //   baseURL: baseNestMainURL,
 // })
@@ -146,7 +162,7 @@ const URL = {
   ADD_SPECIALIST_URL: "/api/specialist",
   ADD_DESIGNATION_URL: "/api/designation",
   STAFF_ROLE_URL: "/api/user_Roles",
-  AUTH_LOGIN_URL: "/api/authlogin",
+  AUTH_LOGIN_URL: "/login",
   PATIENT_URL: "/api/appointment/add_patient",
 
   SETUP_CHARGE_TYPE_URL: "/api/chargetype",
@@ -399,7 +415,10 @@ const URL = {
   SETUP_BED_STATUS:'/setup-bed-bed-status',
   SETUP_BED:'/setup-bed-bed',
   SETUP_BED_GROUP:'/setup-bed-bed-group',
-  SETUP_BED_TYPE:'/setup-bed-bed-type'
+  SETUP_BED_TYPE:'/setup-bed-bed-type',
+
+  SMS_GATEWAY: '/sms',
+  EMAIL_GATEWAY: '/email/send'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -476,8 +495,8 @@ function getBloodBank(data = {}) {
   return http.get(URL, BLOOD_URL, data);
 }
 
-function postAuthUsers(data = {}){
-  return http.post(URL.AUTH_LOGIN_URL, data);
+function postAuthUsers(data){
+  return auth_http.post(URL.AUTH_LOGIN_URL, data);
 }
 
 function getUser(data = {}) {
@@ -2896,7 +2915,21 @@ const url =`${URL.SETUP_ROLE_URL}/${id}`
 }
 
 
+//sms and email APIs
+
+function postSms(datas){
+  console.log(datas,'logging in api');
+  return sms_http.post(URL.SMS_GATEWAY,datas)
+}
+
+function postEmail(email_datas){
+  return email_http.post(URL.EMAIL_GATEWAY,email_datas)
+}
+
+
 const api = {
+  postSms,
+  postEmail,
   deleteRole,
   getPriorityAppointment_Mainmodule,
   updateAppointment,
