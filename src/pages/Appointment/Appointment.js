@@ -105,8 +105,9 @@ const Appointment = (props) => {
         const appno = params.data.id;
         return <p>{"APPN" + appno}</p>;
       },
+      flex: '1'
     },
-    { headerName: "Appointment Date", field: "date", resizable: true },
+    { headerName: "Appointment Date", field: "date", flex: '2' },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
     { headerName: "Priority", field: "priority_status" },
@@ -249,6 +250,7 @@ const Appointment = (props) => {
     onFirstDataRendered: (params) => {
       // params.api.autoSizeAllColumns();
     },
+    
   };
 
   const onGridReady = (params) => {

@@ -15,6 +15,7 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PaymentDialog from "pages/Payment/PaymentDialog";
 // import "./";
  
 export default function AlertDialog({
@@ -27,6 +28,7 @@ export default function AlertDialog({
 }) {
   console.log(selectedData, "selected data");
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false);
+  const [openpayDialog,setOpenpaydialog] = useState(false)
   const [patients, setPatients] = useState([]);
  
   const [doctors, setDoctors] = useState([]);
@@ -50,57 +52,43 @@ export default function AlertDialog({
   }, [doctors]);
  
   useEffect(() => {
-    if (selectedData) {
-      console.log(selectedData.date,'data here')
-      const [datePart, timePart] = String(selectedData?.date)?.split(", ");
-      console.log(selectedData?.date, datePart, "dd mm yy");
-      const dateObject = new Date(datePart);
-      const formattedDate = dateObject.toLocaleDateString();
-      console.log(selectedData.time,'time value here')
-      console.log(formattedDate,'formatted date');
+  if (selectedData) {
+    const dateObject = new Date(selectedData.date);
+    const formattedDate = `${dateObject.getFullYear()}-${String(dateObject.getMonth() + 1).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
 
-      const timeWithoutAMPM = dateObject
-        .toLocaleTimeString()
-        .replace(/\s[AaPp][Mm]$/, "");
-      const [month, day, year] = String(formattedDate)?.split("/");
-      
-      console.log(timeWithoutAMPM,'set time')
-      const final_date = `${year}-${String(month)?.padStart(2, "0")}-${String(
-        day
-      ).padStart(2, "0")}`;
- 
-      console.log(final_date,'final date');
-      setFormValues({
-        date: final_date,
-        amount: selectedData?.amount,
-        live_consult: selectedData?.live_consult,
-        global_shift_id: String(selectedData?.shift_id),
-        shift_id: String(selectedData?.slot_id),
-        time: timeWithoutAMPM ? timeWithoutAMPM : "12:00:00",
-        // time:selectedData?.time,
-        priority: selectedData?.priorityID,
-        // message:selectedData?.message,
-        appointment_status: selectedData?.appointment_status,
-        source: selectedData?.source,
-        Hospital_id: 1,
-      });
-    } else {
-      setFormValues({
-        date: "",
-        amount: "",
-        live_consult: "",
-        global_shift_id: "",
-        shift_id: "",
-        time: "11:11:11",
-        // time:selectedData?.time,
-        priority: "",
-        // message:selectedData?.message,
-        appointment_status: "",
-        source: "Online",
-        Hospital_id: 1,
-      });
-    }
-  }, [selectedData]);
+    const timeWithoutAMPM = dateObject
+      .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      .replace(/\s[AaPp][Mm]$/, "");
+
+    setFormValues({
+      date: formattedDate,
+      amount: selectedData.amount,
+      live_consult: selectedData.live_consult,
+      global_shift_id: String(selectedData.shift_id),
+      shift_id: String(selectedData.slot_id),
+      time: timeWithoutAMPM ? timeWithoutAMPM : "12:00",
+      priority: selectedData.priorityID,
+      appointment_status: selectedData.appointment_status,
+      source: selectedData.source,
+      Hospital_id: 1,
+    });
+  } else {
+    setFormValues({
+      date: "",
+      amount: "",
+      live_consult: "",
+      global_shift_id: "",
+      shift_id: "",
+      time: "11:11",
+      priority: "",
+      appointment_status: "",
+      source: "Online",
+      Hospital_id: 1,
+    });
+  }
+}, [selectedData]);
+
+  
   // useEffect(() => {
   //   if (formSubmitted) {
   //     const timeoutId = setTimeout(() => {
@@ -149,7 +137,6 @@ export default function AlertDialog({
   const handleChange = (event) => {
     const { name, value } = event.target;
   
-    // If the input is the time field, append ':00' to include seconds
     const formattedValue = name === "time" ? `${value}:00` : value;
   
     setFormValues((prevFormValues) => ({
@@ -257,40 +244,51 @@ export default function AlertDialog({
   const handleDialogClose = () => {
     setOpenpatientDialog(false);
   };
+
+  const handleOpenpay = () => {
+    setOpenpaydialog(true);
+  };
+  const handleclosePaydialog = () => {
+    setOpenpaydialog(false);
+  };
+
+
+
   const handleFetch = (event) => {
     console.log("connection");
   };
  
-  const handleFormSubmit = async () => {
-    const Data = {
-      ...formValues,
-      // Remove this line to use the actual time value from the form
-      // time: `12:00:00`,
-    };
-    const response = await api.postAppointment(Data);
-    const { status, data } = response;
-    console.log(Data, data, "form values");
-  
-    if (status === 201) {
-      toast.success("Appointment booked successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 500,
-      });
-  
-      setFormSubmitted(true);
-      handleClose();
-      setFormValues({});
-  
-      // Delay the execution of getAppointment by one second
-      setTimeout(() => {
-        getAppointment();
-      }, 1000);
-      handleClose();
-    } else {
-      // Handle other response statuses if needed
-      toast.error("Failed to set up appointment slot. Please try again.");
-    }
+const handleFormSubmit = async () => {
+  const Data = {
+    ...formValues,
+    // Remove this line to use the actual time value from the form
+    // time: `12:00:00`,
   };
+  const response = await api.postAppointment(Data);
+  const { status, data } = response;
+  console.log(Data, data, "form values");
+  // handleOpenpay();
+
+  if (status === 201) {
+    toast.success("Appointment booked successfully!", {  
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 500,
+    });
+
+    setFormSubmitted(true);
+    handleClose();
+    setFormValues({});
+
+    setTimeout(() => {
+      getAppointment();
+    }, 800);
+    
+    
+  } else {
+    toast.error("Failed to set up appointment slot. Please try again.");
+  }
+};
+
   
   const handleUpdate = async () => {
     const newData = {
@@ -394,6 +392,10 @@ export default function AlertDialog({
             open={openpatientDialog}
             handleClose={handleDialogClose}
             getAllPatient={getAllPatient}
+          />
+          <PaymentDialog 
+            open={openpayDialog}
+            handleClose={handleclosePaydialog}
           />
         </DialogTitle>
         <DialogContent className="mt-4">
@@ -741,6 +743,7 @@ export default function AlertDialog({
           ) : (
             <button
               onClick={() => {
+
                 handleFormSubmit();
                 generatePdf();
               }}

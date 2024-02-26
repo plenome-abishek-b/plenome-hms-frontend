@@ -50,7 +50,7 @@ const URL = {
   IPD_URL: "/api/patient",
   FRONT_OFFICE_URL: "/api/frontoffice/visitors_book",
   COMPLAIN_URL: "/api/frontoffice/complaint",
-  OPD_URL: "/api/outpatient/opd_details",
+  OPD_URL: "/opd-out-patient",
   IPD_URL: "/api/ipd_details",
   BLOOD_URL: "/setup-blood-bank-products",
   CONSULTANT_DOC_URL: "/internal-appointment-staff",
@@ -588,7 +588,7 @@ function getOpd(data = {}) {
 }
 
 function postOpd(data = {}) {
-  return http.post(URL.OPD_URL, data);
+  return http3.post(URL.OPD_URL, data);
 }
 
 function getIpd(data = {}) {
@@ -604,7 +604,7 @@ function getBloodgroups(data = {}) {
 }
 
 function getConsultant(data = {}) {
-  return http.get(URL.CONSULTANT_DOC_URL, data);
+  return http3.get(URL.CONSULTANT_DOC_URL, data);
 }
 
 function postConstant(data) {
