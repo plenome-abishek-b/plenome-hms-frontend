@@ -28,7 +28,7 @@ const Layout = (props) => {
   } = useSelector(state => ({
     topbarTheme: state.Layout.topbarTheme,
     layoutWidth: state.Layout.layoutWidth,
-    isPreloader: state.Layout.isPreloader,
+    isPreloader: state?.Layout?.isPreloader,
     showRightSidebar: state.Layout.showRightSidebar,
   }));
 

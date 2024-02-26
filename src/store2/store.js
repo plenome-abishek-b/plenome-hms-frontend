@@ -1,8 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';import rootReducer from './reducers';
-
-const store2 = configureStore({
-  reducer: rootReducer,
-
-});
-
-export default store2;
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+// import controllSlice from 'controll/controllSlice';
+import rootReducer from 'controll/reducers'; 
+ // Adjust import path
+ 
+const store = configureStore({
+    reducer: {
+        toggle: rootReducer,
+      },
+//   }, 
+  // Add any additional middleware here
+})
+export default store; 

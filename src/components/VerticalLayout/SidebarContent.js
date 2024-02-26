@@ -60,7 +60,12 @@ const SidebarContent = (props) => {
 
   useEffect(() => {
     ref.current.recalculate();
+
   });
+  useEffect(()=>{
+  const modules =  JSON.parse(localStorage.getItem("Modules"));
+  setModules(modules)
+  },[])
 
   function scrollElement(item) {
     if (item) {
@@ -117,78 +122,81 @@ const SidebarContent = (props) => {
           <ul className="metismenu list-unstyled" id="side-menu">
             {/* <li className="menu-title">{props.t("Menu")} </li> */}
 
-            <li>
+            {modules?.dashboard &&<li>
               <Link to="/#">
                 <i className="fas fa-desktop"></i>
                 <span className="ms-2 fw-bold">Dashboard</span>
               </Link>
-            </li>
+            </li>}
             {/* <ul className="sub-menu"> */}
-            <li className>
+            {modules?.billing && <li className>
               <Link to="/billing">
                 <i className="fas fa-file-invoice"></i>
                 <span className="ms-2 fw-bold">Billing</span>
               </Link>
-            </li>
+            </li>}
+           {modules?.appointment &&
             <li>
               <Link to="/appointment">
                 <i className="fas fa-calendar"></i>
                 <span className="ms-2 fw-bold">Appointment</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+            {modules?.opd && <li>
               <Link to="/opd">
                 <i className="fas fa-stethoscope"></i>
                 <span className="ms-2 fw-bold">OPD-Out Patient</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+           {modules?.ipd && <li>
               <Link to="/ipd">
                 <i className="fas fa-procedures"></i>
                 <span className="ms-2 fw-bold">IPD-In Patient</span>
               </Link>
-            </li>
-            {/* <li>
+            </li>}
+            {modules?.pharmacy && <li>
               <Link to="/pharmacy">
                 <i className="fas fa-mortar-pestle"></i>
                 <span className="ms-2 fw-bold">Pharmacy</span>
               </Link>
-            </li> */}
+            </li> }
             {/* </ul> */}
 
-            {/* <li>
+            <li>
               <Link to="/pathology">
                 <i className="fas fa-flask"></i>
                 <span className="ms-2 fw-bold">Pathology</span>
               </Link>
             </li>
 
-            <li>
+           { modules?.radiology && <li>
               <Link to="/radiology">
                 <i className="fas fa-microscope"></i>
                 <span className="ms-2 fw-bold">Radiology</span>
               </Link>
             </li>
-            <li>
+        }
+          {modules?.bloodbank &&  <li>
               <Link to="/bloodbank">
                 <i className="fas fa-tint"></i>
                 <span className="ms-2 fw-bold">Blood Bank</span>
               </Link>
             </li>
+        }
 
-            <li>
+          { modules?.ambulance && <li>
               <Link to="/ambulance" className="">
                 <i className="fas fa-ambulance"></i>
                 <span className="ms-2 fw-bold">Ambulance</span>
               </Link>
-            </li>
-            <li>
+            </li> }
+          { modules?.frontoffice &&  <li>
               <Link to="/frontoffice">
                 <i className="fas fa-hospital-alt"></i>
                 <span className="ms-2 fw-bold">Front Office</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+            { modules?.birthAndDeathRecord && <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-birthday-cake"></i>
                 <span className="ms-2 fw-bold">Birth & Death Record</span>
@@ -201,20 +209,21 @@ const SidebarContent = (props) => {
                   <Link to="/deathrecord">{props.t("Death Record")}</Link>
                 </li>
               </ul>
-            </li> */}
-            <li>
+            </li>
+               }
+            {modules?.hr &&<li>
               <Link to="/hr">
                 <i className="fas fa-sitemap"></i>
                 <span className="ms-2 fw-bold">Human Resource</span>
               </Link>
-            </li>
-            {/* <li>
+            </li>}
+            { modules?.tpa &&<li>
               <Link to="/tpa">
                 <i className="fas fa-umbrella"></i>
                 <span className="ms-2 fw-bold">TPA Management</span>
               </Link>
-            </li> */}
-            {/* <li>
+            </li>}
+          {modules?.finance &&  <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-money-bill"></i>
                 <span className="ms-2 fw-bold">Finance</span>
@@ -227,8 +236,8 @@ const SidebarContent = (props) => {
                   <Link to="/expenses">{props.t("Expenses")}</Link>
                 </li>
               </ul>
-            </li> */}
-            {/* <li>
+            </li>}
+            {modules?.liveConsultation && <li>
               <Link
                 to="#"
                 className="has-arrow"
@@ -245,8 +254,8 @@ const SidebarContent = (props) => {
                   <Link to="/livemeeting">{props.t("Live Meeting")}</Link>
                 </li>
               </ul>
-            </li>
-            <li>
+            </li>}
+           { modules?.certificate && <li>
               <Link to="#" className="has-arrow">
                 <i className="far fa-newspaper"></i>
                 <span className="ms-2 fw-bold">Certificate</span>
@@ -264,14 +273,14 @@ const SidebarContent = (props) => {
                   <Link to="/Staff_ID_Card">{props.t("Staff ID Card")}</Link>
                 </li>
               </ul>
-            </li>
-            <li>
+            </li>}
+            {modules?.referral &&<li>
               <Link to="/referral">
                 <i className="fas fa-users"></i>
                 <span className="ms-2 fw-bold">Referral</span>
               </Link>
-            </li> */}
-            <li>
+            </li>}
+            { modules?.reports && <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-print"></i>
                 <span className="ms-2 fw-bold">Reports</span>
@@ -298,6 +307,7 @@ const SidebarContent = (props) => {
                     {props.t("OPD Discharged Report")}
                   </Link>
                 </li>
+                
                 <li>
                   <Link to="/ipddischargedreport">
                     {props.t("IPD Discharged Report")}
@@ -426,56 +436,62 @@ const SidebarContent = (props) => {
                   </Link>
                 </li> */}
               </ul>
-            </li>
-            {/* <li>
+            </li>}
+            {modules?.inventory &&
+             <li>
               <Link to="/inventory">
                 <i className="fas fa-luggage-cart"></i>
                 <span className="ms-2 fw-bold">Inventory</span>
               </Link>
-            </li>
+            </li>}
+            { modules?.message &&
             <li>
               <Link to="/message" style={{ pointerEvents: "none" }}>
                 <i className="far fa-envelope"></i>
                 <span className="ms-2 fw-bold">Messaging</span>
               </Link>
             </li>
-            <li>
+          }
+            { modules?.frontcms && <li>
               <Link to="/frontcms">
                 <i className="fa fa-solar-panel"></i>
                 <span className="ms-2 fw-bold">Front CMS</span>
               </Link>
             </li>
-            <li>
+      }
+           { modules?.download && <li>
               <Link to="/download">
                 <i className="fas fa-download"></i>
                 <span className="ms-2 fw-bold">Download</span>
               </Link>
-            </li> */}
-            <li>
+            </li>
+}
+           {modules?.abha && <li>
               <Link to="/account/aadhar">
               <i class="fas fa-address-card"></i>
                 <span className="ms-2 fw-bold">ABHA Registration</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+           {modules?.appointment &&
+           <li>
               <Link to="/linkcarecontext">
               <i class="fas fa-link"></i>
                 <span className="ms-2 fw-bold">Link Care-context</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+            {modules?.linkCareContext && <li>
               <Link to="/discovercarecontext">
               <i class="fas fa-book-open"></i>
                 <span className="ms-2 fw-bold">Discover Care-context</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+           {modules?.discoverCareDonText && <li>
               <Link to="/consentrequest">
               <i class="fas fa-hand-holding-medical"></i>
                 <span className="ms-2 fw-bold">Consent Request</span>
               </Link>
-            </li>
-            <li>
+            </li>}
+            {modules?.setup && <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-cogs"></i>
                 <span className="ms-2 fw-bold">Setup</span>
@@ -764,7 +780,7 @@ const SidebarContent = (props) => {
                   </ul>
                 </li>
               </ul>
-            </li>
+            </li>}
           </ul>
         </div>
       </SimpleBar>
