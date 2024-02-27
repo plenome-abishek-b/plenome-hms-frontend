@@ -26,6 +26,21 @@ export default function OpdDialog({
   const [listPatient, setListPatient] = useState([])
   const [consdoctor,setConsdoctor] = useState('')
 
+  const initialOpdValue = {
+    patient_id: "",
+    generated_by: "",
+    is_ipd_moved: "",
+    discharged: "",
+    case_type: "",
+    payment_mode: "",
+    can_delete: "",
+    opd_details_id: "",
+    organisation_id: "",
+    cons_doctor: "",
+    patient_charge_id: "",
+    transaction_id: "",
+  }
+
   useEffect(() => {
     getAllPatients()
     handleConsultant()
@@ -156,13 +171,13 @@ export default function OpdDialog({
                   
                 </input>
               </Col> */}
-              <Col lg='3' md='3' sm='12'>
+              {/* <Col lg='3' md='3' sm='12'>
                 <label>case Reference id</label>
                 <br />
                 <input value={data?.case_reference_id} id="case_reference_id" onChange={e=>onChange(e)} type="number" style={{ height: "30px", width: '100%', borderRadius: '5px', border: '1px solid grey'}}>
                   
                 </input>
-              </Col>
+              </Col> */}
                 <Col lg='3' md='3' sm='12'>
                   <label>Height</label>
                   <br />

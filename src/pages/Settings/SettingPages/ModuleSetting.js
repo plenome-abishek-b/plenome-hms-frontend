@@ -2,6 +2,7 @@
 import React from 'react';
 
 const ModuleToggles = ({ modules, onToggle }) => {
+  console.log("Modules received in ModuleToggles:", modules);
   return (
     <div>
       {modules.map((module) => (

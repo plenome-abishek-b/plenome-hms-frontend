@@ -54,7 +54,6 @@ export default function HrDetailDialog({
       window.location.reload();
     }, 500);
   };
-  //   const specialistNameConcat = staffDetail['group_concat(DISTINCT specialist.specialist_name)'];
   var dob = new Date(staffDetail?.dob);
   var DobOnly = dob.toISOString().split("T")[0];
 
@@ -136,11 +135,8 @@ export default function HrDetailDialog({
               <h6>Date of Joining: {formattedDateOfJoining}</h6>
             </div>
           </div>
-
-          {/* <h6> Specialist: {specialistNameConcat}</h6> */}
         </div>
 
-        {/* Right side content (85%) */}
         <div
           style={{
             flex: "0 0 75%", // 85% width

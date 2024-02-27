@@ -105,8 +105,8 @@ export default function Patientdetails({
       );
 
       setTimeout(() => {
-        getAppointment();
-      }, 500);
+        window.location.reload();
+      }, 800);
       handleClose();
     } catch (error) {
       console.error("Error deleting appointment:", error);
