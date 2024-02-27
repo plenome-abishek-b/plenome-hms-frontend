@@ -193,6 +193,7 @@ import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
 import ModuleSettingsPage from "pages/Settings/SettingPages/ModuleToggleSettings";
 
 const authProtectedRoutes = [
+  { path: "/", component: Dashboard },
   { path: "/dashboard", component: Dashboard },
   { path: "/billing", component: Billing },
   { path: "/appointment", component: Appointment },

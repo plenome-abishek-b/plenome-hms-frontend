@@ -15,8 +15,9 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PaymentDialog from "pages/Payment/PaymentDialog";
 // import "./";
- 
+
 export default function AlertDialog({
   open,
   handleClose,
@@ -27,8 +28,9 @@ export default function AlertDialog({
 }) {
   console.log(selectedData, "selected data");
   const [openpatientDialog, setOpenpatientDialog] = React.useState(false);
+  const [openpayDialog, setOpenpaydialog] = useState(false);
   const [patients, setPatients] = useState([]);
- 
+
   const [doctors, setDoctors] = useState([]);
   const [example, setExample] = useState([]);
   const [shift, setShift] = useState([]);
@@ -36,52 +38,40 @@ export default function AlertDialog({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [charge, SetCharge] = useState([]);
   const [priorities, setPriorities] = useState([]);
- 
+
   useEffect(() => {
     getAllPatient();
     getAllDoctors();
- 
+
     //  getShifts()
     //  getSlot()
   }, []);
- 
+
   useEffect(() => {
     handleStuff();
   }, [doctors]);
- 
+
   useEffect(() => {
     if (selectedData) {
-      console.log(selectedData.date,'data here')
-      const [datePart, timePart] = String(selectedData?.date)?.split(", ");
-      console.log(selectedData?.date, datePart, "dd mm yy");
-      const dateObject = new Date(datePart);
-      const formattedDate = dateObject.toLocaleDateString();
-      console.log(selectedData.time,'time value here')
-      console.log(formattedDate,'formatted date');
+      const dateObject = new Date(selectedData.date);
+      const formattedDate = `${dateObject.getFullYear()}-${String(
+        dateObject.getMonth() + 1
+      ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
 
       const timeWithoutAMPM = dateObject
-        .toLocaleTimeString()
+        .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
         .replace(/\s[AaPp][Mm]$/, "");
-      const [month, day, year] = String(formattedDate)?.split("/");
-      
-      console.log(timeWithoutAMPM,'set time')
-      const final_date = `${year}-${String(month)?.padStart(2, "0")}-${String(
-        day
-      ).padStart(2, "0")}`;
- 
-      console.log(final_date,'final date');
+
       setFormValues({
-        date: final_date,
-        amount: selectedData?.amount,
-        live_consult: selectedData?.live_consult,
-        global_shift_id: String(selectedData?.shift_id),
-        shift_id: String(selectedData?.slot_id),
-        time: timeWithoutAMPM ? timeWithoutAMPM : "12:00:00",
-        // time:selectedData?.time,
-        priority: selectedData?.priorityID,
-        // message:selectedData?.message,
-        appointment_status: selectedData?.appointment_status,
-        source: selectedData?.source,
+        date: formattedDate,
+        amount: selectedData.amount,
+        live_consult: selectedData.live_consult,
+        global_shift_id: String(selectedData.shift_id),
+        shift_id: String(selectedData.slot_id),
+        time: timeWithoutAMPM ? timeWithoutAMPM : "12:00",
+        priority: selectedData.priorityID,
+        appointment_status: selectedData.appointment_status,
+        source: selectedData.source,
         Hospital_id: 1,
       });
     } else {
@@ -91,16 +81,15 @@ export default function AlertDialog({
         live_consult: "",
         global_shift_id: "",
         shift_id: "",
-        time: "11:11:11",
-        // time:selectedData?.time,
+        time: "11:11",
         priority: "",
-        // message:selectedData?.message,
         appointment_status: "",
         source: "Online",
         Hospital_id: 1,
       });
     }
   }, [selectedData]);
+
   // useEffect(() => {
   //   if (formSubmitted) {
   //     const timeoutId = setTimeout(() => {
@@ -135,7 +124,7 @@ export default function AlertDialog({
   useEffect(() => {
     getApptCharge();
   }, [formValues.doctor]);
- 
+
   const generatePdf = () => {
     const doc = new jsPDF();
     doc.text("Bill Details", 10, 10);
@@ -145,20 +134,18 @@ export default function AlertDialog({
     doc.text(`Doctor Fees: ${formValues.amount}`, 10, 50);
     doc.save("bill.pdf");
   };
- 
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
-    // If the input is the time field, append ':00' to include seconds
+
     const formattedValue = name === "time" ? `${value}:00` : value;
-  
+
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       [name]: formattedValue,
     }));
   };
-  
- 
+
   console.log(formValues, "valll");
   const getAllPatient = async () => {
     const response = await api.getAllPatients();
@@ -166,17 +153,17 @@ export default function AlertDialog({
     console.log(data, "patients");
     setPatients(data);
   };
- 
+
   const updatedPatientsData = patients.map((patient) => {
     // Remove "/" from the patient_name property
     const updatedPatient = {
       ...patient,
       patient_name: patient.patient_name.replace("/", ""),
     };
- 
+
     return updatedPatient;
   });
- 
+
   const getAllDoctors = async () => {
     const response = await api.getApptDoctor();
     const { data } = response;
@@ -187,11 +174,11 @@ export default function AlertDialog({
   //   console.log("ddddm,m,m,")
   //   if (doctors && doctors.length > 0) {
   //       const exampleArray = await doctors.map(val => ({ staff_id: val.shift_id, name: val.name }));
- 
+
   //   setExample(exampleArray)
   //   }
   //   else{
- 
+
   //     console.log("empty")
   //   }
   // }
@@ -207,7 +194,7 @@ export default function AlertDialog({
     }
     return {}; // return an empty object if there are no doctors
   };
- 
+
   // if(doctors.length > 0){
   //   console.log("first")
   //   handleStuff()
@@ -219,7 +206,7 @@ export default function AlertDialog({
     console.log(data, "shiffffffffffffffff");
     setShift(data);
   };
- 
+
   const getSlot = async () => {
     const response = await api.getApptSlot(
       formValues.doctor,
@@ -230,14 +217,14 @@ export default function AlertDialog({
     console.log(data, "slot data");
     setSlot(data);
   };
- 
+
   const getApptCharge = async () => {
     try {
       const response = await api.getSetupApptSlotCharge(formValues.doctor);
       const { data } = response;
       console.log(data, "slot charge data");
       SetCharge(data);
- 
+
       if (data.length > 0) {
         const firstChargeAmount = data[0].amount;
         setFormValues((prevFormValues) => ({
@@ -250,48 +237,103 @@ export default function AlertDialog({
       console.error("Error fetching slot charge data:", error);
     }
   };
- 
+
   const handleClickOpen = () => {
     setOpenpatientDialog(true);
   };
   const handleDialogClose = () => {
     setOpenpatientDialog(false);
   };
+
+  const handleOpenpay = () => {
+    setOpenpaydialog(true);
+  };
+  const handleclosePaydialog = () => {
+    setOpenpaydialog(false);
+  };
+
   const handleFetch = (event) => {
     console.log("connection");
   };
- 
+
   const handleFormSubmit = async () => {
     const Data = {
       ...formValues,
-      // Remove this line to use the actual time value from the form
-      // time: `12:00:00`,
     };
     const response = await api.postAppointment(Data);
     const { status, data } = response;
-    console.log(Data, data, "form values");
-  
+    console.log(Data, "form values");
+    // console.log(data[0].inserted_details[0].mobileno,"diff data");
+    // handleOpenpay();
+
     if (status === 201) {
+      const mobilenumber = data[0].inserted_details[0].mobileno;
+
+      const trimmedDate = data[0].inserted_details[0].date.split("T")[0];
+
+      const combinedDateTime = `${trimmedDate}`;
+
+      const formattedDateTime = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }).format(new Date(combinedDateTime));
+
+      const Dates = formattedDateTime;
+      const doctorName = data[0].inserted_details[0].doctor_name;
+      const formattedDoctorName = doctorName.replace(/(\D)(\d+)/, "$1 ($2)");
+
+      const Patname = data[0].inserted_details[0].patient_name.replace(
+        /\//g,
+        ""
+      );
+      const email = data[0].inserted_details[0].email;
+
+      // console.log(mobilenumber,Patname,Date,DocName,'sms data');
+      const datas = {
+        mobilenumber: mobilenumber,
+        Patname: Patname,
+        Date: Dates,
+        DocName: formattedDoctorName,
+      };
+
+      const email_datas = {
+        recipients: [
+          {
+            to: [
+              {
+                email: email,
+                name: Patname,
+              },
+            ],
+          },
+        ],
+        from: {
+          email: "plenome@plenome.com",
+        },
+        domain: "plenome.com",
+        template_id: "template_2",
+      };
+
+      const sms_response = await api.postSms(datas);
+      // const email_response = await api.postEmail(email_datas)
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
-  
+
       setFormSubmitted(true);
       handleClose();
       setFormValues({});
-  
-      // Delay the execution of getAppointment by one second
+
       setTimeout(() => {
         getAppointment();
-      }, 1000);
-      handleClose();
+      }, 800);
     } else {
-      // Handle other response statuses if needed
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
-  
+
   const handleUpdate = async () => {
     const newData = {
       ...formValues,
@@ -337,7 +379,7 @@ export default function AlertDialog({
   //       getFindings();
   //     }, 500);
   //     handleClose();
- 
+
   //     // Reload the page after a delay of 1 second
   //     // setTimeout(() => {
   //     //   location.reload();
@@ -346,7 +388,7 @@ export default function AlertDialog({
   //     console.error("Error updating data:", error);
   //   }
   // }
- 
+
   console.log(doctors, "docsss");
   return (
     <div>
@@ -394,6 +436,10 @@ export default function AlertDialog({
             open={openpatientDialog}
             handleClose={handleDialogClose}
             getAllPatient={getAllPatient}
+          />
+          <PaymentDialog
+            open={openpayDialog}
+            handleClose={handleclosePaydialog}
           />
         </DialogTitle>
         <DialogContent className="mt-4">
@@ -754,4 +800,3 @@ export default function AlertDialog({
     </div>
   );
 }
- 

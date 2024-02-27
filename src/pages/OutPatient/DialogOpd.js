@@ -17,7 +17,6 @@ export default function OpdDialog({
   open,
   handleClose,
   data,
-  onChange,
   handleFormSubmit,
   setFetchData,
   patientId
@@ -25,21 +24,29 @@ export default function OpdDialog({
   const [openDialog, setOpenDialog] = React.useState(false)
   const [listPatient, setListPatient] = useState([])
   const [consdoctor,setConsdoctor] = useState('')
+ 
 
   const initialOpdValue = {
     patient_id: "",
-    generated_by: "",
-    is_ipd_moved: "",
-    discharged: "",
-    case_type: "",
-    payment_mode: "",
-    can_delete: "",
-    opd_details_id: "",
-    organisation_id: "",
+    Hospital_id: "1",
     cons_doctor: "",
-    patient_charge_id: "",
-    transaction_id: "",
+    symptoms: "",
+    // bp: "",
+    // height: "",
+    // weight:"",
+    // pulse: "",
+    // temperature: "",
+    // respiration: "",
+    // known_allergies: "",
+    patient_old: "",
+    casualty: "",
+    amount: "",
+    apply_charge: "",
+    charge_id: "",
+    
   }
+
+  const [formData,setFormData] = useState(initialOpdValue)
 
   useEffect(() => {
     getAllPatients()
@@ -49,16 +56,18 @@ export default function OpdDialog({
     const response = await api.getPatient()
     const { data } = response
     console.log(data, "kkkkkkkkkkkkkkkkkkk")
-    setListPatient(data)
-
-
-  }
+    const modifiedData = response.data.map(patient => ({
+      ...patient,
+      patient_name: patient.patient_name.replace('/', ' ')
+  }));
+    setListPatient(modifiedData)
+ }
 
   const handleConsultant = async () =>{
     const response = await  api.getConsultant()
     const {data} = response
     setConsdoctor(data)
-    console.log(data,"data")
+    console.log(data,"datas doc")
   }
 
   const handleClickOpen = () => {
@@ -69,6 +78,19 @@ export default function OpdDialog({
   const handleDialogClose = () => {
     //dialog close
     setOpenDialog(false)
+  }
+
+  const handleSubmit = async() => {
+    const response = await api.postOpd(formData)
+    const {data} = response
+    console.log(data,'opd posted data')
+  }
+
+  const onChange = (e) => {
+    const {id,value} = e.target
+    setFormData({
+      ...formData,[id]:value
+    })
   }
 
   
@@ -316,17 +338,19 @@ export default function OpdDialog({
                   <Col>
                     <label>Casualty</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
-                      <option>No</option>
-                      <option>Yes</option>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }} id="casualty" value={data?.casualty} onChange={e=>onChange(e)} >
+                      <option>select</option>
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
                     </select>
                   </Col>
                   <Col>
                     <label>Old Patient</label>
                     <br />
-                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}>
-                      <option>No</option>
-                      <option>Yes</option>
+                    <select style={{ width: "100%", height: "30px", borderRadius: '3px', border: '1px solid rgba(0,0,0,0.2)' }}  id="patient_old" value={data?.patient_old} onChange={e=>onChange(e)}>
+                    <option>select</option>
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
                     </select>
                   </Col>
                 </Row>
@@ -357,7 +381,7 @@ export default function OpdDialog({
                     <option>select one</option>
                     {consdoctor && consdoctor.map((doctor) => (
                     <option key={doctor.id} value={doctor?.id}>
-                      {doctor.name}
+                      {doctor.doctor}
                     </option>
                   ))}
                     </select>
@@ -441,7 +465,7 @@ export default function OpdDialog({
           </Row>
         </DialogContent>
         <DialogActions>
-          <button className="btn-mod bg-soft btn-md fw-bold" onClick={() => handleFormSubmit()} style={{ marginRight: '3%' }}>
+          <button className="btn-mod bg-soft btn-md fw-bold" onClick={() => handleSubmit()} style={{ marginRight: '3%' }}>
             Save
           </button>
         </DialogActions>

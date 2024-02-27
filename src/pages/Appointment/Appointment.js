@@ -105,8 +105,9 @@ const Appointment = (props) => {
         const appno = params.data.id;
         return <p>{"APPN" + appno}</p>;
       },
+      flex: '1'
     },
-    { headerName: "Appointment Date", field: "date", resizable: true },
+    { headerName: "Appointment Date", field: "date", flex: '2' },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
     { headerName: "Priority", field: "priority_status" },
@@ -125,7 +126,7 @@ const Appointment = (props) => {
   ];
 
   const onBtnExport = useCallback(() => {
-    console.log(gridRef.current); // Log the grid reference
+    console.log(gridRef.current); 
     gridRef.current.api.exportDataAsCsv();
   }, []);
 
@@ -232,8 +233,8 @@ const Appointment = (props) => {
       );
 
       setTimeout(() => {
-        window.location.reload();
-      }, 800);
+        getAppointment();
+      }, 1500);
     } catch (error) {
       console.error("Error deleting appointment:", error);
     }
@@ -249,6 +250,7 @@ const Appointment = (props) => {
     onFirstDataRendered: (params) => {
       // params.api.autoSizeAllColumns();
     },
+    
   };
 
   const onGridReady = (params) => {
