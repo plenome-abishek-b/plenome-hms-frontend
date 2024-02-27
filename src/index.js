@@ -9,16 +9,18 @@ import { Provider } from "react-redux";
 
 
 import store from "./store";
-
+import store2 from "./store2/store"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+      // <Provider store={store2}>
     <Provider store={store}>
       <React.Fragment>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </React.Fragment>
-    </Provider>
+      </Provider>
+    //  </Provider>
 );
 
 serviceWorker.unregister()

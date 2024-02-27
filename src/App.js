@@ -45,7 +45,7 @@ const App = props => {
 
   function getLayout() {
     let layoutCls = VerticalLayout;
-    switch (props.layout.layoutType) {
+    switch (props?.layout?.layoutType) {
       case "horizontal":
         layoutCls = HorizontalLayout;
         break;
