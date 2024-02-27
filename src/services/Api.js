@@ -418,7 +418,8 @@ const URL = {
   SETUP_BED_TYPE:'/setup-bed-bed-type',
 
   SMS_GATEWAY: '/sms',
-  EMAIL_GATEWAY: '/email/send'
+  EMAIL_GATEWAY: '/email/send',
+  FORGOT_PASSWORD: '/login/forgotPassword'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -459,6 +460,10 @@ function getApptSlot(staff_id, global_shift_id, date,data = {}){
 
 function getApptDoctor(data = {}){
   return http3.get(URL.APPT_DOC_URL, data)
+}
+
+function postForgotPassword(data = {}){
+  return auth_http.post(URL.FORGOT_PASSWORD,data)
 }
 
 function getGraphData(year, month) {
@@ -3458,6 +3463,7 @@ searchDisableStaffBykeyword,
 changePasswordHR,
 getIPD_syptomsTitle,
 getSymptomeDescriptionByTitleId,
-getIPDBedByBedgroup
+getIPDBedByBedgroup,
+postForgotPassword
 };
 export default api;

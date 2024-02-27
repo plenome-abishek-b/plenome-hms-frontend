@@ -1,25 +1,25 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
-
+ 
 // //Import Scrollbar
 import SimpleBar from "simplebar-react";
-
+ 
 // MetisMenu
 import MetisMenu from "metismenujs";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+ 
 //i18n
 import { withTranslation } from "react-i18next";
-
+ 
 const SidebarContent = (props) => {
   const [modules, setModules] = useState([
     { id: 'dashboard', name: 'Dashboard', enabled: true },
     { id: 'billing', name: 'Billing', enabled: true },
   ]);
-  
-
+ 
+ 
   const handleToggle = (moduleId) => {
     setModules((prevModules) =>
       prevModules.map((module) =>
@@ -27,23 +27,18 @@ const SidebarContent = (props) => {
       )
     );
   };
-
+ 
   // console.log(props,"prop")
-  const location = useLocation(); 
+  const location = useLocation();
   const userData = location.state ? location.state.userData : null;
-
-  // console.log(userData, "userdata");
-
+ 
+  console.log(userData, "userdata");
+ 
   const ref = useRef();
-
-  useEffect(() => {
-    ref.current.recalculate();
-  });
-
-  
+  // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
     const pathName = props.location.pathname;
-
+ 
     const initMenu = () => {
       new MetisMenu("#side-menu");
       let matchingMenuItem = null;
@@ -59,19 +54,19 @@ const SidebarContent = (props) => {
         activateParentDropdown(matchingMenuItem);
       }
     };
-
+ 
     initMenu();
   }, [props.location.pathname]);
-
+ 
   useEffect(() => {
     ref.current.recalculate();
-
+ 
   });
   useEffect(()=>{
   const modules =  JSON.parse(localStorage.getItem("Modules"));
   setModules(modules)
   },[])
-
+ 
   function scrollElement(item) {
     if (item) {
       const currentPosition = item.offsetTop;
@@ -80,7 +75,7 @@ const SidebarContent = (props) => {
       }
     }
   }
-
+ 
   function activateParentDropdown(item) {
     item.classList.add("active");
     const parent = item.parentElement;
@@ -88,16 +83,16 @@ const SidebarContent = (props) => {
     if (parent2El && parent2El.id !== "side-menu") {
       parent2El.classList.add("mm-show");
     }
-
+ 
     if (parent) {
       parent.classList.add("mm-active");
       const parent2 = parent.parentElement;
-
+ 
       if (parent2) {
         parent2.classList.add("mm-show"); // ul tag
-
+ 
         const parent3 = parent2.parentElement; // li tag
-
+ 
         if (parent3) {
           parent3.classList.add("mm-active"); // li
           parent3.childNodes[0].classList.add("mm-active"); //a
@@ -118,21 +113,17 @@ const SidebarContent = (props) => {
     scrollElement(item);
     return false;
   }
-
+ 
   return (
     <React.Fragment>
-      
+     
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
             {/* <li className="menu-title">{props.t("Menu")} </li> */}
-
-
+ 
             {modules?.dashboard &&<li>
               <Link to="/#">
-
-            <li>
-              <Link to="/dashboard">
                 <i className="fas fa-desktop"></i>
                 <span className="ms-2 fw-bold">Dashboard</span>
               </Link>
@@ -170,14 +161,14 @@ const SidebarContent = (props) => {
               </Link>
             </li> }
             {/* </ul> */}
-
+ 
             <li>
               <Link to="/pathology">
                 <i className="fas fa-flask"></i>
                 <span className="ms-2 fw-bold">Pathology</span>
               </Link>
             </li>
-
+ 
            { modules?.radiology && <li>
               <Link to="/radiology">
                 <i className="fas fa-microscope"></i>
@@ -192,7 +183,7 @@ const SidebarContent = (props) => {
               </Link>
             </li>
         }
-
+ 
           { modules?.ambulance && <li>
               <Link to="/ambulance" className="">
                 <i className="fas fa-ambulance"></i>
@@ -316,7 +307,7 @@ const SidebarContent = (props) => {
                     {props.t("OPD Discharged Report")}
                   </Link>
                 </li>
-                
+               
                 <li>
                   <Link to="/ipddischargedreport">
                     {props.t("IPD Discharged Report")}
@@ -500,7 +491,7 @@ const SidebarContent = (props) => {
                 <span className="ms-2 fw-bold">Consent Request</span>
               </Link>
             </li>}
-            {modules?.setup && <li>
+           <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-cogs"></i>
                 <span className="ms-2 fw-bold">Setup</span>
@@ -789,12 +780,13 @@ const SidebarContent = (props) => {
                   </ul>
                 </li>
               </ul>
-            </li>}
+            </li>
           </ul>
         </div>
       </SimpleBar>
     </React.Fragment>
   );
 };
-
+ 
 export default withRouter(withTranslation()(SidebarContent));
+ 

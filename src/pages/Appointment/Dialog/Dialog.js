@@ -283,10 +283,8 @@ export default function AlertDialog({
       const doctorName = data[0].inserted_details[0].doctor_name;
       const formattedDoctorName = doctorName.replace(/(\D)(\d+)/, "$1 ($2)");
 
-      const Patname = data[0].inserted_details[0].patient_name.replace(
-        /\//g,
-        ""
-      );
+      const Patname = " " + data[0].inserted_details[0].patient_name.replace(/\//g, "");
+
       const email = data[0].inserted_details[0].email;
 
       // console.log(mobilenumber,Patname,Date,DocName,'sms data');
