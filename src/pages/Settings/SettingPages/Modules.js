@@ -3,6 +3,7 @@ import { toggle } from "../../../controll/controllSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus, toggleStatus } from "../../../store/module/action.js";
+import { Container } from "reactstrap";
 
 // import { setStatus } from 'store/module/action';
 const Modules = () => {
@@ -14,29 +15,29 @@ const Modules = () => {
     return savedState
       ? JSON.parse(savedState)
       : {
-          dashboard: false,
-          billing: false,
-          appointment: false,
-          opd: false,
-          ipd: false,
-          pharmacy: false,
-          pathology: false,
-          radiology: false,
-          bloodbank: false,
-          ambulance: false,
-          frontoffice: false,
-          birthAndDeathRecord: false,
-          hr: false,
-          tpa: false,
-          finance: false,
-          liveConsultation: false,
-          message: false,
-          certificate: false,
-          referral: false,
-          reports: false,
-          inventory: false,
-          frontCMS: false,
-          download: false,
+          Dashboard: false,
+          Billing: false,
+          Appointment: false,
+          Opd: false,
+          Ipd: false,
+          Pharmacy: false,
+          Pathology: false,
+          Radiology: false,
+          Bloodbank: false,
+          Ambulance: false,
+          Frontoffice: false,
+          BirthAndDeathRecord: false,
+          HumarResource: false,
+          TPA: false,
+          Finance: false,
+          LiveConsultation: false,
+          Message: false,
+          Certificate: false,
+          Referral: false,
+          Reports: false,
+          Inventory: false,
+          FrontCMS: false,
+          Download: false,
           abha: false,
           linkCareContext: false,
           discoverCareDonText: false,
@@ -55,7 +56,9 @@ const Modules = () => {
       ...prevState,
       [key]: !prevState[key],
     }));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
   };
   const [sideBar, setSideBar] = useState(initialState);
 
@@ -69,43 +72,48 @@ const Modules = () => {
     setModule(values);
   }, [sideBar]);
   return (
-    <div style={{ marginTop: "30px" }}>
-      <div>
-        <ul>
-          {Object.keys(module).map(
-            (key) => (
-              console.log(key),
-              (value = module[key]),
-              (
-                <li
-                  key={key}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "5px",
-                  }}
-                >
-                  <span>{key}</span>
-                  <button
-                    className="btn-mod"
-                    style={{
-                      marginRight: "10px",
-                      backgroundColor: value === false ? "red" : "green",
-                    }}
-                    onClick={() => handleClick(key)}
-                  >
-                    {value === false ? "Disabled" : "Enabled"}
-                  </button>
-                </li>
-              )
-            )
-          )}
-        </ul>
+    <React.Fragment>
+      <div className="page-content" style={{position: 'relative', bottom: '35px', right: '10px'}}>
+        <Container style={{}}>
+          <div>
+            <ul>
+              {Object.keys(module).map(
+                (key) => (
+                  console.log(key),
+                  (value = module[key]),
+                  (
+                    <li
+                      key={key}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "12px",
+                        border: '1px solid rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      <h5>{key}</h5>
+                      <button
+                        className="btn text-white"
+                        style={{
+                          marginRight: "10px",
+                          backgroundColor:
+                            value === false ? "#C62727" : "#65B741",
+                        }}
+                        onClick={() => handleClick(key)}
+                      >
+                        {value === false ? "Disabled" : "Enabled"}
+                      </button>
+                    </li>
+                  )
+                )
+              )}
+            </ul>
+          </div>
+        </Container>
+        {/* Your other fields can be added here */}
       </div>
-
-      {/* Your other fields can be added here */}
-    </div>
+    </React.Fragment>
   );
 };
 

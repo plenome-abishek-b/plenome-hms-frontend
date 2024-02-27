@@ -419,7 +419,8 @@ const URL = {
 
   SMS_GATEWAY: '/sms',
   EMAIL_GATEWAY: '/email/send',
-  FORGOT_PASSWORD: '/login/forgotPassword'
+  FORGOT_PASSWORD: '/login/forgotPassword',
+  RESET_PASSWORD: '/login/resetPassword'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -502,6 +503,10 @@ function getBloodBank(data = {}) {
 
 function postAuthUsers(data){
   return auth_http.post(URL.AUTH_LOGIN_URL, data);
+}
+
+function postResetPassword(data){
+  return auth_http.post(URL.RESET_PASSWORD,data,)
 }
 
 function getUser(data = {}) {
@@ -2889,21 +2894,21 @@ http.interceptors.request.use((config) => {
   return config;
 });
 
-http.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const { status } = error.response;
-    if (status === 401) {
-      toast.error("Unauthorized");
-    } else if (status === 200) {
-      toast.success("success!");
-      console.log("success");
-    } else {
-      toast.error("An error occurred");
-    }
-    return Promise.reject(error);
-  }
-);
+// http.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     const { status } = error.response;
+//     if (status === 401) {
+//       toast.error("Unauthorized");
+//     } else if (status === 201) {
+//       toast.success("success!");
+//       console.log("success");
+//     } else {
+//       // toast.error("An error occurred");
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 function updateAppointment(data){
   console.log(data,"rrrr");
@@ -3464,6 +3469,7 @@ changePasswordHR,
 getIPD_syptomsTitle,
 getSymptomeDescriptionByTitleId,
 getIPDBedByBedgroup,
-postForgotPassword
+postForgotPassword,
+postResetPassword
 };
 export default api;

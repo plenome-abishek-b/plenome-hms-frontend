@@ -1,44 +1,45 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
- 
+
 // //Import Scrollbar
 import SimpleBar from "simplebar-react";
- 
+
 // MetisMenu
 import MetisMenu from "metismenujs";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
- 
+
 //i18n
 import { withTranslation } from "react-i18next";
- 
+
 const SidebarContent = (props) => {
   const [modules, setModules] = useState([
-    { id: 'dashboard', name: 'Dashboard', enabled: true },
-    { id: 'billing', name: 'Billing', enabled: true },
+    { id: "dashboard", name: "Dashboard", enabled: true },
+    { id: "billing", name: "Billing", enabled: true },
   ]);
- 
- 
+
   const handleToggle = (moduleId) => {
     setModules((prevModules) =>
       prevModules.map((module) =>
-        module.id === moduleId ? { ...module, enabled: !module.enabled } : module
+        module.id === moduleId
+          ? { ...module, enabled: !module.enabled }
+          : module
       )
     );
   };
- 
+
   // console.log(props,"prop")
   const location = useLocation();
   const userData = location.state ? location.state.userData : null;
- 
+
   console.log(userData, "userdata");
- 
+
   const ref = useRef();
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
     const pathName = props.location.pathname;
- 
+
     const initMenu = () => {
       new MetisMenu("#side-menu");
       let matchingMenuItem = null;
@@ -54,19 +55,18 @@ const SidebarContent = (props) => {
         activateParentDropdown(matchingMenuItem);
       }
     };
- 
+
     initMenu();
   }, [props.location.pathname]);
- 
+
   useEffect(() => {
     ref.current.recalculate();
- 
   });
-  useEffect(()=>{
-  const modules =  JSON.parse(localStorage.getItem("Modules"));
-  setModules(modules)
-  },[])
- 
+  useEffect(() => {
+    const modules = JSON.parse(localStorage.getItem("Modules"));
+    setModules(modules);
+  }, []);
+
   function scrollElement(item) {
     if (item) {
       const currentPosition = item.offsetTop;
@@ -75,7 +75,7 @@ const SidebarContent = (props) => {
       }
     }
   }
- 
+
   function activateParentDropdown(item) {
     item.classList.add("active");
     const parent = item.parentElement;
@@ -83,16 +83,16 @@ const SidebarContent = (props) => {
     if (parent2El && parent2El.id !== "side-menu") {
       parent2El.classList.add("mm-show");
     }
- 
+
     if (parent) {
       parent.classList.add("mm-active");
       const parent2 = parent.parentElement;
- 
+
       if (parent2) {
         parent2.classList.add("mm-show"); // ul tag
- 
+
         const parent3 = parent2.parentElement; // li tag
- 
+
         if (parent3) {
           parent3.classList.add("mm-active"); // li
           parent3.childNodes[0].classList.add("mm-active"); //a
@@ -113,207 +113,239 @@ const SidebarContent = (props) => {
     scrollElement(item);
     return false;
   }
- 
+
   return (
     <React.Fragment>
-     
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
             {/* <li className="menu-title">{props.t("Menu")} </li> */}
- 
-            {modules?.dashboard &&<li>
-              <Link to="/#">
-                <i className="fas fa-desktop"></i>
-                <span className="ms-2 fw-bold">Dashboard</span>
-              </Link>
-            </li>}
+
+            {modules?.Dashboard && (
+              <li>
+                <Link to="/#">
+                  <i className="fas fa-desktop"></i>
+                  <span className="ms-2 fw-bold">Dashboard</span>
+                </Link>
+              </li>
+            )}
             {/* <ul className="sub-menu"> */}
-            {modules?.billing && <li className>
-              <Link to="/billing">
-                <i className="fas fa-file-invoice"></i>
-                <span className="ms-2 fw-bold">Billing</span>
-              </Link>
-            </li>}
-           {modules?.appointment &&
-            <li>
-              <Link to="/appointment">
-                <i className="fas fa-calendar"></i>
-                <span className="ms-2 fw-bold">Appointment</span>
-              </Link>
-            </li>}
-            {modules?.opd && <li>
-              <Link to="/opd">
-                <i className="fas fa-stethoscope"></i>
-                <span className="ms-2 fw-bold">OPD-Out Patient</span>
-              </Link>
-            </li>}
-           {modules?.ipd && <li>
-              <Link to="/ipd">
-                <i className="fas fa-procedures"></i>
-                <span className="ms-2 fw-bold">IPD-In Patient</span>
-              </Link>
-            </li>}
-            {modules?.pharmacy && <li>
-              <Link to="/pharmacy">
-                <i className="fas fa-mortar-pestle"></i>
-                <span className="ms-2 fw-bold">Pharmacy</span>
-              </Link>
-            </li> }
+            {modules?.Billing && (
+              <li className>
+                <Link to="/billing">
+                  <i className="fas fa-file-invoice"></i>
+                  <span className="ms-2 fw-bold">Billing</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Appointment && (
+              <li>
+                <Link to="/appointment">
+                  <i className="fas fa-calendar"></i>
+                  <span className="ms-2 fw-bold">Appointment</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Opd && (
+              <li>
+                <Link to="/opd">
+                  <i className="fas fa-stethoscope"></i>
+                  <span className="ms-2 fw-bold">OPD-Out Patient</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Ipd && (
+              <li>
+                <Link to="/ipd">
+                  <i className="fas fa-procedures"></i>
+                  <span className="ms-2 fw-bold">IPD-In Patient</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Pharmacy && (
+              <li>
+                <Link to="/pharmacy">
+                  <i className="fas fa-mortar-pestle"></i>
+                  <span className="ms-2 fw-bold">Pharmacy</span>
+                </Link>
+              </li>
+            )}
             {/* </ul> */}
- 
+            {modules?.Pathology && (
             <li>
               <Link to="/pathology">
                 <i className="fas fa-flask"></i>
                 <span className="ms-2 fw-bold">Pathology</span>
               </Link>
-            </li>
- 
-           { modules?.radiology && <li>
-              <Link to="/radiology">
-                <i className="fas fa-microscope"></i>
-                <span className="ms-2 fw-bold">Radiology</span>
-              </Link>
-            </li>
-        }
-          {modules?.bloodbank &&  <li>
-              <Link to="/bloodbank">
-                <i className="fas fa-tint"></i>
-                <span className="ms-2 fw-bold">Blood Bank</span>
-              </Link>
-            </li>
-        }
- 
-          { modules?.ambulance && <li>
-              <Link to="/ambulance" className="">
-                <i className="fas fa-ambulance"></i>
-                <span className="ms-2 fw-bold">Ambulance</span>
-              </Link>
-            </li> }
-          { modules?.frontoffice &&  <li>
-              <Link to="/frontoffice">
-                <i className="fas fa-hospital-alt"></i>
-                <span className="ms-2 fw-bold">Front Office</span>
-              </Link>
-            </li>}
-            { modules?.birthAndDeathRecord && <li>
-              <Link to="#" className="has-arrow">
-                <i className="fas fa-birthday-cake"></i>
-                <span className="ms-2 fw-bold">Birth & Death Record</span>
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/birthrecord">{props.t("Birth Record")}</Link>
-                </li>
-                <li>
-                  <Link to="/deathrecord">{props.t("Death Record")}</Link>
-                </li>
-              </ul>
-            </li>
-               }
-            {modules?.hr &&<li>
-              <Link to="/hr">
-                <i className="fas fa-sitemap"></i>
-                <span className="ms-2 fw-bold">Human Resource</span>
-              </Link>
-            </li>}
-            { modules?.tpa &&<li>
-              <Link to="/tpa">
-                <i className="fas fa-umbrella"></i>
-                <span className="ms-2 fw-bold">TPA Management</span>
-              </Link>
-            </li>}
-          {modules?.finance &&  <li>
-              <Link to="#" className="has-arrow">
-                <i className="fas fa-money-bill"></i>
-                <span className="ms-2 fw-bold">Finance</span>
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/income">{props.t("Income")}</Link>
-                </li>
-                <li>
-                  <Link to="/expenses">{props.t("Expenses")}</Link>
-                </li>
-              </ul>
-            </li>}
-            {modules?.liveConsultation && <li>
-              <Link
-                to="#"
-                className="has-arrow"
-                style={{ pointerEvents: "none" }}
-              >
-                <i className="fas fa-video"></i>
-                <span className="ms-2 fw-bold">Live Consultation</span>
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/liveconsult">{props.t("Live Consultation")}</Link>
-                </li>
-                <li>
-                  <Link to="/livemeeting">{props.t("Live Meeting")}</Link>
-                </li>
-              </ul>
-            </li>}
-           { modules?.certificate && <li>
-              <Link to="#" className="has-arrow">
-                <i className="far fa-newspaper"></i>
-                <span className="ms-2 fw-bold">Certificate</span>
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/certificate">{props.t("certificate")}</Link>
-                </li>
-                <li>
-                  <Link to="/Patient_id_card">
-                    {props.t("Patient ID Card")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Staff_ID_Card">{props.t("Staff ID Card")}</Link>
-                </li>
-              </ul>
-            </li>}
-            {modules?.referral &&<li>
-              <Link to="/referral">
-                <i className="fas fa-users"></i>
-                <span className="ms-2 fw-bold">Referral</span>
-              </Link>
-            </li>}
-            { modules?.reports && <li>
-              <Link to="#" className="has-arrow">
-                <i className="fas fa-print"></i>
-                <span className="ms-2 fw-bold">Reports</span>
-              </Link>
-              <ul>
-                <li>
-                  <Link to="/opdreport">{props.t("OPD Report")}</Link>
-                </li>
-                <li>
-                  <Link to="/ipdreport">{props.t("IPD Report")}</Link>
-                </li>
-                <li>
-                  <Link to="/opdbalancereport">
-                    {props.t("OPD Balance Report")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/ipdbalancereport">
-                    {props.t("IPD Balance Report")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/opddischargedreport">
-                    {props.t("OPD Discharged Report")}
-                  </Link>
-                </li>
-               
-                <li>
-                  <Link to="/ipddischargedreport">
-                    {props.t("IPD Discharged Report")}
-                  </Link>
-                </li>
-                {/* <li>
+            </li>)}
+
+            {modules?.Radiology && (
+              <li>
+                <Link to="/radiology">
+                  <i className="fas fa-microscope"></i>
+                  <span className="ms-2 fw-bold">Radiology</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Bloodbank && (
+              <li>
+                <Link to="/bloodbank">
+                  <i className="fas fa-tint"></i>
+                  <span className="ms-2 fw-bold">Blood Bank</span>
+                </Link>
+              </li>
+            )}
+
+            {modules?.Ambulance && (
+              <li>
+                <Link to="/ambulance" className="">
+                  <i className="fas fa-ambulance"></i>
+                  <span className="ms-2 fw-bold">Ambulance</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Frontoffice && (
+              <li>
+                <Link to="/frontoffice">
+                  <i className="fas fa-hospital-alt"></i>
+                  <span className="ms-2 fw-bold">Front Office</span>
+                </Link>
+              </li>
+            )}
+            {modules?.BirthAndDeathRecord && (
+              <li>
+                <Link to="#" className="has-arrow">
+                  <i className="fas fa-birthday-cake"></i>
+                  <span className="ms-2 fw-bold">Birth & Death Record</span>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="/birthrecord">{props.t("Birth Record")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/deathrecord">{props.t("Death Record")}</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {modules?.HumarResource && (
+              <li>
+                <Link to="/hr">
+                  <i className="fas fa-sitemap"></i>
+                  <span className="ms-2 fw-bold">Human Resource</span>
+                </Link>
+              </li>
+            )}
+            {modules?.TPA && (
+              <li>
+                <Link to="/tpa">
+                  <i className="fas fa-umbrella"></i>
+                  <span className="ms-2 fw-bold">TPA Management</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Finance && (
+              <li>
+                <Link to="#" className="has-arrow">
+                  <i className="fas fa-money-bill"></i>
+                  <span className="ms-2 fw-bold">Finance</span>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="/income">{props.t("Income")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/expenses">{props.t("Expenses")}</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {modules?.LiveConsultation && (
+              <li>
+                <Link
+                  to="#"
+                  className="has-arrow"
+                  style={{ pointerEvents: "none" }}
+                >
+                  <i className="fas fa-video"></i>
+                  <span className="ms-2 fw-bold">Live Consultation</span>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="/liveconsult">
+                      {props.t("Live Consultation")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/livemeeting">{props.t("Live Meeting")}</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {modules?.Certificate && (
+              <li>
+                <Link to="#" className="has-arrow">
+                  <i className="far fa-newspaper"></i>
+                  <span className="ms-2 fw-bold">Certificate</span>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="/certificate">{props.t("certificate")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/Patient_id_card">
+                      {props.t("Patient ID Card")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/Staff_ID_Card">{props.t("Staff ID Card")}</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {modules?.Referral && (
+              <li>
+                <Link to="/referral">
+                  <i className="fas fa-users"></i>
+                  <span className="ms-2 fw-bold">Referral</span>
+                </Link>
+              </li>
+            )}
+            {modules?.Reports && (
+              <li>
+                <Link to="#" className="has-arrow">
+                  <i className="fas fa-print"></i>
+                  <span className="ms-2 fw-bold">Reports</span>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="/opdreport">{props.t("OPD Report")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/ipdreport">{props.t("IPD Report")}</Link>
+                  </li>
+                  <li>
+                    <Link to="/opdbalancereport">
+                      {props.t("OPD Balance Report")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/ipdbalancereport">
+                      {props.t("IPD Balance Report")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/opddischargedreport">
+                      {props.t("OPD Discharged Report")}
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link to="/ipddischargedreport">
+                      {props.t("IPD Discharged Report")}
+                    </Link>
+                  </li>
+                  {/* <li>
                   <Link to="/bloodreport">{props.t("Blood Issue Report")}</Link>
                 </li>
                 <li>
@@ -346,7 +378,7 @@ const SidebarContent = (props) => {
                     {props.t("Patient Bill Report")}
                   </Link>
                 </li> */}
-                {/* <li>
+                  {/* <li>
                   <Link to="/incomereport">{props.t("Income Report")}</Link>
                 </li>
                 <li>
@@ -404,94 +436,105 @@ const SidebarContent = (props) => {
                     {props.t("Audit Trail Report")}
                   </Link>
                 </li> */}
-                <li>
-                  <Link to="/incomegroupreport">
-                    {props.t("Income Group Report")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/expensegroupreport">
-                    {props.t("Expense Group Report")}
-                  </Link>
-                </li>
-                {/* <li>
+                  <li>
+                    <Link to="/incomegroupreport">
+                      {props.t("Income Group Report")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/expensegroupreport">
+                      {props.t("Expense Group Report")}
+                    </Link>
+                  </li>
+                  {/* <li>
                   <Link to="/tpareport">{props.t("TPA Report")}</Link>
                 </li>
                 <li>
                   <Link to="/referralreport">{props.t("Referral Report")}</Link>
                 </li> */}
-                <li>
-                  <Link to="/patientvisitreport">
-                    {props.t("Patient Visit Report")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/patientlogincreds">
-                    {props.t("Patient Login Credentials")}
-                  </Link>
-                </li>
-                {/* <li>
+                  <li>
+                    <Link to="/patientvisitreport">
+                      {props.t("Patient Visit Report")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/patientlogincreds">
+                      {props.t("Patient Login Credentials")}
+                    </Link>
+                  </li>
+                  {/* <li>
                   <Link to="/ambulancereport">
                     {props.t("Ambulance Call Report")}
                   </Link>
                 </li> */}
-              </ul>
-            </li>}
-            {modules?.inventory &&
-             <li>
-              <Link to="/inventory">
-                <i className="fas fa-luggage-cart"></i>
-                <span className="ms-2 fw-bold">Inventory</span>
-              </Link>
-            </li>}
-            { modules?.message &&
+                </ul>
+              </li>
+            )}
+            {modules?.inventory && (
+              <li>
+                <Link to="/inventory">
+                  <i className="fas fa-luggage-cart"></i>
+                  <span className="ms-2 fw-bold">Inventory</span>
+                </Link>
+              </li>
+            )}
+            {modules?.message && (
+              <li>
+                <Link to="/message" style={{ pointerEvents: "none" }}>
+                  <i className="far fa-envelope"></i>
+                  <span className="ms-2 fw-bold">Messaging</span>
+                </Link>
+              </li>
+            )}
+            {modules?.frontcms && (
+              <li>
+                <Link to="/frontcms">
+                  <i className="fa fa-solar-panel"></i>
+                  <span className="ms-2 fw-bold">Front CMS</span>
+                </Link>
+              </li>
+            )}
+            {modules?.download && (
+              <li>
+                <Link to="/download">
+                  <i className="fas fa-download"></i>
+                  <span className="ms-2 fw-bold">Download</span>
+                </Link>
+              </li>
+            )}
+            {modules?.abha && (
+              <li>
+                <Link to="/account/aadhar">
+                  <i class="fas fa-address-card"></i>
+                  <span className="ms-2 fw-bold">ABHA Registration</span>
+                </Link>
+              </li>
+            )}
+            {modules?.linkCareContext && (
+              <li>
+                <Link to="/linkcarecontext">
+                  <i class="fas fa-link"></i>
+                  <span className="ms-2 fw-bold">Link Care-context</span>
+                </Link>
+              </li>
+            )}
+            {modules?.discoverCareDonText && (
+              <li>
+                <Link to="/discovercarecontext">
+                  <i class="fas fa-book-open"></i>
+                  <span className="ms-2 fw-bold">Discover Care-context</span>
+                </Link>
+              </li>
+            )}
+            {modules?.consentRequest && (
+              <li>
+                <Link to="/consentrequest">
+                  <i class="fas fa-hand-holding-medical"></i>
+                  <span className="ms-2 fw-bold">Consent Request</span>
+                </Link>
+              </li>
+            )}
             <li>
-              <Link to="/message" style={{ pointerEvents: "none" }}>
-                <i className="far fa-envelope"></i>
-                <span className="ms-2 fw-bold">Messaging</span>
-              </Link>
-            </li>
-          }
-            { modules?.frontcms && <li>
-              <Link to="/frontcms">
-                <i className="fa fa-solar-panel"></i>
-                <span className="ms-2 fw-bold">Front CMS</span>
-              </Link>
-            </li>
-      }
-           { modules?.download && <li>
-              <Link to="/download">
-                <i className="fas fa-download"></i>
-                <span className="ms-2 fw-bold">Download</span>
-              </Link>
-            </li>
-}
-           {modules?.abha && <li>
-              <Link to="/account/aadhar">
-              <i class="fas fa-address-card"></i>
-                <span className="ms-2 fw-bold">ABHA Registration</span>
-              </Link>
-            </li>}
-           {modules?.appointment &&
-           <li>
-              <Link to="/linkcarecontext">
-              <i class="fas fa-link"></i>
-                <span className="ms-2 fw-bold">Link Care-context</span>
-              </Link>
-            </li>}
-            {modules?.linkCareContext && <li>
-              <Link to="/discovercarecontext">
-              <i class="fas fa-book-open"></i>
-                <span className="ms-2 fw-bold">Discover Care-context</span>
-              </Link>
-            </li>}
-           {modules?.discoverCareDonText && <li>
-              <Link to="/consentrequest">
-              <i class="fas fa-hand-holding-medical"></i>
-                <span className="ms-2 fw-bold">Consent Request</span>
-              </Link>
-            </li>}
-           <li>
               <Link to="#" className="has-arrow">
                 <i className="fas fa-cogs"></i>
                 <span className="ms-2 fw-bold">Setup</span>
@@ -534,9 +577,7 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul style={{ marginLeft: "-30px" }}>
                     <li>
-                      <Link to="/setupslotappointment">
-                        {props.t("Slots")}
-                      </Link>
+                      <Link to="/setupslotappointment">{props.t("Slots")}</Link>
                     </li>
                     <li>
                       <Link to="/onlineappointment/globalshift">
@@ -568,8 +609,8 @@ const SidebarContent = (props) => {
                       <Link to="/bedgroup">{props.t("Bed Group")}</Link>
                     </li>
                     <li>
-                          <Link to="/setupbed">{props.t("Bed Status")}</Link>
-                     </li>
+                      <Link to="/setupbed">{props.t("Bed Status")}</Link>
+                    </li>
                     <li>
                       <Link to="/floor">{props.t("Floor")}</Link>
                     </li>
@@ -638,9 +679,7 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul style={{ marginLeft: "-30px" }}>
                     <li>
-                      <Link to="/setupPatient">
-                        {props.t("Patient list")}
-                      </Link>
+                      <Link to="/setupPatient">{props.t("Patient list")}</Link>
                     </li>
                     {/* <li>
                       <Link to="/operations">{props.t("Operation")}</Link>
@@ -702,7 +741,7 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-               
+
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Human Resource")}
@@ -787,6 +826,5 @@ const SidebarContent = (props) => {
     </React.Fragment>
   );
 };
- 
+
 export default withRouter(withTranslation()(SidebarContent));
- 

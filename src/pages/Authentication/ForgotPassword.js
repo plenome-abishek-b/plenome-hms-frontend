@@ -20,30 +20,15 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import { withRouter, Link, useHistory } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-// Formik validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-//Social Media Imports
-import { GoogleLogin } from "react-google-login";
-// import TwitterLogin from "react-twitter-auth"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
-// actions
-import { loginUser } from "store/actions";
-import { LOGIN_SUCCESS } from "store/auth/login/actionTypes";
-
-//Import config
-import { facebook, google } from "../../config";
-import fakeBackend from "helpers/AuthType/fakeBackend";
-import Sidebar from "components/VerticalLayout/Sidebar";
-import { setRoleName } from "store_1/authslice";
 // import api from "services/Api"
 
 const Forgotpassword = (props) => {
     const [data, setData] = useState([]);
+    
+    const history = useHistory()
 
     const onChange = e => {
         //catch the parameters when changed.
@@ -53,26 +38,40 @@ const Forgotpassword = (props) => {
         
       }
 
-    const handleFormSubmit = async() => {
+      const handleFormSubmit = async () => {
         console.log("hi");
-        const response = await api.postForgotPassword(data)
-        const {datas } = response;
-        console.log(datas,'forgot data');
-    }
+        const response = await api.postForgotPassword(data);
+        const { datas } = response;
+        console.log(datas, 'forgot data');
+    
+        if (response.status === 201) {
+          toast.success("Password Reset Mail sent Successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 300,
+          });
+          setTimeout(()=>{
+            history.push('/account/login')
+          },1200)
+           
+          
+        }
+    };
+    
 
   return (
     <React.Fragment>
       {/* <Sidebar props={userData}/> */}
-      <div className="home-btn d-none d-sm-block">
+      <div className="d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft p-3" style={{position: 'relative',top: '100px'}}>
+      <ToastContainer />
+      <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft p-5" style={{position: 'relative',top: '30px'}}>
         <Container>
-          <Row className="justify-content-center mt-5 p-4">
+          <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden" style={{height: '500px'}}>
                 <div className="bg-primary bg-primary">
                   <Row>
                     <Col xs={7}>
@@ -92,11 +91,11 @@ const Forgotpassword = (props) => {
                 </div>
 
                 <CardBody className="p-4">
-                    <Row>
+                    <Row className="mt-5">
                     <Col>
                         <label>Enter Mail</label>
                         <br />
-                        <input style={{width: '100%', height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}} name="Username" onChange={onChange} value={data.Username}></input>
+                        <input className="mt-2" style={{width: '100%', height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}} name="Username" onChange={onChange} value={data.Username}></input>
                     </Col>
                     </Row>
                     <div className="mt-5 d-flex justify-content-center">

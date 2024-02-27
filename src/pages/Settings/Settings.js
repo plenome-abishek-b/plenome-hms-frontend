@@ -1,22 +1,21 @@
-import React, { useState } from "react"
-import { Container, Row, Col, Card, Table } from "reactstrap"
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
-import General from "./SettingPages/General"
-import EmailSetting from "./SettingPages/EmailSetting"
-import PaymentSetting from "./SettingPages/PaymentSetting"
-import RoleSetting from "./SettingPages/Roles"
-import SmsSetting from "./SettingPages/SmsSetting"
-import PrefixSetting from "./SettingPages/PrefixSetting"
-import UserSetting from "./SettingPages/UserSetting"
-import { withTranslation } from "react-i18next"
+import React, { useState } from "react";
+import { Container, Row, Col, Card, Table } from "reactstrap";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import General from "./SettingPages/General";
+import EmailSetting from "./SettingPages/EmailSetting";
+import PaymentSetting from "./SettingPages/PaymentSetting";
+import RoleSetting from "./SettingPages/Roles";
+import SmsSetting from "./SettingPages/SmsSetting";
+import PrefixSetting from "./SettingPages/PrefixSetting";
+import UserSetting from "./SettingPages/UserSetting";
+import { withTranslation } from "react-i18next";
 
-import Modules from "./SettingPages/Modules"
-import ModuleSettingsPage from "./SettingPages/ModuleToggleSettings"
-import ModuleToggleSettings from "./SettingPages/ModuleToggleSettings"
-
+import Modules from "./SettingPages/Modules";
+import ModuleSettingsPage from "./SettingPages/ModuleToggleSettings";
+import ModuleToggleSettings from "./SettingPages/ModuleToggleSettings";
 
 function Settings() {
-  const [activeSetting, setActiveSetting] = useState("General");
+  const [activeSetting, setActiveSetting] = useState("Modules");
 
   const handleSettingClick = (settingName) => {
     setActiveSetting(settingName);
@@ -30,7 +29,7 @@ function Settings() {
             <div className="table-responsive">
               <Table className="table mb-0">
                 <thead>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <h4>General settings</h4>
                     </th>
@@ -41,13 +40,13 @@ function Settings() {
                         General
                       </Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   {/* <tr>
                     <th>
                       <Link>System Notification</Link>
                     </th>
                   </tr> */}
-                  <tr>
+                  {/* <tr>
                     <th>
                     <Link to="#" onClick={() => handleSettingClick("Email")} className='text-white'>
                         Email Setting
@@ -73,7 +72,7 @@ function Settings() {
                     <th>
                       <Link to="#" onClick={() => handleSettingClick("Sms")} className='text-white'>SMS settings</Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   {/* <tr>
                     <th>
                       <Link>Backup / Restore</Link>
@@ -100,12 +99,17 @@ function Settings() {
                     </th>
                   </tr> */}
                   <tr>
-                    <th>
-
-                      <Link to="#" onClick={() => handleSettingClick("Modules")} className='text-white'>Modules</Link>
+                    <th className="text-center fs-5 fw-bold">
+                      <Link
+                        to="#"
+                        onClick={() => handleSettingClick("Modules")}
+                        className="text-white"
+                      >
+                        <i className="fas fa-list"></i>&nbsp;&nbsp; Modules
+                      </Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                     <Link to="#" onClick={() => handleSettingClick("Prefix")} className='text-white'>Prefix settings</Link>
                     </th>
@@ -114,7 +118,7 @@ function Settings() {
                     <th>
                      <Link to='#' className='text-white'>System Updates</Link>
                     </th>
-                  </tr>
+                  </tr> */}
                 </thead>
               </Table>
             </div>
@@ -122,7 +126,7 @@ function Settings() {
         </Col>
         <Col lg="9" md="8" sm="12">
           <Card>
-          {activeSetting === "General" && <General />}
+            {activeSetting === "General" && <General />}
             {activeSetting === "Email" && <EmailSetting />}
             {activeSetting === "Payments" && <PaymentSetting />}
             {activeSetting === "Role" && <RoleSetting />}
@@ -130,12 +134,11 @@ function Settings() {
             {activeSetting === "Prefix" && <PrefixSetting />}
             {activeSetting === "Users" && <UserSetting />}
             {activeSetting === "Modules" && <Modules />}
-
           </Card>
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
-export default withTranslation()(Settings)
+export default withTranslation()(Settings);
