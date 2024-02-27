@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import storage from "services/Storage";
 import api from "services/Api";
-
 
 import {
   Row,
@@ -20,9 +19,8 @@ import {
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { withRouter, Link , useHistory} from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast";
-
+import { withRouter, Link, useHistory } from "react-router-dom";
+// import { toast, Toaster } from "react-hot-toast";
 
 // Formik validation
 import * as Yup from "yup";
@@ -42,16 +40,21 @@ import { facebook, google } from "../../config";
 import fakeBackend from "helpers/AuthType/fakeBackend";
 import Sidebar from "components/VerticalLayout/Sidebar";
 import { setRoleName } from "store_1/authslice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import api from "services/Api"
 
-const Login = props => {
+const Login = (props) => {
   //meta title
-  document.title = "Login | BlockTrack"
+  document.title = "Login | BlockTrack";
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [creds, setCreds] = useState(null);
-  const [userData, setUserData] = useState('');
-  console.log(userData,"ussserr")
+  const [userData, setUserData] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+
+  console.log(userData, "ussserr");
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -65,14 +68,13 @@ const Login = props => {
       Username: Yup.string().required("Please Enter Your Username / Email"),
       Password: Yup.string().required("Please Enter Your Password"),
     }),
-    onSubmit: values => {
-      dispatch(loginUser(values, props.history))
+    onSubmit: (values) => {
+      dispatch(loginUser(values, props.history));
       // console.log(values,'values')
-      onLoginUser(values)
-      setCreds(values)
+      // onLoginUser(values);
+      setCreds(values);
     },
   });
-
 
   const history = useHistory();
   const onLoginUser = async (values) => {
@@ -85,7 +87,6 @@ const Login = props => {
     //   setUserData(updatedData);
     //   console.log(userData, 'userdataaaa');
     //   await handleVerify(values);
-  
     //   if (updatedData === "Doctor") {
     //     dispatch({ type: LOGIN_SUCCESS, payload: { userRole: "Doctor" } });
     //     toast.success("Logged in as a Doctor", {
@@ -107,101 +108,112 @@ const Login = props => {
     //       },
     //     });
     //   }
-  
     //   // Introduce a delay of 3 seconds before calling handleVerify
-    
-      
-   
-  
     // } catch (error) {
     //   console.error(error);
     // }
   };
-  
 
   useEffect(() => {
     if (userData !== null) {
       console.log(userData, "data here new");
     }
   }, [userData]);
-  
 
   const handleVerify = async (values) => {
     try {
       console.log("handleVerify called with values:", values);
-  
+
       const response = await api.postAuthUsers(values);
       console.log("API response:", response);
-  
+
+      const [{ details }] = response.data;
+      const { resetStatus, username } = details;
+      console.log(resetStatus, username, "datasss");
+
       fakeBackend(values.email, values.password);
-  
+
       if (response.status === 401) {
-        prompt("Invalid email or password")
+        toast.error("Invalid email or password")
       } else if (response.status === 201) {
-        console.log("Authentication successful");
+        toast.success("Logged in successfully", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 200,
+        })
         dispatch(setRoleName(userData));
-        history.push("/dashboard");
+        setTimeout(() => {
+          history.push("/dashboard");
+        }, 1000)
+
+
+        if (resetStatus === 1) {
+          setTimeout(async () => {
+            const newPassword = prompt(
+              "Your password has been reset. Please enter your new password:"
+            );
+            if (newPassword) {
+              const newPasswordResponse = await api.postResetPassword({
+                Username: username,
+                Password: newPassword,
+              });
+              console.log("New password API response:", newPasswordResponse);
+              if (newPasswordResponse.status === 201) {
+                window.alert("Password reset successful");
+              } else {
+                window.alert("Password reset failed");
+              }
+
+            } else {
+              console.log("New password not provided");
+            }
+          }, 1200);
+        }
+
       } else {
         console.log("Other response status:", response.status);
-        // Handle other response statuses if needed
       }
     } catch (error) {
       console.error("Error in handleVerify:", error);
     }
   };
-  
 
- 
-  
-
-  const { error } = useSelector(state => ({
+  const { error } = useSelector((state) => ({
     error: state.Login.error,
-    
   }));
 
-
-  const googleResponse = response => {
-    signIn(response, "google")
+  const googleResponse = (response) => {
+    signIn(response, "google");
   };
 
-  const facebookResponse = response => {
-    signIn(response, "facebook")
+  const facebookResponse = (response) => {
+    signIn(response, "facebook");
   };
 
   const handleFormSubmit = async (values) => {
     try {
-      const Hospital_id = 
-      validation.handleSubmit();
+      const Hospital_id = validation.handleSubmit();
       await onLoginUser(values);
       await handleVerify(values, Hospital_id);
     } catch (error) {
       console.error(error);
     }
   };
-  
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <React.Fragment>
-    {/* <Sidebar props={userData}/> */}
+      {/* <Sidebar props={userData}/> */}
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="bx bx-home h2" />
         </Link>
       </div>
+      <ToastContainer />
       <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft">
         <Container>
-        <Toaster toastOptions={{
-    success: {
-      style: {
-        background: 'green',
-      },
-    },
-    error: {
-      style: {
-        background: 'red',
-      },
-    },
-  }}/>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
@@ -222,7 +234,7 @@ const Login = props => {
                     </Col>
                   </Row>
                 </div>
-                
+
                 <CardBody className="pt-0">
                   <div></div>
                   <div className="p-3">
@@ -245,7 +257,8 @@ const Login = props => {
                           onBlur={validation.handleBlur}
                           value={validation.values.Username || ""}
                           invalid={
-                            validation.touched.Username && validation.errors.Username
+                            validation.touched.Username &&
+                              validation.errors.Username
                               ? true
                               : false
                           }
@@ -261,19 +274,37 @@ const Login = props => {
                         <Label className="form-label">Password</Label>
                         <Input
                           name="Password"
-                          // value={password}
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           placeholder="Enter Password"
                           onChange={validation.handleChange}
-                          // onChange={e => setPassword(e.target.value)}
                           onBlur={validation.handleBlur}
                           invalid={
                             validation.touched.Password &&
-                            validation.errors.Password
+                              validation.errors.Password
                               ? true
                               : false
                           }
                         />
+                        <button
+                          type="button"
+                          style={{
+                            position: "absolute",
+                            right: "30px",
+                            top: "295px",
+                            border: "none",
+                            background: "none",
+                            cursor: "pointer",
+                            color: "grey",
+                          }}
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? (
+                            <i className="fas fa-eye-slash"></i>
+                          ) : (
+                            <i className="fas fa-eye"></i>
+                          )}
+                        </button>
+
                         {/* {validation.touched.password &&
                         validation.errors.password ? (
                           <FormFeedback type="invalid">
@@ -300,15 +331,14 @@ const Login = props => {
                         <button
                           className="btn btn-outline-primary btn-block"
                           // type="submit"
-                          onClick={() => handleFormSubmit(validation.values)} 
+                          onClick={() => handleFormSubmit(validation.values)}
                         >
                           Log In
                         </button>
-                        
                       </div>
-                        {/* {userData === "Doctor" && <Sidebar role="Doctor" />}
+                      {/* {userData === "Doctor" && <Sidebar role="Doctor" />}
             {userData === "Super Admin" && <Sidebar role="Super Admin" />} */}
-                      
+
                       <div className="mt-4 text-center">
                         <h5 className="font-size-14 mb-3">Sign in with</h5>
 
@@ -318,7 +348,7 @@ const Login = props => {
                               appId={facebook.APP_ID}
                               autoLoad={false}
                               callback={facebookResponse}
-                              render={renderProps => (
+                              render={(renderProps) => (
                                 <Link
                                   to="#"
                                   className="social-list-item bg-primary text-white border-primary"
@@ -333,7 +363,7 @@ const Login = props => {
                           <li className="list-inline-item">
                             <GoogleLogin //Google login
                               clientId={google.CLIENT_ID}
-                              render={renderProps => (
+                              render={(renderProps) => (
                                 <Link
                                   to="#"
                                   className="social-list-item bg-danger text-white border-danger"
@@ -343,14 +373,17 @@ const Login = props => {
                                 </Link>
                               )}
                               onSuccess={googleResponse}
-                              onFailure={() => {}}
+                              onFailure={() => { }}
                             />
                           </li>
                         </ul>
                       </div>
 
                       <div className="mt-4 text-center">
-                        <Link to="/forgot-password" className="text-muted">
+                        <Link
+                          to="/account/forgotpassword"
+                          className="text-muted"
+                        >
                           <i className="mdi mdi-lock me-1" />
                           Forgot your password?
                         </Link>
@@ -375,14 +408,13 @@ const Login = props => {
                   <i className="mdi text-danger" />
                 </p>
               </div>
-
             </Col>
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export default withRouter(Login);
 

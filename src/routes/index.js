@@ -191,6 +191,7 @@ import SetupPatientImport from "pages/Setup/SetupComponents/SetupPatientImport";
 import SetupExample from "pages/Setup/SetupComponents/SetupBedLisNew";
 import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
 import ModuleSettingsPage from "pages/Settings/SettingPages/ModuleToggleSettings";
+import ForgotPassword from "pages/Authentication/ForgotPassword";
 
 const authProtectedRoutes = [
   { path: "/", component: Dashboard },
@@ -378,7 +379,8 @@ const publicRoutes = [
   {path: "/account/abhaverifyotp", component: AbhaOtpVerification},
   {path: "/account/abham1verifyotp", component: Verifyabhaotp},
   {path: "/account/abhagenerateotp", component: AbhaGenerateOtp},
-  {path: "/account/generateqr", component: Generateqr}
+  {path: "/account/generateqr", component: Generateqr},
+  {path: "/account/forgotpassword", component: ForgotPassword},
 ];
 
 export { authProtectedRoutes, publicRoutes };

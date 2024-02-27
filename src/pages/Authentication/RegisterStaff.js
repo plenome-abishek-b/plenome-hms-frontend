@@ -400,23 +400,26 @@ const RegisterStaff = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-        <div className="bg-primary">
-                  <Row>
-                    <Col className="col-9">
-                      <div className="text-white p-5">
-                        <h4 className="text-white">Register here</h4>
-                        <p>Signup for New Account</p>
-                      </div>
-                    </Col>
-                    <Col className="col-2 align-self-end p-3" style={{width: '150px'}}>
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/4228/4228730.png"
-                        alt=""
-                        className="img-fluid"
-                      />
-                    </Col>
-                  </Row>
+          <div className="bg-primary">
+            <Row>
+              <Col className="col-9">
+                <div className="text-white p-5">
+                  <h4 className="text-white">Register here</h4>
+                  <p>Signup for New Account</p>
                 </div>
+              </Col>
+              <Col
+                className="col-2 align-self-end p-3"
+                style={{ width: "150px" }}
+              >
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/4228/4228730.png"
+                  alt=""
+                  className="img-fluid"
+                />
+              </Col>
+            </Row>
+          </div>
 
           <Card>
             <CardBody>
@@ -1053,382 +1056,54 @@ const RegisterStaff = () => {
                 </Col> */}
               </Row>
               <br />
-              <Row className="mt-3">
-                <Col>
-                  <div>
-                    <h4>Add Other Details</h4>
-                    <div
-                      id="toggler"
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <Button color="primary" style={{ marginBottom: "1rem" }}>
-                        <i className="fas fa-caret-down fa-lg"></i>
-                      </Button>
-                    </div>
-
-                    <UncontrolledCollapse toggler="#toggler">
-                      <Card>
-                        <CardBody>
-                          <div className="bg-primary bg-soft p-2">
-                            <h5 className="mt-1 ms-1">Payroll</h5>
-                          </div>
-                          <Row className="mt-3">
-                            <Col lg="4">
-                              <label>EPF No</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="epf_no"
-                                onChange={handleChange}
-                                value={formData?.epf_no}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <label>Basic Salary</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="basic_salary"
-                                onChange={handleChange}
-                                value={formData?.basic_salary}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <label>Contract Type</label>
-                              <br />
-                              <select
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="contract_type"
-                                onChange={handleChange}
-                                value={formData?.contract_type}
-                              >
-                                <option>Select</option>
-                                <option value="permanent">Permanent</option>
-                                <option value="probation">Probation</option>
-                              </select>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col lg="4">
-                              <label>Work Shift</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="shift"
-                                onChange={handleChange}
-                                value={formData?.shift}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <label>Work Location</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="location"
-                                value={formData?.location}
-                                onChange={handleChange}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <div className="bg-primary bg-soft p-2 mb-3">
-                              <h5 className="mt-1 ms-2">Leaves</h5>
-                            </div>
-                            <Col lg="4">
-                              <label>Summer Vacation</label>
-                              <br />
-                              <input
-                                placeholder="Number of leaves"
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          {/* <Row> */}
-
-                          <br />
-                          <Row>
-                            <div className="bg-primary bg-soft p-2 mb-3">
-                              <h5 className="mt-1 ms-2">
-                                Bank Account Details
-                              </h5>
-                            </div>
-                            <Col lg="4">
-                              <label>Account Title</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="account_title"
-                                onChange={handleChange}
-                                value={formData?.account_title}
-                              ></input>
-                            </Col>
-
-                            <Col lg="4">
-                              <label>Bank Account No.</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="bank_account_no"
-                                onChange={handleChange}
-                                value={formData?.bank_account_no}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col lg="4">
-                              <label>Account Name</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="bank_name"
-                                onChange={handleChange}
-                                value={formData?.bank_name}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <label>IFSC Code</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="ifsc_code"
-                                onChange={handleChange}
-                                value={formData?.ifsc_code}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <label>Bank Branch Name</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="bank_branch"
-                                onChange={handleChange}
-                                value={formData?.bank_branch}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <div className="bg-primary bg-soft p-2 mb-3">
-                              <h5 className="mt-1">Social Media Link</h5>
-                            </div>
-                            <Col lg="6">
-                              <label>Facebook URL</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="facebook"
-                                onChange={handleChange}
-                                value={formData?.facebook}
-                              ></input>
-                            </Col>
-                            <Col lg="6">
-                              <label>Twitter URL</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="twitter"
-                                onChange={handleChange}
-                                value={formData?.twitter}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <Col lg="6">
-                              <label>Linkedin URL</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="linkedin"
-                                onChange={handleChange}
-                                value={formData?.linkedin}
-                              ></input>
-                            </Col>
-                            <Col lg="6">
-                              <label>Instagram URL</label>
-                              <br />
-                              <input
-                                style={{
-                                  width: "100%",
-                                  height: "30px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
-                                }}
-                                name="instagram"
-                                onChange={handleChange}
-                                value={formData?.instagram}
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <div className="bg-primary bg-soft  p-2 mb-3">
-                              <h5 className="mt-1">Upload Documents</h5>
-                            </div>
-                            <Col lg="4">
-                              <p>1. Resume</p>
-                              <input
-                                type="file"
-                                name="resume"
-                                onChange={handleChange}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <p>3.Joining Letter</p>
-                              <input
-                                type="file"
-                                name="joining_letter"
-                                onChange={handleChange}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <p>3.Resignation Letter</p>
-                              <input
-                                type="file"
-                                name="resignation_letter"
-                                onChange={handleChange}
-                              ></input>
-                            </Col>
-                            <Col lg="4">
-                              <p>4.Other Documents</p>
-                              <input
-                                name="other_document_file"
-                                onChange={handleChange}
-                                type="file"
-                              ></input>
-                            </Col>
-                          </Row>
-                          <br />
-                          <Row>
-                            <div>
-                              <div className="bg-primary bg-soft p-2 mb-3">
-                                <h5 className="mt-1">Certificates</h5>
-                              </div>
-                              {certificates.map((certificate) => (
-                                <div key={certificate.id}>
-                                  <div>
-                                    <br />
-                                    <input
-                                      name="certificates"
-                                      onChange={handleChange}
-                                      type="file"
-                                      onChange={(event) =>
-                                        onChange(certificate.id, event)
-                                      }
-                                      // value={formData?.cirt}
-                                    />
-                                  </div>
-                                </div>
-                              ))}
-                              <br />
-                              <button
-                                onClick={addCertificate}
-                                className="btn btn-primary btn-sm"
-                              >
-                                Add Certificate
-                              </button>
-                              {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
-                            </div>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                      <div className="d-flex justify-content-end">
-                        {staff ? (
-                          <button
-                            className="btn text-white fw-bold"
-                            style={{ backgroundColor: "#6070FF" }}
-                            onClick={handleUpdate}
-                          >
-                            Save
-                          </button>
-                        ) : (
-                          <button
-                            className="btn text-white fw-bold"
-                            style={{ backgroundColor: "#6070FF" }}
-                            onClick={handleSubmit}
-                          >
-                            Save
-                          </button>
-                        )}
-                      </div>
-                    </UncontrolledCollapse>
+              <Row>
+                <div>
+                  <div className="bg-primary bg-soft p-2 mb-3">
+                    <h5 className="mt-1">Certificates</h5>
                   </div>
-                </Col>
+                  {certificates.map((certificate) => (
+                    <div key={certificate.id}>
+                      <div>
+                        <br />
+                        <input
+                          name="certificates"
+                          onChange={handleChange}
+                          type="file"
+                          onChange={(event) => onChange(certificate.id, event)}
+                          // value={formData?.cirt}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <br />
+                  <button
+                    onClick={addCertificate}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Add Certificate
+                  </button>
+                  {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
+                </div>
               </Row>
+              <div className="d-flex justify-content-end">
+                {staff ? (
+                  <button
+                    className="btn text-white fw-bold"
+                    style={{ backgroundColor: "#6070FF" }}
+                    onClick={handleUpdate}
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    className="btn text-white fw-bold"
+                    style={{ backgroundColor: "#6070FF" }}
+                    onClick={handleSubmit}
+                  >
+                    Save
+                  </button>
+                )}
+              </div>
             </CardBody>
           </Card>
         </Container>

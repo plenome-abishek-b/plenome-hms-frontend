@@ -4,7 +4,7 @@ const initialState = {
   };
 
    const statusReducer = (state = initialState, action) => {
-    console.log(state,action,"both");
+    // console.log(state,action,"both");
     switch (action.type) {
       case 'TOGGLE_STATUS': 
         return { ...state, status: !state.status };
