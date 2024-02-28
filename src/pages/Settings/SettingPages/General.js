@@ -2,6 +2,11 @@ import React, { useState } from "react"
 import { Row, Col, Card, CardBody, Container } from "reactstrap"
 import GeneralDialog from "../SettingDialog/GeneralDialog"
 import api from "services/Api"
+import {
+  showRightSidebarAction,
+  toggleLeftmenu,
+  changeSidebarType,
+} from "../../../store/actions"
 
 function General() {
   const initialGeneralValue = {
@@ -64,7 +69,7 @@ function General() {
             <br />
             <br />
             <Container className="mt-2">
-              <Row>
+              {/* <Row>
                 <Col lg="2">
                   <label>Hospital Name</label>
                 </Col>
@@ -682,7 +687,7 @@ function General() {
               </Row>
               <div className="d-flex justify-content-end">
                 <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
-              </div>
+              </div> */}
             </Container>
 
           </Col>

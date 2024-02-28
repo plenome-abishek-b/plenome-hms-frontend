@@ -6,8 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField } from "@mui/material";
-import { Input, Select } from "@material-ui/core";
-import { Row, Col } from "reactstrap";
+// import { Input, Select } from "@material-ui/core";
+import { Row, Col,Input, Label} from "reactstrap";
 import PatientDialog from "./PatientDialog";
 import { useEffect } from "react";
 import api from "services/Api";
@@ -16,6 +16,7 @@ import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaymentDialog from "pages/Payment/PaymentDialog";
+// import "../customToast.css"
 // import "./";
 
 export default function AlertDialog({
@@ -340,6 +341,13 @@ export default function AlertDialog({
     const response = await api?.updateAppointment(newData);
     console.log(response, "eeeerespo");
     handleClose();
+    if(response.status === 200){
+      toast.info("Appointment Updated Successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+        className: "toast-message",
+        autoClose: 300
+      });
+    }
     getAppointment();
   };
   const getPriority = async () => {
@@ -509,7 +517,7 @@ export default function AlertDialog({
               <label>
                 Doctor Fees <span className="text-danger">*</span>
               </label>
-              <input
+              <Input
                 style={{
                   width: "100%",
                   height: "35px",
@@ -523,9 +531,9 @@ export default function AlertDialog({
                 onChange={handleChange}
                 type="number"
                 readOnly
-              ></input>
+              ></Input>
             </Col>
-            <input
+            <Input
               hidden
               style={{
                 width: "100%",
@@ -536,7 +544,7 @@ export default function AlertDialog({
               name="specialist"
               value={formValues.specialist}
               onChange={handleChange}
-            ></input>
+            ></Input>
           </Row>
           <br />
           <Row>
@@ -575,7 +583,7 @@ export default function AlertDialog({
               </label>
               <br />
               {selectedData?.date && isEditing ? (
-                <input
+                <Input
                   type="text"
                   style={{
                     width: "100%",
@@ -588,9 +596,9 @@ export default function AlertDialog({
                   //  onBlur={() => setIsEditing(false)}
                   //  onChange={handleChange}
                   onClick={() => setIsEditing(false)}
-                ></input>
+                ></Input>
               ) : (
-                <input
+                <Input
                   type="date"
                   style={{
                     width: "100%",
@@ -601,7 +609,7 @@ export default function AlertDialog({
                   name="date"
                   value={formValues.date}
                   onChange={handleChange}
-                ></input>
+                ></Input>
               )}
             </Col>
             <Col lg="4" md="4" sm="12">
@@ -609,7 +617,7 @@ export default function AlertDialog({
                 Time <span className="text-danger">*</span>
               </label>
               <br />
-              <input
+              <Input
                 type="time"
                 style={{
                   width: "100%",
@@ -620,7 +628,7 @@ export default function AlertDialog({
                 name="time"
                 value={formValues.time}
                 onChange={handleChange}
-              ></input>
+              ></Input>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -776,7 +784,7 @@ export default function AlertDialog({
             <button
               onClick={() => {
                 handleUpdate();
-                generatePdf();
+                // generatePdf();
               }}
               className="btn-mod bg-soft fw-bold"
             >

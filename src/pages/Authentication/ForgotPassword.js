@@ -77,7 +77,7 @@ const Forgotpassword = (props) => {
                     <Col xs={7}>
                       <div className="p-5">
                         <h2 className="text-white">Forgot Password</h2>
-                        <p className="text-white">Enter Your Mail</p>
+                        {/* <p className="text-white">Enter Your Mail</p> */}
                       </div>
                     </Col>
                     <Col className="col-4 align-self-end">
@@ -95,11 +95,11 @@ const Forgotpassword = (props) => {
                     <Col>
                         <label>Enter Mail</label>
                         <br />
-                        <input className="mt-2" style={{width: '100%', height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}} name="Username" onChange={onChange} value={data.Username}></input>
+                        <Input className="mt-2" style={{width: '100%', height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px'}} name="Username" onChange={onChange} value={data.Username}></Input>
                     </Col>
                     </Row>
                     <div className="mt-5 d-flex justify-content-center">
-                        <button className="btn btn-primary" onClick={handleFormSubmit}>Send Mail</button>
+                        <button className="btn btn-primary" onClick={handleFormSubmit}>Reset Password</button>
                     </div>
                  </CardBody>
                  </Card>

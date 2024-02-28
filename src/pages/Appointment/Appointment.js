@@ -14,7 +14,7 @@ import DeleteButtonRenderer from "common/data/delete-button";
 import Patientdetails from "./Dialog/PatientdetailsDialog";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
 //redux
@@ -92,6 +92,7 @@ const Appointment = (props) => {
       field: "patient_name",
       filter: "agSetColumnFilter",
       cellRenderer: "patientNameLinkRenderer",
+      flex: '1' 
     },
     {
       headerName: "Appointment No",
@@ -228,7 +229,7 @@ const Appointment = (props) => {
         {
           position: toast.POSITION.TOP_RIGHT,
           closeButton: false,
-          autoClose: 500,
+          autoClose: 300,
         }
       );
 
@@ -315,7 +316,7 @@ const Appointment = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <ToastContainer />
+          <ToastContainer transition={Flip}/>
           <Breadcrumbs
             title={props.t("Appointment")}
             breadcrumbItem={props.t("Appointment")}

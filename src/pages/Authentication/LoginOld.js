@@ -33,15 +33,16 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 
 // actions
 import { loginUser } from "store/actions";
-import { LOGIN_SUCCESS } from "store/auth/login/actionTypes";
 
 //Import config
 import { facebook, google } from "../../config";
 import fakeBackend from "helpers/AuthType/fakeBackend";
 import Sidebar from "components/VerticalLayout/Sidebar";
 import { setRoleName } from "store_1/authslice";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast,Slide, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.min.css";
+import { loginSuccess } from "store/login/actions";
 // import api from "services/Api"
 
 const Login = (props) => {
@@ -127,24 +128,25 @@ const Login = (props) => {
       const response = await api.postAuthUsers(values);
       console.log("API response:", response);
 
+
       const [{ details }] = response.data;
-      const { resetStatus, username } = details;
-      console.log(resetStatus, username, "datasss");
+      const { resetStatus, username,role_name } = details;
+      console.log(resetStatus, username,role_name, "datasss");
+
+      // dispatch(loginSuccess(role_name));
+      localStorage.setItem("newRole",role_name)
 
       fakeBackend(values.email, values.password);
-
-      if (response.status === 401) {
-        toast.error("Invalid email or password")
-      } else if (response.status === 201) {
-        toast.success("Logged in successfully", {
+      if (response.status === 201) {
+        toast.success(`Logged in as ${role_name}`, {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: 200,
-        })
+          autoClose: 200, 
+          transition: Flip
+        });
         dispatch(setRoleName(userData));
         setTimeout(() => {
           history.push("/dashboard");
-        }, 1000)
-
+        }, 1000);
 
         if (resetStatus === 1) {
           setTimeout(async () => {
@@ -162,17 +164,21 @@ const Login = (props) => {
               } else {
                 window.alert("Password reset failed");
               }
-
             } else {
               console.log("New password not provided");
             }
           }, 1200);
         }
-
       } else {
         console.log("Other response status:", response.status);
       }
     } catch (error) {
+      if (error.message === "Request failed with status code 401") {
+        toast.error("Invalid email or password", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 250,
+        });
+      }
       console.error("Error in handleVerify:", error);
     }
   };
@@ -211,7 +217,7 @@ const Login = (props) => {
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <ToastContainer />
+      <ToastContainer transition={Flip}/>
       <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft">
         <Container>
           <Row className="justify-content-center">
@@ -258,7 +264,7 @@ const Login = (props) => {
                           value={validation.values.Username || ""}
                           invalid={
                             validation.touched.Username &&
-                              validation.errors.Username
+                            validation.errors.Username
                               ? true
                               : false
                           }
@@ -280,7 +286,7 @@ const Login = (props) => {
                           onBlur={validation.handleBlur}
                           invalid={
                             validation.touched.Password &&
-                              validation.errors.Password
+                            validation.errors.Password
                               ? true
                               : false
                           }
@@ -373,7 +379,7 @@ const Login = (props) => {
                                 </Link>
                               )}
                               onSuccess={googleResponse}
-                              onFailure={() => { }}
+                              onFailure={() => {}}
                             />
                           </li>
                         </ul>
