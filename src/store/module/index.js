@@ -6,7 +6,7 @@ import { statusReducer } from './reducer';
 import { watchToggleStatus } from './sagas';
 
 const rootReducer = combineReducers(
-    console.log("going");{
+    console.log("going"),{
   status: statusReducer
 });
 

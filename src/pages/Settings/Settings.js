@@ -13,6 +13,7 @@ import { withTranslation } from "react-i18next";
 import Modules from "./SettingPages/Modules";
 import ModuleSettingsPage from "./SettingPages/ModuleToggleSettings";
 import ModuleToggleSettings from "./SettingPages/ModuleToggleSettings";
+import LanguageSettings from "./SettingPages/LanguageSettings";
 
 function Settings() {
   const [activeSetting, setActiveSetting] = useState("Modules");
@@ -29,18 +30,18 @@ function Settings() {
             <div className="table-responsive">
               <Table className="table mb-0">
                 <thead>
-                  {/* <tr>
-                    <th>
+                  <tr>
+                    <th className="fw-bold text-center">
                       <h4>General settings</h4>
                     </th>
                   </tr>
                   <tr>
-                    <th>
+                    <th className="text-start fs-5 fw-bold">
                     <Link to="#" onClick={() => handleSettingClick("General")} className='text-white'>
-                        General
+                    <i className="fas fa-wrench"></i>&nbsp;&nbsp; General
                       </Link>
                     </th>
-                  </tr> */}
+                  </tr>
                   {/* <tr>
                     <th>
                       <Link>System Notification</Link>
@@ -88,18 +89,18 @@ function Settings() {
                       <Link>Front CMS Settings</Link>
                     </th>
                   </tr> */}
-                  {/* <tr>
-                    <th>
-                      <Link>Languages</Link>
+                  <tr>
+                    <th className="text-start fs-5 fw-bold">
+                      <Link className="text-white" onClick={() => handleSettingClick("Languages")}><i className="fas fa-language"></i>&nbsp;&nbsp;  Languages</Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <Link>Captcha settings</Link>
                     </th>
                   </tr> */}
                   <tr>
-                    <th className="text-center fs-5 fw-bold">
+                    <th className="text-start fs-5 fw-bold">
                       <Link
                         to="#"
                         onClick={() => handleSettingClick("Modules")}
@@ -134,6 +135,7 @@ function Settings() {
             {activeSetting === "Prefix" && <PrefixSetting />}
             {activeSetting === "Users" && <UserSetting />}
             {activeSetting === "Modules" && <Modules />}
+            {activeSetting === "Languages" && <LanguageSettings />}
           </Card>
         </Col>
       </Row>

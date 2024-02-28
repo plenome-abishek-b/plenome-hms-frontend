@@ -46,8 +46,8 @@ const Modules = () => {
         };
   };
   const status = useSelector((state) => {
-    console.log("Redux state:", state); // Log the entire Redux state
-    console.log("Status slice:", state?.statusReducer?.status); // Log the status slice
+    console.log("Redux state:", state); 
+    console.log("Status slice:", state?.statusReducer?.status); 
     return state?.statusReducer?.status;
   });
   console.log(status, "redux value");
@@ -75,8 +75,10 @@ const Modules = () => {
     <React.Fragment>
       <div className="page-content" style={{position: 'relative', bottom: '35px', right: '10px'}}>
         <Container style={{}}>
+        
           <div>
-            <ul>
+          <h4 style={{marginLeft: '30px'}}>Module Settings</h4>
+            <ul className="pt-3">
               {Object.keys(module).map(
                 (key) => (
                   console.log(key),
@@ -92,9 +94,10 @@ const Modules = () => {
                         border: '1px solid rgba(0,0,0,0.1)',
                       }}
                     >
+                      
                       <h5>{key}</h5>
                       <button
-                        className="btn text-white"
+                        className="btn btn-sm fw-bold text-white ps-2"
                         style={{
                           marginRight: "10px",
                           backgroundColor:

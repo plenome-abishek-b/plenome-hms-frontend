@@ -12,12 +12,18 @@ import { useLocation } from "react-router-dom";
 
 //i18n
 import { withTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const SidebarContent = (props) => {
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
+
   const [modules, setModules] = useState([
     { id: "dashboard", name: "Dashboard", enabled: true },
     { id: "billing", name: "Billing", enabled: true },
   ]);
+
+  const [userRole, setUserrole] = useState();
 
   const handleToggle = (moduleId) => {
     setModules((prevModules) =>
@@ -37,27 +43,27 @@ const SidebarContent = (props) => {
 
   const ref = useRef();
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
-  useEffect(() => {
-    const pathName = props.location.pathname;
+  // useEffect(() => {
+  //   const pathName = props.location.pathname;
 
-    const initMenu = () => {
-      new MetisMenu("#side-menu");
-      let matchingMenuItem = null;
-      const ul = document.getElementById("side-menu");
-      const items = ul.getElementsByTagName("a");
-      for (let i = 0; i < items.length; ++i) {
-        if (pathName === items[i].pathname) {
-          matchingMenuItem = items[i];
-          break;
-        }
-      }
-      if (matchingMenuItem) {
-        activateParentDropdown(matchingMenuItem);
-      }
-    };
+  //   const initMenu = () => {
+  //     new MetisMenu("#side-menu");
+  //     let matchingMenuItem = null;
+  //     const ul = document.getElementById("side-menu");
+  //     const items = ul.getElementsByTagName("a");
+  //     for (let i = 0; i < items.length; ++i) {
+  //       if (pathName === items[i].pathname) {
+  //         matchingMenuItem = items[i];
+  //         break;
+  //       }
+  //     }
+  //     if (matchingMenuItem) {
+  //       activateParentDropdown(matchingMenuItem);
+  //     }
+  //   };
 
-    initMenu();
-  }, [props.location.pathname]);
+  //   initMenu();
+  // }, [props.location.pathname]);
 
   useEffect(() => {
     ref.current.recalculate();
@@ -76,43 +82,74 @@ const SidebarContent = (props) => {
     }
   }
 
-  function activateParentDropdown(item) {
-    item.classList.add("active");
-    const parent = item.parentElement;
-    const parent2El = parent.childNodes[1];
-    if (parent2El && parent2El.id !== "side-menu") {
-      parent2El.classList.add("mm-show");
-    }
+  // function activateParentDropdown(item) {
+  //   item.classList.add("active");
+  //   const parent = item.parentElement;
+  //   const parent2El = parent.childNodes[1];
+  //   if (parent2El && parent2El.id !== "side-menu") {
+  //     parent2El.classList.add("mm-show");
+  //   }
 
-    if (parent) {
-      parent.classList.add("mm-active");
-      const parent2 = parent.parentElement;
+  //   if (parent) {
+  //     parent.classList.add("mm-active");
+  //     const parent2 = parent.parentElement;
 
-      if (parent2) {
-        parent2.classList.add("mm-show"); // ul tag
+  //     if (parent2) {
+  //       parent2.classList.add("mm-active");
 
-        const parent3 = parent2.parentElement; // li tag
+  //       const parent3 = parent2.parentElement;
 
-        if (parent3) {
-          parent3.classList.add("mm-active"); // li
-          parent3.childNodes[0].classList.add("mm-active"); //a
-          const parent4 = parent3.parentElement; // ul
-          if (parent4) {
-            parent4.classList.add("mm-show"); // ul
-            const parent5 = parent4.parentElement;
-            if (parent5) {
-              parent5.classList.add("mm-show"); // li
-              parent5.childNodes[0].classList.add("mm-active"); // a tag
-            }
-          }
-        }
-      }
-      scrollElement(item);
-      return false;
-    }
-    scrollElement(item);
-    return false;
-  }
+  //       if (parent3) {
+  //         parent3.classList.add("mm-active");
+  //         parent3.childNodes[0].classList.add("mm-active");
+  //         const parent4 = parent3.parentElement;
+  //         if (parent4) {
+  //           parent4.classList.add("mm-show");
+  //           const parent5 = parent4.parentElement;
+  //           if (parent5) {
+  //             parent5.classList.add("mm-show");
+  //             parent5.childNodes[0].classList.add("mm-active");
+  //           }
+  //         }
+  //       }
+  //     }
+  //     scrollElement(item);
+  //     return false;
+  //   }
+  //   scrollElement(item);
+  //   return false;
+  // }
+
+  // const role = useSelector((state) => {
+  //   console.log("Redux sidebar state:", state);
+  //   localStorage.setItem('role',state?.loginReducer?.user)
+  //   // console.log("Status slice:", state?.statusReducer?.status);
+  //   return state?.loginReducer?.user;
+  // });
+
+  // useEffect(()=>{
+  //   setTimeout(()=>{
+  //     const roleuser = localStorage.getItem('role');
+  //     console.log(roleuser,'roleuser');
+  //     setUserrole(roleuser)
+  //   },2000)
+  // },[])
+  useEffect(() => {
+    const role = localStorage.getItem("newRole");
+    setUserrole(role);
+  }, []);
+
+  const toggleDropdown = (dropdownNumber) => {
+    setActiveDropdown((prevActiveDropdown) =>
+      prevActiveDropdown === dropdownNumber ? null : dropdownNumber
+    );
+  };
+
+  const toggleSubmenu = (submenuNumber) => {
+    setActiveSubmenu((prevActiveSubmenu) =>
+      prevActiveSubmenu === submenuNumber ? null : submenuNumber
+    );
+  };
 
   return (
     <React.Fragment>
@@ -121,16 +158,17 @@ const SidebarContent = (props) => {
           <ul className="metismenu list-unstyled" id="side-menu">
             {/* <li className="menu-title">{props.t("Menu")} </li> */}
 
-            {modules?.Dashboard && (
-              <li>
-                <Link to="/#">
-                  <i className="fas fa-desktop"></i>
-                  <span className="ms-2 fw-bold">Dashboard</span>
-                </Link>
-              </li>
-            )}
+            {modules?.Dashboard &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/#">
+                    <i className="fas fa-desktop"></i>
+                    <span className="ms-2 fw-bold">Dashboard</span>
+                  </Link>
+                </li>
+              )}
             {/* <ul className="sub-menu"> */}
-            {modules?.Billing && (
+            {modules?.Billing && userRole === "Super Admin" && (
               <li className>
                 <Link to="/billing">
                   <i className="fas fa-file-invoice"></i>
@@ -138,31 +176,34 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.Appointment && (
-              <li>
-                <Link to="/appointment">
-                  <i className="fas fa-calendar"></i>
-                  <span className="ms-2 fw-bold">Appointment</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Opd && (
-              <li>
-                <Link to="/opd">
-                  <i className="fas fa-stethoscope"></i>
-                  <span className="ms-2 fw-bold">OPD-Out Patient</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Ipd && (
-              <li>
-                <Link to="/ipd">
-                  <i className="fas fa-procedures"></i>
-                  <span className="ms-2 fw-bold">IPD-In Patient</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Pharmacy && (
+            {modules?.Appointment &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/appointment">
+                    <i className="fas fa-calendar"></i>
+                    <span className="ms-2 fw-bold">Appointment</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Opd &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/opd">
+                    <i className="fas fa-stethoscope"></i>
+                    <span className="ms-2 fw-bold">OPD-Out Patient</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Ipd &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/ipd">
+                    <i className="fas fa-procedures"></i>
+                    <span className="ms-2 fw-bold">IPD-In Patient</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Pharmacy && userRole === "Super Admin" && (
               <li>
                 <Link to="/pharmacy">
                   <i className="fas fa-mortar-pestle"></i>
@@ -171,40 +212,45 @@ const SidebarContent = (props) => {
               </li>
             )}
             {/* </ul> */}
-            {modules?.Pathology && (
-            <li>
-              <Link to="/pathology">
-                <i className="fas fa-flask"></i>
-                <span className="ms-2 fw-bold">Pathology</span>
-              </Link>
-            </li>)}
+            {modules?.Pathology &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/pathology">
+                    <i className="fas fa-flask"></i>
+                    <span className="ms-2 fw-bold">Pathology</span>
+                  </Link>
+                </li>
+              )}
 
-            {modules?.Radiology && (
-              <li>
-                <Link to="/radiology">
-                  <i className="fas fa-microscope"></i>
-                  <span className="ms-2 fw-bold">Radiology</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Bloodbank && (
-              <li>
-                <Link to="/bloodbank">
-                  <i className="fas fa-tint"></i>
-                  <span className="ms-2 fw-bold">Blood Bank</span>
-                </Link>
-              </li>
-            )}
+            {modules?.Radiology &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/radiology">
+                    <i className="fas fa-microscope"></i>
+                    <span className="ms-2 fw-bold">Radiology</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Bloodbank &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/bloodbank">
+                    <i className="fas fa-tint"></i>
+                    <span className="ms-2 fw-bold">Blood Bank</span>
+                  </Link>
+                </li>
+              )}
 
-            {modules?.Ambulance && (
-              <li>
-                <Link to="/ambulance" className="">
-                  <i className="fas fa-ambulance"></i>
-                  <span className="ms-2 fw-bold">Ambulance</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Frontoffice && (
+            {modules?.Ambulance &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/ambulance" className="">
+                    <i className="fas fa-ambulance"></i>
+                    <span className="ms-2 fw-bold">Ambulance</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Frontoffice && userRole === "Super Admin" && (
               <li>
                 <Link to="/frontoffice">
                   <i className="fas fa-hospital-alt"></i>
@@ -212,13 +258,19 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.BirthAndDeathRecord && (
-              <li>
-                <Link to="#" className="has-arrow">
+            {modules?.BirthAndDeathRecord && userRole === "Super Admin" && (
+              <li className={activeDropdown === 1 ? "mm-active" : ""}>
+                <Link
+                  to="#"
+                  className="has-arrow"
+                  onClick={() => toggleDropdown(1)}
+                >
                   <i className="fas fa-birthday-cake"></i>
                   <span className="ms-2 fw-bold">Birth & Death Record</span>
                 </Link>
-                <ul>
+                <ul
+                  style={{ display: activeDropdown === 1 ? "block" : "none" }}
+                >
                   <li>
                     <Link to="/birthrecord">{props.t("Birth Record")}</Link>
                   </li>
@@ -228,29 +280,37 @@ const SidebarContent = (props) => {
                 </ul>
               </li>
             )}
-            {modules?.HumarResource && (
-              <li>
-                <Link to="/hr">
-                  <i className="fas fa-sitemap"></i>
-                  <span className="ms-2 fw-bold">Human Resource</span>
-                </Link>
-              </li>
-            )}
-            {modules?.TPA && (
-              <li>
-                <Link to="/tpa">
-                  <i className="fas fa-umbrella"></i>
-                  <span className="ms-2 fw-bold">TPA Management</span>
-                </Link>
-              </li>
-            )}
-            {modules?.Finance && (
-              <li>
-                <Link to="#" className="has-arrow">
+            {modules?.HumarResource &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/hr">
+                    <i className="fas fa-sitemap"></i>
+                    <span className="ms-2 fw-bold">Human Resource</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.TPA &&
+              (userRole === "Doctor" || userRole === "Super Admin") && (
+                <li>
+                  <Link to="/tpa">
+                    <i className="fas fa-umbrella"></i>
+                    <span className="ms-2 fw-bold">TPA Management</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.Finance && userRole === "Super Admin" && (
+              <li className={activeDropdown === 2 ? "mm-active" : ""}>
+                <Link
+                  to="#"
+                  className="has-arrow"
+                  onClick={() => toggleDropdown(2)}
+                >
                   <i className="fas fa-money-bill"></i>
                   <span className="ms-2 fw-bold">Finance</span>
                 </Link>
-                <ul>
+                <ul
+                  style={{ display: activeDropdown === 2 ? "block" : "none" }}
+                >
                   <li>
                     <Link to="/income">{props.t("Income")}</Link>
                   </li>
@@ -260,50 +320,54 @@ const SidebarContent = (props) => {
                 </ul>
               </li>
             )}
-            {modules?.LiveConsultation && (
-              <li>
-                <Link
-                  to="#"
-                  className="has-arrow"
-                  style={{ pointerEvents: "none" }}
-                >
-                  <i className="fas fa-video"></i>
-                  <span className="ms-2 fw-bold">Live Consultation</span>
-                </Link>
-                <ul>
-                  <li>
-                    <Link to="/liveconsult">
-                      {props.t("Live Consultation")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/livemeeting">{props.t("Live Meeting")}</Link>
-                  </li>
-                </ul>
-              </li>
-            )}
-            {modules?.Certificate && (
-              <li>
-                <Link to="#" className="has-arrow">
-                  <i className="far fa-newspaper"></i>
-                  <span className="ms-2 fw-bold">Certificate</span>
-                </Link>
-                <ul>
-                  <li>
-                    <Link to="/certificate">{props.t("certificate")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/Patient_id_card">
-                      {props.t("Patient ID Card")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/Staff_ID_Card">{props.t("Staff ID Card")}</Link>
-                  </li>
-                </ul>
-              </li>
-            )}
-            {modules?.Referral && (
+            {modules?.LiveConsultation &&
+              (role === "Doctor" || role === "Super Admin") && (
+                <li>
+                  <Link
+                    to="#"
+                    className="has-arrow"
+                    style={{ pointerEvents: "none" }}
+                  >
+                    <i className="fas fa-video"></i>
+                    <span className="ms-2 fw-bold">Live Consultation</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/liveconsult">
+                        {props.t("Live Consultation")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/livemeeting">{props.t("Live Meeting")}</Link>
+                    </li>
+                  </ul>
+                </li>
+              )}
+            {modules?.Certificate &&
+              (role === "Doctor" || role === "Super Admin") && (
+                <li>
+                  <Link to="#" className="has-arrow">
+                    <i className="far fa-newspaper"></i>
+                    <span className="ms-2 fw-bold">Certificate</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/certificate">{props.t("certificate")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/Patient_id_card">
+                        {props.t("Patient ID Card")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/Staff_ID_Card">
+                        {props.t("Staff ID Card")}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              )}
+            {modules?.Referral && userRole === "Super Admin" && (
               <li>
                 <Link to="/referral">
                   <i className="fas fa-users"></i>
@@ -311,7 +375,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.Reports && (
+            {modules?.Reports && (role === "Doctor" || role === "Super Admin") && (
               <li>
                 <Link to="#" className="has-arrow">
                   <i className="fas fa-print"></i>
@@ -470,7 +534,7 @@ const SidebarContent = (props) => {
                 </ul>
               </li>
             )}
-            {modules?.inventory && (
+            {modules?.inventory && userRole === "Super Admin" && (
               <li>
                 <Link to="/inventory">
                   <i className="fas fa-luggage-cart"></i>
@@ -478,7 +542,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.message && (
+            {modules?.message && userRole === "Super Admin" && (
               <li>
                 <Link to="/message" style={{ pointerEvents: "none" }}>
                   <i className="far fa-envelope"></i>
@@ -486,7 +550,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.frontcms && (
+            {modules?.frontcms && userRole === "Super Admin" && (
               <li>
                 <Link to="/frontcms">
                   <i className="fa fa-solar-panel"></i>
@@ -494,15 +558,16 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.download && (
-              <li>
-                <Link to="/download">
-                  <i className="fas fa-download"></i>
-                  <span className="ms-2 fw-bold">Download</span>
-                </Link>
-              </li>
-            )}
-            {modules?.abha && (
+            {modules?.download &&
+              (role === "Doctor" || role === "Super Admin") && (
+                <li>
+                  <Link to="/download">
+                    <i className="fas fa-download"></i>
+                    <span className="ms-2 fw-bold">Download</span>
+                  </Link>
+                </li>
+              )}
+            {modules?.abha && userRole === "Super Admin" && (
               <li>
                 <Link to="/account/aadhar">
                   <i class="fas fa-address-card"></i>
@@ -510,7 +575,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.linkCareContext && (
+            {modules?.linkCareContext && userRole === "Super Admin" && (
               <li>
                 <Link to="/linkcarecontext">
                   <i class="fas fa-link"></i>
@@ -518,7 +583,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.discoverCareDonText && (
+            {modules?.discoverCareDonText && userRole === "Super Admin" && (
               <li>
                 <Link to="/discovercarecontext">
                   <i class="fas fa-book-open"></i>
@@ -526,7 +591,7 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.consentRequest && (
+            {modules?.consentRequest && userRole === "Super Admin" && (
               <li>
                 <Link to="/consentrequest">
                   <i class="fas fa-hand-holding-medical"></i>
@@ -534,48 +599,112 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            <li>
-              <Link to="#" className="has-arrow">
+            <li className={activeDropdown === 3 ? "mm-active" : ""}>
+              <Link
+                to="#"
+                className="has-arrow"
+                onClick={() => toggleDropdown(3)}
+              >
                 <i className="fas fa-cogs"></i>
                 <span className="ms-2 fw-bold">Setup</span>
               </Link>
-              <ul style={{ marginLeft: "-30px" }}>
-                <li>
+              <ul style={{ display: activeDropdown === 3 ? "block" : "none" }}>
+                <hr style={{ color: 'grey' }} />
+                <li className="fw-bold">
                   <Link to="/settings">{props.t("Settings")}</Link>
                 </li>
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 4 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(4)}
+                  >
                     {props.t("Hospital Charges")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 4 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
+                    <Link
+                      to="/setupcharges"
+                      className={
+                        props.location.pathname === "/setupcharges"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
+                      {props.t("Charges")}
+                    </Link>
                     <li>
-                      <Link to="/setupcharges">{props.t("Charges")}</Link>
-                    </li>
-                    <li>
-                      <Link to="/chargecategory">
+                      <Link
+                        to="/chargecategory"
+                        className={
+                          props.location.pathname === "/setupcharges"
+                            ? "mm-active"
+                            : ""
+                        }
+                      >
                         {props.t("Charge Category")}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/charges/chargetype">
+                      <Link
+                        to="/charges/chargetype"
+                        className={
+                          props.location.pathname === "/setupcharges"
+                            ? "mm-active"
+                            : ""
+                        }
+                      >
                         {props.t("Charge Type")}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/taxcategory">
+                      <Link
+                        to="/taxcategory"
+                        className={
+                          props.location.pathname === "/setupcharges"
+                            ? "mm-active"
+                            : ""
+                        }
+                      >
                         {props.t("Tax Category List")}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/unittype">{props.t("Unit Type")}</Link>
+                      <Link
+                        to="/unittype"
+                        className={
+                          props.location.pathname === "/setupcharges"
+                            ? "mm-active"
+                            : ""
+                        }
+                      >
+                        {props.t("Unit Type")}
+                      </Link>
                     </li>
                   </ul>
                 </li>
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 5 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(5)}
+                  >
                     {props.t("Appointment")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 5 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/setupslotappointment">{props.t("Slots")}</Link>
                     </li>
@@ -594,11 +723,22 @@ const SidebarContent = (props) => {
                 {/* <li>
                   <Link to="/setupbloodbank">{props.t("Blood Bank")}</Link>
                 </li> */}
-                <li>
-                  <Link to="/setupbed" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 6 ? "mm-active" : ""}>
+                  <Link
+                    to="/setupbed"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(6)}
+                  >
                     {props.t("Bed")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 6 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/bed">{props.t("Bed List")}</Link>
                     </li>
@@ -616,11 +756,22 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 7 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(7)}
+                  >
                     {props.t("Findings")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 7 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/findings">{props.t("Finding")}</Link>
                     </li>
@@ -657,11 +808,22 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li> */}
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 8 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(8)}
+                  >
                     {props.t("Operations")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 8 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/setupoperation">
                         {props.t("Operation Category")}
@@ -672,12 +834,23 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
+                <hr style={{ color: 'grey' }} />
                 {/* ////////// */}
-                <li>
-                  <Link to="#" className="has-arrow">
+                <li className={activeSubmenu === 9 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(9)}
+                  >
                     {props.t("Patients")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 9 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/setupPatient">{props.t("Patient list")}</Link>
                     </li>
@@ -724,11 +897,22 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li> */}
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 10 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(10)}
+                  >
                     {props.t("Symptoms")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 10 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/setup/symptomshead">
                         {props.t("Symptoms Head")}
@@ -741,12 +925,22 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-
-                <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 11 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(11)}
+                  >
                     {props.t("Human Resource")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 11 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/human-resource-setup/leave-type">
                         {props.t("Leave Type")}
@@ -769,11 +963,22 @@ const SidebarContent = (props) => {
                     </li>
                   </ul>
                 </li>
-                {/* <li>
-                  <Link to="#" className="has-arrow">
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 12 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(12)}
+                  >
                     {props.t("Front Office")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 12 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/frontoffice-setup/purpose-list">
                         {props.t("Purpose")}
@@ -794,13 +999,29 @@ const SidebarContent = (props) => {
                         {props.t("Appointment Priority")}
                       </Link>
                     </li>
+                    <li>
+                      <Link to="/frontoffice-setup/appointment-status">
+                        {props.t("Appointment Status")}
+                      </Link>
+                    </li>
                   </ul>
-                </li> */}
-                <li>
-                  <Link to="#" className="has-arrow">
+                </li>
+                <hr style={{ color: 'grey' }} />
+                <li className={activeSubmenu === 13 ? "mm-active" : ""}>
+                  <Link
+                    to="#"
+                    className="has-arrow fw-bold"
+                    onClick={() => toggleSubmenu(13)}
+                  >
                     {props.t("Inventory")}
                   </Link>
-                  <ul style={{ marginLeft: "-30px" }}>
+                  <ul
+                    style={{
+                      marginLeft: "-30px",
+                      display: activeSubmenu === 13 ? "block" : "none",
+                    }}
+                    className="fw-bold"
+                  >
                     <li>
                       <Link to="/setupinventorycategory">
                         {props.t("Inventeroy Category")}

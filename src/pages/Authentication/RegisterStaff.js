@@ -326,7 +326,7 @@ const RegisterStaff = () => {
     console.log(response, "consoling");
     const { data } = response;
     console.log(data, "consoling");
-    history.push("/hr");
+    history.push("/login");
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
