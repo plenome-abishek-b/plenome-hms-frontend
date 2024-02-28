@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const baseNestURL = "http://3.108.145.57:3003";
-// const baseNestURL = "http://localhost:4000";
+const baseNestURL = "http://localhost:4000";
+// const baseNestURL = "http://3.108.145.57:3003";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
 // const baseNodeURL = "http://13.200.35.19:3101";
@@ -18,7 +18,7 @@ const sms_gateway = "http://13.200.35.19:3500"
 const email_gateway = "https://control.msg91.com/api/v5"
 
 const baseAuthUrl = "http://13.200.35.19:6001"
-
+const localhost3 = "http://13.200.35.19:3102"
 const http2 = axios.create({
   baseURL: baseNestURL,  
 });
@@ -38,6 +38,9 @@ const http5 = axios.create({
 })
 const http6 = axios.create({
   baseURL:localhost2
+})
+const http10 = axios.create({
+  baseURL:localhost3
 })
 
 const sms_http = axios.create({
@@ -371,7 +374,6 @@ const URL = {
   SETUP_APPT_SLOT_CHARGES: "/setup_appt_slot_amount",
   SETUP_APPT_SHIFT: "/setup-appointment-shift",
   SETUP_APPT_GLOBAL_SHIFT: "/setup-appointment-doctor-shift",
-
   APPT_DOC_URL: "/internal-appointment-staff",
   SETUP_RADIOLOGY_CATEGORY:"/setup-radiology-radiology-category",
   SETUP_RADIOLOGY_UNIT:'/setup-radiology-unit',
@@ -2331,6 +2333,9 @@ function postAbhaMobileAuth(data) {
 function getLinkAddress(transactionId) {
   return http2.post(URL.ABHA_PHR_ADDRESS_SUGGESTION, { transactionId });
 }
+function updateDoctorShift(data){
+  return http10.post(URL.SETUP_APPT_GLOBAL_SHIFT,data)
+}
 ////////
 
 function postSetupRadiologyCategory(data){
@@ -3470,6 +3475,7 @@ getIPD_syptomsTitle,
 getSymptomeDescriptionByTitleId,
 getIPDBedByBedgroup,
 postForgotPassword,
-postResetPassword
+postResetPassword,
+updateDoctorShift
 };
 export default api;
