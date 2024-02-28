@@ -60,10 +60,11 @@ const DoctorShift_setupAppointment = (props) => {
     try {
       const response = await api.getSetupApptGlobalShift();
       const { data } = response;
-
+      console.log(data,"roww");
       if (Array.isArray(data) && data.length > 0) {
         const rowData = mapApiDataToRowData(data);
-        setRowData(rowData);
+        console.log(rowData,"rowData");
+        setRowData(data);
 
         localStorage.setItem("rowData", JSON.stringify(rowData));
       }
@@ -112,6 +113,30 @@ console.log(globalShiftIds,'global ids');
       })
     );
   };
+  const handleEdit = async (shiftid,globalshiftId) =>{
+    if(globalshiftId?.id === undefined){
+      const data = {
+        staff_id: shiftid,
+        global_shift_id:globalshiftId,
+        Hospital_id:1
+      }
+      console.log(data,"edittingss")
+       const response = await api.updateDoctorShift(data)
+       console.log(response,"response")
+    //  getSetupDoctorGlobalShift()
+    }else{
+      const data ={
+        staff_id: shiftid,
+        global_shift_id:globalshiftId?.id,
+        Hospital_id:1
+      }
+      console.log(data,"editting")
+       const response = await api.updateDoctorShift(data)
+       console.log(response,"response")
+       
+      //  getSetupDoctorGlobalShift()
+    }
+  }
 
   return (
     <React.Fragment>
@@ -122,45 +147,55 @@ console.log(globalShiftIds,'global ids');
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
               <table>
-                <thead>
-                  <tr>
-                    <th>Doctor Name</th>
-                    {shifts &&
-                      shifts.map((shift) => (
-                        <th key={shift.id}>{shift.name}</th>
-                      ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rowData.map((doctor) => (
-                    <tr key={doctor.doctor_name}>
-                      <td>{doctor.doctor_name}</td>
-                      {shifts.map((shift) => (
-                        <td key={shift.id}>
-                          <input
-                            value={doctor.global_shift_id === shift.id ? "Yes" : "No"}
-                            onChange={(e) =>
-                              handleDropdownChange(
-                                doctor.doctor_name,
-                                e.target.value,
-                                shift.name.toLowerCase()
-                              )
-                            }
-                            style={{
-                              backgroundColor:
-                                doctor.global_shift_id === shift.id ? "#00cc00" : "#ff6666",
-                              border: "1px solid #7070FF",
-                              borderRadius: "5px",
-                              color: "white",
-                            }}
-                            type="checkbox"
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+  <thead>
+    <tr>
+      <th>Doctor Name</th>
+      {shifts &&
+        shifts.map((shift) => (
+          <th key={shift.id}>{shift.name}</th>
+        ))}
+    </tr>
+  </thead>
+  <tbody>
+  {rowData.map((doctor) => (
+    <tr key={doctor.doctor_name}>
+      <td>{doctor.doctor_name}</td>
+      {shifts.map((shift) => (
+        <td key={shift.id}>
+          {console.log(shift,"kk",doctor,"both")}
+          {doctor?.global_shifts && doctor?.global_shifts.some((s) => s.shift === shift.name) ? (
+            <input
+              checked
+              style={{
+                backgroundColor: "#00cc00",
+                border: "1px solid #7070FF",
+                borderRadius: "5px",
+                color: "white",
+              }}
+              onClick={() => handleEdit(doctor?.id, doctor?.global_shifts.find((s) => s.shift === shift.name))}
+              type="checkbox"
+              // readOnly
+            />
+          ) : (
+            <input
+              style={{
+                backgroundColor: "#ff6666",
+                border: "1px solid #7070FF",
+                borderRadius: "5px",
+                color: "white",
+              }}
+              onClick={() => handleEdit(doctor?.id,shift?.id)}
+              type="checkbox"
+              // readOnly
+            />
+          )}
+        </td>
+      ))} 
+    </tr>
+  ))}
+</tbody>
+</table>
+
               <div
                 style={{
                   display: "flex",
