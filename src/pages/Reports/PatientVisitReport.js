@@ -12,36 +12,66 @@ import api from "services/Api"
 
 const Patientvisitreport = props => {
   const [tableData, setTableData] = useState(null)
+  const [ipdDate, setIpddate] = useState();
+  const [ipdColumn,setIpdcolumn] = useState();
 
   const getPatientVisit = async () => {
     const patient_ID = document.getElementById("patient_ID").value
     const response = await api.getPatientVisitReport(patient_ID)
-
+  
     const { data } = response
     console.log(data, "patient visit report")
-
-    // Create a new array with the received data
+  
+    const modifiedData = data[1].map((patient)=>{
+      console.log('hi' ,patient.date)
+      const trimmedDate = patient.date.split("T");
+      console.log('trim',trimmedDate);
+      const combinedDateTime = `${trimmedDate}`;
+  
+      const formattedDateTime = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }).format(new Date(combinedDateTime));
+  
+      console.log(formattedDateTime,'fomatted date');
+  
+      return {
+        ...patient,
+        date: formattedDateTime,
+      };
+    })
+  
+    console.log(modifiedData,'moddata');
+  
     const updatedTableData = [...data]
-
+    updatedTableData.push(modifiedData);
+  
     // Update the tableData state with the new array
     setTableData(updatedTableData)
+
   }
+  
 
   const columnOpdDefs = [
     { headerName: "OPD No", field: "opdNo" },
-    { headerName: "Case ID", field: "caseID" },
-    { headerName: "Date", field: "date" },
+    { headerName: "Case ID", field: "case_reference_id" },
+    { headerName: "Date", field: "appointment_date" },
     { headerName: "OPD Checkup ID", field: "opdCheckupId" },
-    { headerName: "Doctor Name", field: "doctorName" },
+    { headerName: "Doctor Name", field: "doctor" },
     { headerName: "Symptoms", field: "symptoms" },
     { headerName: "Findings", field: "findings" },
   ]
 
   const columnIpdDefs = [
     { headerName: "IPD No", field: "ipdNo" },
-    { headerName: "Case ID", field: "caseID" },
+    { headerName: "Case ID", field: "case_reference_id" },
     { headerName: "Date", field: "date" },
-    { headerName: "Doctor Name", field: "doctorName" },
+    { headerName: "Doctor Name", field: "doctor" },
     { headerName: "Symptoms", field: "symptoms" },
     { headerName: "Findings", field: "findings" },
   ]

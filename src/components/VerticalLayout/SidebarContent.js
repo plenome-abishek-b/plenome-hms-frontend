@@ -375,13 +375,16 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.Reports && (role === "Doctor" || role === "Super Admin") && (
-              <li>
-                <Link to="#" className="has-arrow">
+            {modules?.Reports && (userRole === "Doctor" || userRole === "Super Admin") && (
+              <li className={activeDropdown === 0 ? "mm-active" : ""}>
+                <Link to="#" className="has-arrow" onClick={() => toggleDropdown(0)}>
                   <i className="fas fa-print"></i>
                   <span className="ms-2 fw-bold">Reports</span>
                 </Link>
-                <ul>
+                <ul style={{ display: activeDropdown === 0 ? "block" : "none" }}>
+                  <li>
+                    <Link to="/appointmentreport">{props.t("Appointment Report")}</Link>
+                  </li>
                   <li>
                     <Link to="/opdreport">{props.t("OPD Report")}</Link>
                   </li>
@@ -524,6 +527,11 @@ const SidebarContent = (props) => {
                   <li>
                     <Link to="/patientlogincreds">
                       {props.t("Patient Login Credentials")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/patientbillreport">
+                      {props.t("Patient Bill Report")}
                     </Link>
                   </li>
                   {/* <li>
