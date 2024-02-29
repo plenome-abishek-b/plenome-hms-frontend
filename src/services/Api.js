@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { toDate } from "validator";
 
-const baseNestURL = "http://localhost:4000";
+const baseNestURL = "http://13.200.35.19:3003";
 // const baseNestURL = "http://3.108.145.57:3003";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
@@ -296,8 +297,8 @@ const URL = {
   AUDIT_TRAIL_REPORT_URL: "/api/audittrailreport",
   PHARMACY_BILL_REPORT_URL: "/api/pharmacybillreport",
   TPA_REPORT_URL: "/api/tpareport",
-  PATIENT_VISIT_REPORT_URL: "/api/patientvisitreport",
-  PATIENT_BILL_REPORT_URL: "/api/patientbillreport",
+  PATIENT_VISIT_REPORT_URL: "/patient-visit-report",
+  PATIENT_BILL_REPORT_URL: "/patient_bill_report",
   RADIOLOGY_REPORT_NAME_URL: "/api/radiology_name",
   RADILOGY_REPORT_CATEGORY_URL: "/api/radiologyCategory",
   RADIOLOGY_PATIENT_REPORT: "/api/radiologypatientreport",
@@ -422,7 +423,8 @@ const URL = {
   SMS_GATEWAY: '/sms',
   EMAIL_GATEWAY: '/email/send',
   FORGOT_PASSWORD: '/login/forgotPassword',
-  RESET_PASSWORD: '/login/resetPassword'
+  RESET_PASSWORD: '/login/resetPassword',
+  APPOINTMENT_REPORT_URL: '/appointment_report'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -435,6 +437,39 @@ function getAppointmentbyId(id){
   const url = `${URL.APPOINTMENT_URL}/${id}`
   return http3.get(url);
 }
+
+function getAppointmentReport(formData) {
+  let url = `${URL.APPOINTMENT_REPORT_URL}?`;
+
+  // Add selected values to the URL based on the selected options
+  if (formData.timeDuration !== "select") {
+    url += `timeDuration=${formData.timeDuration}&`;
+  }
+  if (formData.doctor && formData.doctor !== "select") {
+    url += `doctor=${formData.doctor}&`;
+  }
+  if (formData.shift && formData.shift !== "select") {
+    url += `shift=${formData.shift}&`;
+  }
+  if (formData.priority && formData.priority !== "select") {
+    url += `priority=${formData.priority}&`;
+  }
+  if (formData.source && formData.source !== "select") {
+    url += `source=${formData.source}&`;
+  }
+  if (formData.timeDuration === "Period" && formData.fromDate && formData.toDate) {
+    url += `fromDate=${formData.fromDate}&toDate=${formData.toDate}`;
+  }
+
+  // Remove trailing '&' if present
+  url = url.replace(/&$/, "");
+
+  return http3.get(url);
+}
+
+
+
+
 
 function getStaffcountData(roleId) {
   console.log("roleId:", roleId);
@@ -1900,15 +1935,15 @@ function getPharmacyBillReport(
 
 function getPatientVisitReport(patient_ID) {
   console.log("patient_ID:", patient_ID);
-  const url = `${URL.PATIENT_VISIT_REPORT_URL}?patient_ID=${patient_ID}`;
+  const url = `${URL.PATIENT_VISIT_REPORT_URL}/${patient_ID}`;
   console.log("url:", url);
 
-  return http.get(url);
+  return http3.get(url);
 }
 
 function getPatientBillReport(case_ID) {
   console.log("case_ID:", case_ID);
-  const url = `${URL.PATIENT_BILL_REPORT_URL}?case_ID=${case_ID}`;
+  const url = `${URL.PATIENT_BILL_REPORT_URL}/${case_ID}`;
   console.log("url:", url);
 
   return http.get(url);
@@ -3476,6 +3511,7 @@ getSymptomeDescriptionByTitleId,
 getIPDBedByBedgroup,
 postForgotPassword,
 postResetPassword,
-updateDoctorShift
+updateDoctorShift,
+getAppointmentReport
 };
 export default api;

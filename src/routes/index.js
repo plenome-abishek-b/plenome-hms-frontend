@@ -192,6 +192,7 @@ import SetupExample from "pages/Setup/SetupComponents/SetupBedLisNew";
 import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
 import ModuleSettingsPage from "pages/Settings/SettingPages/ModuleToggleSettings";
 import ForgotPassword from "pages/Authentication/ForgotPassword";
+import AppointmetnReport from "pages/Reports/AppointmetnReport";
 
 const authProtectedRoutes = [
   { path: "/", component: Dashboard },
@@ -354,6 +355,7 @@ const authProtectedRoutes = [
   {path: "/linkcarecontext", component: Linkcarecontext},
   {path: "/discovercarecontext", component: Discovercontext},
   {path: "/consentrequest", component: Consentrequest},
+  {path: "/appointmentreport", component: AppointmetnReport},
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

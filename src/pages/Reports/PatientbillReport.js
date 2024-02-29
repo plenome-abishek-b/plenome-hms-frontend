@@ -61,7 +61,7 @@ const Patientbillreport = props => {
                     </Card>
                     <div className="ag-theme-alpine mt-2" style={{ height: 400 }}>
                 <AgGridReact
-                rowData={tableData[0]}
+                rowData={tableData}
                   columnDefs={columnDefs}
                   defaultColDef={defaultColDef}
                   pagination={true}
