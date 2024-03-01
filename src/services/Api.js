@@ -16,7 +16,7 @@ const localhost = "http://localhost:4000"
 const localhost2= "http://localhost:4000"
 
 const sms_gateway = "http://13.200.35.19:3500"
-const email_gateway = "https://control.msg91.com/api/v5"
+const email_gateway = "https://13.200.35.19:3500"
 
 const baseAuthUrl = "http://13.200.35.19:6001"
 const localhost3 = "http://13.200.35.19:3102"
@@ -421,7 +421,7 @@ const URL = {
   SETUP_BED_TYPE:'/setup-bed-bed-type',
 
   SMS_GATEWAY: '/sms',
-  EMAIL_GATEWAY: '/email/send',
+  EMAIL_GATEWAY: '/email-appointment-booked',
   FORGOT_PASSWORD: '/login/forgotPassword',
   RESET_PASSWORD: '/login/resetPassword',
   APPOINTMENT_REPORT_URL: '/appointment_report'
@@ -1780,11 +1780,14 @@ function getUserStaffSetting(data = {}) {
 }
 
 function getPrefixSetting(data = {}) {
-  return http.get(URL.PREFIX_SETTING_URL, data);
+  return http4.get(URL.PREFIX_SETTING_URL, data);
 }
 
-function postPrefixSetting(data = {}) {
-  return http.put(URL.PREFIX_SETTING_URL, data);
+function postPrefixSetting(formData) {
+  const id = formData.id
+  console.log(id,'id');
+  const url = `${URL.PREFIX_SETTING_URL}/${id}`
+  return http4.patch(url, formData);
 }
 
 function getPatientCredsReport(data = {}) {

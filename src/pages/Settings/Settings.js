@@ -110,12 +110,12 @@ function Settings() {
                       </Link>
                     </th>
                   </tr>
-                  {/* <tr>
+                  <tr>
                     <th>
-                    <Link to="#" onClick={() => handleSettingClick("Prefix")} className='text-white'>Prefix settings</Link>
+                    <Link to="#" onClick={() => handleSettingClick("Prefix")} className='text-white fs-5 fw-bold'><i className="fas fa-file-word"></i>&nbsp;&nbsp; Prefix settings</Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                      <Link to='#' className='text-white'>System Updates</Link>
                     </th>

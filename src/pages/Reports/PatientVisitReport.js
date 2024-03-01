@@ -49,9 +49,8 @@ const Patientvisitreport = props => {
     console.log(modifiedData,'moddata');
   
     const updatedTableData = [...data]
-    updatedTableData.push(modifiedData);
-  
-    // Update the tableData state with the new array
+
+    
     setTableData(updatedTableData)
 
   }
