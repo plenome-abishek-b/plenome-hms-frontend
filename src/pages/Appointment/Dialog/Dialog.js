@@ -297,21 +297,11 @@ export default function AlertDialog({
       };
 
       const email_datas = {
-        recipients: [
-          {
-            to: [
-              {
-                email: email,
-                name: Patname,
-              },
-            ],
-          },
-        ],
-        from: {
-          email: "plenome@plenome.com",
-        },
-        domain: "plenome.com",
-        template_id: "template_2",
+       email: email,
+       Date: Dates,
+       name: Patname,
+       drname: formattedDoctorName,
+       HosName: hos
       };
 
       const sms_response = await api.postSms(datas);
