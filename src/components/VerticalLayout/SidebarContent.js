@@ -13,8 +13,10 @@ import { useLocation } from "react-router-dom";
 //i18n
 import { withTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SidebarContent = (props) => {
+  const { t } = useTranslation();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
@@ -163,7 +165,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/#">
                     <i className="fas fa-desktop"></i>
-                    <span className="ms-2 fw-bold">Dashboard</span>
+                    <span className="ms-2 fw-bold">{t('Dashboard')}</span>
                   </Link>
                 </li>
               )}
@@ -181,7 +183,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/appointment">
                     <i className="fas fa-calendar"></i>
-                    <span className="ms-2 fw-bold">Appointment</span>
+                    <span className="ms-2 fw-bold">{t('Appointment')}</span>
                   </Link>
                 </li>
               )}
@@ -190,7 +192,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/opd">
                     <i className="fas fa-stethoscope"></i>
-                    <span className="ms-2 fw-bold">OPD-Out Patient</span>
+                    <span className="ms-2 fw-bold">{t("OPD-Out Patient")}</span>
                   </Link>
                 </li>
               )}
@@ -285,7 +287,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/hr">
                     <i className="fas fa-sitemap"></i>
-                    <span className="ms-2 fw-bold">Human Resource</span>
+                    <span className="ms-2 fw-bold">{t('Human Resource')}</span>
                   </Link>
                 </li>
               )}
@@ -379,7 +381,7 @@ const SidebarContent = (props) => {
               <li className={activeDropdown === 0 ? "mm-active" : ""}>
                 <Link to="#" className="has-arrow" onClick={() => toggleDropdown(0)}>
                   <i className="fas fa-print"></i>
-                  <span className="ms-2 fw-bold">Reports</span>
+                  <span className="ms-2 fw-bold">{t("Reports")}</span>
                 </Link>
                 <ul style={{ display: activeDropdown === 0 ? "block" : "none" }}>
                   <li>
@@ -614,7 +616,7 @@ const SidebarContent = (props) => {
                 onClick={() => toggleDropdown(3)}
               >
                 <i className="fas fa-cogs"></i>
-                <span className="ms-2 fw-bold">Setup</span>
+                <span className="ms-2 fw-bold">{t("Setup")}</span>
               </Link>
               <ul style={{ display: activeDropdown === 3 ? "block" : "none" }}>
                 <hr style={{ color: 'grey' }} />
