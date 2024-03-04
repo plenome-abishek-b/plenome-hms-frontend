@@ -8,6 +8,8 @@ import DeleteButtonRenderer from "common/data/delete-button";
 import EditButtonRenderer from "common/data/update-button";
 import { ToastContainer, toast } from "react-toastify";
 import { getRoles } from "@testing-library/react";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@material-ui/core";
+
 
 function RoleSetting() {
   const initialRoleValue = {
@@ -25,6 +27,7 @@ function RoleSetting() {
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
   const [open, setOpen] = React.useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
     //dialog open
@@ -94,6 +97,8 @@ function RoleSetting() {
     setFormData({ ...formData, [id]: value });
   };
 
+  
+
   const handleDeleteClick = async (data) => {
     try {
       const toastId = toast.info(
@@ -120,10 +125,12 @@ function RoleSetting() {
     }
   };
   const handleEditClick = (data) => {
-    console.log(data, "edit");
     setSelectedData(data);
-    // setSelectedData()
-    setOpen(true);
+    setEditDialogOpen(true);
+  };
+
+  const handleEditDialogClose = () => {
+    setEditDialogOpen(false);
   };
 
   const handleDeletionConfirmed = async (roleId) => {
@@ -205,7 +212,7 @@ function RoleSetting() {
       <h4>Role</h4>
       <Row>
         <Col lg="4">
-          <Container>
+          <Container className="p-3">
             <h4>Role</h4>
 
             <label>Name</label>
@@ -220,9 +227,32 @@ function RoleSetting() {
                 Save
               </button>
             </div>
+            <Dialog open={editDialogOpen} onClose={handleEditDialogClose}  sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "900px", // Set your width here
+            },
+          },
+        }}>
+        <DialogTitle style={{backgroundColor: '#7070FF'}} className="fw-bold text-white">Edit Role</DialogTitle>
+        <DialogContent>
+          <br />
+          <Input
+            style={{ width: "100%" }}
+            id="name"
+            onChange={(e) => onChange(e)}
+            value={selectedData.name || ""}
+          />
+        </DialogContent>
+        <DialogActions className="d-flex justify-content-center p-3">
+          <button onClick={handleEditDialogClose} className="btn btn-danger btn-sm">Cancel</button>
+          <button onClick={handleEditDialogClose} className="btn btn-success btn-sm">Save</button>
+        </DialogActions>
+      </Dialog>
           </Container>
         </Col>
-        <Col lg="8">
+        <Col lg="8" className="p-3">
           <Container>
             <h4>Role List</h4>
             <div

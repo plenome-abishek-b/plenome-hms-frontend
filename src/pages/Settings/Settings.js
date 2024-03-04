@@ -63,13 +63,13 @@ function Settings() {
                     <th>
                       <Link to="#" onClick={() => handleSettingClick("Payments")} className='text-white'>Payments</Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Users")} className='text-white'>Users</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Users")} className='text-white fs-5 fw-bold'><i className="fas fa-users"></i>&nbsp;&nbsp; Users</Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <Link to="#" onClick={() => handleSettingClick("Sms")} className='text-white'>SMS settings</Link>
                     </th>
