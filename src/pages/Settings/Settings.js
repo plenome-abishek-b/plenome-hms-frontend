@@ -53,13 +53,13 @@ function Settings() {
                         Email Setting
                       </Link>
                     </th>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <th>
-                      <Link to="#" onClick={() => handleSettingClick("Role")} className='text-white'>Roles & Permissions</Link>
+                      <Link to="#" onClick={() => handleSettingClick("Role")} className='text-white fs-5 fw-bold'><i class="fas fa-user"></i>&nbsp;&nbsp; Roles & Permissions</Link>
                     </th>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th>
                       <Link to="#" onClick={() => handleSettingClick("Payments")} className='text-white'>Payments</Link>
                     </th>
@@ -73,7 +73,7 @@ function Settings() {
                     <th>
                       <Link to="#" onClick={() => handleSettingClick("Sms")} className='text-white'>SMS settings</Link>
                     </th>
-                  </tr> */}
+                  </tr>  */}
                   {/* <tr>
                     <th>
                       <Link>Backup / Restore</Link>
