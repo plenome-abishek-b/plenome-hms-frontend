@@ -48,6 +48,8 @@ const PrefixSetting = () => {
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
   };
+
+  console.log(formData,'formdata');
   
   function handleFormSubmit() {
     api.postPrefixSetting(formData).then(resp => {
@@ -57,23 +59,23 @@ const PrefixSetting = () => {
   return (
     <React.Fragment>
       <div className="page-content">
-        <h4>Prefix Setting</h4>
+        <h4 style={{marginLeft: '218px', position: 'relative', bottom: '30px'}}>Prefix Setting</h4>
         <br />
-        <Container lg="12" style={{ marginLeft: "18%" }}>
+        <Container lg="12" style={{ marginLeft: "18%", position: 'relative', bottom: '50px' }} className="p-3">
           <Row>
             <Col>
               <label>IPD No</label>
               <br />
-              <input
-                style={{ width: "60%" }}
-                id="1"
+              <Input
+                style={{ width: "60%", }}
+                id=""
                 placeholder={
-                  datas && datas.length > 0 && datas[0].type === "ipd_no"
+                  datas && datas.length > 0 && datas[0].type === "IPD NO"
                     ? datas[0].prefix
                     : "Loading..."
                 }
                 onChange={e=>onChange(e)}
-              ></input>
+              ></Input>
             </Col>
           </Row>
           <br />
@@ -81,16 +83,16 @@ const PrefixSetting = () => {
             <Col>
               <label>OPD No</label>
               <br />
-              <input
-                id="2"
+              <Input
+                id=""
                 placeholder={
-                  datas && datas.length > 0 && datas[1].type === "opd_no"
+                  datas && datas.length > 0 && datas[1].type === "OPD NO"
                     ? datas[1].prefix
                     : "Loading..."
                 }
                 onChange={e=>onChange(e)}
                 style={{ width: "60%" }}
-              ></input>
+              ></Input>
             </Col>
           </Row>
           <br />
@@ -98,18 +100,18 @@ const PrefixSetting = () => {
             <Col>
               <label>IPD Prescription</label>
               <br />
-              <input
+              <Input
                 id="3"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[2].type === "ipd_prescription"
-                    ? datas[2].prefix
-                    : "Loading..."
-                }
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[2].type === "ipd_prescription"
+                //     ? datas[2].prefix
+                //     : "Loading..."
+                // }
                 onChange={e=>onChange(e)}
                 style={{ width: "60%" }}
-              ></input>
+              ></Input>
             </Col>
           </Row>
           <br />
@@ -117,16 +119,16 @@ const PrefixSetting = () => {
             <Col>
               <label>OPD Prescription</label>
               <br />
-              <input  id="4"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[3].type === "opd_prescription"
-                    ? datas[3].prefix
-                    : "Loading..."
-                }
+              <Input  id="4"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[3].type === "opd_prescription"
+                //     ? datas[3].prefix
+                //     : "Loading..."
+                // }
                 onChange={e=>onChange(e)}
-                 style={{ width: "60%" }}></input>
+                 style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -134,16 +136,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Appointment</label>
               <br />
-              <input id="5"
+              <Input id=""
                 placeholder={
                   datas &&
                   datas.length > 0 &&
-                  datas[4].type === "appointment"
-                    ? datas[4].prefix
+                  datas[2].type === "APPOINTMENT"
+                    ? datas[2].prefix
                     : "Loading..."
                 } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -151,16 +153,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Pharmacy Bill</label>
               <br />
-              <input id="5"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[5].type === "pharmacy_billing"
-                    ? datas[5].prefix
-                    : "Loading..."
-                } 
+              <Input id="5"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[5].type === "pharmacy_billing"
+                //     ? datas[5].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -168,16 +170,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Operation Reference No</label>
               <br />
-              <input id="6"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[6].type === "operation_theater_reference_no"
-                    ? datas[6].prefix
-                    : "Loading..."
-                } 
+              <Input id="6"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[6].type === "operation_theater_reference_no"
+                //     ? datas[6].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -185,16 +187,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Blood Bank Bill</label>
               <br />
-              <input id="7"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[7].type === "blood_bank_billing"
-                    ? datas[7].prefix
-                    : "Loading..."
-                } 
+              <Input id="7"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[7].type === "blood_bank_billing"
+                //     ? datas[7].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -202,16 +204,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Ambulance Call Bill</label>
               <br />
-              <input id="8"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[8].type === "ambulance_call_billing"
-                    ? datas[8].prefix
-                    : "Loading..."
-                } 
+              <Input id="8"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[8].type === "ambulance_call_billing"
+                //     ? datas[8].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -219,16 +221,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Radiology Bill</label>
               <br />
-              <input id="9"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[9].type === "radiology_billing"
-                    ? datas[9].prefix
-                    : "Loading..."
-                } 
+              <Input id="9"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[9].type === "radiology_billing"
+                //     ? datas[9].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -236,16 +238,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Pathology Bill</label>
               <br />
-              <input id="10"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[10].type === "pathology_billing"
-                    ? datas[10].prefix
-                    : "Loading..."
-                } 
+              <Input id="10"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[10].type === "pathology_billing"
+                //     ? datas[10].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -253,16 +255,16 @@ const PrefixSetting = () => {
             <Col>
               <label>OPD Checkup ID</label>
               <br />
-              <input id="11"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[11].type === "checkup_id"
-                    ? datas[11].prefix
-                    : "Loading..."
-                } 
+              <Input id="11"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[11].type === "checkup_id"
+                //     ? datas[11].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -270,16 +272,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Pharmacy Purchase No</label>
               <br />
-              <input id="12"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[12].type === "purchase_no"
-                    ? datas[12].prefix
-                    : "Loading..."
-                } 
+              <Input id="12"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[12].type === "purchase_no"
+                //     ? datas[12].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -287,16 +289,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Transaction ID</label>
               <br />
-              <input id="13"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[13].type === "transaction_id"
-                    ? datas[13].prefix
-                    : "Loading..."
-                } 
+              <Input id="13"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[13].type === "transaction_id"
+                //     ? datas[13].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -304,16 +306,16 @@ const PrefixSetting = () => {
             <Col>
               <label>Birth Record Reference No</label>
               <br />
-              <input id="14"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[14].type === "birth_record_reference_no"
-                    ? datas[14].prefix
-                    : "Loading..."
-                } 
+              <Input id="14"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[14].type === "birth_record_reference_no"
+                //     ? datas[14].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
@@ -321,23 +323,24 @@ const PrefixSetting = () => {
             <Col>
               <label>Death Record Reference No</label>
               <br />
-              <input  id="15"
-                placeholder={
-                  datas &&
-                  datas.length > 0 &&
-                  datas[15].type === "death_record_reference_no"
-                    ? datas[15].prefix
-                    : "Loading..."
-                } 
+              <Input  id="15"
+                // placeholder={
+                //   datas &&
+                //   datas.length > 0 &&
+                //   datas[15].type === "death_record_reference_no"
+                //     ? datas[15].prefix
+                //     : "Loading..."
+                // } 
                 onChange={e=>onChange(e)}
-                style={{ width: "60%" }}></input>
+                style={{ width: "60%" }}></Input>
             </Col>
           </Row>
           <br />
-          <div className="d-flex justify-content-center">
-            <button className="btn-mod" onClick={handleFormSubmit}>Save</button>
-          </div>
+          
         </Container>
+        <div style={{position: 'absolute', right: '270px',bottom: '80px'}}>
+            <button className="btn text-white fw-bold" style={{backgroundColor: '#7070FF'}} onClick={handleFormSubmit}>Save</button>
+          </div>
       </div>
     </React.Fragment>
   )

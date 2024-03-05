@@ -13,8 +13,10 @@ import { useLocation } from "react-router-dom";
 //i18n
 import { withTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SidebarContent = (props) => {
+  const { t } = useTranslation();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
@@ -163,7 +165,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/#">
                     <i className="fas fa-desktop"></i>
-                    <span className="ms-2 fw-bold">Dashboard</span>
+                    <span className="ms-2 fw-bold">{t('Dashboard')}</span>
                   </Link>
                 </li>
               )}
@@ -181,7 +183,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/appointment">
                     <i className="fas fa-calendar"></i>
-                    <span className="ms-2 fw-bold">Appointment</span>
+                    <span className="ms-2 fw-bold">{t('Appointment')}</span>
                   </Link>
                 </li>
               )}
@@ -190,7 +192,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/opd">
                     <i className="fas fa-stethoscope"></i>
-                    <span className="ms-2 fw-bold">OPD-Out Patient</span>
+                    <span className="ms-2 fw-bold">{t("OPD-Out Patient")}</span>
                   </Link>
                 </li>
               )}
@@ -199,7 +201,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/ipd">
                     <i className="fas fa-procedures"></i>
-                    <span className="ms-2 fw-bold">IPD-In Patient</span>
+                    <span className="ms-2 fw-bold">{t("IPD-In Patient")}</span>
                   </Link>
                 </li>
               )}
@@ -217,7 +219,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/pathology">
                     <i className="fas fa-flask"></i>
-                    <span className="ms-2 fw-bold">Pathology</span>
+                    <span className="ms-2 fw-bold">{t("Pathology")}</span>
                   </Link>
                 </li>
               )}
@@ -227,7 +229,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/radiology">
                     <i className="fas fa-microscope"></i>
-                    <span className="ms-2 fw-bold">Radiology</span>
+                    <span className="ms-2 fw-bold">{t("Radiology")}</span>
                   </Link>
                 </li>
               )}
@@ -236,7 +238,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/bloodbank">
                     <i className="fas fa-tint"></i>
-                    <span className="ms-2 fw-bold">Blood Bank</span>
+                    <span className="ms-2 fw-bold">{t("Blood Bank")}</span>
                   </Link>
                 </li>
               )}
@@ -246,7 +248,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/ambulance" className="">
                     <i className="fas fa-ambulance"></i>
-                    <span className="ms-2 fw-bold">Ambulance</span>
+                    <span className="ms-2 fw-bold">{t("Ambulance")}</span>
                   </Link>
                 </li>
               )}
@@ -285,11 +287,11 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/hr">
                     <i className="fas fa-sitemap"></i>
-                    <span className="ms-2 fw-bold">Human Resource</span>
+                    <span className="ms-2 fw-bold">{t('Human Resource')}</span>
                   </Link>
                 </li>
               )}
-            {modules?.TPA &&
+            {/* {modules?.TPA &&
               (userRole === "Doctor" || userRole === "Super Admin") && (
                 <li>
                   <Link to="/tpa">
@@ -297,7 +299,7 @@ const SidebarContent = (props) => {
                     <span className="ms-2 fw-bold">TPA Management</span>
                   </Link>
                 </li>
-              )}
+              )} */}
             {modules?.Finance && userRole === "Super Admin" && (
               <li className={activeDropdown === 2 ? "mm-active" : ""}>
                 <Link
@@ -375,13 +377,16 @@ const SidebarContent = (props) => {
                 </Link>
               </li>
             )}
-            {modules?.Reports && (role === "Doctor" || role === "Super Admin") && (
-              <li>
-                <Link to="#" className="has-arrow">
+            {modules?.Reports && (userRole === "Doctor" || userRole === "Super Admin") && (
+              <li className={activeDropdown === 0 ? "mm-active" : ""}>
+                <Link to="#" className="has-arrow" onClick={() => toggleDropdown(0)}>
                   <i className="fas fa-print"></i>
-                  <span className="ms-2 fw-bold">Reports</span>
+                  <span className="ms-2 fw-bold">{t("Reports")}</span>
                 </Link>
-                <ul>
+                <ul style={{ display: activeDropdown === 0 ? "block" : "none" }}>
+                  <li>
+                    <Link to="/appointmentreport">{props.t("Appointment Report")}</Link>
+                  </li>
                   <li>
                     <Link to="/opdreport">{props.t("OPD Report")}</Link>
                   </li>
@@ -526,6 +531,11 @@ const SidebarContent = (props) => {
                       {props.t("Patient Login Credentials")}
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/patientbillreport">
+                      {props.t("Patient Bill Report")}
+                    </Link>
+                  </li>
                   {/* <li>
                   <Link to="/ambulancereport">
                     {props.t("Ambulance Call Report")}
@@ -606,7 +616,7 @@ const SidebarContent = (props) => {
                 onClick={() => toggleDropdown(3)}
               >
                 <i className="fas fa-cogs"></i>
-                <span className="ms-2 fw-bold">Setup</span>
+                <span className="ms-2 fw-bold">{t("Setup")}</span>
               </Link>
               <ul style={{ display: activeDropdown === 3 ? "block" : "none" }}>
                 <hr style={{ color: 'grey' }} />

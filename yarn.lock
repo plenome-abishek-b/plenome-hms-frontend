@@ -4689,6 +4689,13 @@
   "resolved" "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   "version" "1.0.0"
 
+"bootstrap-switch-button-react@^1.2.0":
+  "integrity" "sha512-p/l+Rp69VtXpK0Y2PR9XYE1TPuypxF+1CpBPmvLUpwXjCisuxtl2S8AF6PqeLDxizFeHuW5nUE6qnqrZY/9ZQA=="
+  "resolved" "https://registry.npmjs.org/bootstrap-switch-button-react/-/bootstrap-switch-button-react-1.2.0.tgz"
+  "version" "1.2.0"
+  dependencies:
+    "react" "^16.11.0"
+
 "bootstrap@^5.2.0":
   "integrity" "sha512-qlnS9GL6YZE6Wnef46GxGv1UpGGzAwO0aPL1yOjzDIJpeApeMvqV24iL+pjr2kU4dduoBA9fINKWKgMToobx9A=="
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-5.2.0.tgz"
@@ -6987,6 +6994,11 @@
   "version" "1.0.4"
   dependencies:
     "minimatch" "^5.0.1"
+
+"filereader@^0.10.3":
+  "integrity" "sha512-7F8w6GSXuHLN80ukaVOcHgBaiTRHUZr8GeEhNdqfAECcnBoROg4i8hTl+KqtF4yUPffOJVHEFg4iDJb7xIYFng=="
+  "resolved" "https://registry.npmjs.org/filereader/-/filereader-0.10.3.tgz"
+  "version" "0.10.3"
 
 "filesize@^8.0.6":
   "integrity" "sha512-pjmC+bkIF8XI7fWaH8KxHcZL3DPybs1roSKP4rKDvy20tAWwIObE4+JIseG2byfGKhud5ZnM4YSGKBz7Sh0ndQ=="
@@ -12240,6 +12252,15 @@
     "object-assign" "^4.1.1"
     "prop-types" "^15.6.2"
 
+"react@^16.11.0":
+  "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
+  "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  "version" "16.14.0"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "prop-types" "^15.6.2"
+
 "reactcss@^1.2.0":
   "integrity" "sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A=="
   "resolved" "https://registry.npmjs.org/reactcss/-/reactcss-1.2.3.tgz"
@@ -14015,6 +14036,11 @@
   "version" "3.1.5"
   dependencies:
     "is-typedarray" "^1.0.0"
+
+"typedarray-to-buffer@^4.0.0":
+  "integrity" "sha512-6dOYeZfS3O9RtRD1caom0sMxgK59b27+IwoNy8RDPsmslSGOyU+mpTamlaIW7aNKi90ZQZ9DFaZL3YRoiSCULQ=="
+  "resolved" "https://registry.npmjs.org/typedarray-to-buffer/-/typedarray-to-buffer-4.0.0.tgz"
+  "version" "4.0.0"
 
 "typedarray@^0.0.6":
   "integrity" "sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA=="

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { toDate } from "validator";
 
-const baseNestURL = "http://localhost:4000";
+const baseNestURL = "http://13.200.35.19:3003";
 // const baseNestURL = "http://3.108.145.57:3003";
 
 // const mURL = process.env.REACT_APP_MURL || "http://localhost:3000"
@@ -15,7 +16,7 @@ const localhost = "http://localhost:4000"
 const localhost2= "http://localhost:4000"
 
 const sms_gateway = "http://13.200.35.19:3500"
-const email_gateway = "https://control.msg91.com/api/v5"
+const email_gateway = "https://13.200.35.19:3500"
 
 const baseAuthUrl = "http://13.200.35.19:6001"
 const localhost3 = "http://13.200.35.19:3102"
@@ -295,8 +296,8 @@ const URL = {
   AUDIT_TRAIL_REPORT_URL: "/api/audittrailreport",
   PHARMACY_BILL_REPORT_URL: "/api/pharmacybillreport",
   TPA_REPORT_URL: "/api/tpareport",
-  PATIENT_VISIT_REPORT_URL: "/api/patientvisitreport",
-  PATIENT_BILL_REPORT_URL: "/api/patientbillreport",
+  PATIENT_VISIT_REPORT_URL: "/patient-visit-report",
+  PATIENT_BILL_REPORT_URL: "/patient_bill_report",
   RADIOLOGY_REPORT_NAME_URL: "/api/radiology_name",
   RADILOGY_REPORT_CATEGORY_URL: "/api/radiologyCategory",
   RADIOLOGY_PATIENT_REPORT: "/api/radiologypatientreport",
@@ -420,15 +421,18 @@ const URL = {
   SETUP_BED_TYPE:'/setup-bed-bed-type',
 
   SMS_GATEWAY: '/sms',
-  EMAIL_GATEWAY: '/email/send',
+  EMAIL_GATEWAY: '/email-appointment-booked',
   FORGOT_PASSWORD: '/login/forgotPassword',
   RESET_PASSWORD: '/login/resetPassword',
+
   OPD_CHARGES:'/internal-opd-charges/charges',
   OPD_CHARGE_AMOUNT:'/internal-opd-charges/amount',
   TPA_OPD_INTERNAL:'/tpa-management',
   OPD_OVERVIEW:'/internal-opd-overview',
   OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',
-  OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor'
+  OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor',
+
+  APPOINTMENT_REPORT_URL: '/appointment_report'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
@@ -440,6 +444,39 @@ function getAppointmentbyId(id){
   const url = `${URL.APPOINTMENT_URL}/${id}`
   return http3.get(url);
 }
+
+function getAppointmentReport(formData) {
+  let url = `${URL.APPOINTMENT_REPORT_URL}?`;
+
+  // Add selected values to the URL based on the selected options
+  if (formData.timeDuration !== "select") {
+    url += `timeDuration=${formData.timeDuration}&`;
+  }
+  if (formData.doctor && formData.doctor !== "select") {
+    url += `doctor=${formData.doctor}&`;
+  }
+  if (formData.shift && formData.shift !== "select") {
+    url += `shift=${formData.shift}&`;
+  }
+  if (formData.priority && formData.priority !== "select") {
+    url += `priority=${formData.priority}&`;
+  }
+  if (formData.source && formData.source !== "select") {
+    url += `source=${formData.source}&`;
+  }
+  if (formData.timeDuration === "Period" && formData.fromDate && formData.toDate) {
+    url += `fromDate=${formData.fromDate}&toDate=${formData.toDate}`;
+  }
+
+  // Remove trailing '&' if present
+  url = url.replace(/&$/, "");
+
+  return http3.get(url);
+}
+
+
+
+
 
 function getStaffcountData(roleId) {
   console.log("roleId:", roleId);
@@ -1751,11 +1788,14 @@ function getUserStaffSetting(data = {}) {
 }
 
 function getPrefixSetting(data = {}) {
-  return http.get(URL.PREFIX_SETTING_URL, data);
+  return http4.get(URL.PREFIX_SETTING_URL, data);
 }
 
-function postPrefixSetting(data = {}) {
-  return http.put(URL.PREFIX_SETTING_URL, data);
+function postPrefixSetting(formData) {
+  const id = formData.id
+  console.log(id,'id');
+  const url = `${URL.PREFIX_SETTING_URL}/${id}`
+  return http4.patch(url, formData);
 }
 
 function getPatientCredsReport(data = {}) {
@@ -1906,15 +1946,15 @@ function getPharmacyBillReport(
 
 function getPatientVisitReport(patient_ID) {
   console.log("patient_ID:", patient_ID);
-  const url = `${URL.PATIENT_VISIT_REPORT_URL}?patient_ID=${patient_ID}`;
+  const url = `${URL.PATIENT_VISIT_REPORT_URL}/${patient_ID}`;
   console.log("url:", url);
 
-  return http.get(url);
+  return http3.get(url);
 }
 
 function getPatientBillReport(case_ID) {
   console.log("case_ID:", case_ID);
-  const url = `${URL.PATIENT_BILL_REPORT_URL}?case_ID=${case_ID}`;
+  const url = `${URL.PATIENT_BILL_REPORT_URL}/${case_ID}`;
   console.log("url:", url);
 
   return http.get(url);
@@ -3517,6 +3557,7 @@ getTPA_OPD,
 getAmountWithCharge,
 get_OPD_Overview,
 get_OPD_OverviewVist,
-get_OPD_Consultant
+get_OPD_Consultant,
+getAppointmentReport
 };
 export default api;
