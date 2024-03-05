@@ -201,7 +201,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/ipd">
                     <i className="fas fa-procedures"></i>
-                    <span className="ms-2 fw-bold">IPD-In Patient</span>
+                    <span className="ms-2 fw-bold">{t("IPD-In Patient")}</span>
                   </Link>
                 </li>
               )}
@@ -219,7 +219,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/pathology">
                     <i className="fas fa-flask"></i>
-                    <span className="ms-2 fw-bold">Pathology</span>
+                    <span className="ms-2 fw-bold">{t("Pathology")}</span>
                   </Link>
                 </li>
               )}
@@ -229,7 +229,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/radiology">
                     <i className="fas fa-microscope"></i>
-                    <span className="ms-2 fw-bold">Radiology</span>
+                    <span className="ms-2 fw-bold">{t("Radiology")}</span>
                   </Link>
                 </li>
               )}
@@ -238,7 +238,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/bloodbank">
                     <i className="fas fa-tint"></i>
-                    <span className="ms-2 fw-bold">Blood Bank</span>
+                    <span className="ms-2 fw-bold">{t("Blood Bank")}</span>
                   </Link>
                 </li>
               )}
@@ -248,7 +248,7 @@ const SidebarContent = (props) => {
                 <li>
                   <Link to="/ambulance" className="">
                     <i className="fas fa-ambulance"></i>
-                    <span className="ms-2 fw-bold">Ambulance</span>
+                    <span className="ms-2 fw-bold">{t("Ambulance")}</span>
                   </Link>
                 </li>
               )}
@@ -291,7 +291,7 @@ const SidebarContent = (props) => {
                   </Link>
                 </li>
               )}
-            {modules?.TPA &&
+            {/* {modules?.TPA &&
               (userRole === "Doctor" || userRole === "Super Admin") && (
                 <li>
                   <Link to="/tpa">
@@ -299,7 +299,7 @@ const SidebarContent = (props) => {
                     <span className="ms-2 fw-bold">TPA Management</span>
                   </Link>
                 </li>
-              )}
+              )} */}
             {modules?.Finance && userRole === "Super Admin" && (
               <li className={activeDropdown === 2 ? "mm-active" : ""}>
                 <Link

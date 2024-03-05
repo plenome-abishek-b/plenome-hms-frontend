@@ -19,7 +19,9 @@ i18next.init({
   resources: {
     en: { translation: require('./locale/en.json') },
     es: { translation: require('./locale/es.json') },
-    tm: {translation: require('./locale/tm.json')}
+    tm: {translation: require('./locale/tm.json')},
+    ml: {translation: require('./locale/ml.json')},
+    hn: {translation: require('./locale/hn.json')}
   },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -4,6 +4,11 @@
     "Human Resource": "மனித வளாகம்",
     "OPD-Out Patient": "வெளி நோயாளி",
     "Reports": "அறிக்கைகள்",
-    "Setup": "அமைவு"
+    "Setup": "அமைவு",
+    "Pathology": "நோயியல்",
+    "Radiology": "கதிரியக்கவியல்",
+    "IPD-In Patient": "உள்நோயாளி",
+    "Blood Bank": "இரத்த வங்கி",
+    "Ambulance": "மருத்துவ அவசர ஊர்தி"
   }
   

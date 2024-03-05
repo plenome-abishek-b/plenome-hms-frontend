@@ -22,7 +22,7 @@ import { format } from "prettier";
 import { useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-
+import { Buffer } from "buffer";
 //redux
 
 const AddStaff = () => {
@@ -38,7 +38,10 @@ const AddStaff = () => {
   const [department, setDepartment] = useState([]);
   const [specialist, setSpecialist] = useState([]);
   const [bloodGroup, setBloodGroup] = useState([]);
+  const [fileData, setFiledata] = useState();
+  const [bufferData,setbufferData] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const [newBuffer, setNewbuffer] = useState();
   const [formData, setFormData] = useState({
     employee_id: "",
     role_id: "",
@@ -282,73 +285,103 @@ const AddStaff = () => {
     };
     setCertificates([...certificates, newCertificate]);
   };
+  
+  
 
   const handleSubmit = async () => {
+    
     const selectedFiles = certificates.map((cert) => ({
       fileName: cert.fileName,
       fileType: cert.fileType,
       date: cert.date,
     }));
-    console.log(" ", selectedFiles);
+
+    console.log(newBuffer,'newbufferinside');
+
+    const selectedImages = {
+      originalname: fileData.name,
+      mimetype: fileData.type,
+      size: fileData.size,
+      buffer: newBuffer,
+      "encoding": "7bit", 
+      "fieldname": "file"
+  };
+    console.log(" ", selectedFiles);  
     const datas = {
       ...formData,
       name: `${formData?.first_name}`,
       certificates: selectedFiles,
       other_document_name: formData?.other_document_file,
+      image: selectedImages
     };
-    // if(datas?.employee_id){
-
-    // }else if(datas?.role_id){
-
-    // }else if(datas?.staff_designation_id){
-
-    // }else if(datas?.department_id){
-
-    // }else if(datas?.specialist){
-
-    // }else if(datas?.first_name){
-
-    // }else if(datas?.surname){
-
-    // }else if(data?.father_name){
-
-    // }else if(data?.mother_name){
-
-    // }else if(data?.gender){
-
-    // }else if(data?.marital_status){
-
-    // }
     console.log(datas, "all datas getting");
-    // const filteredObject = Object.fromEntries(
-    //   Object.entries(datas).filter(([key, value]) => value !== "")
-    // );
     const response = await api?.postHRmainModuleHr_Staff(datas);
     console.log(response, "consoling");
     const { data } = response;
     console.log(data, "consoling");
     history.push("/hr");
   };
+
+  
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
+    console.log(files[0],'filedata');
     console.log(name, typeof value, "both");
     try {
-      if (name === "specialist") {
-        setFormData({
-          ...formData,
-          specialist: JSON.stringify([parseInt(value)]),
-        });
-      } else {
-        console.log("here");
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      }
+        if (name === "specialist") {
+            setFormData({
+                ...formData,
+                specialist: JSON.stringify([parseInt(value)]),
+            });
+        } else if (files && files[0]) {
+            const file = files[0];
+            setFiledata(file)
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const base64String = e.target.result.split(",")[1];
+                const arrayBuffer = Uint8Array.from(atob(base64String), c => c.charCodeAt(0)).buffer;
+                const arrayBuffer_1 = reader.result;
+                const modBuffer = Buffer.from(arrayBuffer_1)
+                console.log(modBuffer,'modified');
+
+                setbufferData(modBuffer)
+                // setFormData({
+                //     ...formData,
+                //     [name]: arrayBuffer,
+                //     // [`${name}_image`]: base64String, 
+                // });
+            };
+
+
+
+            reader.readAsDataURL(file);
+            modifiedBuffer();
+        } else {
+            console.log("here");
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
     } catch (error) {
-      console.log(error, "error");
+        console.log(error, "error");
     }
-  }; //handlechange function with correct set of data
+};
+
+const modifiedBuffer = () => {
+  const bufferString = JSON.stringify({
+    buffer: "<Buffer " + Array.from(bufferData).map(byte => byte.toString(16).padStart(2, '0')).join(' ') + ">",
+  });
+  
+  const afterbuffer = JSON.parse(bufferString).buffer
+  
+  setNewbuffer(afterbuffer)
+}
+
+
+
+
 
   const getStaffs = async () => {
     const response = await api.getRolePermission();
