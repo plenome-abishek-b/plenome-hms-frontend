@@ -74,8 +74,8 @@ console.log(tableData,"jjijijij")
     { headerName: "Contact", field: "mobileno" },
     { headerName: "Consultant", field: "doctor" },
     // { headerName: "Last visit", field: "appointment_date" },
-    { headerName: "Age", field: "age" }
-    //{ headerName: "Total Recheckup", field: "totalrecheckup" },
+    { headerName: "Age", field: "age" },
+    { headerName: "Total Recheckup", field: "totalrecheckup" },
   ];
 
   const gridOptions = {
@@ -94,13 +94,15 @@ console.log(tableData,"jjijijij")
   getOPDpatient()
  },[])
  const getOPDpatient = async () => {
-  const response = await api.getOpdOutpatient_MainModule();
-  const modifiedData = response.data.map(patient => ({
-      ...patient,
-      patient_name: patient.patient_name.replace('/', ' ')
-  }));
-  console.log(modifiedData, "wwwwwwww");
-  setTableData(modifiedData);
+  const response = await api.getOpd();
+  const {data} = response;
+  console.log(data,"opd get")
+  // const modifiedData = response.data.map(patient => ({
+  //     ...patient,
+  //     patient_name: patient.patient_name.replace('/', ' ')
+  // }));
+  // console.log(modifiedData, "wwwwwwww");
+  setTableData(data);
 }
 
    return (
@@ -112,7 +114,7 @@ console.log(tableData,"jjijijij")
             breadcrumbItem={props.t("Out Patient")}
           />
 
-          <OpdDialog  setFetchData={setFetchData} open={open} handleClose={handleClose} />
+          <OpdDialog getOPDpatient={getOPDpatient}  setFetchData={setFetchData} open={open} handleClose={handleClose}/>
           <div
             style={{
               display: "flex",
