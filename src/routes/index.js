@@ -242,7 +242,7 @@ const authProtectedRoutes = [
   {path: "/billgenerate", component: Billgeneration},
   {path: "/ipdprofile/:ipdno", component: IpdPatientProfile},
   {path: "/opdprofile/:pid", component: OpdProfile},
-  {path: "/opdprofileview", component: OutPatientProfile},
+  {path: "/opdprofileview/:pid", component: OutPatientProfile},
   {path: "/ipddischargedreport", component: IpdDischargeReport},
   {path: "/opddischargedreport", component: OpdDischargedReport},
   {path: "/addstaff", component: AddStaff},

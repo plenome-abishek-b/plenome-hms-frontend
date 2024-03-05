@@ -1,32 +1,61 @@
-import * as React from "react"
-import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
-import DialogTitle from "@mui/material/DialogTitle"
-import { TextField } from "@mui/material"
-import { Input, Select } from "@material-ui/core"
-import { Row, Col } from "reactstrap"
-import { useEffect } from "react"
-import api from "services/Api"
-import { useState } from "react"
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { TextField } from "@mui/material";
+import { Input, Select } from "@material-ui/core";
+import { Row, Col } from "reactstrap";
+import { useEffect } from "react";
+import api from "services/Api";
+import { useState } from "react";
 // import { Formik } from "formik"
-import { useFormik } from "formik"
+import { useFormik } from "formik";
+import { Link } from "react-router-dom";
+import * as yup from "yup";
 
-export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
-  const [bloodgroupData, setBloodgroupData] = useState("")
+export default function PatientDialog({ open, handleClose, getAllPatient }) {
+  const [bloodgroupData, setBloodgroupData] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   useEffect(() => {
-    handleBloodgroup()
-    // handleBloodgroups()
-  }, [])
+    handleBloodgroups();
+  }, []);
 
-  const handleBloodgroup = async () => {
-    const response = await api.getBloodBank()
-    const { data } = response
-    setBloodgroupData(data)
-    console.log(data, "data")
-  }
+  const [isDateSelected, setIsDateSelected] = useState(false);
+
+  const getCurrentDateTime = () => {
+    const currentDate = new Date();
+    return `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${currentDate
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${currentDate
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${currentDate
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}:${currentDate
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  const validationSchema = yup.object().shape({
+    mobileno: yup
+      .string()
+      .matches(/^[0-9]+$/, "Phone number must contain only digits")
+      .min(10, "Phone number must be at least 10 digits")
+      .required("Phone number is required *"),
+    email: yup.string().email("Invalid email").required("Email is required *"),
+    patient_name: yup.string().required("Patient Name is required *"),
+    gender: yup.string().required("Gender is required *"),
+    dob: yup.string().required("Date of Birth is required *"),
+  });
 
   const [formValues, setFormValues] = useState({
     patient_name: "",
@@ -42,7 +71,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
     app_key: "",
     is_dead: "no",
     is_active: "yes",
-    created_at: "2023-02-02 11:11:11",
+    created_at: getCurrentDateTime(),
     blood_group: "",
     marital_status: "single",
     mobileno: "",
@@ -54,77 +83,114 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
     insurence_id: "",
     insurence_validity: "",
     identification_number: "",
-  })
-  const [bloodgroupDatas, setBloodgroupDatas] = useState([])
+    ABHA_number: "",
+  });
 
-  useEffect(() => {
-    handleBloodgroup()
-  }, [])
+  const handleBloodgroups = async () => {
+    const response = await api.getBloodgroups();
+    const { data } = response;
+    setBloodgroupData(data);
+    console.log(data, "data");
+  };
 
-  const handleChange = event => {
-    // event.preventDefault()
+  const handleChange = (event) => {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
-    })
-  }
+    });
+  };
 
-  const handleSubmit = async event => {
-    // event.preventDefault()
-    console.log("form values: ", formValues)
-    setFetchData(formValues)
-    const response = await api.postPatient(formValues)
-  }
+  const handleSubmit = async (event) => {
+    const formattedDateTime = formatDateTime(formValues.insurence_validity);
+    const updatedFormValues = {
+      ...formValues,
+      insurence_validity: formattedDateTime,
+      created_at: getCurrentDateTime(),
+    };
 
-  const [isDateSelected, setIsDateSelected] = useState(false)
-  const handledobChange = event => {
-    const { name, value } = event.target
+    try {
+      const response = await api.postPatients(updatedFormValues);
+
+      setFormSubmitted(true);
+      setFormValues({});
+      getAllPatient();
+      handleClose();
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
+  };
+
+  const formatDateTime = (dateTimeString) => {
+    const dateObject = new Date(dateTimeString);
+    return `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${dateObject
+      .getDate()
+      .toString()
+      .padStart(2, "0")} ${dateObject
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${dateObject
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}:${dateObject
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  const handledobChange = (event) => {
+    const { name, value } = event.target;
 
     if (name === "dob") {
-      const currentDate = new Date()
-      const selectedDate = new Date(value)
+      const currentDate = new Date();
+      const selectedDate = new Date(value);
 
-      // Calculate the age based on the difference in years, months, and days
-      let age = currentDate.getFullYear() - selectedDate.getFullYear()
-      const monthDiff = currentDate.getMonth() - selectedDate.getMonth()
-      const dayDiff = currentDate.getDate() - selectedDate.getDate()
+      let age = currentDate.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = currentDate.getMonth() - selectedDate.getMonth();
+      const dayDiff = currentDate.getDate() - selectedDate.getDate();
 
-      // Adjust the age if the current month and day are before the selected month and day
       if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        age--
+        age--;
       }
 
       // Calculate the absolute difference in months and days
-      const absMonthDiff = Math.abs(monthDiff)
-      const absDayDiff = Math.abs(dayDiff)
+      const absMonthDiff = Math.abs(monthDiff);
+      const absDayDiff = Math.abs(dayDiff);
 
       // Handle the special case when the age is -1
       if (age === -1) {
-        setFormValues(prevValues => ({
+        setFormValues((prevValues) => ({
           ...prevValues,
           age: "0",
           month: "0",
           day: "0",
           dob: value,
-        }))
+        }));
       } else {
-        setFormValues(prevValues => ({
+        setFormValues((prevValues) => ({
           ...prevValues,
           age: age.toString(),
           month: absMonthDiff.toString(),
           day: absDayDiff.toString(),
           dob: value,
-        }))
+        }));
       }
 
-      setIsDateSelected(true) // Set isDateSelected to true
+      setIsDateSelected(true); // Set isDateSelected to true
     } else {
-      setFormValues(prevValues => ({
+      setFormValues((prevValues) => ({
         ...prevValues,
         [name]: value,
-      }))
+      }));
     }
-  }
+  };
+
+  const formik = useFormik({
+    initialValues: formValues,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <div>
@@ -134,19 +200,28 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          maxWidth="xl"
+          sx={{
+            "& .MuiDialog-container": {
+              "& .MuiPaper-root": {
+                width: "100%",
+                maxWidth: "1200px", // Set your width here
+              },
+            },
+          }}
         >
           <DialogTitle
             id="alert-dialog-title"
             className="text-white fw-bold"
-            style={{ backgroundColor: "#92A4FF" }}
+            style={{ backgroundColor: "#6070FF" }}
           >
             Add Patient
           </DialogTitle>
           <DialogContent className="mt-4 ms-2">
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Name <span className="text-danger">*</span></label>
+                <label>
+                  Name <span className="text-danger">*</span>
+                </label>
                 <br />
                 <input
                   type="text"
@@ -155,14 +230,18 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   value={formValues.patient_name}
                   onChange={handleChange}
+                  onBlur={formik.handleBlur}
                   //   onChange={formik.handleChange}
                   // value={formik.values.name}
                 ></input>
+                {formik.touched.patient_name && formik.errors.patient_name ? (
+                  <div className="text-danger">{formik.errors.patient_name}</div>
+                ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
                 <label>Guardian Name</label>
@@ -178,8 +257,8 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -187,75 +266,31 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Gender</label>
+                <label>Gender<span className="text-danger"> *</span></label>
                 <br />
                 <select
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="gender"
                   value={formValues.gender}
                   onChange={handleChange}
+                  onBlur={formik.handleBlur}
                   // onChange={formik.handleChange}
                   // value={formik.values.gender}
                 >
+                  <option>select</option>
                   <option value="Male">Male</option>
                   <option valeu="Female">Female</option>
                   <option value="Transgeder">Transgender</option>
                 </select>
+                {formik.touched.gender && formik.errors.gender ? (
+                  <div className="text-danger">{formik.errors.gender}</div>
+                ) : null}
               </Col>
-              <Col lg="6" md="6" sm="12">
-                <label>Age <span className="text-danger">*</span></label> 
-                <br />
-                {isDateSelected ? (
-                  <>
-                    <input
-                      name="age"
-                      value={formValues.age}
-                      onChange={handledobChange}
-                      style={{
-                        width: "80px",
-                        height: "35px",
-                        border: "1px solid grey",
-                        borderRadius: "5px",
-                      }}
-                    />
-                    <input
-                    className="ms-2"
-                      name="month"
-                      value={formValues.month}
-                      onChange={handledobChange}
-                      style={{
-                        width: "80px",
-                        height: "35px",
-                        border: "1px solid grey",
-                        borderRadius: "5px",
-                      }}
-                    />
-                    <input
-                    className="ms-2"
-                      name="day"
-                      value={formValues.day}
-                      onChange={handledobChange}
-                      style={{
-                        width: "80px",
-                        height: "35px",
-                        border: "1px solid grey",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  </>
-                ) : (
-                  <span>Date not selected</span>
-                )}
-                <br />
-              </Col>
-            </Row>
-            <br />
-            <Row>
               <Col lg="6" md="6" sm="12">
                 <label>Date of Birth</label>
                 <br />
@@ -269,11 +304,70 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
+                {formik.touched.patient_name && formik.errors.patient_name ? (
+                  <div className="text-danger">{formik.errors.patient_name}</div>
+                ) : null}
               </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col lg="6" md="6" sm="12">
+                <label>
+                  Age <span className="text-danger">*</span>
+                </label>
+                <br />
+                {isDateSelected ? (
+                  <>
+                    <input
+                      name="age"
+                      value={formValues.age}
+                      onChange={handledobChange}
+                      style={{
+                        width: "80px",
+                        height: "35px",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
+                      }}
+                    />
+                    <input
+                      name="month"
+                      value={formValues.month}
+                      onChange={handledobChange}
+                      style={{
+                        width: "80px",
+                        height: "35px",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
+                      }}
+                      className="ms-3"
+                    />
+                    <input
+                      name="day"
+                      value={formValues.day}
+                      onChange={handledobChange}
+                      style={{
+                        width: "80px",
+                        height: "35px",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
+                      }}
+                      className="ms-3"
+                    />
+                  </>
+                ) : (
+                  <span>Date not selected</span>
+                )}
+                <br />
+              </Col>
+              {/* <Row>
+           
+
+            </Row> */}
+
               <Col lg="6" md="6" sm="12">
                 <label>Blood Group</label>
                 <br />
@@ -281,8 +375,8 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="blood_group"
                   value={formValues.blood_group}
@@ -292,7 +386,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                 >
                   <option>Select an field</option>
                   {bloodgroupData &&
-                    bloodgroupData.map(bloodgroup => (
+                    bloodgroupData.map((bloodgroup) => (
                       <option key={bloodgroup.name} value={bloodgroup.name}>
                         {bloodgroup.name}
                       </option>
@@ -308,8 +402,8 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                   name="marital_status"
                   value={formValues.marital_status}
@@ -317,6 +411,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   //  onChange={formik.handleChange}
                   //  value={formik.values.gender}
                 >
+                  <option>select</option>
                   <option value="single">Single</option>
                   <option value="married">Married</option>
                   <option value="widowed">Widowed</option>
@@ -325,80 +420,59 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                 </select>
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label style={{ width: "100%" }}>Patient Photo</label>
+                <label style={{ width: "100%", borderRadius: "5px" }}>
+                  Patient Photo
+                </label>
                 <input type="file" name="image" placeholder=""></input>
               </Col>
             </Row>
             <br />
             <Row>
               <Col lg="6" md="6" sm="12">
-                <label>Phone</label>
+                <label>Phone<span className="text-danger"> *</span></label>
                 <br />
                 <input
                   type="number"
                   name="mobileno"
-                  value={formValues.mobileno}
-                  onChange={handleChange} // onChange={formik.handleChange}
-                  // value={formik.values.number}
+                  value={formik.values.mobileno}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder=""
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
-                ></input>
+                />
+                {formik.touched.mobileno && formik.errors.mobileno ? (
+                  <div className="text-danger">{formik.errors.mobileno}</div>
+                ) : null}
               </Col>
               <Col lg="6" md="6" sm="12">
-                <label>Email</label>
+                <label>Email<span className="text-danger"> *</span></label>
                 <br />
                 <input
-                  type="text"
+                  type="email"
                   name="email"
-                  value={formValues.email}
-                  onChange={handleChange}
-                  // onChange={formik.handleChange}
-                  // value={formik.values.email}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder=""
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
-                ></input>
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="error">{formik.errors.email}</div>
+                ) : null}
               </Col>
             </Row>
             <br />
             <Row>
-              <Col lg="12" md="12" sm="12">
-                <label>Address</label>
-                <br />
-                <input
-                  type="text"
-                  name="address"
-                  value={formValues.address}
-                  onChange={handleChange}
-                  // onChange={formik.handleChange}
-                  // value={formik.values.address}
-                  placeholder=""
-                  style={{
-                    width: "100%",
-                    height: "70px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
-                  }}
-                ></input>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              {/* <Col lg="6" md="6" sm="3">
-              <label>Remarks</label>
-              <input name="remarks"
-        onChange={formik.handleChange}
-        value={formik.values.remarks} maxLength="2" style={{ width: "100%" }}></input>
-            </Col> */}
               <Col lg="6" md="6" sm="12">
                 <label>Remarks</label>
                 <br />
@@ -413,8 +487,8 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -432,10 +506,32 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col lg="12" md="12" sm="12">
+                <label>Address</label>
+                <br />
+                <textarea
+                  type="text"
+                  name="address"
+                  value={formValues.address}
+                  onChange={handleChange}
+                  // onChange={formik.handleChange}
+                  // value={formik.values.address}
+                  placeholder=""
+                  style={{
+                    width: "100%",
+                    height: "60px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
+                  }}
+                ></textarea>
               </Col>
             </Row>
             <br />
@@ -454,8 +550,8 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -468,13 +564,13 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   onChange={handleChange}
                   // onChange={formik.handleChange}
                   // value={formik.values.tpa_validity}
-                  type="text/number"
+                  type="datetime-local"
                   placeholder=""
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
               </Col>
@@ -495,10 +591,55 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
                   style={{
                     width: "100%",
                     height: "35px",
-                    border: "1px solid grey",
-                    borderRadius: "5px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
                   }}
                 ></input>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <h5 className="fw-bold">Additional Identifiers</h5>
+
+            <br />
+            <Row>
+              <Col>
+                <label>ABHA Address</label>
+                <br />
+                <input
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
+                  }}
+                ></input>
+              </Col>
+              <Col>
+                <label>ABHA Number</label>
+                <br />
+                <input
+                  name="ABHA_number"
+                  value={formValues.ABHA_number}
+                  onChange={handleChange}
+                  style={{
+                    width: "100%",
+                    height: "35px",
+                    borderRadius: "3px",
+                    border: "1px solid rgba(0,0,0,0.2)",
+                  }}
+                ></input>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <Row className="d-flex justify-content-center">
+              <Col className="d-flex justify-content-center">
+                <button className="btn-mod fw-bold">Verify ABHA</button>
+                <button className="btn-mod ms-3 fw-bold">Patient Queue</button>
+                <Link to="/account/aadhar">
+                  <button className="btn-mod ms-3 fw-bold">Create ABHA</button>
+                </Link>
               </Col>
             </Row>
           </DialogContent>
@@ -513,7 +654,7 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn-mod bg-soft"
+              className="btn-mod bg-soft fw-bold"
               type="submit"
             >
               Save
@@ -522,5 +663,5 @@ export default function OpdPatientDialog({ open, handleClose, setFetchData }) {
         </Dialog>
       </form>
     </div>
-  )
+  );
 }

@@ -214,8 +214,7 @@ const URL = {
   APPOINTMENT_SETUP_SLOT_SHIFT: "/internal-appointment-slot",
   APPOINTMETN_SETUP_SLOT_CONSULTATION: "/api/appointmentsetupConsultation",
   APPOINTMENT_SETUP_SLOT_GETSEARCH: "/api/appointmentsetupsearch",
-  APPOINTMENT_SETUP_SLOT_CHARGECATEGORY:
-    "/api/appointmentsetupslotchargecategory",
+  APPOINTMENT_SETUP_SLOT_CHARGECATEGORY:"/api/appointmentsetupslotchargecategory",
   APPOINTMENT_SETUP_SLOT_CHARGES: "/appointmentsetupslotcharges",
   APPOINTMENT_SETUP_DOCTORSHIFT: "/api/appointmentsetupdoctorshift",
   FINANCE_SETUP_INCOMEHEAD: "/api/financeicomehead",
@@ -402,6 +401,7 @@ const URL = {
   SETUP_FRONT_OFFICE_APPT_PRIORITY:'/setup-front-office-appointment-priority',
   SETUP_SYMPTOMS_HEAD:'/setup-symptoms-symptoms-head',
   SETUP_SYMPTOM_TITLE_BYID:'/ipd-main-module/symptoms',
+  SETUP_SYMPTOM_TITLE_BYOPD:'/opd-out-patient/symptoms',
   SETUP_SYMPTOMS_TYPE:'/setup-symptoms-symptoms-type',
   OPD_OUT_PATIENT:'/opd-out-patient',
   HR_MAIN_MODULE_STAFF:'/human-resource-staff',
@@ -422,14 +422,19 @@ const URL = {
   SMS_GATEWAY: '/sms',
   EMAIL_GATEWAY: '/email/send',
   FORGOT_PASSWORD: '/login/forgotPassword',
-  RESET_PASSWORD: '/login/resetPassword'
+  RESET_PASSWORD: '/login/resetPassword',
+  OPD_CHARGES:'/internal-opd-charges/charges',
+  OPD_CHARGE_AMOUNT:'/internal-opd-charges/amount',
+  TPA_OPD_INTERNAL:'/tpa-management',
+  OPD_OVERVIEW:'/internal-opd-overview',
+  OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',
+  OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor'
 };  
 
 function getSlotTiming(date,staff,shift, data={}){
   const url = `${URL.SLOT_TIMING}?day=${date}&staff_id=${staff}&shift_id=${shift}`;
   return http4.get(url, data);
 }
-
 
 function getAppointmentbyId(id){
   const url = `${URL.APPOINTMENT_URL}/${id}`
@@ -614,12 +619,13 @@ function getPatient(doctor, shift, date, slot) {
   return http4.get(URL.PATIENT_SEARCH_URL, data);
 }
 
-function getOpd(data = {}) {
-  return http.get(URL.OPD_URL, data);
+function getOpd() {
+  return http6.get(URL.OPD_URL);
 }
 
-function postOpd(data = {}) {
-  return http3.post(URL.OPD_URL, data);
+function postOpd(data) {
+  console.log(data,"posted data")
+  return http6.post(URL.OPD_URL, data);
 }
 
 function getIpd(data = {}) {
@@ -2149,7 +2155,6 @@ function getCertificateOverview(module, certificateTemplate, status) {
   console.log("module:", module);
   console.log("certificateTemplate:", certificateTemplate);
   console.log("status:", status);
-
   const url = `${URL.CERTIFICATE_URL}?module=${module}&certificateTemplate=${certificateTemplate}&status=${status}`;
   console.log("url:", url);
 
@@ -2783,6 +2788,9 @@ function patchSetupRadiologyParameter(data){
   function getIPDBedByBedgroup(id){
     return http5.get(`${URL.IPD_DETATILS}/bed/${id}`)
   }
+  function getSymptomeDescriptionByTitleIdOPD(id){
+    return http6.get(`${URL.OPD_URL}/symptomDescription/${id}`)
+  }
   function getSetup_bed_floor(){
     return http6.get(URL.SETUP_BED_FLOOR)
   }
@@ -2855,6 +2863,31 @@ function patchSetupRadiologyParameter(data){
   function getIPD_syptomsTitle(id) {
     const url = `${URL.SETUP_SYMPTOM_TITLE_BYID}/${id}`
     return http5.get(url)
+  }
+  function getOpd_symptomsTitle(id){
+    const url = `${URL.SETUP_SYMPTOM_TITLE_BYOPD}/${id}`
+    return http6.get(url)
+  }
+  function getCharge_OPD(id){
+    return http6.get(`${URL.OPD_CHARGES}/${id}`)
+  }
+  function getTPA_OPD(){
+    return http6.get(URL.TPA_OPD_INTERNAL)
+  }
+  function getAmountWithCharge(id){
+    return http6.get(`${URL.OPD_CHARGE_AMOUNT}/${id}`)
+  }
+  function get_OPD_Overview(id){
+    const data = {params:{patient_id:id}}
+    return http6.get(URL.OPD_OVERVIEW,data)
+  }
+  function get_OPD_OverviewVist(id){
+    const data ={ params:{patient_id:id}}
+    return http6.get(URL.OPD_OVERVIEW_VISITS,data)
+  }
+  function get_OPD_Consultant(id){
+    const data ={ params:{patient_id:id}}
+    return http6.get(URL.OPD_OVERVIEW_DOCTOR,data)
   }
 
 ////////
@@ -3473,9 +3506,17 @@ searchDisableStaffBykeyword,
 changePasswordHR,
 getIPD_syptomsTitle,
 getSymptomeDescriptionByTitleId,
+getSymptomeDescriptionByTitleIdOPD,
 getIPDBedByBedgroup,
 postForgotPassword,
 postResetPassword,
-updateDoctorShift
+updateDoctorShift,
+getOpd_symptomsTitle,
+getCharge_OPD,
+getTPA_OPD,
+getAmountWithCharge,
+get_OPD_Overview,
+get_OPD_OverviewVist,
+get_OPD_Consultant
 };
 export default api;

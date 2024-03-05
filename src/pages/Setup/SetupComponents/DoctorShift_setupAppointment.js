@@ -131,9 +131,8 @@ console.log(globalShiftIds,'global ids');
         Hospital_id:1
       }
       console.log(data,"editting")
-       const response = await api.updateDoctorShift(data)
-       console.log(response,"response")
-       
+       const response = await api.updateDoctorShift(data);
+       console.log(response,"response");
       //  getSetupDoctorGlobalShift()
     }
   }
