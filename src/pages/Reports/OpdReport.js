@@ -91,12 +91,12 @@ const Opdreport = (props) => {
   };
 
   const getFindings = async () => {
-    const response = await api.getFindings_report();
+    const response = await api.getSetup_Findings();
     const { data } = response;
     setFinding(data);
   };
   const getSymptoms = async () => {
-    const response = await api.getSymptoms();
+    const response = await api.getSetupSymptoms_Type();
     const { data } = response;
     setSymptoms(data);
   };
@@ -163,8 +163,8 @@ const Opdreport = (props) => {
                   >
                     <option>select</option>
                     {doctors.map((val) => (
-                      <option key={val.staff_id} value={val.staff_id}>
-                        {val.name}
+                      <option key={val.id} value={val.id}>
+                        {val.doctor}
                       </option>
                     ))}
                   </select>
@@ -273,10 +273,10 @@ const Opdreport = (props) => {
                     {symptoms &&
                       symptoms.map((val) => (
                         <option
-                          key={val.symptoms_title}
-                          value={val.symptoms_title}
+                          key={val.id}
+                          value={val.symptoms_type}
                         >
-                          {val.symptoms_title}
+                          {val.symptoms_type}
                         </option>
                       ))}
                   </select>
@@ -299,7 +299,7 @@ const Opdreport = (props) => {
                     <option>select</option>
                     {finding &&
                       finding.map((val) => (
-                        <option key={val.id} value={val.id}>
+                        <option key={val.id} value={val.name}>
                           {val.name}
                         </option>
                       ))}

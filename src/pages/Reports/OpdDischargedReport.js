@@ -95,16 +95,16 @@ const OpdDischargedreport = (props) => {
   ];
 
   const columnDefs = [
-    { headerName: "Patient Name", field: "patient_name" },
-    { headerName: "OPD No", field: "opd_id" },
+    { headerName: "Patient Name", field: "patientName", flex: '2' },
+    { headerName: "OPD No", field: "opd_no" },
     { headerName: "Case ID", field: "case_reference_id" },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
-    { headerName: "Consutant", field: "consultant" },
-    { headerName: "Appointment Date", field: "appointment_date" },
-    { headerName: "Admission Date", field: "appointment_date" },
-    { headerName: "Discharged Date", field: "discharge_date" },
-    { headerName: "Discharge Status", field: "status" },
+    { headerName: "Consutant", field: "Consultant", flex: '2' },
+    { headerName: "Appointment Date", field: "appointment_date", flex: '2' },
+    // { headerName: "Admission Date", field: "admission_date" },
+    { headerName: "Discharged Date", field: "discharge_date", flex: '2' },
+    { headerName: "Discharge Status", field: "discharge_status" },
     { headerName: "Total Admit Days", field: "admitted_days" },
   ];
 
@@ -136,7 +136,61 @@ const OpdDischargedreport = (props) => {
     const response = await api.getOpdDischargedReport(formData, toAge, fromAge);
     const { data } = response;
     console.log(data, "duta");
-    setData(data);
+
+    const modifiedData = data.map((patient) => {
+      const trimmedDate = patient.discharge_date.split("T")[0];
+
+        const combinedDateTime = `${trimmedDate}`;
+
+        const formattedDateTime = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }).format(new Date(combinedDateTime));
+
+        const trimmedAppointmentDate = patient.appointment_date.split("T")[0];
+        const combinedApptDateTime = `${trimmedAppointmentDate}`;
+        const formattedApptDateTime = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }).format(new Date(combinedApptDateTime));
+
+        // const trimmedAdmissionDate = patient.admission_date.split("T")[0];
+        // const combinedAdmissionDateTime = `${trimmedAdmissionDate}`;
+        // const formattedAdmissionDateTime = new Intl.DateTimeFormat("en-US", {
+        //   year: "numeric",
+        //   month: "short",
+        //   day: "2-digit",
+        //   hour: "2-digit",
+        //   minute: "2-digit",
+        //   second: "2-digit",
+        //   hour12: true,
+        // }).format(new Date(combinedAdmissionDateTime));
+
+        const modified_discharge_status = patient.discharge_status === 1 ? "Discharged" : "Not discharged";
+
+        console.log(modified_discharge_status,'mod status');
+
+      const modifiedName = patient.patientName.replace(/\//g, "");
+      return {
+        ...patient,
+        patientName: modifiedName,
+        discharge_date: formattedDateTime,
+        appointment_date: formattedApptDateTime,
+        // admission_date: formattedAdmissionDateTime,
+        discharge_status: modified_discharge_status
+      }
+    })
+    setData(modifiedData);
   };
   return (
     <React.Fragment>
@@ -190,8 +244,8 @@ const OpdDischargedreport = (props) => {
                   >
                     <option>select</option>
                     {doctors.map((val) => (
-                      <option key={val.staff_id} value={val.staff_id}>
-                        {val.name}
+                      <option key={val.id} value={val.id}>
+                        {val.doctor}
                       </option>
                     ))}
                   </select>

@@ -8,11 +8,13 @@ import { withTranslation } from "react-i18next"
 import "./styles.css"
 import Barchart from "pages/BarChart/Barchart"
 import { useLocation } from "react-router-dom"
-import EventCalendar from "./Calendar"
+// import EventCalendar from "./Calendar"
 import MyChart from "./Charts";
 import Piechart from "./PieCharts";
 import api from "services/Api"
-//redux
+// import EventCalendar from "./Calendar"
+import MyCalendar from "./Calendar"
+// //redux
 
 const Dashboard = props => {
   const [opdIncome,setOpdIncome] = useState()
@@ -29,6 +31,7 @@ const Dashboard = props => {
   const[admin, setAdmin] = useState()
   const[pharmacist,setPharmacist] = useState()
   const [superAdmin, setSuperAdmin] = useState()
+  const [dashboardStaff,setDashboardstaff] = useState()
   //meta title
   document.title = "Dashboard | BlockTrack"
   const location = useLocation()
@@ -55,60 +58,83 @@ const Dashboard = props => {
   }
 
   useEffect(()=>{
-    getDashdata()
-    getStaffDoctor()
-    getStaffAdmin()
-    getStaffPharmacist()
-    getStaffSuperAdmin()
+    getDashdata();
+    getStaffs();
+    getYearlyIncome();
   },[])
 
   const getDashdata = async () => {
    const response = await api.getDashboardData();
     const { data } = response;
     console.log(data, 'dashboard data');
-    setOpdIncome(data[0].opdIncome)
-    setIpdIncome(data[0].ipdIncome)
-    setPharmacyIncome(data[0].pharmacyIncome)
-    setPathologyIncome(data[0].pathologyIncome)
-    setRadiologyIncome(data[0].radiologyIncome)
-    setBloodIncome(data[0].bloodIncome)
-  setGeneralIncome(data[0].generalIncome)
-  setAmbulanceIncome(data[0].ambulanceIncome)
-  setGeneralExpenses(data[0].generalexpenses)
+    setOpdIncome(data[0].OPD)
+    setIpdIncome(data[0].IPD)
+    setPharmacyIncome(data[0].pharmacy_income)
+    setPathologyIncome(data[0].pathology_income)
+    setRadiologyIncome(data[0].radiology_income)
+    setBloodIncome(data[0].bloodbank_income)
+  setGeneralIncome(data[0].general_income)
+  setAmbulanceIncome(data[0].ambulance_income)
+  setGeneralExpenses(data[0].expenses)
   };
 
-  const getStaffDoctor = async () => {
+  // const getStaffDoctor = async () => {
     
-    const roleId = 3;
-    const response = await api.getStaffcountData(roleId);
-     const { data } = response;
-     console.log(data, 'staff3 data');
-     setDoctor(data[0].count)
+  //   const roleId = 3;
+  //   const response = await api.getStaffcountData(roleId);
+  //    const { data } = response;
+  //    console.log(data, 'staff3 data');
+  //    setDoctor(data[0].count)
+  // }
+
+  // const getStaffAdmin = async () => {
+  //   const roleId = 1;
+  //   const response = await api.getStaffcountData(roleId);
+  //    const { data } = response;
+  //    console.log(data, 'staff1 data');
+  //    setAdmin(data[0].count)
+  // }
+
+  // const getStaffPharmacist = async () => {
+  //   const roleId = 4;
+  //   const response = await api.getStaffcountData(roleId);
+  //    const { data } = response;
+  //    console.log(data, 'staff4 data');
+  //    setPharmacist(data[0].count)
+  // }
+
+  // const getStaffSuperAdmin = async () => {
+  //   const roleId = 7;
+  //   const response = await api.getStaffcountData(roleId);
+  //    const { data } = response;
+  //    console.log(data, 'staff7 data');
+  //    setSuperAdmin(data[0].count)
+  // }
+
+  const getStaffs = async() => {
+    console.log('staffres');
+    const response = await api.getDashboardStaff();
+    // console.log(staff_data,'staffdata')
+    const staff_data = response.data
+    // setDashboardstaff(staff_data)
+    if(staff_data){
+      setDoctor(staff_data[1]?.staff_count)
+      setPharmacist(staff_data[2]?.staff_count)
+      setAdmin(staff_data[8]?.staff_count)
+      setSuperAdmin(staff_data[5]?.staff_count)
+    }else{
+      console.log('cant set');
+    }
+   
   }
 
-  const getStaffAdmin = async () => {
-    const roleId = 1;
-    const response = await api.getStaffcountData(roleId);
-     const { data } = response;
-     console.log(data, 'staff1 data');
-     setAdmin(data[0].count)
+  const getYearlyIncome = async() => {
+    const response = await api.getyearlyincome()
+    const {data} = response;
+    console.log(data,'yearly income data');
   }
 
-  const getStaffPharmacist = async () => {
-    const roleId = 4;
-    const response = await api.getStaffcountData(roleId);
-     const { data } = response;
-     console.log(data, 'staff4 data');
-     setPharmacist(data[0].count)
-  }
-
-  const getStaffSuperAdmin = async () => {
-    const roleId = 7;
-    const response = await api.getStaffcountData(roleId);
-     const { data } = response;
-     console.log(data, 'staff7 data');
-     setSuperAdmin(data[0].count)
-  }
+  console.log(dashboardStaff,'staffdashboard');
 
   return (
     <React.Fragment>
@@ -136,7 +162,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="text-white fw-bold">Outpatient Income</p>
-                        <h5 className="mb-0 text-white">₹ 18000.00</h5>
+                        <h5 className="mb-0 text-white"></h5>
                         <h5 className="mb-0 text-white">{opdIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
@@ -159,7 +185,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Inpatient Income</p>
-                        <h5 className="mb-0 text-white">₹ 18000.00</h5>
+                        <h5 className="mb-0 text-white">{ipdIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -181,7 +207,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Pharmacy Income</p>
-                        <h5 className="mb-0 text-white">₹ 14000.00</h5>
+                        <h5 className="mb-0 text-white">{pharmacyIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -203,7 +229,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Pathology Income</p>
-                        <h5 className="mb-0 text-white">₹ 22000.00</h5>
+                        <h5 className="mb-0 text-white">{pathologyIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -225,7 +251,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Radiology Income</p>
-                        <h5 className="mb-0 text-white">₹ 17000.00</h5>
+                        <h5 className="mb-0 text-white">{radiologyIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -247,7 +273,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Blood Bank Income</p>
-                        <h5 className="mb-0 text-white">₹ 17500.00</h5>
+                        <h5 className="mb-0 text-white">{bloodIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -269,7 +295,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Ambulance Income</p>
-                        <h5 className="mb-0 text-white">₹ 12700.00</h5>
+                        <h5 className="mb-0 text-white">{ambulanceIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -291,7 +317,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">General Income</p>
-                        <h5 className="mb-0 text-white">₹ 30000.00</h5>
+                        <h5 className="mb-0 text-white">{generalIncome}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -313,7 +339,7 @@ const Dashboard = props => {
                     <div className="d-flex">
                       <div className="flex-grow-1">
                         <p className="fw-bold text-white">Expenses</p>
-                        <h5 className="mb-0 text-white">₹ 70000.00</h5>
+                        <h5 className="mb-0 text-white">{generalexpenses}</h5>
                       </div>
                       <div className="avatar-sm rounded-circle bg-white">
                         <span className="avatar-title rounded-circle bg-white">
@@ -331,7 +357,7 @@ const Dashboard = props => {
             <br />
             <Row>
               <Col lg='6'>
-                <Card>
+                <Card className="p-4">
                   <CardBody>
                   <h5>Yearly Income & Expense Overview</h5>
                   <br />
@@ -340,7 +366,7 @@ const Dashboard = props => {
                 </Card>
               </Col>
               <Col lg='6'>
-                <Card>
+                <Card className="p-4">
                   <CardBody>
                     <h5>Monthly Income Overview</h5>
                     <br />
@@ -353,7 +379,7 @@ const Dashboard = props => {
               <Col lg="9">
                 <Card>
                   <CardBody>
-                  <h5>Calendar</h5>
+                  <h4 className="ms-4">Event Calendar</h4>
                   <br />
                     <div>
                       {showModal && (
@@ -368,7 +394,7 @@ const Dashboard = props => {
                         </div>
                       )}
                     </div>
-                    <EventCalendar events={events} handleAddEvent={handleAddEvent} />
+                    <MyCalendar />
                   </CardBody>
                 </Card>
               </Col>
@@ -400,7 +426,7 @@ const Dashboard = props => {
                                 className="info-box-number text-secondary"
                                 style={{ fontWeight: "bold" }}
                               >
-                                {doctor}
+                               {doctor}
                               </span>
                             </div>
                           </Link>

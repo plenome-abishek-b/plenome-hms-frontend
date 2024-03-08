@@ -195,6 +195,7 @@ import ForgotPassword from "pages/Authentication/ForgotPassword";
 import AppointmetnReport from "pages/Reports/AppointmetnReport";
 
 const authProtectedRoutes = [
+  // { path: "", component: Login },
   { path: "/", component: Dashboard },
   { path: "/dashboard", component: Dashboard },
   { path: "/billing", component: Billing },
@@ -358,7 +359,7 @@ const authProtectedRoutes = [
   {path: "/appointmentreport", component: AppointmetnReport},
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
-  { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
+  { path: "/", exact: true, component: () => <Redirect to="/account/login" /> },
 ];
 
 const publicRoutes = [

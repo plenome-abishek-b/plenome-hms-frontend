@@ -22,7 +22,7 @@ import { format } from "prettier";
 import { useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-
+import { Buffer } from "buffer";
 //redux
 
 const RegisterStaff = () => {
@@ -38,7 +38,12 @@ const RegisterStaff = () => {
   const [department, setDepartment] = useState([]);
   const [specialist, setSpecialist] = useState([]);
   const [bloodGroup, setBloodGroup] = useState([]);
+  const [fileData, setFiledata] = useState();
+  const [bufferData, setbufferData] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const [newBuffer, setNewbuffer] = useState();
+  const [imgFile, setImagefile] = useState();
+  const [certFile, setCertfile] = useState();
   const [formData, setFormData] = useState({
     employee_id: "",
     role_id: "",
@@ -283,56 +288,62 @@ const RegisterStaff = () => {
   };
 
   const handleSubmit = async () => {
-    const selectedFiles = certificates.map((cert) => ({
-      fileName: cert.fileName,
-      fileType: cert.fileType,
-      date: cert.date,
-    }));
-    console.log(" ", selectedFiles);
-    const datas = {
-      ...formData,
-      name: `${formData?.first_name}`,
-      certificates: selectedFiles,
-      other_document_name: formData?.other_document_file,
-    };
-    // if(datas?.employee_id){
+    if (imgFile && certFile) {
+      console.log(imgFile, certFile, "both getting");
+      const formDataImg = new FormData();
+      formDataImg.append("file", imgFile);
+      const fileImgUpload = await api.postFiles(formDataImg);
+      console.log(fileImgUpload, "fileImgUpload");
 
-    // }else if(datas?.role_id){
+      const formDataCert = new FormData();
+      formDataCert.append("file", certFile);
+      const fileCertUpload = await api.postFiles(formDataCert);
+      console.log(fileCertUpload, "fileCertUpload");
 
-    // }else if(datas?.staff_designation_id){
+      const selectedFiles = certificates.map((cert) => ({
+        fileName: fileCertUpload.data.data,
+        fileType: fileCertUpload.data.data,
+        date: new Date().toISOString().split("T")[0],
+      }));
 
-    // }else if(datas?.department_id){
+      console.log(newBuffer, "newbufferinside");
 
-    // }else if(datas?.specialist){
-
-    // }else if(datas?.first_name){
-
-    // }else if(datas?.surname){
-
-    // }else if(data?.father_name){
-
-    // }else if(data?.mother_name){
-
-    // }else if(data?.gender){
-
-    // }else if(data?.marital_status){
-
-    // }
-    console.log(datas, "all datas getting");
-    // const filteredObject = Object.fromEntries(
-    //   Object.entries(datas).filter(([key, value]) => value !== "")
-    // );
-    const response = await api?.postHRmainModuleHr_Staff(datas);
-    console.log(response, "consoling");
-    const { data } = response;
-    console.log(data, "consoling");
-    history.push("/login");
+      console.log(" ", selectedFiles);
+      const datas = {
+        ...formData,
+        name: `${formData?.first_name}`,
+        certificates: selectedFiles,
+        other_document_name: formData?.other_document_file,
+        image: fileImgUpload.data.data,
+        // image: selectedImages
+      };
+      console.log(datas, "all datas getting");
+      const response = await api?.postHRmainModuleHr_Staff(datas);
+      console.log(response, "consoling");
+      const { data } = response;
+      console.log(data, "consoling");
+      history.push("/hr");
+    } else {
+      console.log("both empty");
+    }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(name, typeof value, "both");
     try {
-      if (name === "specialist") {
+      if (name === "image") {
+        console.log("entering");
+        const img_file = e.target.files[0];
+        console.log(img_file, "image file");
+        setImagefile(img_file);
+      } else if (name === "certificates") {
+        const cert_file = e.target.files[0];
+        console.log(cert_file, "cert file");
+        setCertfile(cert_file);
+
+        console.log("not working");
+      } else if (name === "specialist") {
         setFormData({
           ...formData,
           specialist: JSON.stringify([parseInt(value)]),
@@ -344,10 +355,20 @@ const RegisterStaff = () => {
           [name]: value,
         });
       }
-    } catch (error) {
-      console.log(error, "error");
+    } catch {
+      console.log("its not coming");
     }
-  }; //handlechange function with correct set of data
+  };
+
+  // const modifiedBuffer = () => {
+  //   const bufferString = JSON.stringify({
+  //     buffer: "<Buffer " + Array.from(bufferData).map(byte => byte.toString(16).padStart(2, '0')).join(' ') + ">",
+  //   });
+
+  //   const afterbuffer = JSON.parse(bufferString).buffer
+
+  //   setNewbuffer(afterbuffer)
+  // }
 
   const getStaffs = async () => {
     const response = await api.getRolePermission();
@@ -398,30 +419,15 @@ const RegisterStaff = () => {
 
   return (
     <React.Fragment>
-      <div className="page-content">
+      <div className="page-content bg-primary bg-soft">
         <Container fluid>
-          <div className="bg-primary">
-            <Row>
-              <Col className="col-9">
-                <div className="text-white p-5">
-                  <h4 className="text-white">Register here</h4>
-                  <p>Signup for New Account</p>
-                </div>
-              </Col>
-              <Col
-                className="col-2 align-self-end p-3"
-                style={{ width: "150px" }}
-              >
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/4228/4228730.png"
-                  alt=""
-                  className="img-fluid"
-                />
-              </Col>
-            </Row>
-          </div>
-
+         
+          {/* Render Breadcrumb */}
+         
           <Card>
+          <div className="bg-primary">
+          <h4 className="text-white fw-bold p-4">Register New Staff</h4>
+          </div>
             <CardBody>
               <p className="text-danger d-flex justify-content-end fw-bold">
                 Fill All the Mandatoty Details (*)
@@ -1042,6 +1048,7 @@ const RegisterStaff = () => {
                     value={formData?.local_identification_number}
                   ></input>
                 </Col>
+
                 {/* <Col lg="3" md="12" sm="12">
                   <label>Reference Contact</label>
                   <br />
@@ -1059,7 +1066,9 @@ const RegisterStaff = () => {
               <Row>
                 <div>
                   <div className="bg-primary bg-soft p-2 mb-3">
-                    <h5 className="mt-1">Certificates</h5>
+                    <h5 className="mt-1">
+                      Certificates<span className="text-danger"> *</span>
+                    </h5>
                   </div>
                   {certificates.map((certificate) => (
                     <div key={certificate.id}>
@@ -1069,7 +1078,9 @@ const RegisterStaff = () => {
                           name="certificates"
                           onChange={handleChange}
                           type="file"
-                          onChange={(event) => onChange(certificate.id, event)}
+                          // onChange={(event) =>
+                          //   onChange(certificate.id, event)
+                          // }
                           // value={formData?.cirt}
                         />
                       </div>
@@ -1084,26 +1095,28 @@ const RegisterStaff = () => {
                   </button>
                   {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
                 </div>
+                <div className="d-flex justify-content-end">
+                  {staff ? (
+                    <button
+                      className="btn text-white fw-bold"
+                      style={{ backgroundColor: "#6070FF" }}
+                      onClick={handleUpdate}
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      className="btn text-white fw-bold"
+                      style={{ backgroundColor: "#6070FF" }}
+                      onClick={handleSubmit}
+                    >
+                      Save
+                    </button>
+                  )}
+                </div>
               </Row>
-              <div className="d-flex justify-content-end">
-                {staff ? (
-                  <button
-                    className="btn text-white fw-bold"
-                    style={{ backgroundColor: "#6070FF" }}
-                    onClick={handleUpdate}
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    className="btn text-white fw-bold"
-                    style={{ backgroundColor: "#6070FF" }}
-                    onClick={handleSubmit}
-                  >
-                    Save
-                  </button>
-                )}
-              </div>
+              <br />
+              
             </CardBody>
           </Card>
         </Container>
