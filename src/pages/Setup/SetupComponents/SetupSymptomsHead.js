@@ -49,10 +49,10 @@ const SetupSymptomsHead = props => {
     // setOpenSetupOperationsDialog(true)
    }
   const columnDefs = [
-    { headerName: "Symptoms Head", field: "symptoms_title" },
+    { headerName: "Symptoms Head", field: "symptoms_head" },
     { 
       headerName: "Symptoms Type", 
-      field: "type",
+      field: "symptoms_type",
     },
     {headerName: "Symptoms Description", field: 'description'},
     {

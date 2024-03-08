@@ -14,6 +14,7 @@ const baseNestSetupandMainURL = "http://localhost:4000";
 const baseNestSetupURL = "http://localhost:4000";
 const localhost = "http://localhost:4000"
 const localhost2= "http://localhost:4000"
+const file_upload = "http://13.200.35.19:7000"
 
 const sms_gateway = "http://13.200.35.19:3500"
 const email_gateway = "https://13.200.35.19:3500"
@@ -61,7 +62,12 @@ const auth_http = axios.create({
 
 // ...
 
+const file_upload_http = axios.create({
+  baseURL: file_upload
+})
+
 const URL = {
+  FILE_UPLOAD: "/file_upload",
   USERS_URL: "table",
   APPOINTMENT_INTERNAL_PRIORITY:'/internal-appointment-priority',
   SIGNUP_URL: "Signup",
@@ -201,9 +207,9 @@ const URL = {
 
   IPD_DISCHARGED_REPORT_URL: "/api/dischargedReport",
   IPD_REPORTS: "/api/ipdReport",
-  OPD_REPORTS: "/api/opdReport",
-  OPD_DISCHARGED_REPORT_URL: "/api/opdDischargedReport",
-  OPD_BALANCED_REPORT: "/api/opdbalancedreport",
+  OPD_REPORTS: "/opd-report",
+  OPD_DISCHARGED_REPORT_URL: "/opd-discharged-patient-report",
+  OPD_BALANCED_REPORT: "/opd-balance-report",
   IPD_BALANCE_REPORT: "/api/ipdbalancedreport",
   FINDING_URL: "/api/findings_report",
   SYMPTOMS_URL: "/api/symptoms",
@@ -290,8 +296,8 @@ const URL = {
   INVENTORY_ISSUE_REPORT_URL: "/api/inventoryissuereport",
   INVENTORY_ITEM_REPORT_URL: "/api/inventoryitemreport",
   INVENTORY_ITEM_STOCK_REPORT_URL: "/api/inventorystockreport",
-  TRANSACTION_REPORT_URL: "/api/transactionreport",
-  DAILY_TRANSACTION_REPORT_URL: "/api/dailytransaction",
+  TRANSACTION_REPORT_URL: "/transaction_report",
+  DAILY_TRANSACTION_REPORT_URL: "/daily-transaction-report",
   COLLECTED_BY_URL: "/api/collectedby",
   AUDIT_TRAIL_REPORT_URL: "/api/audittrailreport",
   PHARMACY_BILL_REPORT_URL: "/api/pharmacybillreport",
@@ -345,7 +351,7 @@ const URL = {
   TRANSACTION_URL: "/api/billing/transaction",
   BLOOD_COMPONENT_ISSUE_BILLING_URL: "/api/billing/bloodComponentIssue",
 
-  DASHBOARD_DATA_URL: "/api/dashCalc",
+  DASHBOARD_DATA_URL: "/income-summary/overall",
   STAFF_COUNT_URL: "/api/staffCount",
   GRAPH_URL: "/api/graph",
 
@@ -432,8 +438,22 @@ const URL = {
   OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',
   OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor',
 
-  APPOINTMENT_REPORT_URL: '/appointment_report'
+  APPOINTMENT_REPORT_URL: '/appointment_report',
+  DASHBOARD_STAFF_URL: '/staff_roles',
+  YEARLY_INCOME_URL: '/income-summary/yearly-income'
 };  
+
+function getDashboardStaff(data = {}){
+  return http.get(URL.DASHBOARD_STAFF_URL,data)
+}
+
+function getyearlyincome(data = {}){
+  return http.get(URL.YEARLY_INCOME_URL,data)
+}
+
+function postFiles(data = {}){
+  return file_upload_http.post(URL.FILE_UPLOAD,data)
+}
 
 function getSlotTiming(date,staff,shift, data={}){
   const url = `${URL.SLOT_TIMING}?day=${date}&staff_id=${staff}&shift_id=${shift}`;
@@ -1351,7 +1371,7 @@ function getOpdReport(data, toAge, fromAge) {
   }
 
   const datas = { params: Object.keys(params).length > 0 ? params : null };
-  return http.get(URL.OPD_REPORTS, datas);
+  return http3.get(URL.OPD_REPORTS, datas);
 }
 function getOpdDischargedReport(data, toAge, fromAge) {
   const params = {};
@@ -1376,7 +1396,7 @@ function getOpdDischargedReport(data, toAge, fromAge) {
   }
 
   const datas = { params: Object.keys(params).length > 0 ? params : null };
-  return http.get(URL.OPD_DISCHARGED_REPORT_URL, datas);
+  return http3.get(URL.OPD_DISCHARGED_REPORT_URL, datas);
 }
 
 // function disableStaff_HR_mainModule(id){
@@ -1431,7 +1451,7 @@ function getOpdBalanceReport(data, toAge, fromAge) {
     params.toAge = toAge;
   }
   const datas = { params: Object.keys(params).length > 0 ? params : null };
-  return http.get(URL.OPD_BALANCED_REPORT, datas);
+  return http3.get(URL.OPD_BALANCED_REPORT, datas);
 }
 
 function getIpdBalanceReport(data, toAge, fromAge) {
@@ -2379,7 +2399,7 @@ function getLinkAddress(transactionId) {
   return http2.post(URL.ABHA_PHR_ADDRESS_SUGGESTION, { transactionId });
 }
 function updateDoctorShift(data){
-  return http10.post(URL.SETUP_APPT_GLOBAL_SHIFT,data)
+  return http3.post(URL.SETUP_APPT_GLOBAL_SHIFT,data)
 }
 ////////
 
@@ -3014,8 +3034,15 @@ function postEmail(email_datas){
   return email_http.post(URL.EMAIL_GATEWAY,email_datas)
 }
 
+function updateRoles(data){
+  console.log(data,'data api');
+  const url = `${URL.SETUP_ROLE_URL}/${data?.id}`
+  return http.patch(url,data)
+}
+
 
 const api = {
+  updateRoles,
   postSms,
   postEmail,
   deleteRole,
@@ -3558,6 +3585,9 @@ getAmountWithCharge,
 get_OPD_Overview,
 get_OPD_OverviewVist,
 get_OPD_Consultant,
-getAppointmentReport
+getAppointmentReport,
+postFiles,
+getDashboardStaff,
+getyearlyincome
 };
 export default api;

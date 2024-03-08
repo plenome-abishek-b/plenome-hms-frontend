@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import React from "react";
+import React,{useEffect} from "react";
 
-import { Switch, BrowserRouter as Router } from "react-router-dom";
+import { Switch, BrowserRouter as Router,useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Import Routes all
@@ -43,6 +43,8 @@ fakeBackend()
 
 const App = props => {
 
+  const history = useHistory()
+
   function getLayout() {
     let layoutCls = VerticalLayout;
     switch (props?.layout?.layoutType) {
@@ -55,6 +57,35 @@ const App = props => {
     }
     return layoutCls;
   }
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const loginTime = parseInt(localStorage.getItem('loginTime'));
+      const currentTime = Date.now();
+      const elapsedMinutes = (currentTime - loginTime) / (1000 * 60);
+      if (elapsedMinutes > 15) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('loginTime');
+      }
+    };
+  
+    // window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    // return () => {
+    //   window.removeEventListener('beforeunload', handleBeforeUnload);
+    // };
+  }, []);
+  
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const loginTime = parseInt(localStorage.getItem('loginTime'));
+const currentTime = Date.now();
+const elapsedMinutes = (currentTime - loginTime) / (1000 * 60);
+
+if (!isLoggedIn || elapsedMinutes > 10) {
+  history.push('/account/login');
+}
+
 
   const Layout = getLayout();
   return (

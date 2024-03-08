@@ -214,7 +214,7 @@ const SidebarContent = (props) => {
               </li>
             )}
             {/* </ul> */}
-            {modules?.Pathology &&
+            {/* {modules?.Pathology &&
               (userRole === "Doctor" || userRole === "Super Admin") && (
                 <li>
                   <Link to="/pathology">
@@ -232,8 +232,8 @@ const SidebarContent = (props) => {
                     <span className="ms-2 fw-bold">{t("Radiology")}</span>
                   </Link>
                 </li>
-              )}
-            {modules?.Bloodbank &&
+              )} */}
+            {/* {modules?.Bloodbank &&
               (userRole === "Doctor" || userRole === "Super Admin") && (
                 <li>
                   <Link to="/bloodbank">
@@ -251,7 +251,7 @@ const SidebarContent = (props) => {
                     <span className="ms-2 fw-bold">{t("Ambulance")}</span>
                   </Link>
                 </li>
-              )}
+              )} */}
             {modules?.Frontoffice && userRole === "Super Admin" && (
               <li>
                 <Link to="/frontoffice">
@@ -390,30 +390,30 @@ const SidebarContent = (props) => {
                   <li>
                     <Link to="/opdreport">{props.t("OPD Report")}</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/ipdreport">{props.t("IPD Report")}</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/opdbalancereport">
                       {props.t("OPD Balance Report")}
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/ipdbalancereport">
                       {props.t("IPD Balance Report")}
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/opddischargedreport">
                       {props.t("OPD Discharged Report")}
                     </Link>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <Link to="/ipddischargedreport">
                       {props.t("IPD Discharged Report")}
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <li>
                   <Link to="/bloodreport">{props.t("Blood Issue Report")}</Link>
                 </li>
@@ -426,7 +426,7 @@ const SidebarContent = (props) => {
                   <Link to="/radiologyreport">
                     {props.t("Radiology Report")}
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/dailytransactionreport">
                     {props.t("Daily Transaction Report")}
@@ -437,7 +437,7 @@ const SidebarContent = (props) => {
                     {props.t("Transaction Report")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/pharmacybillreport">
                     {props.t("Pharmacy Bill Report")}
                   </Link>
@@ -452,8 +452,8 @@ const SidebarContent = (props) => {
                 </li>
                 <li>
                   <Link to="/expensereport">{props.t("Expense Report")}</Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to="/payrollreport">{props.t("Payroll Report")}</Link>
                 </li>
                 <li>
@@ -505,7 +505,7 @@ const SidebarContent = (props) => {
                     {props.t("Audit Trail Report")}
                   </Link>
                 </li> */}
-                  <li>
+                  {/* <li>
                     <Link to="/incomegroupreport">
                       {props.t("Income Group Report")}
                     </Link>
@@ -514,7 +514,7 @@ const SidebarContent = (props) => {
                     <Link to="/expensegroupreport">
                       {props.t("Expense Group Report")}
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <li>
                   <Link to="/tpareport">{props.t("TPA Report")}</Link>
                 </li>
@@ -526,11 +526,11 @@ const SidebarContent = (props) => {
                       {props.t("Patient Visit Report")}
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/patientlogincreds">
                       {props.t("Patient Login Credentials")}
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/patientbillreport">
                       {props.t("Patient Bill Report")}

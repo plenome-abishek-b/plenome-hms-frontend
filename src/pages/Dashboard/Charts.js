@@ -1,9 +1,27 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { Chart } from "react-charts"
 import { Row, Col } from "reactstrap"
 import "./styles.css"
+import api from "services/Api"
 
 function MyChart() {
+  const [incomeData, setIncomeData] = useState([])
+  const [expensesData, setExpensesData] = useState([])
+
+  useEffect(()=> {
+    getYearlyIncome();
+  }, [])
+
+  const getYearlyIncome = async() => {
+    try {
+      const response = await api.getyearlyincome()
+      const data = response.data
+      setIncomeData(data.map(item => ({ x: item.month, y: item.income_total })))
+      setExpensesData(data.map(item => ({ x: item.month, y: item.expenses_total })))
+    } catch (error) {
+      console.error('Error fetching yearly income:', error)
+    }
+  }
 
   const axes = useMemo(
     () => [
@@ -12,31 +30,6 @@ function MyChart() {
     ],
     []
   )
-
-  const monthLabels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ]
-
-  const incomeData = monthLabels.map((month, index) => ({
-    x: month,
-    y: Math.random() * 80000 + 20000,
-  }))
-
-  const expensesData = monthLabels.map((month, index) => ({
-    x: month,
-    y: Math.random() * 60000 + 30000,
-  }))
 
   const combinedData = [
     {

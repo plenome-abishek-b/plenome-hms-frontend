@@ -42,7 +42,7 @@ const Modules = () => {
           linkCareContext: false,
           discoverCareDonText: false,
           consentRequest: false,
-          setup: false,
+          // setup: false,
         };
   };
   const status = useSelector((state) => {

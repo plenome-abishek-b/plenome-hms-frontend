@@ -72,7 +72,7 @@ const Patientvisitreport = props => {
     { headerName: "Date", field: "date" },
     { headerName: "Doctor Name", field: "doctor" },
     { headerName: "Symptoms", field: "symptoms" },
-    { headerName: "Findings", field: "findings" },
+    { headerName: "Findings", field: "finding_description" },
   ]
 
   const columnPharmacyDefs = [
