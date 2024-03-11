@@ -8,7 +8,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { getCloseIcon } from "antd/es/notification/PurePanel";
 
 export default function OpdVistDetailDialog({
-  location,
+    completeData,
+    // opdid,
   getAllStaff,
   open,
   handleClose,
@@ -59,6 +60,7 @@ export default function OpdVistDetailDialog({
 
   var dateOfJoining = new Date(staffDetail?.date_of_joining);
   var formattedDateOfJoining = dateOfJoining.toLocaleDateString("en-US");
+  console.log(completeData,"completeData")
 
   return (
     <div>
@@ -85,64 +87,60 @@ export default function OpdVistDetailDialog({
           }}
         >
           <div className="text-white p-4 text-start" style={{backgroundColor: '#7070FF'}}>
-            <h4 className="fw-bold">{staffDetail?.name}</h4>
+            <h4 className="fw-bold">{completeData?.patient_name}</h4>
             <hr />
             <div>
-              <h6>OPD Checkup ID: {staffDetail?.employee_id}</h6>
+              <h6>OPD Checkup ID: {completeData?.OPD_checkup_id}</h6>
             </div>
             <hr />
             <div>
-              <h6>Case ID: {staffDetail?.role_name}</h6>
-            </div>
-            <hr />
-
-            <div>
-              <h6>Old patient: {staffDetail?.designation}</h6>
+              <h6>Case ID: {completeData?. case_reference_id}</h6>
             </div>
             <hr />
 
             <div>
-              <h6>Gender: {staffDetail?.department_name}</h6>
+              <h6>Old patient: {completeData?.patient_old ? completeData?.patient_old : 'null'}</h6>
             </div>
             <hr />
 
             <div>
-              <h6>Phone: {staffDetail?.epf_no}</h6>
+              <h6>Gender: {completeData?.gender}</h6>
             </div>
             <hr />
 
             <div>
-              <h6>Phone: {staffDetail?.basic_salary}</h6>
+              <h6>Phone: {completeData?.mobileno}</h6>
+            </div>
+            {/* <hr /> */}
+            <hr />
+
+            <div>
+              <h6>Address: {completeData?.address ? completeData?.address : 'null'}</h6>
             </div>
             <hr />
 
             <div>
-              <h6>Address: {staffDetail?.contract_type}</h6>
+              <h6>Blood gruop: {completeData?.blood_group ? completeData?.blood_group : 'null'}</h6>
             </div>
             <hr />
 
             <div>
-              <h6>Blood gruop: {staffDetail?.shift}</h6>
+              <h6>weight: {completeData?.weight ? completeData?.weigh : 'null'}</h6>
             </div>
             <hr />
-
             <div>
-              <h6>weight: {staffDetail?.location}</h6>
+              <h6>Pulse: {completeData?.pulse ? completeData?.pulse : 'null'}</h6>
             </div>
-            <hr />
-
-            <div>
-              <h6>Pulse: {formattedDateOfJoining}</h6>
+            <hr/>
+          <div>
+              <h6>Appointment Date: {completeData?.appointment_date ? completeData?.appointment_date : 'null'}</h6>
             </div>
             <hr/>
             <div>
-              <h6>Respiration: {formattedDateOfJoining}</h6>
+              <h6>Respiration: {completeData?.respiration ? completeData?.respiration : 'null'}</h6>
             </div>
           </div>
-          <hr/>
-          <div>
-              <h6>Appointment Date: {formattedDateOfJoining}</h6>
-            </div>
+         
         </div>
 
         <div
@@ -201,7 +199,17 @@ export default function OpdVistDetailDialog({
                   style={{ padding: "7px", marginRight: "10px", backgroundColor: "#B80000" }}
                 >
                   <i className="fas fa-trash"></i>
-                  &nbsp;Delete
+                  &nbsp;
+                </button>
+              </div>
+              <div className="ms-3">
+                <button
+                  className="btn bg-soft btn-sm text-white fw-bold"
+                  onClick={() => handleDelete(staffDetail?.id)}
+                  style={{ padding: "7px", marginRight: "10px", backgroundColor:'green' }}
+                >
+                  <i className="fas fa-pencil-alt"></i>
+                  &nbsp;
                 </button>
               </div>
             </div>
@@ -212,92 +220,96 @@ export default function OpdVistDetailDialog({
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div style={{ flex: "0 0 50%", marginRight: "20px" }}>
                 <div style={{ marginBottom: "10px" }}>
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>OPD ID:</h6>
+                  <p>{completeData?.OPD_ID ? completeData?.OPD_ID : 'null'}</p>
+                </div>
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Patient Name:</h6>
+                  <p>{completeData?.patient_name}</p>
+                </div>
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Marital Status:</h6>
+                  <p>{completeData?.marital_status ? completeData?.marital_status : 'null'}</p>
+                </div>
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Guardian Name:</h6>
+                  <p>{completeData?.guardian_name ? completeData?.guardian_name:'null'}</p>
+                </div>
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Email:</h6>
+                  <p>{completeData?.email ? completeData?.email : 'null'}</p>
+                </div>
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Age:</h6>
+                  <p>{completeData?.age ? completeData?.age : 'null'}</p>
+                </div>
+                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                   <h6>Casuality:</h6>
-                  <p>{staffDetail?.contact_no}</p>
+                  <p>{completeData?.casualty ? completeData?.casualty : 'null'}</p>
                 </div>
                 <hr
                   style={{ width: "280%", margin: "0", marginBottom: "20px", color: 'rgba(0,0,0,0.2)' }}
                 />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>TPA:</h6>
-                  <p>{staffDetail?.emergency_contact_no}</p>
+                  <p>{completeData?.TPA ? completeData?.TPA : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Note:</h6>
-                  <p>{staffDetail?.email}</p>
+                  <p>{completeData?.note ? completeData?.note : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Symptoms:</h6>
-                  <p>{staffDetail?.gender}</p>
+                  <p>{completeData?.symptoms ? completeData?.symptoms : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>OPD ID:</h6>
-                  <p>{staffDetail?.bloodgroup}</p>
-                </div>
-                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Patient Name:</h6>
-                  {/* <p>{DobOnly}</p> */}
-                </div>
-                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Marital Status:</h6>
-                  <p>{staffDetail?.marital_status}</p>
-                </div>
-                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Guardian Name:</h6>
-                  <p>{staffDetail?.father_name}</p>
-                </div>
-                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Email:</h6>
-                  <p>{staffDetail?.mother_name}</p>
-                </div>
-                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Age:</h6>
-                  <p>{staffDetail?.qualification}</p>
-                </div>
-                <hr style={{ width: "280%", color: 'rgba(0,0,0,0.2)'  }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Height:</h6>
-                  <p>{staffDetail?.work_exp}</p>
+                  <p>{completeData?.height ? completeData?.height : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>BP:</h6>
-                  <p>{staffDetail?.specialization}</p>
+                  <p>{completeData?.bp ? completeData?.bp : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Temperature:</h6>
-                  <p>{staffDetail?.note}</p>
+                  <p>{completeData?.temperature ? completeData?.temperature : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Known allargies:</h6>
-                  <p>{staffDetail?.pan_card}</p>
+                  <p>{completeData?.known_allergies ? completeData?.known_allergies : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
                 <div style={{ marginBottom: "10px" }}>
                   <h6>Case:</h6>
-                  <p>{staffDetail?.pan_number}</p>
+                  <p>{completeData?.case_type ? completeData?.case_type : 'null'}</p>
+                </div>
+                <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
+                <div style={{ marginBottom: "10px" }}>
+                  <h6>Refference:</h6>
+                  <p>{completeData?.refference ? completeData?.refference : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
 
                 <div style={{ marginBottom: "10px" }}>
-                  <h6>Refference:</h6>
-                  <p>{staffDetail?.pan_number}</p>
+                  <h6>Consultant Doctor:</h6>
+                  <p>{completeData?.doctor ? completeData?.doctor : 'null'}</p>
                 </div>
                 <hr style={{ width: "280%" , color: 'rgba(0,0,0,0.2)' }} />
-
-                <div style={{ marginBottom: "10px" }}>
-                  <h6>Refference:</h6>
-                  <p>{staffDetail?.pan_number}</p>
+                                <div style={{ marginBottom: "10px" }}>
+                  <h6>Symptoms:</h6>
+                  <p>{completeData?.symptoms ? completeData?.symptoms : 'null'}</p>
                 </div>
               </div>
             </div>

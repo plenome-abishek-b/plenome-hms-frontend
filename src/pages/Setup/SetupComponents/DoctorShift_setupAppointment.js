@@ -123,17 +123,17 @@ console.log(globalShiftIds,'global ids');
       console.log(data,"edittingss")
        const response = await api.updateDoctorShift(data)
        console.log(response,"response")
-    //  getSetupDoctorGlobalShift()
+    //  getSetupDoctorGlobalShift() 
     }else{
-      const data ={
-        staff_id: shiftid,
+      const data ={  
+        staff_id: shiftid, 
         global_shift_id:globalshiftId?.id,
         Hospital_id:1
       }
       console.log(data,"editting")
        const response = await api.updateDoctorShift(data);
        console.log(response,"response");
-      //  getSetupDoctorGlobalShift()
+       getSetupDoctorGlobalShift()
     }
   }
 

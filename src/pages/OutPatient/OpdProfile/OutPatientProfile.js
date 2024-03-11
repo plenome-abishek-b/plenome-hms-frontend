@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Row,
   Col,
@@ -34,16 +34,23 @@ import MedicationDialog from "pages/InPatient/IpdPatientProfile/MedicationDialog
 import OpdCharges from "../OpdTabs/OpdCharges";
 import OpdTimelineDialog from "../OpdDialog/OpdTimelineDialog"
 import OpdOperationDialog from "../OpdDialog/OpdOperationDialog"
+import api from "services/Api"
+import { useParams } from "react-router-dom/cjs/react-router-dom.min"
+import OPDdischargedPatientDialog from "./DischargedPatientDialog"
 
 
 const OutPatientProfile = props => {
   const [activeTab, setactiveTab] = useState("1")
-  
+  const [consultant,setConsultant] = useState([])
+  const params = useParams();
+  const pid = params?.pid;
+  const opdId = params?.opdid;
+console.log(opdId,"OPD IDDDD");
   
 
   const [openTimeline, setOpenTimeline] = useState(false)
-
-  
+  const [details,setDetails] = useState([])
+  const [opndischarge,setOpenDischarge] = useState(false)
 
   const toggle = tab => {
     if (activeTab !== tab) {
@@ -62,11 +69,31 @@ const OutPatientProfile = props => {
   const handleCloseTimeline = () => {
     setOpenTimeline(false)
   }
- 
 
-  
+  useEffect(()=>{
+   getOPDProfile()
+   getConsultant()
 
-
+  },[])
+  const getOPDProfile = async () =>{
+  const response = await api.get_OPD_VISIT_list(opdId)
+  const {data} = response;
+  console.log(data,"whole data")
+  setDetails(data)
+  }
+  const getConsultant = async () =>{
+    const response = await api.get_OPD_Consultant(pid)
+    const {data} = response;
+    console.log(data,"all data");
+    setConsultant(data);
+   }
+   const openOPDdischarge = () =>{
+    console.log("calling");
+    setOpenDischarge(true);
+   }
+   const handleClose = () =>{
+    setOpenDischarge(false)
+   }
   return (
     <React.Fragment>
       <div className="page-content">
@@ -236,8 +263,7 @@ const OutPatientProfile = props => {
                       <Row>
                         <Col lg="6" className="mt-3">
                           <Row>
-                            <Col lg="3">
-                              <h5 className="mt-4">Patient Name</h5>
+                          <Col lg="3">
                               <div className="avatar-md profile-user-wid mt-3">
                                 <img
                                   src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
@@ -245,12 +271,76 @@ const OutPatientProfile = props => {
                                   className="img-thumbnail rounded-circle"
                                 />
                               </div>
+                              <h5 className="mt-4">Patient Name</h5>{" "}
+                              <h3>{details[0]?.patient_name}</h3>
                             </Col>
                             <Col lg="3" sm="6" className="mt-5 ms-3">
-                              <p className="fw-bold">Gender</p>
-                              <p className="fw-bold">Age</p>
-                              <p className="fw-bold">Guardian Name</p>
-                              <p className="fw-bold">Phone</p>
+                              <div style={{marginBottom:'20px',display:'flex',justifyContent:'space-around'}}>
+                            <i className="fas fa-pencil-alt"></i> 
+                        
+                            <i className="fas fa-trash-alt "></i> 
+                            <i className="fas fa-hospital" onClick={()=>openOPDdischarge()}></i>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                <p
+                                  className="fw-bold"
+                                  style={{ marginRight: "10px" }}
+                                >
+                                  Gender:
+                                </p>
+                                <span>{details[0]?.gender}</span>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                <p
+                                  className="fw-bold"
+                                  style={{ marginRight: "10px" }}
+                                >
+                                  Age:
+                                </p>
+                                <span>
+                                  {details[0]?.age ? details[0]?.age : "null"}
+                                </span>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                <p
+                                  className="fw-bold"
+                                  style={{ marginRight: "10px" }}
+                                >
+                                  Guardian_Name
+                                </p>
+                                <span style={{ flex: "1" }}>
+                                  {details[0]?.guardian_name}
+                                </span>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                <p
+                                  className="fw-bold"
+                                  style={{ marginRight: "10px" }}
+                                >
+                                  Phone:
+                                </p>
+                                <span>{details[0]?.mobileno}</span>
+                              </div>
                             </Col>
                             <hr
                               className="mt-2"
@@ -264,10 +354,10 @@ const OutPatientProfile = props => {
                           </Row>
                           <Row>
                             <Col lg="3">
-                              <p className="fw-bold">Case ID</p>
-                              <p className="fw-bold">IPD No</p>
-                              <p className="fw-bold">Admission Date</p>
-                              <p className="fw-bold">Bed</p>
+                              <p className="fw-bold">Case ID   :{details[0]?.OPD_ID}</p>
+                              <p className="fw-bold">IPD No    :{details[0]?.case_reference_id}</p>
+                              {/* <p className="fw-bold">Admission Date</p>
+                              <p className="fw-bold">Bed</p> */}
                             </Col>
                             <hr
                               className="mt-2"
@@ -287,6 +377,14 @@ const OutPatientProfile = props => {
                               ></i>
                               Known Allergies
                             </p>
+                            <div className="mt-2 ms-2 fw-bold">
+                              <ul>
+                                {details[0]?.known_allergies ? details[0]?.known_allergies:'null'}
+                                {/* <li>
+                                  <p>Doctor_2 name</p>
+                                </li> */}
+                              </ul>
+                            </div>
                             <hr
                               className="mt-2"
                               style={{
@@ -303,6 +401,22 @@ const OutPatientProfile = props => {
                               ></i>
                               Findings
                             </p>
+                            <div className="mt-2 ms-2 fw-bold">
+                              <ul>
+                                {/* {details.map((val=>(
+
+                                <li>
+                                  <p>{val?.consultant_doctor}</p>
+                                </li>
+                                )))} */}
+                                <li>
+                                  {details[0]?.doctor}
+                                  </li>
+                                {/* <li>
+                                  <p>Doctor_2 name</p>
+                                </li> */}
+                              </ul>
+                            </div>
                             <hr
                               className="mt-2"
                               style={{
@@ -318,6 +432,14 @@ const OutPatientProfile = props => {
                               ></i>
                               Symptoms
                             </p>
+                            <div className="mt-2 ms-2 fw-bold">
+                              {/* <ul> */}
+                                {details[0]?.symptoms ? details[0]?.symptoms : 'null'}
+                                {/* <li>
+                                  <p>Doctor_2 name</p>
+                                </li> */}
+                              {/* </ul> */}
+                            </div>
                             <hr
                               className="mt-2"
                               style={{
@@ -327,18 +449,25 @@ const OutPatientProfile = props => {
                                 height: "0.5px",
                               }}
                             />
+                             
                           </Row>
                           <Row>
                             <p className="fw-bold fs-5">Consultant Doctor</p>
-
                             <div className="mt-2 ms-2 fw-bold">
                               <ul>
+                                {/* {consultant.map((val=>(
+
                                 <li>
-                                  <p>Doctor_1 name</p>
+                                  <p>{val?.consultant_doctor}</p>
                                 </li>
-                                <li>
+                                )))} */}
+                                {/* <li>{details[0]/}</li> */}
+                                {/* <li>
                                   <p>Doctor_2 name</p>
-                                </li>
+                                </li> */}
+                                <val>
+                                  <li>{details[0]?.doctor}</li>
+                                </val>
                               </ul>
                             </div>
                             <hr
@@ -351,7 +480,7 @@ const OutPatientProfile = props => {
                               }}
                             />
                           </Row>
-                          <Row>
+                          {/* <Row>
                             <p className="fw-bold fs-5">Nurse Notes</p>
                             <div className="timeline-item">
                               <h4 className="timeline-header text-primary">
@@ -368,7 +497,7 @@ const OutPatientProfile = props => {
                                 height: "0.5px",
                               }}
                             />
-                          </Row>
+                          </Row> */}
                           <Row>
                             <p className="fw-bold fs-5">Timeline</p>
                             <Col lg="12" className="mt-2">
@@ -636,6 +765,7 @@ const OutPatientProfile = props => {
                         <button className="btn-mod custom-btn" onClick={handleOpenTimeline}>+ Add Timeline</button>
                         <OpdTimelineDialog open={openTimeline} handleClose={handleCloseTimeline}/>
                       </div>
+                    <OPDdischargedPatientDialog open={opndischarge} handleClose={handleClose}  opdId={opdId}/>
                       <OpdTimeline />
                     </TabPane>
                   </TabContent>

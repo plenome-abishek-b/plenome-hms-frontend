@@ -424,16 +424,15 @@ const URL = {
   EMAIL_GATEWAY: '/email-appointment-booked',
   FORGOT_PASSWORD: '/login/forgotPassword',
   RESET_PASSWORD: '/login/resetPassword',
-
   OPD_CHARGES:'/internal-opd-charges/charges',
   OPD_CHARGE_AMOUNT:'/internal-opd-charges/amount',
   TPA_OPD_INTERNAL:'/tpa-management',
   OPD_OVERVIEW:'/internal-opd-overview',
-  OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',
+  OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',  
   OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor',
-
-  APPOINTMENT_REPORT_URL: '/appointment_report'
-};  
+  APPOINTMENT_REPORT_URL: '/appointment_report',
+  OPD_DISCHARGED_PATIENT:'/discharge-patient-opd-module'
+};
 
 function getSlotTiming(date,staff,shift, data={}){
   const url = `${URL.SLOT_TIMING}?day=${date}&staff_id=${staff}&shift_id=${shift}`;
@@ -2379,10 +2378,9 @@ function getLinkAddress(transactionId) {
   return http2.post(URL.ABHA_PHR_ADDRESS_SUGGESTION, { transactionId });
 }
 function updateDoctorShift(data){
-  return http10.post(URL.SETUP_APPT_GLOBAL_SHIFT,data)
+  return http6.post(URL.SETUP_APPT_GLOBAL_SHIFT,data)
 }
 ////////
-
 function postSetupRadiologyCategory(data){
   return http4.post(URL.SETUP_RADIOLOGY_CATEGORY,data)
 }
@@ -2921,15 +2919,26 @@ function patchSetupRadiologyParameter(data){
     const data = {params:{patient_id:id}}
     return http6.get(URL.OPD_OVERVIEW,data)
   }
-  function get_OPD_OverviewVist(id){
-    const data ={ params:{patient_id:id}}
+  function get_OPD_OverviewVist(id,opdid){
+    const data ={ params:{patient_id:id,visit_details_id:opdid}}
     return http6.get(URL.OPD_OVERVIEW_VISITS,data)
+  }
+  function get_OPD_VISIT_list(id){
+    console.log(id,"yes id")
+    const url = `${URL.OPD_OVERVIEW_VISITS}/${id}`
+    return http6.get(url)
+  }
+  function post_OPD_VISIT(data){
+   return http6.post(URL.OPD_OVERVIEW_VISITS,data)
   }
   function get_OPD_Consultant(id){
     const data ={ params:{patient_id:id}}
     return http6.get(URL.OPD_OVERVIEW_DOCTOR,data)
   }
-
+  function post_OPD_dischargedPatinet(data){
+    return http6.post(URL.OPD_DISCHARGED_PATIENT,data)
+  }
+  // function 
 ////////
 
 function createPhrAddress(
@@ -3557,7 +3566,10 @@ getTPA_OPD,
 getAmountWithCharge,
 get_OPD_Overview,
 get_OPD_OverviewVist,
+get_OPD_VISIT_list,
 get_OPD_Consultant,
-getAppointmentReport
+getAppointmentReport,
+post_OPD_dischargedPatinet,
+post_OPD_VISIT
 };
 export default api;

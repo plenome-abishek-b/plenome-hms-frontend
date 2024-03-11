@@ -14,8 +14,9 @@ import OpdVistDetailDialog from '../OpdDialog/OpdVisitDetailDialog'
 
 function Visits() {
   const params = useParams();
-  console.log(params.pid, "params");
   const pid = params?.pid;
+  const opdid = localStorage.getItem('opdid')
+  console.log(pid, "params");
   const initialVisitValue = {
     cons_doctor: "",
     generated_by: "1",
@@ -33,7 +34,8 @@ function Visits() {
   const [patientid, setPatientid] = useState('')
   const [openVisit, setOpenVisit] = useState(false);
   const [tableData, setTableData] = useState(null)
-  const [formData, setFormData] = useState(initialVisitValue)
+  const [formData, setFormData] = useState(initialVisitValue);
+  const [completeData,setCompleteData] = useState({})
   const [modelOpen,setModelOpen] = useState(false)
   const onChange = (e) => {
     console.log(e.target.value,"lllll")
@@ -51,7 +53,7 @@ function Visits() {
    getOverviewVist()
   },[])
   const getOverviewVist = async () =>{
-   const response = await api.get_OPD_OverviewVist(pid)
+   const response = await api.get_OPD_OverviewVist(pid,opdid)
    const {data} = response;
    console.log(data,"visit list")
    setTableData(data);
@@ -64,22 +66,26 @@ function Visits() {
     const handleDeleteClick = async () =>{
 
     }
-    const handleView = async () =>{
-      console.log("can't dude"); 
-      setModelOpen(true)
+    const handleView = async (data) =>{
+      const opdNumber = data?.opd_NO.replace('OPDN', '');
+      const response = await api.get_OPD_VISIT_list(opdNumber)
+      console.log(response.data,"can't dude");
+      setCompleteData(response?.data[0])
+      setModelOpen(true);
     }
     const handleClose = () =>{
       setModelOpen(false)
     }
       const columnDefs = [
         { headerName: 'OPD No', field: 'opd_NO', cellStyle: { fontWeight: 'bold', color: 'black', backgroundColor: '#F1F6F5' }, 
-        // cellRenderer: (params) => 
+        // cellRenderer: (params) =>
           // const id = params.;
           cellRenderer: (params) => {
-            const opd_NO = params.data.opd_NO; // Accessing the opd_NO field value
+            const opd_NO = params.data.opd_NO;
+            const opdNumber = opd_NO?.replace('OPDN', '');
             return (
-              <a href={`/opdprofileview/${pid}`}>
-                {"OPDN" + opd_NO}
+              <a href={`/opdprofileview/${pid}/${opdNumber}`}>
+                {"" + opd_NO}
               </a>
             );
           } },
@@ -181,7 +187,7 @@ function Visits() {
        <i className="fas fa-exchange-alt"></i> 
           &nbsp;Visits
         </button>
-        <OpdVisitDialog open={openVisit} handleClose={handleCloseVisit}  data={data} onChange={onChange} handlePatientId={handlePatientId}/>
+        <OpdVisitDialog getOverviewVist={getOverviewVist} open={openVisit} opdid={opdid} handleClose={handleCloseVisit}  data={data} onChange={onChange} handlePatientId={handlePatientId}/>
       </div>
       <div className="ag-theme-alpine mt-4"
             style={{ height: 700 }}>
@@ -194,7 +200,7 @@ function Visits() {
               domLayout='autoHeight'
               frameworkComponents={components}
             />
-          <OpdVistDetailDialog open={modelOpen} handleClose={handleClose}/> 
+          <OpdVistDetailDialog open={modelOpen} completeData={completeData} handleClose={handleClose}/> 
           </div>
     </div>
         
