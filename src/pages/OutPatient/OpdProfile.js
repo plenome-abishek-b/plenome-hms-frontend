@@ -51,6 +51,7 @@ const Message = (props) => {
     const response = await api.get_OPD_Overview(pid);
     const { data } = response;
     console.log(data, "all details");
+    localStorage.setItem('opdid',data[0]?.OPD_ID)
     setDetails(data);
   };
   const getConsultant = async () =>{
@@ -277,7 +278,7 @@ const Message = (props) => {
                                 {details.map((val=>(
 
                                 <li>
-                                  <p>{val?.known_allergies}</p>
+                                  <p>{val?.known_allergies ? val?.known_allergies : 'null'}</p>
                                 </li>
                                 )))}
                                 {/* <li>
@@ -334,7 +335,7 @@ const Message = (props) => {
                                 {details.map((val=>(
 
                                 <li>
-                                  <p>{val?.symptoms}</p>
+                                  <p>{val?.symptoms  ? val?.symptoms : 'null'}</p>
                                 </li>
                                 )))}
                                 {/* <li>

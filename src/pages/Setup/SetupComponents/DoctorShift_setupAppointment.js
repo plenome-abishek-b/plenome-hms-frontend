@@ -114,23 +114,23 @@ const DoctorShift_setupAppointment = (props) => {
     if (globalshiftId?.id === undefined) {
       const data = {
         staff_id: shiftid,
-        global_shift_id: globalshiftId,
-        Hospital_id: 1,
-      };
-      console.log(data, "edittingss");
-      const response = await api.updateDoctorShift(data);
-      console.log(response, "response");
-      //  getSetupDoctorGlobalShift()
-    } else {
-      const data = {
-        staff_id: shiftid,
-        global_shift_id: globalshiftId?.id,
-        Hospital_id: 1,
-      };
-      console.log(data, "editting");
-      const response = await api.updateDoctorShift(data);
-      console.log(response, "response");
-      window.location.reload()
+        global_shift_id:globalshiftId,
+        Hospital_id:1
+      }
+      console.log(data,"edittingss")
+       const response = await api.updateDoctorShift(data)
+       console.log(response,"response")
+    //  getSetupDoctorGlobalShift() 
+    }else{
+      const data ={  
+        staff_id: shiftid, 
+        global_shift_id:globalshiftId?.id,
+        Hospital_id:1
+      }
+      console.log(data,"editting")
+       const response = await api.updateDoctorShift(data);
+       console.log(response,"response");
+       getSetupDoctorGlobalShift()
     }
   };
 
