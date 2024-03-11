@@ -39,9 +39,11 @@ const AddStaff = () => {
   const [specialist, setSpecialist] = useState([]);
   const [bloodGroup, setBloodGroup] = useState([]);
   const [fileData, setFiledata] = useState();
-  const [bufferData,setbufferData] = useState();
+  const [bufferData, setbufferData] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [newBuffer, setNewbuffer] = useState();
+  const [imgFile, setImagefile] = useState();
+  const [certFile, setCertfile] = useState();
   const [formData, setFormData] = useState({
     employee_id: "",
     role_id: "",
@@ -259,11 +261,11 @@ const AddStaff = () => {
 
   const validationSchema = yup.object().shape({
     contact_no: yup
-    .string()
-    .matches(/^[0-9]+$/, "Phone number must contain only digits")
-    .min(10, "Phone number must be at least 10 digits")
-    .max(10, "Phone number must not exceed 10 digits")
-    .required("Phone number is required *"),
+      .string()
+      .matches(/^[0-9]+$/, "Phone number must contain only digits")
+      .min(10, "Phone number must be at least 10 digits")
+      .max(10, "Phone number must not exceed 10 digits")
+      .required("Phone number is required *"),
     email: yup.string().email("Invalid email").required("Email is required *"),
     employee_id: yup.string().required("Staff ID is required *"),
     first_name: yup.string().required("First Name is required *"),
@@ -273,7 +275,6 @@ const AddStaff = () => {
     password: yup.string().required("Password is required *"),
     role_id: yup.string().required("Role is required *"),
   });
-
 
   const addCertificate = () => {
     const newCertificate = {
@@ -285,103 +286,91 @@ const AddStaff = () => {
     };
     setCertificates([...certificates, newCertificate]);
   };
-  
-  
 
   const handleSubmit = async () => {
+    if (imgFile && certFile) {
+      console.log(imgFile, certFile, "both getting");
+      const formDataImg = new FormData();
+      formDataImg.append("file", imgFile);
+      const fileImgUpload = await api.postFiles(formDataImg);
+      console.log(fileImgUpload, "fileImgUpload");
+
+      const formDataCert = new FormData();
+      formDataCert.append("file", certFile);
+      const fileCertUpload = await api.postFiles(formDataCert);
+      console.log(fileCertUpload, "fileCertUpload");
+
+      const selectedFiles = certificates.map((cert) => ({
+        fileName: fileCertUpload.data.data,
+        fileType: fileCertUpload.data.data,
+        date: new Date().toISOString().split("T")[0],
+      }));
+
+      console.log(newBuffer, "newbufferinside");
+
+      console.log(" ", selectedFiles);
+      const datas = {
+        ...formData,
+        name: `${formData?.first_name}`,
+        certificates: selectedFiles,
+        other_document_name: formData?.other_document_file,
+        image: fileImgUpload.data.data,
+        // image: selectedImages
+      };
+      console.log(datas, "all datas getting");
+      const response = await api?.postHRmainModuleHr_Staff(datas);
+      console.log(response, "consoling");
+      const { data } = response;
+      console.log(data, "consoling");
+      history.push("/hr");
+    } else {
+      console.log("both empty");
+    }
+      
     
-    const selectedFiles = certificates.map((cert) => ({
-      fileName: cert.fileName,
-      fileType: cert.fileType,
-      date: cert.date,
-    }));
-
-    console.log(newBuffer,'newbufferinside');
-
-    const selectedImages = {
-      originalname: fileData.name,
-      mimetype: fileData.type,
-      size: fileData.size,
-      buffer: newBuffer,
-      "encoding": "7bit", 
-      "fieldname": "file"
-  };
-    console.log(" ", selectedFiles);  
-    const datas = {
-      ...formData,
-      name: `${formData?.first_name}`,
-      certificates: selectedFiles,
-      other_document_name: formData?.other_document_file,
-      image: selectedImages
-    };
-    console.log(datas, "all datas getting");
-    const response = await api?.postHRmainModuleHr_Staff(datas);
-    console.log(response, "consoling");
-    const { data } = response;
-    console.log(data, "consoling");
-    history.push("/hr");
   };
 
-  
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    console.log(files[0],'filedata');
+    const { name, value } = e.target;
     console.log(name, typeof value, "both");
     try {
-        if (name === "specialist") {
-            setFormData({
-                ...formData,
-                specialist: JSON.stringify([parseInt(value)]),
-            });
-        } else if (files && files[0]) {
-            const file = files[0];
-            setFiledata(file)
-            const reader = new FileReader();
+      if (name === "image") {
+        console.log("entering");
+        const img_file = e.target.files[0];
+        console.log(img_file, "image file");
+        setImagefile(img_file);
+      } else if (name === "certificates") {
+        const cert_file = e.target.files[0];
+        console.log(cert_file, "cert file");
+        setCertfile(cert_file);
 
-            reader.onload = (e) => {
-                const base64String = e.target.result.split(",")[1];
-                const arrayBuffer = Uint8Array.from(atob(base64String), c => c.charCodeAt(0)).buffer;
-                const arrayBuffer_1 = reader.result;
-                const modBuffer = Buffer.from(arrayBuffer_1)
-                console.log(modBuffer,'modified');
-
-                setbufferData(modBuffer)
-                // setFormData({
-                //     ...formData,
-                //     [name]: arrayBuffer,
-                //     // [`${name}_image`]: base64String, 
-                // });
-            };
-
-
-
-            reader.readAsDataURL(file);
-            modifiedBuffer();
-        } else {
-            console.log("here");
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        }
-    } catch (error) {
-        console.log(error, "error");
+        console.log("not working");
+      } else if (name === "specialist") {
+        setFormData({
+          ...formData,
+          specialist: JSON.stringify([parseInt(value)]),
+        });
+      } else {
+        console.log("here");
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      }
+    } catch {
+      console.log("its not coming");
     }
-};
+  };
 
-const modifiedBuffer = () => {
-  const bufferString = JSON.stringify({
-    buffer: "<Buffer " + Array.from(bufferData).map(byte => byte.toString(16).padStart(2, '0')).join(' ') + ">",
-  });
-  
-  const afterbuffer = JSON.parse(bufferString).buffer
-  
-  setNewbuffer(afterbuffer)
-}
+  // const modifiedBuffer = () => {
+  //   const bufferString = JSON.stringify({
+  //     buffer: "<Buffer " + Array.from(bufferData).map(byte => byte.toString(16).padStart(2, '0')).join(' ') + ">",
+  //   });
 
+  //   const afterbuffer = JSON.parse(bufferString).buffer
 
-
-
+  //   setNewbuffer(afterbuffer)
+  // }
 
   const getStaffs = async () => {
     const response = await api.getRolePermission();
@@ -1404,9 +1393,9 @@ const modifiedBuffer = () => {
                                       name="certificates"
                                       onChange={handleChange}
                                       type="file"
-                                      onChange={(event) =>
-                                        onChange(certificate.id, event)
-                                      }
+                                      // onChange={(event) =>
+                                      //   onChange(certificate.id, event)
+                                      // }
                                       // value={formData?.cirt}
                                     />
                                   </div>

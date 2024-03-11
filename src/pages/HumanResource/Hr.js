@@ -19,6 +19,7 @@ import Card from "common/data/Card";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import EditButtonRenderer from "common/data/update-button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import "./Hr.css"
 // import { FaPencilAlt } from 'react-icons/fa/';
 //redux
 
@@ -389,6 +390,7 @@ const Hr = (props) => {
                           disabledStaff.map((staff) => (
                             <Col md={4} key={staff.staffId}>
                               <Card
+                              className="card"
                                 getAllStaff={getAllStaffs}
                                 staff={staff}
                                 staffname={staff?.staffname}
@@ -404,6 +406,7 @@ const Hr = (props) => {
                           staffs.map((staff) => (
                             <Col md={4} key={staff.staffId}>
                               <Card
+                              className="card"
                                 getAllStaff={getAllStaffs}
                                 staff={staff}
                                 staffname={staff?.staffname}

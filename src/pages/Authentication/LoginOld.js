@@ -135,6 +135,9 @@ const Login = (props) => {
 
       // dispatch(loginSuccess(role_name));
       localStorage.setItem("newRole",role_name)
+localStorage.setItem('isLoggedIn', 'true');
+localStorage.setItem('loginTime', Date.now().toString());
+
 
       fakeBackend(values.email, values.password);
       if (response.status === 201) {

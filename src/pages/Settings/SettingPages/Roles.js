@@ -94,7 +94,7 @@ function RoleSetting() {
   const onChange = (e) => {
     console.log(e.target.value, "lllll");
     const { value, id } = e.target;
-    setFormData({ ...formData, [id]: value });
+    setSelectedData({ ...formData, [id]: value });
   };
 
   
@@ -206,6 +206,16 @@ function RoleSetting() {
   //     })
   // }, [])
 
+  const handleUpdate = async (id) => {
+    console.log(id,'id');
+    const datas = {id:id,name:selectedData.name,is_system:selectedData.is_system,hospital_id: '1'}
+    const response = await api.updateRoles(datas);
+    const { data } = response;
+    console.log(data, "role data");
+  };
+  
+
+
   return (
     <React.Fragment>
       <ToastContainer />
@@ -247,7 +257,10 @@ function RoleSetting() {
         </DialogContent>
         <DialogActions className="d-flex justify-content-center p-3">
           <button onClick={handleEditDialogClose} className="btn btn-danger btn-sm">Cancel</button>
-          <button onClick={handleEditDialogClose} className="btn btn-success btn-sm">Save</button>
+          <button onClick={() => handleUpdate(selectedData)} className="btn btn-success btn-sm">
+  Save
+</button>
+
         </DialogActions>
       </Dialog>
           </Container>

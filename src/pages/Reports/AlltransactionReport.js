@@ -62,7 +62,7 @@ const Alltransactionreport = props => {
    return (
     <React.Fragment>
       <div className="page-content">
-        <Card>
+        <Card >
           <CardBody>
             <Container fluid>
               <h4>Transaction Report</h4>

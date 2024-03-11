@@ -14,7 +14,8 @@ const Logout = props => {
   useEffect(() => {
     dispatch(logoutUser(props.history))
   }, [dispatch])
-
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('loginTime');
   return <></>
 };
 

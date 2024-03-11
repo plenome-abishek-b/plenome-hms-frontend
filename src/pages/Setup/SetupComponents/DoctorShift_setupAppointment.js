@@ -14,25 +14,23 @@ const DoctorShift_setupAppointment = (props) => {
     getSetupShift();
   }, []);
 
+  // useEffect(() => {
+  //   try {
+  //     const storedData =
+  //       JSON.parse(localStorage.getItem("globalShiftIds")) || {};
 
-// useEffect(() => {
-//   try {
-//     const storedData =
-//       JSON.parse(localStorage.getItem("globalShiftIds")) || {};
+  //     setRowData((prevData) =>
+  //       prevData.map((row) => ({
+  //         ...row,
+  //         global_shift_id: storedData[row.doctor_name] || row.global_shift_id,
+  //       }))
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching data from localStorage:", error);
+  //   }
+  // }, [rowData]);
 
-//     setRowData((prevData) =>
-//       prevData.map((row) => ({
-//         ...row,
-//         global_shift_id: storedData[row.doctor_name] || row.global_shift_id,
-//       }))
-//     );
-//   } catch (error) {
-//     console.error("Error fetching data from localStorage:", error);
-//   }
-// }, [rowData]); 
-  
-  
- const mapApiDataToRowData = (apiData) => {
+  const mapApiDataToRowData = (apiData) => {
     const rowData = apiData.map((item) => {
       return {
         staff_id: item.staff_id,
@@ -60,10 +58,10 @@ const DoctorShift_setupAppointment = (props) => {
     try {
       const response = await api.getSetupApptGlobalShift();
       const { data } = response;
-      console.log(data,"roww");
+      console.log(data, "roww");
       if (Array.isArray(data) && data.length > 0) {
         const rowData = mapApiDataToRowData(data);
-        console.log(rowData,"rowData");
+        console.log(rowData, "rowData");
         setRowData(data);
 
         localStorage.setItem("rowData", JSON.stringify(rowData));
@@ -71,12 +69,11 @@ const DoctorShift_setupAppointment = (props) => {
     } catch (error) {
       console.error("Error fetching global shifts:", error);
     }
-
   };
 
-  const globalShiftIds = rowData.map(item => item.global_shift_id);
+  const globalShiftIds = rowData.map((item) => item.global_shift_id);
 
-console.log(globalShiftIds,'global ids');        
+  console.log(globalShiftIds, "global ids");
 
   const handleDropdownChange = (doctorName, selectedValue, shiftType) => {
     console.log("Dropdown change:", doctorName, selectedValue, shiftType);
@@ -113,8 +110,8 @@ console.log(globalShiftIds,'global ids');
       })
     );
   };
-  const handleEdit = async (shiftid,globalshiftId) =>{
-    if(globalshiftId?.id === undefined){
+  const handleEdit = async (shiftid, globalshiftId) => {
+    if (globalshiftId?.id === undefined) {
       const data = {
         staff_id: shiftid,
         global_shift_id:globalshiftId,
@@ -135,7 +132,7 @@ console.log(globalShiftIds,'global ids');
        console.log(response,"response");
        getSetupDoctorGlobalShift()
     }
-  }
+  };
 
   return (
     <React.Fragment>
@@ -144,56 +141,68 @@ console.log(globalShiftIds,'global ids');
           <h4>Doctor shift</h4>
           <Card>
             <CardBody>
-              <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
+              <div
+                style={{ display: "flex", justifyContent: "flex-end" }}
+              ></div>
               <table>
-  <thead>
-    <tr>
-      <th>Doctor Name</th>
-      {shifts &&
-        shifts.map((shift) => (
-          <th key={shift.id}>{shift.name}</th>
-        ))}
-    </tr>
-  </thead>
-  <tbody>
-  {rowData.map((doctor) => (
-    <tr key={doctor.doctor_name}>
-      <td>{doctor.doctor_name}</td>
-      {shifts.map((shift) => (
-        <td key={shift.id}>
-          {console.log(shift,"kk",doctor,"both")}
-          {doctor?.global_shifts && doctor?.global_shifts.some((s) => s.shift === shift.name) ? (
-            <input
-              checked
-              style={{
-                backgroundColor: "#00cc00",
-                border: "1px solid #7070FF",
-                borderRadius: "5px",
-                color: "white",
-              }}
-              onClick={() => handleEdit(doctor?.id, doctor?.global_shifts.find((s) => s.shift === shift.name))}
-              type="checkbox"
-              // readOnly
-            />
-          ) : (
-            <input
-              style={{
-                backgroundColor: "#ff6666",
-                border: "1px solid #7070FF",
-                borderRadius: "5px",
-                color: "white",
-              }}
-              onClick={() => handleEdit(doctor?.id,shift?.id)}
-              type="checkbox"
-              // readOnly
-            />
-          )}
-        </td>
-      ))} 
-    </tr>
-  ))}
-</tbody>
-</table>
+                <thead>
+                  <tr>
+                    <th>Doctor Name</th>
+                    {shifts &&
+                      shifts.map((shift) => (
+                        <th key={shift.id}>{shift.name}</th>
+                      ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rowData.map((doctor) => (
+                    <tr key={doctor.doctor_name}>
+                      <td>{doctor.doctor_name}</td>
+                      {shifts.map((shift) => (
+                        <td key={shift.id}>
+                          {console.log(shift, "kk", doctor, "both")}
+                          {doctor?.global_shifts &&
+                          doctor?.global_shifts.some(
+                            (s) => s.shift === shift.name
+                          ) ? (
+                            <input
+                              checked
+                              style={{
+                                backgroundColor: "#00cc00",
+                                border: "1px solid #7070FF",
+                                borderRadius: "5px",
+                                color: "white",
+                              }}
+                              onClick={() =>
+                                handleEdit(
+                                  doctor?.id,
+                                  doctor?.global_shifts.find(
+                                    (s) => s.shift === shift.name
+                                  )
+                                )
+                              }
+                              type="checkbox"
+                              // readOnly
+                            />
+                          ) : (
+                            <input
+                              style={{
+                                backgroundColor: "#ff6666",
+                                border: "1px solid #7070FF",
+                                borderRadius: "5px",
+                                color: "white",
+                              }}
+                              onClick={() => handleEdit(doctor?.id, shift?.id)}
+                              type="checkbox"
+                              // readOnly
+                            />
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
               <div
                 style={{
