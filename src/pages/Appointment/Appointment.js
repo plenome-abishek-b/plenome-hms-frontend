@@ -156,10 +156,10 @@ const Appointment = (props) => {
           hour12: true,
         }).format(new Date(combinedDateTime));
 
-        const modifiedName = patient.patient_name.replace(/\//g, "");
+        const modifiedName = patient?.patient_name?.replace(/\//g, "");
 
         return {
-          ...patient,
+          ...patient, 
           patient_name: modifiedName,
           date: formattedDateTime,
         };

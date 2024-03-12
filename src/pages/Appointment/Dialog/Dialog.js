@@ -159,7 +159,7 @@ export default function AlertDialog({
     // Remove "/" from the patient_name property
     const updatedPatient = {
       ...patient,
-      patient_name: patient.patient_name.replace("/", ""),
+      patient_name: patient?.patient_name?.replace("/", ""),
     };
 
     return updatedPatient;

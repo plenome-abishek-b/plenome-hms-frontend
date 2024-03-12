@@ -95,6 +95,7 @@ const URL = {
   APPT_SLOT_URL: "/internal-appointment-slot",
   APPT_SLOT_CHARGE: "/setup_appt_slot_amount",
   APPT_INTERNAL_SLOT_CHARGE: "/internal-appointment-charges",
+  APPT_INTERNAL_CHARGE_NAME_BY_ID:'/internal-modules-chargesname-and-id',
   SLOT_WISE_URL: "/internal-appointment-slot",
   PATIENT_SEARCH_URL: "/setup-patient-new-patient",
   ADD_PATIENT_URL: "/setup-patient-new-patient",
@@ -437,8 +438,7 @@ const URL = {
   OPD_OVERVIEW_VISITS:'/internal-opd-overview-visits',  
   OPD_OVERVIEW_DOCTOR:'/internal-opd-overview-consultant-doctor',
   APPOINTMENT_REPORT_URL: '/appointment_report',
-  OPD_DISCHARGED_PATIENT:'/discharge-patient-opd-module'
-
+  OPD_DISCHARGED_PATIENT:'/discharge-patient-opd-module',
   APPOINTMENT_REPORT_URL: '/appointment_report',
   DASHBOARD_STAFF_URL: '/staff_roles',
   YEARLY_INCOME_URL: '/income-summary/yearly-income'
@@ -802,7 +802,7 @@ function postCharges(data = {}) {
 
 function getChargeCategory(data = {}) {
   return http3.get(URL.CHARGES_CATEGORY_URL, data);
-}
+};
 
 function postChargeCategory(data = {}) {
   return http3.post(URL.CHARGES_CATEGORY_URL, data);
@@ -2237,15 +2237,8 @@ function getSetupApptSlotTime(day, staff_id, shift_id) {
   return http3.get(url);
 }
 
-function postSetupApptSlotTime(formData, staff_id, global_shift_id, start_time, end_time) {
-  const payload = {
-    ...formData,
-    staff_id: staff_id,
-    global_shift_id: global_shift_id,
-    start_time,
-    end_time
-  };
-
+function postSetupApptSlotTime(payload) {
+  console.log(payload,"complete payload") 
   return http3.post(URL.SETUP_APPT_SLOT_TIMING, payload);
 }
 
@@ -2960,7 +2953,18 @@ function patchSetupRadiologyParameter(data){
   function post_OPD_dischargedPatinet(data){
     return http6.post(URL.OPD_DISCHARGED_PATIENT,data)
   }
-  // function 
+  function post_Appointment_slot_amount(data) {
+    console.log(data,"all comming")
+    return http6.post(URL.APPT_SLOT_CHARGE,data)
+  }
+  function appointment_chargeName_byid(id){
+    const url = `${URL.APPT_INTERNAL_CHARGE_NAME_BY_ID}/${id}`
+    return http6.get(url)
+  }
+  function getAmount_APPT_Slot(id){
+    const url =  `${URL.APPT_INTERNAL_CHARGE_NAME_BY_ID}/charges/${id}`
+    return http6.get(url);
+  }
 ////////
 
 function createPhrAddress(
@@ -3602,6 +3606,9 @@ post_OPD_dischargedPatinet,
 post_OPD_VISIT,
 postFiles,
 getDashboardStaff,
-getyearlyincome
+getyearlyincome,
+post_Appointment_slot_amount,
+appointment_chargeName_byid,
+getAmount_APPT_Slot
 };
 export default api;
