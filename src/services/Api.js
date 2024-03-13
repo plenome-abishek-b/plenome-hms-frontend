@@ -788,6 +788,7 @@ function postPatients(patients) {
 function getAllPatients(data = {}) {
   return http3.get(URL.ADD_PATIENT_URL, data);
 }
+
 function postAppointment(formValues) {
   return http3.post(URL.ADD_APPOINTMENT_URL, formValues);
 }
@@ -2260,8 +2261,14 @@ function getSetupApptShift(data = {}){
   return http3.get(URL.SETUP_APPT_SHIFT, data)
 }
 
-function postSetupApptShift(data = {}){
+function postSetupApptShift(data){
   return http3.post(URL.SETUP_APPT_SHIFT, data)
+}
+function deleteSetupApptShift(id){
+  return http3.delete(`${URL.SETUP_APPT_SHIFT}/${id}`)
+}
+function patchSetupApptShift(data){
+  return http3.patch(`${URL.SETUP_APPT_SHIFT}/${data?.id}`, data)
 }
 
 function getSetupApptGlobalShift(data = {}){
@@ -2965,6 +2972,9 @@ function patchSetupRadiologyParameter(data){
     const url =  `${URL.APPT_INTERNAL_CHARGE_NAME_BY_ID}/charges/${id}`
     return http6.get(url);
   }
+  function deleteSetupPatient(id){
+    return http6.delete(`${URL.ADD_PATIENT_URL}/${id}`)
+  }
 ////////
 
 function createPhrAddress(
@@ -3609,6 +3619,8 @@ getDashboardStaff,
 getyearlyincome,
 post_Appointment_slot_amount,
 appointment_chargeName_byid,
-getAmount_APPT_Slot
+getAmount_APPT_Slot,
+patchSetupApptShift,
+deleteSetupApptShift
 };
 export default api;

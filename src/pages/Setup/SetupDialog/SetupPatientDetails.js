@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import api from "services/Api";
 import { Row, Col } from "reactstrap";
+import { useEffect } from "react";
 
 export default function SetupPatientDetails({
   open,
@@ -13,7 +14,7 @@ export default function SetupPatientDetails({
   getSetup_Patient,
   location,
 }) {
-  console.log(patientDetail, "patientdetails");
+  console.log(patientDetail,"patientdetails");
   const handleDisable = async () => {
     const userConfirmed = window.confirm(
       "Are you sure you want to disable it?"
@@ -44,6 +45,17 @@ export default function SetupPatientDetails({
       console.log("error");
     }
   };
+  // useEffect(() => {
+    const formatDateString = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      return formattedDate;
+    }
+  // },[patientDetail[0]?.dob])
+
   return (
     // <div style={{width:'100px',height:'200px',backgroundColor:'black'}}>SetupPatientDetails</div>
     <div
@@ -99,53 +111,53 @@ export default function SetupPatientDetails({
         <DialogContent className="mt-4 ms-2">
           <Row>
             <Col>
-              <h2>Patient Name: {patientDetail[0]?.patient_name}</h2>
+              <h2> {patientDetail[0]?.patient_name}</h2>
             </Col>
             <Col>
-              <h5>Guardian Name: {patientDetail[0]?.guardian_name}</h5>
+              <h5><span>Guardian Name:</span> {patientDetail[0]?.guardian_name}</h5>
             </Col>
           </Row>
           <br />
           <Row>
             <Col>
               <h5 style={{ marginRight: "10px" }}>
-                Abha No:
+                <span>Abha No:</span>
                 {patientDetail[0]?.ABHA_number
                   ? patientDetail[0]?.ABHA_number
                   : "nan"}
               </h5>
             </Col>
             <Col>
-              <h5>Mobile No: {patientDetail[0]?.mobileno}</h5>
+              <h5><span>Mobile No:</span> {patientDetail[0]?.mobileno}</h5>
             </Col>
           </Row>
 
           <br />
           <Row>
             <Col>
-              <h5>Gender: {patientDetail[0]?.gender}</h5>
+              <h5><span>Gender:</span> {patientDetail[0]?.gender}</h5>
             </Col>
             <Col>
-              <h5>Address: {patientDetail[0]?.address}</h5>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <h5>Known Allergies: {patientDetail[0]?.known_allergies}</h5>
-            </Col>
-            <Col>
-              <h5>Age: {patientDetail[0]?.age}</h5>
+              <h5><spna>Address:</spna> {patientDetail[0]?.address}</h5>
             </Col>
           </Row>
           <br />
           <Row>
             <Col>
-              <h5>Date of Birth: {patientDetail[0]?.dob}</h5>
+              <h5><span>Known Allergies:</span> {patientDetail[0]?.known_allergies}</h5>
+            </Col>
+            <Col>
+              <h5><span>Age:</span> {patientDetail[0]?.age}</h5>
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col>
+              <h5><span>Date of Birth:</span> {formatDateString(patientDetail[0]?.dob)}</h5>
             </Col>
             <Col>
               <h5>
-                TPA ID:{" "}
+                <span>TPA ID:{" "}</span>
                 {patientDetail[0]?.insurance_id
                   ? patientDetail[0]?.insurance_id
                   : "nan"}

@@ -9,19 +9,29 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import PatientDialog from "pages/Appointment/Dialog/PatientDialog";
 import { useState } from "react";
 import api from "services/Api";
+import { useEffect } from "react";
 
-export default function SetupShiftDialog({ open, handleClose }) {
+export default function SetupShiftDialog({ open, handleClose , selectedData , getSetupAppointmentShift}) {
   const [openSetupBbDialog, setOpenSetupBbDialog] = React.useState(false);
   const [formData, setFormdata] = useState({
     name: "",
     start_time: "",
     end_time: "",
-    date_created: "2023-02-12 11:11:11",
+    Hospital_id: 1,
   });
   const handleClickOpen = () => {
     //dialog open
     setOpenSetupBbDialog(true);
   };
+
+  useEffect(()=>{
+    setFormdata({
+    name:selectedData?.name,
+    start_time:selectedData?.start_time,
+    end_time:selectedData?.end_time,
+    Hospital_id:1
+    })
+  },[selectedData])
 
   const handleDialogClose = () => {
     //dialog close
@@ -35,17 +45,29 @@ export default function SetupShiftDialog({ open, handleClose }) {
       [name]: value,
     });
   };
-  
+  const handleUpdate = async () =>{
+    const data2  ={
+      ...formData,
+      id:selectedData?.id
+    }
+   const response = await api.patchSetupApptShift(data2)
+   const {data} = response;
+   console.log(data,"update response")
+   getSetupAppointmentShift()
+   handleClose()
+  }
+
   const handleSubmit = async () => {
     const response = await api.postSetupApptShift(formData);
     const { data } = response;
-  
+
     // Wait for 3 seconds before refreshing the page
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
+    getSetupAppointmentShift()
+    handleClose()
   };
-  
 
   return (
     <div
@@ -70,7 +92,9 @@ export default function SetupShiftDialog({ open, handleClose }) {
         </DialogTitle>
         <DialogContent className="mt-2 ms-2">
           <Row className="p-2">
-            <label>Name<span className="text-danger">*</span></label>
+            <label>
+              Name<span className="text-danger">*</span>
+            </label>
             <input
               name="name"
               onChange={handleChange}
@@ -86,7 +110,9 @@ export default function SetupShiftDialog({ open, handleClose }) {
           </Row>
           <br />
           <Row className="p-2">
-            <label>Time From<span className="text-danger">*</span></label>
+            <label>
+              Time From<span className="text-danger">*</span>
+            </label>
             <input
               name="start_time"
               onChange={handleChange}
@@ -102,7 +128,9 @@ export default function SetupShiftDialog({ open, handleClose }) {
           </Row>
           <br />
           <Row className="p-2">
-            <label>Time To<span className="text-danger">*</span></label>
+            <label>
+              Time To<span className="text-danger">*</span>
+            </label>
             <input
               name="end_time"
               onChange={handleChange}
@@ -118,13 +146,22 @@ export default function SetupShiftDialog({ open, handleClose }) {
           </Row>
         </DialogContent>
         <DialogActions>
-          <button
+          {selectedData?.start_time ? (<button
             className="btn-mod bg-soft btn-md"
-            onClick={() => handleSubmit(handleClose())}
+            onClick={() => handleUpdate()}
+            style={{ marginRight: "3%" }}
+          >
+            Saves
+          </button>) :
+          (
+            <button
+            className="btn-mod bg-soft btn-md"
+            onClick={() => handleSubmit()}
             style={{ marginRight: "3%" }}
           >
             Save
           </button>
+          )}
         </DialogActions>
       </Dialog>
     </div>
