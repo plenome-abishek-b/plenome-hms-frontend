@@ -21,6 +21,7 @@ export default function SetupPatientDialog({
 }) {
   const [openSetupBbDialog, setOpenSetupBbDialog] = React.useState(false);
   // const [validate, setValidate] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [bloodBank, setBloodBank] = useState([]);
   const [validate,setValidate] = useState({
     patient_name:false,
@@ -90,23 +91,35 @@ export default function SetupPatientDialog({
     //dialog close
     setOpenCrDialog(false);
   };
-//   useEffect(() => {
-//     // When selectedData changes, update the form data
-//     if (selectedData) {
-//       setFormdata({
-//         specialist_name: selectedData?.specialist_name || "",
-//         is_active: "yes",
-//         Hospital_id: 1,
-//       });
-//     } else {
-//       // Reset form data when selectedData is not available (for addition)
-//       setFormdata({
-//         specialist_name: "",
-//         Hospital_id: 1,
-//         is_active: "yes",
-//       });
-//     }
-//   }, [selectedData]);
+
+  useEffect(()=>{
+    const formatDateString = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      return formattedDate;
+    };
+     setFormdata({
+      patient_name:selectedData?.patient_name,
+      guardian_name:selectedData?.guardian_name,
+      gender:selectedData?.gender,
+      dob:formatDateString(selectedData?.dob),
+      blood_group:selectedData?.blood_group,
+      marital_status:selectedData?.marital_status,
+      image:selectedData?.image,
+      mobileno:selectedData?.mobileno,
+      email:selectedData?.email,
+      address:selectedData?.address,
+      note:selectedData?.remark,
+      known_allergies:selectedData?.known_allergies,
+      insurance_id:selectedData?.insurance_id,
+      insurance_validity:formatDateString(selectedData?.insurance_validity),
+      ABHA_number:selectedData?.ABHA_number, 
+      identification_number:selectedData?.ABHA_number
+     })
+  },[selectedData])
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormdata({
@@ -247,15 +260,65 @@ export default function SetupPatientDialog({
       ...formData,
       id: selectedData?.id,
     };
-    if (newData?.specialist_name === "") {
-      setValidate(true);
-      setTimeout(() => {
-        setValidate(false);
-      }, 10000);
+   console.log(newData,"update data")
+  //  const birthday = new Date(formData?.year, formData?.month, formData?.day);
+  //       const currentDate = new Date();
+  //       const age = currentDate.getFullYear() - birthday.getFullYear();
+  //       console.log(birthday,age,"age222")
+  //       const newDatas = {
+  //         ...formData,
+  //         age: age,
+  //       };
+   const response = await api?.updateSetupHR_patient(newData);
+   const {data} = response;
+   getSetup_Patient()
+   handleClose()
+   console.log(data,"updating"); 
+  };
+  const handledobChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "dob") {
+      const currentDate = new Date();
+      const selectedDate = new Date(value);
+
+      let age = currentDate.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = currentDate.getMonth() - selectedDate.getMonth();
+      const dayDiff = currentDate.getDate() - selectedDate.getDate();
+
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+      }
+
+      // Calculate the absolute difference in months and days
+      const absMonthDiff = Math.abs(monthDiff);
+      const absDayDiff = Math.abs(dayDiff);
+
+      // Handle the special case when the age is -1
+      if (age === -1) {
+        setFormdata((prevValues) => ({
+          ...prevValues,
+          age: "0",
+          month: "0",
+          day: "0",
+          dob: value,
+        }));
+      } else {
+        setFormdata((prevValues) => ({
+          ...prevValues,
+          year: age.toString(),
+          month: absMonthDiff.toString(),
+          day: absDayDiff.toString(),
+          dob: value,
+        }));
+      }
+
+      setIsDateSelected(true); // Set isDateSelected to true
     } else {
-      const response = await api.updateSetupHR_specialist(newData);
-      getSpecialist();
-      handleClose();
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
     }
   };
 
@@ -358,22 +421,35 @@ export default function SetupPatientDialog({
               <Col lg="6" md="6" sm="12">
                 <label>Date of Birth<span className="text-danger"> *</span></label>
                 <br />
-                <input
-                  type="date"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  placeholder={validate?.dob ? 'enter DOB' : ''}
-                  //   onChange={formik.handleChange}
-                  // value={formik.values.dob}
-                  style={{
-                    width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderColor:validate?.dob ? 'red' : ''
-                  }}
-                ></input>
+                {isEditing  ? (
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handledobChange}
+          style={{
+            width: "100%",
+            height: "35px",
+            borderRadius: "3px",
+            border: "1px solid rgba(0,0,0,0.2)",
+            borderColor: validate?.dob ? 'red' : ''
+          }}
+        />
+      ) : (
+        <div
+          onClick={() => setIsEditing(true)}
+          style={{
+            cursor: 'pointer',
+            width: "100%",
+            height: "35px",
+            borderRadius: "3px",
+            border: "1px solid rgba(0,0,0,0.2)",
+            padding: '5px'
+          }}
+        >
+          {selectedData.dob || 'Click to enter DOB'}
+        </div>
+      )}
               </Col>
             </Row>
             <br />
@@ -387,7 +463,7 @@ export default function SetupPatientDialog({
                   <>
                     <input
                       name="year"
-                      placeholder={validate?.age ? 'enter year' : 'year'}
+                      placeholder={validate?.year ? 'enter year' : 'year'}
                       value={formData.year}
                       onChange={handleChange}
                       style={{
@@ -635,6 +711,7 @@ export default function SetupPatientDialog({
                   }}
                 ></input>
               </Col>
+              
               <Col lg="6" md="6" sm="12">
                 <label>TPA Validity<span className="text-danger"> *</span></label>
                 <br />
@@ -730,7 +807,15 @@ export default function SetupPatientDialog({
               marginRight: "20px",
             }}
           >
-            <button
+           {selectedData?.mobileno ? ( <button
+              onClick={() => handleUpdate()}
+              // onClick={handleClose}
+              className="btn-mod bg-soft fw-bold"
+              type="submit"
+            >
+              Save
+            </button>) : (
+              <button
               onClick={() => handleSubmit()}
               // onClick={handleClose}
               className="btn-mod bg-soft fw-bold"
@@ -738,6 +823,7 @@ export default function SetupPatientDialog({
             >
               Save
             </button>
+            )}
           </DialogActions>
         </Dialog>
       </form>

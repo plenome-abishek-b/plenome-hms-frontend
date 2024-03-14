@@ -53,6 +53,7 @@ const SetupPatient = props => {
       cellRendererParams: {
         onEditClick: (row) => handleEditClick(row),
         onDeleteClick: (row) => handleDeleteClick(row),
+        onView: (row) =>handleView(row)
       },
     }
   ]
@@ -76,15 +77,20 @@ const SetupPatient = props => {
     setOpenSetupOperationsDialog(false);
   }
   const handleEditClick = async (data) =>{
+    console.log(data,"edit")
+    setSelectedData(data)
+    setOpenSetupOperationsDialog(true);
+    // setSelectedData(data)
+    // // setSelectedData()
+    // setOpenSetupOperationsDialog(true)
+   }
+   const handleView =async (data) =>{
     console.log(data,"edit");
     setOpen(true)
     const response = await api.getByIDSetup_Patient(data.id)
     console.log(response.data,"all data");
     
     setPatinetDetails(response.data)
-    // setSelectedData(data)
-    // // setSelectedData()
-    // setOpenSetupOperationsDialog(true)
    }
   
 
@@ -101,18 +107,21 @@ const SetupPatient = props => {
     // Remove "/" from patient_name
     const updatedData = data.map(item => ({
         ...item,
-        patient_name: item.patient_name.replace("/", " ")
+        patient_name: item?.patient_name?.replace("/", " ")
     }));
-    setrowDate(updatedData)
-    console.log(updatedData, "fd")
+    console.log(updatedData,"all updatedData");
+    setrowDate(updatedData);
+    console.log(updatedData, "fd");
 }
-
+ 
   const components = {
     actionsRenderer: (props) => (
       <div>
         <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+        <i class="fas fa-eye" style={{color:'blue'}} onClick={()=>props.onView(props.data)}></i>
+
       </div>
     )
   } 
