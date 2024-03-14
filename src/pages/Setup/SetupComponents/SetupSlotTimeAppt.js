@@ -11,18 +11,19 @@ function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
   const [shift, setShift] = useState([]);
   const [data, setData] = useState([]);
-  const [timing,setTiming] = useState([]);
+  const [timing, setTiming] = useState([]);
   const [chargeData, setChargeData] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [chargeCategory,setChargeCategory] = useState([]);
+  const [chargeCategory, setChargeCategory] = useState([]);
   const [timeInputs, setTimeInputs] = useState([]);
-  const [charges,setCharges] = useState([])
+  const [charges, setCharges] = useState([]);
   const addNewTimeInputRow = () => {
     setTimeInputs((prevTimeInputs) => [
       ...prevTimeInputs,
       { startTime: "", endTime: "" },
     ]);
   };
+  const LoginedDoctor = localStorage.getItem("existingDocotr_id");
 
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
@@ -36,31 +37,30 @@ function SetupSlotAppt() {
     day: "",
     start_time: "",
     end_time: "",
-    charge_id:"",
-    charge_category:"",
-    consult_duration:""
+    charge_id: "",
+    charge_category: "",
+    consult_duration: "",
   });
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
-    console.log(name,value,"ee")
-    if(name === 'charge_id'){
-     const response = await api.getAmount_APPT_Slot(value)
-     const {data} = response
-     if (data) {
-      console.log(data,":;")
-      // Create a new array with the updated object at index 0
-      const updatedChargeData = [
-        { ...chargeData[0], standard_charge: data[0].standard_charge },
-        ...chargeData.slice(1),
-      ];
-     console.log(updatedChargeData,"lll")
-      // Update the state or variable holding chargeData with      the new array
-      setChargeData(updatedChargeData);
-
+    console.log(name, value, "ee");
+    if (name === "charge_id") {
+      const response = await api.getAmount_APPT_Slot(value);
+      const { data } = response;
+      if (data) {
+        console.log(data, ":;");
+        // Create a new array with the updated object at index 0
+        const updatedChargeData = [
+          { ...chargeData[0], standard_charge: data[0].standard_charge },
+          ...chargeData.slice(1),
+        ];
+        console.log(updatedChargeData, "lll");
+        // Update the state or variable holding chargeData with      the new array
+        setChargeData(updatedChargeData);
+      }
     }
-    }
-    console.log(name,value,"both")
+    console.log(name, value, "both");
     setFormData({
       ...formData,
       [name]: value,
@@ -68,25 +68,11 @@ function SetupSlotAppt() {
   };
 
   const getDoctor = async () => {
-    const roleName = localStorage.getItem("newRole");
-    let doctorsList = [];
-    
-    if (roleName === "super admin") {
-      const response = await api.getApptDoctor();
-      const { data } = response;
-      doctorsList = data;
-    } else {
-      const staff_id = localStorage.getItem("Staff_id");
-      const response = await api.getApptDoctor();
-      const { data } = response;
-      doctorsList = data.filter((doctor) => doctor.id === parseInt(staff_id));
-    }
-    
-    setDoctor(doctorsList);
-    console.log(doctorsList, "setup doctors");
+    const response = await api.getApptDoctor();
+    const { data } = response;
+    setDoctor(data);
+    console.log(data, "setup doctors");
   };
-  
-  
 
   const getShift = async () => {
     const response = await api.getApptShift(formData.doctor);
@@ -105,7 +91,10 @@ function SetupSlotAppt() {
     console.log(data, "datffs");
     setData(data);
 
-    if (timeInputs.every((input) => !Object.keys(input).length) && data.length > 0) {
+    if (
+      timeInputs.every((input) => !Object.keys(input).length) &&
+      data.length > 0
+    ) {
       const { start_time, end_time } = data[0];
 
       setTimeInputs([
@@ -122,13 +111,14 @@ function SetupSlotAppt() {
       formData.doctor
     );
     const { data: data2 } = charge_response;
-    console.log(data2,"data2");
-    setFormData({...formData,consult_duration:data2[0].consult_duration})
+    console.log(data2, "data2");
+    setFormData({ ...formData, consult_duration: data2[0].consult_duration });
     setChargeData(data2);
     setFormData({
-      ...formData,consult_duration:data2[0].consult_duration,
-      charge_id:data2[0]?.id
-    })
+      ...formData,
+      consult_duration: data2[0].consult_duration,
+      charge_id: data2[0]?.id,
+    });
     console.log(chargeData, "chrgggg");
   };
 
@@ -144,10 +134,10 @@ function SetupSlotAppt() {
 
     const start_time = timeInputs[0]?.startTime || "";
     const end_time = timeInputs[0]?.endTime || "";
-    console.log(start_time,end_time,"time")
-  //update time  if(timing[0]?.start_time && timing[0]?.end_time){
-  //  console.log(timing,"timing")
-  //   }
+    console.log(start_time, end_time, "time");
+    //update time  if(timing[0]?.start_time && timing[0]?.end_time){
+    //  console.log(timing,"timing")
+    //   }
     // const datas = {
     //   day:formData?.day,
     //   staff_id:Number(formData?.doctor),
@@ -157,55 +147,54 @@ function SetupSlotAppt() {
     //   hospital_id:1
     // }
     const newData = {
-      staff_id:Number(formData?.doctor),
-      consult_duration:formData?.consult_duration,
-      charge_id:formData?.charge_id,
-      Hospital_id: 1
+      staff_id: Number(formData?.doctor),
+      consult_duration: formData?.consult_duration,
+      charge_id: formData?.charge_id,
+      Hospital_id: 1,
+    };
+    console.log(newData, "complete newdata", formData);
+    const response = await api.post_Appointment_slot_amount(newData);
+    const { data } = response;
+    console.log(data, "complete response");
+    if (data && start_time && end_time) {
+      const timeSlotData = timeInputs.map((input) => ({
+        day: formData?.day,
+        //  day:'monday',
+        staff_id: Number(formData?.doctor),
+        global_shift_id: Number(formData?.shift),
+        start_time: start_time,
+        end_time: end_time,
+        Hospital_id: 1,
+      }));
+
+      console.log(timeSlotData, "timeslot");
+      timeSlotData.forEach(async (slotData, index) => {
+        console.log(slotData, "showing");
+        setTimeout(async () => {
+          try {
+            const response2 = await api.postSetupApptSlotTime(slotData);
+            console.log(response2, "response of timeing");
+
+            // Show success toast
+            toast.success("Setup appointment slot time added successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          } catch (error) {
+            console.error("Error:", error);
+            // Show error toast
+            toast.error("Failed to add setup appointment slot time", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        }, index * 3000); // Delay each API call by 3 seconds
+      });
     }
-    console.log(newData,"complete newdata",formData)
-      const response = await api.post_Appointment_slot_amount(newData);
-      const {data} = response;
-      console.log(data,"complete response")
-   if(data && start_time && end_time){
-     const timeSlotData = timeInputs.map((input) => ({
-       day: formData?.day,
-      //  day:'monday',
-       staff_id:Number(formData?.doctor),
-       global_shift_id:Number(formData?.shift),
-       start_time:start_time,
-       end_time:end_time,
-       Hospital_id: 1
-     }));
-  
-     console.log(timeSlotData,"timeslot");
-     timeSlotData.forEach(async (slotData, index) => {
-      console.log(slotData, "showing");
-      setTimeout(async () => {
-        try {
-          const response2 = await api.postSetupApptSlotTime(slotData);
-          console.log(response2, "response of timeing");
-  
-          // Show success toast
-          toast.success('Setup appointment slot time added successfully', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        } catch (error) {
-          console.error('Error:', error);
-          // Show error toast
-          toast.error('Failed to add setup appointment slot time', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      }, index * 3000); // Delay each API call by 3 seconds
-    });
-   }
-      // if (data?.status === 'success') {
-        // Handle success
-      // } else {
-        // Handle failure
-      // }
-    // }); 
-  
+    // if (data?.status === 'success') {
+    // Handle success
+    // } else {
+    // Handle failure
+    // }
+    // });
 
     // const { status, data } = response;
 
@@ -216,7 +205,7 @@ function SetupSlotAppt() {
     //     position: toast.POSITION.TOP_RIGHT,
     //     autoClose: 500,
     //   });
-      setFormSubmitted(true);
+    setFormSubmitted(true);
     // } else {
     //   // Handle other response statuses if needed
     //   toast.error("Failed to set up appointment slot. Please try again.");
@@ -224,19 +213,21 @@ function SetupSlotAppt() {
     // console.log(response, "ress");
     // console.log(data, "appointment response");
   };
-  const getAllChargecategory = async () =>{
-   const response = await api.getChargeCategory();
-   const {data} = response;
-   console.log(data,"complete charge category");
-   setChargeCategory(data)
-  }
-  const handleCharge = async () =>{
-    console.log(formData?.charge_category,"categoryid")
-   const response = await api?.appointment_chargeName_byid(formData?.charge_category)
-   const {data} = response;
-   console.log(data,"charge getting")
-   setCharges(data)
-  }
+  const getAllChargecategory = async () => {
+    const response = await api.getChargeCategory();
+    const { data } = response;
+    console.log(data, "complete charge category");
+    setChargeCategory(data);
+  };
+  const handleCharge = async () => {
+    console.log(formData?.charge_category, "categoryid");
+    const response = await api?.appointment_chargeName_byid(
+      formData?.charge_category
+    );
+    const { data } = response;
+    console.log(data, "charge getting");
+    setCharges(data);
+  };
   // const handleUpdateTimeInputChange =  (timeType,value) =>{
   //   if(timeType === 'startTime'){
   //     setTiming({
@@ -262,7 +253,9 @@ function SetupSlotAppt() {
                   <ToastContainer />
                   <Row>
                     <Col lg="4">
-                      <label>Day<span className="text-danger ms-1">*</span></label>
+                      <label>
+                        Day<span className="text-danger ms-1">*</span>
+                      </label>
                       <br />
                       <select
                         name="day"
@@ -285,7 +278,9 @@ function SetupSlotAppt() {
                       </select>
                     </Col>
                     <Col lg="4">
-                      <label>Doctor<span className="text-danger ms-1">*</span></label>
+                      <label>
+                        Doctor<span className="text-danger ms-1">*</span>
+                      </label>
                       <br />
                       <select
                         name="doctor"
@@ -300,16 +295,28 @@ function SetupSlotAppt() {
                         }}
                       >
                         <option>select</option>
-                        {doctors &&
-                          doctors.map((doctors) => (
-                            <option key={doctors.id} value={doctors.id}>
-                              {doctors.doctor}
-                            </option>
-                          ))}
+                        {LoginedDoctor === null
+                          ? doctors &&
+                            doctors.map((doctor) => (
+                              <option key={doctor.id} value={doctor.id}>
+                                {doctor.doctor}
+                              </option>
+                            ))
+                          : doctors
+                              .filter(
+                                (doctor) => doctor.id == Number(LoginedDoctor)
+                              )
+                              .map((doctor) => (
+                                <option key={doctor.id} value={doctor.id}>
+                                  {doctor.doctor}
+                                </option>
+                              ))}
                       </select>
                     </Col>
                     <Col lg="4" sm="12">
-                      <label>Shift<span className="text-danger ms-1">*</span></label>
+                      <label>
+                        Shift<span className="text-danger ms-1">*</span>
+                      </label>
                       <br />
                       <select
                         name="shift"
@@ -353,7 +360,7 @@ function SetupSlotAppt() {
                           borderRadius: "3px",
                         }}
                         name="consult_duration"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         value={formData?.consult_duration}
                       ></input>
                     </Col>
@@ -369,21 +376,29 @@ function SetupSlotAppt() {
                         }}
                         name="charge_category"
                         onChange={handleChange}
-                        onClick={()=>getAllChargecategory()}
+                        onClick={() => getAllChargecategory()}
                       >
                         {/* <option>{chargeData[0]?.charge_category_name}</option> */}
                         {/* <option>select</option> */}
-                        {chargeData &&chargeData?.map((val) => (
-                          <option value={val.charge_category_id}>{val.charge_category_name}</option>
-                        ))}
-                     {chargeCategory &&
-    chargeCategory 
-      .filter((val) => !chargeData.some((c) => c.charge_category_id === val.id)) // Filter out existing charge categories
-      .map((val) => (
-        <option key={val.id} value={val.id}>
-          {val.name}
-        </option>
-      ))}
+                        {chargeData &&
+                          chargeData?.map((val) => (
+                            <option value={val.charge_category_id}>
+                              {val.charge_category_name}
+                            </option>
+                          ))}
+                        {chargeCategory &&
+                          chargeCategory
+                            .filter(
+                              (val) =>
+                                !chargeData.some(
+                                  (c) => c.charge_category_id === val.id
+                                )
+                            ) // Filter out existing charge categories
+                            .map((val) => (
+                              <option key={val.id} value={val.id}>
+                                {val.name}
+                              </option>
+                            ))}
                       </select>
                     </Col>
                     <Col>
@@ -398,16 +413,24 @@ function SetupSlotAppt() {
                         }}
                         name="charge_id"
                         onChange={handleChange}
-                        onClick={()=>handleCharge()}
+                        onClick={() => handleCharge()}
                       >
                         <option>{chargeData[0]?.charge_name}</option>
                         {chargeData?.map((val) => (
                           <option value={val.id}>{val.name}</option>
-                          ))}
-                          {charges && charges.filter((val)=>!chargeData.some((eg)=>eg.id === val.id)).map((val=>(
-                            <option key={val?.id} value={val?.id}>{val?.name}</option>
-                          )))}
-                            <option>select</option>
+                        ))}
+                        {charges &&
+                          charges
+                            .filter(
+                              (val) =>
+                                !chargeData.some((eg) => eg.id === val.id)
+                            )
+                            .map((val) => (
+                              <option key={val?.id} value={val?.id}>
+                                {val?.name}
+                              </option>
+                            ))}
+                        <option>select</option>
                       </select>
                     </Col>
                     <Col>
@@ -436,7 +459,7 @@ function SetupSlotAppt() {
                       style={{ marginLeft: "90px" }}
                     >
                       <Col>
-                    {/* {  data[0].start_time ? <input
+                        {/* {  data[0].start_time ? <input
                           type="time"
                           style={{
                             width: "70%",
@@ -446,7 +469,7 @@ function SetupSlotAppt() {
                             backgroundColor: "#f0f0f0",
                           }}
                           value={
-                            (data[0] && data[0].start_time) 
+                            (data[0] && data[0].start_time)
                           }
                           onChange={(e) =>
                             handleUpdateTimeInputChange(
@@ -476,8 +499,7 @@ function SetupSlotAppt() {
                               e.target.value
                             )
                           }
-                        /> 
-            
+                        />
                       </Col>
                       <Col>
                         <input

@@ -16,6 +16,7 @@ const Logout = props => {
   }, [dispatch])
   localStorage.removeItem('isLoggedIn');
   localStorage.removeItem('loginTime');
+  localStorage.removeItem('existingDocotr_id')
   return <></>
 };
 
