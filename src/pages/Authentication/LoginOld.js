@@ -137,6 +137,7 @@ const Login = (props) => {
         localStorage.setItem('existingDocotr_id',Staff_id)
       }
       // dispatch(loginSuccess(role_name));
+      localStorage.setItem("Staff_id",Staff_id)
       localStorage.setItem("newRole",role_name)
 localStorage.setItem('isLoggedIn', 'true');
 localStorage.setItem('loginTime', Date.now().toString());
