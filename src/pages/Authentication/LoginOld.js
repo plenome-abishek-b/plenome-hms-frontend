@@ -130,10 +130,11 @@ const Login = (props) => {
 
 
       const [{ details }] = response.data;
-      const { resetStatus, username,role_name } = details;
+      const { resetStatus, username,role_name,Staff_id } = details;
       console.log(resetStatus, username,role_name, "datasss");
 
       // dispatch(loginSuccess(role_name));
+      localStorage.setItem("Staff_id",Staff_id)
       localStorage.setItem("newRole",role_name)
 localStorage.setItem('isLoggedIn', 'true');
 localStorage.setItem('loginTime', Date.now().toString());

@@ -68,11 +68,25 @@ function SetupSlotAppt() {
   };
 
   const getDoctor = async () => {
-    const response = await api.getApptDoctor();
-    const { data } = response;
-    setDoctor(data);
-    console.log(data, "setup doctors");
+    const roleName = localStorage.getItem("newRole");
+    let doctorsList = [];
+    
+    if (roleName === "super admin") {
+      const response = await api.getApptDoctor();
+      const { data } = response;
+      doctorsList = data;
+    } else {
+      const staff_id = localStorage.getItem("Staff_id");
+      const response = await api.getApptDoctor();
+      const { data } = response;
+      doctorsList = data.filter((doctor) => doctor.id === parseInt(staff_id));
+    }
+    
+    setDoctor(doctorsList);
+    console.log(doctorsList, "setup doctors");
   };
+  
+  
 
   const getShift = async () => {
     const response = await api.getApptShift(formData.doctor);
