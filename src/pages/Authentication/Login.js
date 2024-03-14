@@ -28,10 +28,10 @@ function Login() {
     console.log("kkkk")
       //for posting and getting data at a sametime
       api.postAuthUsers(email,password).then(resp => {
-        console.log(resp)
+        console.log(resp,"logined details")
       })
   }
-
+  
 
   return (
     <React.Fragment>
