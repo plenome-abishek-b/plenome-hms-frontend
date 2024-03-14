@@ -1,20 +1,46 @@
 /* styles.css */
-.ag-theme-alpine .ag-header {
+.ag-theme-material .ag-header {
     /* Use a gradient background color */
-    background: #7070FF;;
+    background: #6070FF;;
     color: white; /* Change this to the desired text color */
-    border-radius: 10px 10px 0 0;
+    border-radius: 0px 10px 0 0;
     border: none;
   }
   
-  .ag-theme-alpine .ag-header-cell {
-    border-color: #7070FF; /* Border color for header cells */
+  
+  .ag-theme-material .ag-header-cell {
+    border-color: #6070FF; /* Border color for header cells */
     text-align: center;
   }
+
+  /* styles.css */
+
+/* styles.css */
+
+/* styles.css */
+
+.ag-theme-material .ag-header-cell:hover {
+  background: #4070FF !important; /* Change this to the desired hover background color */
+  cursor: pointer; /* Optional: Change cursor to pointer on hover */
+}
+
+/* customAgGridStyles.css */
+
+/* Your custom Ag-Grid styles... */
+
+
+/* customAgGridStyles.css */
+
+/* Your custom Ag-Grid styles... */
+
+/* customAgGridStyles.css */
+
+/* Your custom Ag-Grid styles... */
+
   
-  .ag-theme-alpine .ag-header .ag-header-cell-label {
+  .ag-theme-material .ag-header .ag-header-cell-label {
     color: white; /* Change this to the desired text color */
-    font-weight: bold; /* Optional: You can adjust the font-weight as needed */
+    font-weight: 600; /* Optional: You can adjust the font-weight as needed */
     font-family: 'poppins';
   }
   

@@ -1,0 +1,30 @@
+/* Add this CSS to your existing CSS file or style tag */
+
+.custom-nav .nav-link {
+    background-color: #fff !important; /* Default color */
+    color: #6070FF !important;
+    border: 1px solid #6070FF !important;
+}
+
+.custom-nav .nav-link:hover {
+    color: #fff !important; /* Color on hover */
+    background-color: #6070FF !important;
+}
+
+.custom-nav .nav-link.active {
+    background-color: #6070FF !important;
+    color: #fff !important;
+    /* border: 1px solid white !important; */
+    box-shadow: 0 0 1px 0px grey;
+    /* border-radius: 12px 12px 0 0; */
+}
+
+.custom-nav .nav-link:active {
+    background-color: #6070FF !important;
+    color: #fff !important;
+}
+
+.custom-nav .nav-link:focus {
+    background-color: #6070FF !important;
+    color: #fff !important;
+}
