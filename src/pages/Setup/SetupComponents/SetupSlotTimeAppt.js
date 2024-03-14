@@ -23,6 +23,7 @@ function SetupSlotAppt() {
       { startTime: "", endTime: "" },
     ]);
   };
+  const LoginedDoctor = localStorage.getItem('existingDocotr_id')
 
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
@@ -286,13 +287,19 @@ function SetupSlotAppt() {
                         }}
                       >
                         <option>select</option>
-                        {doctors &&
-                          doctors.map((doctors) => (
-                            <option key={doctors.id} value={doctors.id}>
-                              {doctors.doctor}
-                            </option>
-                          ))}
-                      </select>
+                        { LoginedDoctor === null ? doctors &&
+    doctors.map((doctor) => (
+        <option key={doctor.id} value={doctor.id}>
+          {doctor.doctor}
+        </option>
+      )):
+      doctors.filter((doctor) => doctor.id == Number(LoginedDoctor))
+      .map((doctor) => (
+        <option key={doctor.id} value={doctor.id}>
+          {doctor.doctor}
+        </option>
+      ))}
+</select>
                     </Col>
                     <Col lg="4" sm="12">
                       <label>Shift<span className="text-danger ms-1">*</span></label>
@@ -489,6 +496,8 @@ function SetupSlotAppt() {
                           }
                         />
                       </Col>
+                    
+                      
                     </Row>
                   ))}
 

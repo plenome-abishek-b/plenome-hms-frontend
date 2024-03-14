@@ -130,9 +130,12 @@ const Login = (props) => {
 
 
       const [{ details }] = response.data;
-      const { resetStatus, username,role_name } = details;
-      console.log(resetStatus, username,role_name, "datasss");
-
+      const { resetStatus, username,role_name,Staff_id } = details;
+      console.log(resetStatus, username,role_name,Staff_id, "datasss");
+      if(Staff_id && role_name === 'Doctor'){
+        console.log(Staff_id,"both")
+        localStorage.setItem('existingDocotr_id',Staff_id)
+      }
       // dispatch(loginSuccess(role_name));
       localStorage.setItem("newRole",role_name)
 localStorage.setItem('isLoggedIn', 'true');
