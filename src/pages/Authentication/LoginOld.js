@@ -39,7 +39,7 @@ import { facebook, google } from "../../config";
 import fakeBackend from "helpers/AuthType/fakeBackend";
 import Sidebar from "components/VerticalLayout/Sidebar";
 import { setRoleName } from "store_1/authslice";
-import { ToastContainer, toast,Slide, Flip } from "react-toastify";
+import { ToastContainer, toast, Slide, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import { loginSuccess } from "store/login/actions";
@@ -128,27 +128,27 @@ const Login = (props) => {
       const response = await api.postAuthUsers(values);
       console.log("API response:", response);
 
-
-      const [{ details }] = response.data;
-      const { resetStatus, username,role_name,Staff_id } = details;
-      console.log(resetStatus, username,role_name,Staff_id, "datasss");
-      if(Staff_id && role_name === 'Doctor'){
-        console.log(Staff_id,"both")
-        localStorage.setItem('existingDocotr_id',Staff_id)
+      const { details } = response.data;
+      console.log(details, 'detailsss');
+      const { resetStatus, username, role_name, Staff_id,staffName } = details;
+      console.log(resetStatus, username, role_name, Staff_id, "datasss");
+      if (Staff_id && role_name === "Doctor") {
+        console.log(Staff_id, "both");
+        localStorage.setItem("existingDocotr_id", Staff_id);
       }
       // dispatch(loginSuccess(role_name));
-      localStorage.setItem("Staff_id",Staff_id)
-      localStorage.setItem("newRole",role_name)
-localStorage.setItem('isLoggedIn', 'true');
-localStorage.setItem('loginTime', Date.now().toString());
-
+      localStorage.setItem("Staff_id", Staff_id);
+      localStorage.setItem("newRole", role_name);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("loginTime", Date.now().toString());
+      localStorage.setItem("staffname",staffName);
 
       fakeBackend(values.email, values.password);
       if (response.status === 201) {
         toast.success(`Logged in as ${role_name}`, {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: 200, 
-          transition: Flip
+          autoClose: 200,
+          transition: Flip,
         });
         dispatch(setRoleName(userData));
         setTimeout(() => {
@@ -224,7 +224,7 @@ localStorage.setItem('loginTime', Date.now().toString());
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <ToastContainer transition={Flip}/>
+      <ToastContainer transition={Flip} />
       <div className="account-pages my-5 pt-sm-5 bg-primary bg-soft">
         <Container>
           <Row className="justify-content-center">
