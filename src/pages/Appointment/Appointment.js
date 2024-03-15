@@ -119,15 +119,12 @@ const Appointment = (props) => {
       getAppointment();
 
       setUpdateStaus(data);
-    } else {
-      getAppointment();
- 
-      setUpdateStaus(data)
-    }else{
+    } else{
       console.log("else");
     }
   };
   }
+  
 
   const columnDefs = [
     {
@@ -271,11 +268,6 @@ const Appointment = (props) => {
     console.log(value, "eeerrrr");
     setUpdateStaus({ ...updateStatus, appointment_status: value });
   };
-  const handleChange = (e) => {
-    const { value } = e.target;
-    console.log(value, "eeerrrr");
-    setUpdateStaus({ ...updateStatus, appointment_status: value });
-  };
 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
@@ -409,9 +401,7 @@ const Appointment = (props) => {
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
-  const handleChangeUpdate = () => {
-    console.log("calling ..2..");
-  };
+
   const handleChangeUpdate = () => {
     console.log("calling ..2..");
   };
