@@ -1,3 +1,4 @@
+
 import React from "react";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import { useEffect, useState } from "react";
@@ -6,7 +7,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+ 
 function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
   const [shift, setShift] = useState([]);
@@ -21,17 +22,17 @@ function SetupSlotAppt() {
     console.log(timeInputs, "time");
     setTimeInputs((prevTimeInputs) => [
       ...prevTimeInputs,
-      { startTime: "", endTime: "" }, 
+      { startTime: "", endTime: "" },
     ]);
   };
   const LoginedDoctor = localStorage.getItem("existingDocotr_id");
-
+ 
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
     updatedTimeInputs[index][field] = value;
     setTimeInputs(updatedTimeInputs);
   };
-
+ 
   const [formData, setFormData] = useState({
     doctor: "",
     shift: "",
@@ -42,7 +43,7 @@ function SetupSlotAppt() {
     charge_category: "",
     consult_duration: "",
   });
-
+ 
   const handleChange = async (e) => {
     const { name, value } = e.target;
     console.log(name, value, "ee");
@@ -67,21 +68,21 @@ function SetupSlotAppt() {
       [name]: value,
     });
   };
-
+ 
   const getDoctor = async () => {
     const response = await api.getApptDoctor();
     const { data } = response;
     setDoctor(data);
     console.log(data, "setup doctors");
   };
-
+ 
   const getShift = async () => {
     const response = await api.getApptShift(formData.doctor);
     const { data } = response;
     setShift(data);
     console.log(data, "dd");
   };
-
+ 
   const handleSearch = async () => {
     const response = await api.getSlotTiming(
       formData.day,
@@ -97,7 +98,7 @@ function SetupSlotAppt() {
     }));
     setTimeInputs(newTimeInputs);
     setData(data);
-
+ 
     if (
       timeInputs.every((input) => !Object.keys(input).length) &&
       data.length > 0
@@ -106,14 +107,14 @@ function SetupSlotAppt() {
         startTime: slot.start_time,
         endTime: slot.end_time,
       }));
-  
+ 
       setTimeInputs(newTimeInputs);
     } else {
       // setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
     }
-
+ 
     console.log(formData, "doctor");
-
+ 
     const charge_response = await api.getSetupAppointmentSlotChrg(
       formData.doctor
     );
@@ -128,17 +129,17 @@ function SetupSlotAppt() {
     });
     console.log(chargeData, "chrgggg");
   };
-
+ 
   const handleFormSubmit = async () => {
     console.log(formData, "formdata");
     const staff_id = formData.doctor;
     console.log(staff_id, "staffid");
-
+ 
     const global_shift_id = formData.shift;
     console.log(global_shift_id, "shiftid");
-
+ 
     const Hospital_id = "1";
-
+ 
     const start_time = timeInputs[0]?.startTime || "";
     const end_time = timeInputs[0]?.endTime || "";
     console.log(start_time, end_time, "time");
@@ -173,7 +174,7 @@ function SetupSlotAppt() {
         end_time: end_time,
         Hospital_id: 1,
       }));
-
+ 
       console.log(timeSlotData, "timeslot");
       timeSlotData.forEach(async (slotData, index) => {
         console.log(slotData, "showing");
@@ -181,7 +182,7 @@ function SetupSlotAppt() {
           try {
             const response2 = await api.postSetupApptSlotTime(slotData);
             console.log(response2, "response of timeing");
-
+ 
             // Show success toast
             toast.success("Setup appointment slot time added successfully", {
               position: toast.POSITION.TOP_RIGHT,
@@ -202,9 +203,9 @@ function SetupSlotAppt() {
     // Handle failure
     // }
     // });
-
+ 
     // const { status, data } = response;
-
+ 
     // if (status === 201) {
     //   // const newData
     //   const response = await api.post_Appointment_slot_amount()
@@ -273,9 +274,9 @@ if(userConfirmed && id){
   console.log("rejected")
 }
    
-
+ 
   };
-
+ 
   return (
     <React.Fragment>
       <div className="page-content">
@@ -556,7 +557,7 @@ if(userConfirmed && id){
                       ))}
                     </>
                   ))    :  */}
-                  
+                 
                   {timeInputs.map((timeInput, index) => (
                     console.log(timeInput,"EE"),
                     <div key={index}>
@@ -610,7 +611,7 @@ if(userConfirmed && id){
                   {timeInputs && timeInputs.map((val,index)=>(
                      console.log(val,"time inputs")
                   ))}
-
+ 
                   <div className="d-flex justify-content-end mt-4">
                     <button className="btn-mod" onClick={()=>addNewTimeInputRow()}>
                       + Add Time Slot
@@ -628,5 +629,6 @@ if(userConfirmed && id){
     </React.Fragment>
   );
 }
-
+ 
 export default SetupSlotAppt;
+ 
