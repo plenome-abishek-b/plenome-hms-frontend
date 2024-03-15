@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Container,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Button, Container } from "reactstrap";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useMemo, useState, useCallback, useRef } from "react";
 import AlertDialog from "./Dialog/Dialog";
 import api from "services/Api";
@@ -25,7 +17,6 @@ import autoTable from "jspdf-autotable";
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
-import "./nav.css";
 //redux
 
 const initialValue = {
@@ -57,15 +48,7 @@ const Appointment = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
-
-  const [updateStatus,setUpdateStaus] = useState({})
-
-  const [activeTab, setActiveTab] = useState("current");
-
-  const handleTabSelect = (tab) => {
-    setActiveTab(tab);
-  };
-
+  const [updateStatus, setUpdateStaus] = useState({});
   const handleClickOpen = () => {
     //dialog open
     setSelectedData({});
@@ -105,7 +88,7 @@ const Appointment = (props) => {
   };
   const handleChangeStatus = async (data,value)=>{
     console.log(data,"calling",updateStatus?.appointment_status)
-    if(updateStatus?.appointment_status  !== data?.appointment_status  || undefined){
+    if(updateStatus?.appointment_status){
       const dateObject = new Date(data.date);
       const formattedDate = `${dateObject.getFullYear()}-${String(
         dateObject.getMonth() + 1
@@ -134,18 +117,15 @@ const Appointment = (props) => {
         closeButton: false,
         autoClose: 300,
       });
-       getAppointment();
-
+      getAppointment();
+ 
       setUpdateStaus(data)
     }else{
       console.log("else");
     }
   }
 
-  
-
   const columnDefs = [
-    { headerName: "Token No", field: "id", filter: "agSetColumnFilter" },
     {
       headerName: "Patient Name",
       field: "patient_name",
@@ -173,13 +153,14 @@ const Appointment = (props) => {
     { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
-    { headerName: "Status",
-     field: "appointment_status" ,
-     cellRenderer: "statusRenderer",
-     cellRendererParams: {
-        onStatusChange: (row,value) => handleChangeStatus(row,value)
-     },
-},
+    {
+      headerName: "Status",
+      field: "appointment_status",
+      cellRenderer: "statusRenderer",
+      cellRendererParams: {
+        onStatusChange: (row, value) => handleChangeStatus(row, value),
+      },
+    },
     {
       headerName: "Actions",
       field: "actions",
@@ -207,7 +188,9 @@ const Appointment = (props) => {
 
       const modifiedData = data.map((patient) => {
         const trimmedDate = patient.date.split("T")[0];
+
         const combinedDateTime = `${trimmedDate} ${patient.time}`;
+
         const formattedDateTime = new Intl.DateTimeFormat("en-US", {
           year: "numeric",
           month: "short",
@@ -227,44 +210,13 @@ const Appointment = (props) => {
         };
       });
 
+      console.log(modifiedData, "modifiedData");
+
       setDatas(modifiedData);
     } catch (error) {
       console.error("Error fetching appointment data:", error);
     }
   };
-
-  // Inside your Appointment component
-  const filteredData = useMemo(() => {
-    if (!datas) return null;
-
-    const currentDate = new Date();
-
-    switch (activeTab) {
-      case "current":
-        return datas.filter((appointment) => {
-          const appointmentDate = new Date(appointment.date);
-          return (
-            appointmentDate.getDate() === currentDate.getDate() &&
-            appointmentDate.getMonth() === currentDate.getMonth() &&
-            appointmentDate.getFullYear() === currentDate.getFullYear()
-          );
-        });
-      case "upcoming":
-        return datas.filter((appointment) => {
-          const appointmentDate = new Date(appointment.date);
-          return appointmentDate > currentDate;
-        });
-      case "history":
-        return datas.filter((appointment) => {
-          const appointmentDate = new Date(appointment.date);
-          return appointmentDate < currentDate;
-        });
-      default:
-        return datas;
-    }
-  }, [datas, activeTab]);
-
-  console.log(filteredData, "filterdata");
 
   // const handleEditClick = (rowData) => {
   //   setSelectedRowData(rowData);
@@ -302,11 +254,11 @@ const Appointment = (props) => {
     // setSelectedData()
     setOpen(true);
   };
-  const handleChange =  (e)=>{
-    const {value} = e.target
-    console.log(value,"eeerrrr")
-   setUpdateStaus({...updateStatus,appointment_status:value})
-  }
+  const handleChange = (e) => {
+    const { value } = e.target;
+    console.log(value, "eeerrrr");
+    setUpdateStaus({ ...updateStatus, appointment_status: value });
+  };
 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
@@ -338,28 +290,22 @@ const Appointment = (props) => {
       console.error("Error deleting appointment:", error);
     }
   };
-  
 
   const gridOptions = {
     domLayout: "autoHeight",
-    autoSizeStrategy: {
-      type: 'fitCellContents'
-  },
     defaultColDef: {
       flex: 1,
       sortable: true,
       filter: true,
     },
     onFirstDataRendered: (params) => {
-      params.api.autoSizeAllColumns();
+      // params.api.autoSizeAllColumns();
     },
   };
 
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit();
-    params.api.autoSizeColumns();
   };
-  
 
   const defaultSort = [{ colId: "id", sort: "asc" }];
 
@@ -371,31 +317,37 @@ const Appointment = (props) => {
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
     ),
-    statusRenderer: (props) =>(
-      console.log(props,"props"),
-      <div>
-     <select
-  onChange={handleChange}
-  style={{
-    backgroundColor:props.value=== 'pending'? "#FF9801":props.value ==='approved' ? '#66AA18':'#880000', 
-    border: "1px solid #ffcc00", 
-    borderRadius: "7px", 
-    height: "35px",
-    width:'90px',
-    padding: "2px 10px", 
-    color:props?.value ==='pending'? "#333": "white",
-    cursor: "pointer", 
-  }}
-  onClick={() => props.onStatusChange(props.data,props.value)} 
->
-  <option value="">{props.value}</option>
-  <option value="pending">Pending</option>
-  <option value="approved">Approved</option>
-  <option value="cancel">Cancel</option>
-  {/* Add more options as needed */}
-</select>
-
-      </div>
+    statusRenderer: (props) => (
+      console.log(props, "props"),
+      (
+        <div>
+          <select
+            onChange={handleChange}
+            style={{
+              backgroundColor:
+                props.value === "pending"
+                  ? "#FF9801"
+                  : props.value === "approved"
+                  ? "#66AA18"
+                  : "#880000",
+              border: "1px solid #ffcc00",
+              borderRadius: "7px",
+              height: "35px",
+              width: "100px",
+              padding: "2px 10px",
+              color: props?.value === "pending" ? "#333" : "white",
+              cursor: "pointer",
+            }}
+            onClick={() => props.onStatusChange(props.data, props.value)}
+          >
+            <option value="">{props.value}</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="cancel">Cancel</option>
+            {/* Add more options as needed */}
+          </select>
+        </div>
+      )
     ),
     patientNameLinkRenderer: PatientNameLinkRenderer,
   };
@@ -404,7 +356,7 @@ const Appointment = (props) => {
     setModalOpen(false);
     setModalData(null);
   };
-  
+
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
@@ -439,9 +391,9 @@ const Appointment = (props) => {
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
-  const handleChangeUpdate = () =>{
-    console.log("calling ..2..")
-  }
+  const handleChangeUpdate = () => {
+    console.log("calling ..2..");
+  };
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
@@ -466,7 +418,7 @@ const Appointment = (props) => {
             >
               + Add Appointment
             </button>
-            {/* <Link to="/doctorwise">
+            <Link to="/doctorwise">
               <button
                 className="btn-mod bg-soft custom-btn"
                 style={{ marginRight: "15px" }}
@@ -482,7 +434,7 @@ const Appointment = (props) => {
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link> */}
+            </Link>
 
             <button
               className="btn-mod bg-soft custom-btn"
@@ -508,62 +460,15 @@ const Appointment = (props) => {
         </Container>
 
         <div
-          className="ag-theme-material"
+          className="ag-theme-alpine"
           style={{ height: 1000, marginTop: "20px" }}
         >
-          <div className="d-flex justify-content-start" >
-          <Nav
-            tabs
-            style={{
-              backgroundColor: "#fff",
-              width: "630px",
-              borderRadius: "60px 60px 0 0px",
-            }}
-          >
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "current" ? "active" : ""}
-                onClick={() => handleTabSelect("current")}
-                style={{fontWeight: '600', borderRadius: '12px 0 0 0px'}}
-              >
-                Current Appointment
-              </NavLink>
-            </NavItem>
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "upcoming" ? "active" : ""}
-                onClick={() => handleTabSelect("upcoming")}
-                style={{fontWeight: '600'}}
-              >
-                Upcoming Appointment
-              </NavLink>
-            </NavItem>
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "history" ? "active" : ""}
-                onClick={() => handleTabSelect("history")}
-                style={{ borderRadius: "0 12px 0 0",fontWeight: '600'}}
-              >
-                Appointment History
-              </NavLink>
-            </NavItem>
-          </Nav>
-          </div>
-          
-
-          <TabContent activeTab={activeTab}>
-            <TabPane tabId="current"></TabPane>
-            <TabPane tabId="upcoming"></TabPane>
-            <TabPane tabId="history">
-              {/* Add your appointment history content here */}
-            </TabPane>
-          </TabContent>
           <AgGridReact
             ref={gridRef}
-            rowData={filteredData}
+            rowData={datas}
             columnDefs={columnDefs}
             pagination={true}
-            paginationPageSize={10}
+            paginationPageSize={15}
             domLayout="autoHeight"
             // defaultColDef={defaultColDef}
             defaultSort={defaultSort}
