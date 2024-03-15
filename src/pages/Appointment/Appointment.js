@@ -105,7 +105,7 @@ const Appointment = (props) => {
   };
   const handleChangeStatus = async (data,value)=>{
     console.log(data,"calling",updateStatus?.appointment_status)
-    if(updateStatus?.appointment_status){
+    if(updateStatus?.appointment_status  !== data?.appointment_status  || undefined){
       const dateObject = new Date(data.date);
       const formattedDate = `${dateObject.getFullYear()}-${String(
         dateObject.getMonth() + 1
