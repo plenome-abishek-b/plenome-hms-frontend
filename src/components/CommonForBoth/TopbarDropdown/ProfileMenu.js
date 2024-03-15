@@ -20,7 +20,7 @@ const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false)
 
-  const [username, setusername] = useState("Admin")
+  const UserRole = localStorage.getItem("newRole")
 
   return (
     <React.Fragment>
@@ -39,7 +39,7 @@ const ProfileMenu = props => {
             src="https://cdn-icons-png.flaticon.com/512/921/921130.png"
             alt="Header Avatar"
           />
-          <span className="d-none d-xl-inline-block ms-2 me-1 text-white">{username}</span>
+          <span className="d-none d-xl-inline-block ms-2 me-1 text-white">{UserRole}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block text-white" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">

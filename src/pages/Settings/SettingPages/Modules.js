@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus, toggleStatus } from "../../../store/module/action.js";
 import { Container } from "reactstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import { setStatus } from 'store/module/action';
 const Modules = () => {
@@ -52,14 +54,26 @@ const Modules = () => {
   });
   console.log(status, "redux value");
   const handleClick = (key) => {
+    const isDisabled = !sideBar[key];
+    const confirmationMessage = isDisabled
+      ? "Are you sure you want to enable?"
+      : "Are you sure you want to disable?";
+    
+    const confirmed = window.confirm(confirmationMessage);
+    if (!confirmed) {
+      return; // Cancel the operation if the user clicks Cancel
+    }
+  
     setSideBar((prevState) => ({
       ...prevState,
       [key]: !prevState[key],
     }));
+  
     setTimeout(() => {
       window.location.reload();
     }, 200);
   };
+  
   const [sideBar, setSideBar] = useState(initialState);
 
   useEffect(() => {
@@ -75,7 +89,7 @@ const Modules = () => {
     <React.Fragment>
       <div className="page-content" style={{position: 'relative', bottom: '35px', right: '10px'}}>
         <Container style={{}}>
-        
+          <ToastContainer />
           <div>
           <h4 style={{marginLeft: '30px'}}>Module Settings</h4>
             <ul className="pt-3">
