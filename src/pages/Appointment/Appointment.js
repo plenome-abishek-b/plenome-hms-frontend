@@ -58,7 +58,7 @@ const Appointment = (props) => {
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
 
-  const [updateStatus,setUpdateStaus] = useState({})
+  const [updateStatus, setUpdateStaus] = useState({});
 
   const [activeTab, setActiveTab] = useState("current");
 
@@ -171,13 +171,14 @@ const Appointment = (props) => {
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
 
-    { headerName: "Status",
-     field: "appointment_status" ,
-     cellRenderer: "statusRenderer",
-     cellRendererParams: {
-        onStatusChange: (row,value) => handleChangeStatus(row,value)
-     },
-},
+    {
+      headerName: "Status",
+      field: "appointment_status",
+      cellRenderer: "statusRenderer",
+      cellRendererParams: {
+        onStatusChange: (row, value) => handleChangeStatus(row, value),
+      },
+    },
     {
       headerName: "Actions",
       field: "actions",
@@ -336,13 +337,12 @@ const Appointment = (props) => {
       console.error("Error deleting appointment:", error);
     }
   };
-  
 
   const gridOptions = {
     domLayout: "autoHeight",
     autoSizeStrategy: {
-      type: 'fitCellContents'
-  },
+      type: "fitCellContents",
+    },
     defaultColDef: {
       flex: 1,
       sortable: true,
@@ -357,7 +357,6 @@ const Appointment = (props) => {
     params.api.sizeColumnsToFit();
     params.api.autoSizeColumns();
   };
-  
 
   const defaultSort = [{ colId: "id", sort: "asc" }];
 
@@ -378,16 +377,26 @@ const Appointment = (props) => {
             style={{
               backgroundColor:
                 props.value === "pending"
-                  ? "#FF9801"
+                  ? "#FFF6D6"
                   : props.value === "approved"
-                  ? "#66AA18"
-                  : "#880000",
-              border: "1px solid #ffcc00",
+                  ? "#E3F3E9"
+                  : "#FADBDB",
+              border:
+                props.value === "pending"
+                  ? "#FFF6D6"
+                  : props.value === "approved"
+                  ? "#E3F3E9"
+                  : "#FADBDB",
               borderRadius: "7px",
               height: "35px",
               width: "95px",
               padding: "2px 10px",
-              color: props?.value === "pending" ? "#333" : "white",
+              color:
+                props?.value === "pending"
+                  ? "#FAA300"
+                  : props?.value === "approved"
+                  ? "#0EAD69"
+                  : "#E11313",
               cursor: "pointer",
             }}
             onClick={() => props.onStatusChange(props.data, props.value)}
@@ -515,45 +524,44 @@ const Appointment = (props) => {
           className="ag-theme-material"
           style={{ height: 1000, marginTop: "20px" }}
         >
-          <div className="d-flex justify-content-start" >
-          <Nav
-            tabs
-            style={{
-              backgroundColor: "#fff",
-              width: "630px",
-              borderRadius: "60px 60px 0 0px",
-            }}
-          >
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "current" ? "active" : ""}
-                onClick={() => handleTabSelect("current")}
-                style={{fontWeight: '600', borderRadius: '12px 0 0 0px'}}
-              >
-                Current Appointment
-              </NavLink>
-            </NavItem>
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "upcoming" ? "active" : ""}
-                onClick={() => handleTabSelect("upcoming")}
-                style={{fontWeight: '600'}}
-              >
-                Upcoming Appointment
-              </NavLink>
-            </NavItem>
-            <NavItem className="custom-nav">
-              <NavLink
-                className={activeTab === "history" ? "active" : ""}
-                onClick={() => handleTabSelect("history")}
-                style={{ borderRadius: "0 12px 0 0",fontWeight: '600'}}
-              >
-                Appointment History
-              </NavLink>
-            </NavItem>
-          </Nav>
+          <div className="d-flex justify-content-start">
+            <Nav
+              tabs
+              style={{
+                backgroundColor: "#fff",
+                width: "630px",
+                borderRadius: "60px 60px 0 0px",
+              }}
+            >
+              <NavItem className="custom-nav">
+                <NavLink
+                  className={activeTab === "current" ? "active" : ""}
+                  onClick={() => handleTabSelect("current")}
+                  style={{ fontWeight: "600", borderRadius: "12px 0 0 0px" }}
+                >
+                  Current Appointment
+                </NavLink>
+              </NavItem>
+              <NavItem className="custom-nav">
+                <NavLink
+                  className={activeTab === "upcoming" ? "active" : ""}
+                  onClick={() => handleTabSelect("upcoming")}
+                  style={{ fontWeight: "600" }}
+                >
+                  Upcoming Appointment
+                </NavLink>
+              </NavItem>
+              <NavItem className="custom-nav">
+                <NavLink
+                  className={activeTab === "history" ? "active" : ""}
+                  onClick={() => handleTabSelect("history")}
+                  style={{ borderRadius: "0 12px 0 0", fontWeight: "600" }}
+                >
+                  Appointment History
+                </NavLink>
+              </NavItem>
+            </Nav>
           </div>
-          
 
           <TabContent activeTab={activeTab}>
             <TabPane tabId="current"></TabPane>
