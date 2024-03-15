@@ -4,26 +4,26 @@ import { useHistory } from "react-router-dom";
 import QRCode from 'qrcode.react'; // Import QRCode library
 import HrDetailDialog from 'pages/Setup/SetupDialog/HrDetailDialog';
 import './Card.css'; // Import CSS file for custom styling
-
+ 
 const Card = ({ getAllStaff, staff, staffname, email, qualification, number, role, location }) => {
   const history = useHistory();
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
-
+ 
   const handleEdit = async () => {
     const response = await history.push('/addstaff', { staff: staff });
   };
-
+ 
   const handleOpen = () => {
     setOpen(true);
   };
-
+ 
   const handleClose = () => {
     setOpen(false);
   };
-
+ 
   const staffDetails = `${staffname}, ${role}, ${qualification}, ${email}, ${number}`;
-
+ 
   return (
     <div
       className={`card ${isHovered ? 'hovered' : ''}`}
@@ -32,13 +32,13 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
     >
       <div className="card-body">
         <div className="row">
-          <div className="col-md-4 col-sm-6" >
+          <div className="col-lg-6 col-md-12">
             {/* QR Code */}
             <div onClick={handleOpen}>
               <QRCode value={staffDetails} bgColor="#ffffff" fgColor="#000000" style={{border: '9px solid #419197',borderRadius: '5px', padding: '9px', cursor: 'pointer'}}/>
             </div>
           </div>
-          <div className="col-md-8 col-sm-6">
+          <div className="col-lg-6 col-md-12">
             <h5 className="card-title">{staffname}</h5>
             <h5 className="card-title">{role}</h5>
             <h5 className="card-title">{qualification}</h5>
@@ -63,11 +63,11 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
             </>
           )}
         </div>
-
+ 
       </div>
       <HrDetailDialog location={location} getAllStaff={getAllStaff} open={open} handleClose={handleClose} staffDetail={staff} />
     </div>
   );
 };
-
+ 
 export default Card;

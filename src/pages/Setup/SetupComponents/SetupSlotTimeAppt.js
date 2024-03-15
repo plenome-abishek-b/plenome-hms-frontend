@@ -18,9 +18,10 @@ function SetupSlotAppt() {
   const [timeInputs, setTimeInputs] = useState([]);
   const [charges, setCharges] = useState([]);
   const addNewTimeInputRow = () => {
+    console.log(timeInputs, "time");
     setTimeInputs((prevTimeInputs) => [
       ...prevTimeInputs,
-      { startTime: "", endTime: "" },
+      { startTime: "", endTime: "" }, 
     ]);
   };
   const LoginedDoctor = localStorage.getItem("existingDocotr_id");
@@ -89,18 +90,24 @@ function SetupSlotAppt() {
     );
     const { data } = response;
     console.log(data, "datffs");
+    const newTimeInputs = data.map((slot) => ({
+      startTime: slot.start_time,
+      endTime: slot.end_time,
+      id:slot.id
+    }));
+    setTimeInputs(newTimeInputs);
     setData(data);
 
     if (
       timeInputs.every((input) => !Object.keys(input).length) &&
       data.length > 0
     ) {
-      const { start_time, end_time } = data[0];
-
-      setTimeInputs([
-        ...timeInputs,
-        { startTime: start_time, endTime: end_time },
-      ]);
+      const newTimeInputs = data.map((slot) => ({
+        startTime: slot.start_time,
+        endTime: slot.end_time,
+      }));
+  
+      setTimeInputs(newTimeInputs);
     } else {
       // setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
     }
@@ -241,6 +248,33 @@ function SetupSlotAppt() {
   //     });
   //   }
   // }
+  const handleDeleteSlots = async (id) => {
+    console.log(id, "id");
+    const userConfirmed = window.confirm('Are you sure you want to delete this slot?');
+    console.log(userConfirmed,"delete");
+if(userConfirmed && id){
+    const rseponse = await api.deleteSetupApptSlotTime(id);
+    const response = await api.getSlotTiming(
+      formData.day,
+      formData.doctor,
+      formData.shift
+    );
+    const { data } = response;
+    console.log(data, "datffs");
+    const newTimeInputs = data.map((slot) => ({
+      startTime: slot.start_time,
+      endTime: slot.end_time,
+      id:slot.id
+    }));
+    setTimeInputs(newTimeInputs);
+    toast.success("deleted sucessfullyl")
+    setData(data);
+}else{
+  console.log("rejected")
+}
+   
+
+  };
 
   return (
     <React.Fragment>
@@ -452,84 +486,133 @@ function SetupSlotAppt() {
                   <br />
                   <br />
                   <label className="fw-bold">Time Duration</label>
+                  {/* {data.length > 0 ? timeInputs.map((timeInput, index) => (
+                    <>
+                      {data.map((data, index) => (
+                        <div key={index}>
+                          <Row
+                            key={index}
+                            className="mt-3"
+                            style={{ marginLeft: "90px" }}
+                          >
+                            <Col>
+                              <input
+                                type="time"
+                                style={{
+                                  width: "70%",
+                                  height: "35px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
+                                  backgroundColor: "#f0f0f0",
+                                }}
+                                value={
+                                  timeInput.startTime ||
+                                  (data && data.start_time) ||
+                                  ""
+                                }
+                                onChange={(e) =>
+                                  handleTimeInputChange(
+                                    index,
+                                    "startTime",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </Col>
+                            <Col>
+                              <input
+                                type="time"
+                                style={{
+                                  width: "70%",
+                                  height: "35px",
+                                  border: "1px solid rgba(0,0,0,0.2)",
+                                  borderRadius: "3px",
+                                  backgroundColor: "#f0f0f0",
+                                }}
+                                value={
+                                  timeInput.endTime ||
+                                  (data && data.end_time) ||
+                                  ""
+                                }
+                                onChange={(e) =>
+                                  handleTimeInputChange(
+                                    index,
+                                    "endTime",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              <i
+                                onClick={() => handleDeleteSlots(data.id)}
+                                style={{
+                                  marginLeft: "30px",
+                                  cursor: "pointer",
+                                }}
+                                className="fas fa-trash-alt fa-lg text-danger"
+                              ></i>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))}
+                    </>
+                  ))    :  */}
+                  
                   {timeInputs.map((timeInput, index) => (
-                    <Row
-                      key={index}
-                      className="mt-3"
-                      style={{ marginLeft: "90px" }}
-                    >
-                      <Col>
-                        {/* {  data[0].start_time ? <input
-                          type="time"
-                          style={{
-                            width: "70%",
-                            height: "35px",
-                            border: "1px solid rgba(0,0,0,0.2)",
-                            borderRadius: "3px",
-                            backgroundColor: "#f0f0f0",
-                          }}
-                          value={
-                            (data[0] && data[0].start_time)
-                          }
-                          onChange={(e) =>
-                            handleUpdateTimeInputChange(
-                              "startTime",
-                              e.target.value
-                            )
-                          }
-                        /> : */}
-                        <input
-                          type="time"
-                          style={{
-                            width: "70%",
-                            height: "35px",
-                            border: "1px solid rgba(0,0,0,0.2)",
-                            borderRadius: "3px",
-                            backgroundColor: "#f0f0f0",
-                          }}
-                          value={
-                            timeInput.startTime ||
-                            (data[0] && data[0].start_time) ||
-                            ""
-                          }
-                          onChange={(e) =>
-                            handleTimeInputChange(
-                              index,
-                              "startTime",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </Col>
-                      <Col>
-                        <input
-                          type="time"
-                          style={{
-                            width: "70%",
-                            height: "35px",
-                            border: "1px solid rgba(0,0,0,0.2)",
-                            borderRadius: "3px",
-                            backgroundColor: "#f0f0f0",
-                          }}
-                          value={
-                            timeInput.endTime ||
-                            (data[0] && data[0].end_time) ||
-                            ""
-                          }
-                          onChange={(e) =>
-                            handleTimeInputChange(
-                              index,
-                              "endTime",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </Col>
-                    </Row>
+                    console.log(timeInput,"EE"),
+                    <div key={index}>
+                      <Row
+                        key={index}
+                        className="mt-3"
+                        style={{ marginLeft: "90px" }}
+                      >
+                        <Col>
+                          <input
+                            type="time"
+                            style={{
+                              width: "70%",
+                              height: "35px",
+                              border: "1px solid rgba(0,0,0,0.2)",
+                              borderRadius: "3px",
+                              backgroundColor: "#f0f0f0",
+                            }}
+                            value={timeInput.startTime ||
+                              "" }
+                            onChange={(e) =>
+                              handleTimeInputChange(index, "startTime", e.target.value)
+                            }
+                          />
+                        </Col>
+                        <Col>
+                          <input
+                            type="time"
+                            style={{
+                              width: "70%",
+                              height: "35px",
+                              border: "1px solid rgba(0,0,0,0.2)",
+                              borderRadius: "3px",
+                              backgroundColor: "#f0f0f0",
+                            }}
+                            value={timeInput.endTime || ""}
+                            onChange={(e) =>
+                              handleTimeInputChange(index, "endTime", e.target.value)
+                            }
+                          />
+                          <i
+                            onClick={() => handleDeleteSlots(timeInput.id)}
+                            style={{ marginLeft: "30px", cursor: "pointer" }}
+                            className="fas fa-trash-alt fa-lg text-danger"
+                          ></i>
+                        </Col>
+                      </Row>
+                    </div>
+                  ))
+                  }
+                  {timeInputs && timeInputs.map((val,index)=>(
+                     console.log(val,"time inputs")
                   ))}
 
                   <div className="d-flex justify-content-end mt-4">
-                    <button className="btn-mod" onClick={addNewTimeInputRow}>
+                    <button className="btn-mod" onClick={()=>addNewTimeInputRow()}>
                       + Add Time Slot
                     </button>
                     <button className="btn-mod ms-2" onClick={handleFormSubmit}>

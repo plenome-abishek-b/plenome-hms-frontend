@@ -48,6 +48,7 @@ const Appointment = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
+  const [updateStatus,setUpdateStaus] = useState({})
   const handleClickOpen = () => {
     //dialog open
     setSelectedData({});
@@ -85,6 +86,46 @@ const Appointment = (props) => {
       </Link>
     );
   };
+  const handleChangeStatus = async (data,value)=>{
+    console.log(data,"calling",updateStatus?.appointment_status)
+    if(updateStatus?.appointment_status){
+      const dateObject = new Date(data.date);
+      const formattedDate = `${dateObject.getFullYear()}-${String(
+        dateObject.getMonth() + 1
+      ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
+      const timeWithoutAMPM = dateObject
+      .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      .replace(/\s[AaPp][Mm]$/, "");
+       const newData ={
+        id:data?.id,
+        date: formattedDate,
+        amount: data.amount,
+        live_consult: data.live_consult,
+        global_shift_id: String(data.shift_id),
+        shift_id: String(data.slot_id),
+        time: timeWithoutAMPM ? timeWithoutAMPM : "12:00",
+        priority: data.priorityID,
+        appointment_status: updateStatus?.appointment_status,
+        source: data.source,
+        Hospital_id:1
+       }
+      const response = await api?.updateAppointment(newData);
+       console.log(datas,"datas");
+       toast.success("status updating...",
+       {
+        position: toast.POSITION.TOP_RIGHT,
+        closeButton: false,
+        autoClose: 300,
+      });
+       getAppointment();
+
+      setUpdateStaus(data)
+    }else{
+      console.log("else");
+    }
+  }
+
+  
 
   const columnDefs = [
     {
@@ -114,7 +155,13 @@ const Appointment = (props) => {
     { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
-    { headerName: "Status", field: "appointment_status" },
+    { headerName: "Status",
+     field: "appointment_status" ,
+     cellRenderer: "statusRenderer",
+     cellRendererParams: {
+        onStatusChange: (row,value) => handleChangeStatus(row,value)
+     },
+    },
     {
       headerName: "Actions",
       field: "actions",
@@ -209,6 +256,11 @@ const Appointment = (props) => {
     // setSelectedData()
     setOpen(true);
   };
+  const handleChange =  (e)=>{
+    const {value} = e.target
+    console.log(value,"eeerrrr")
+   setUpdateStaus({...updateStatus,appointment_status:value})
+  }
 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
@@ -268,6 +320,32 @@ const Appointment = (props) => {
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
     ),
+    statusRenderer: (props) =>(
+      console.log(props,"props"),
+      <div>
+     <select
+  onChange={handleChange}
+  style={{
+    backgroundColor:props.value=== 'pending'? "#FF9801":props.value ==='approved' ? '#66AA18':'#880000', 
+    border: "1px solid #ffcc00", 
+    borderRadius: "7px", 
+    height: "35px",
+    width:'90px',
+    padding: "2px 10px", 
+    color:props?.value ==='pending'? "#333": "white",
+    cursor: "pointer", 
+  }}
+  onClick={() => props.onStatusChange(props.data,props.value)} 
+>
+  <option value="">{props.value}</option>
+  <option value="pending">Pending</option>
+  <option value="approved">Approved</option>
+  <option value="cancel">Cancel</option>
+  {/* Add more options as needed */}
+</select>
+
+      </div>
+    ),
     patientNameLinkRenderer: PatientNameLinkRenderer,
   };
 
@@ -275,7 +353,7 @@ const Appointment = (props) => {
     setModalOpen(false);
     setModalData(null);
   };
-
+  
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
@@ -310,7 +388,9 @@ const Appointment = (props) => {
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
-
+  const handleChangeUpdate = () =>{
+    console.log("calling ..2..")
+  }
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
