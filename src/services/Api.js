@@ -2239,8 +2239,10 @@ function getSetupApptSlotTime(day, staff_id, shift_id) {
 }
 
 function postSetupApptSlotTime(payload) {
-  console.log(payload,"complete payload") 
   return http3.post(URL.SETUP_APPT_SLOT_TIMING, payload);
+}
+function deleteSetupApptSlotTime(id){
+  return http6.delete(`${URL.SETUP_APPT_SLOT_TIMING}/${id}`)
 }
 
 function getSetupApptSlotCharge(staff_id) {
@@ -2961,7 +2963,6 @@ function patchSetupRadiologyParameter(data){
     return http6.post(URL.OPD_DISCHARGED_PATIENT,data)
   }
   function post_Appointment_slot_amount(data) {
-    console.log(data,"all comming")
     return http6.post(URL.APPT_SLOT_CHARGE,data)
   }
   function appointment_chargeName_byid(id){
@@ -3621,6 +3622,7 @@ post_Appointment_slot_amount,
 appointment_chargeName_byid,
 getAmount_APPT_Slot,
 patchSetupApptShift,
-deleteSetupApptShift
+deleteSetupApptShift,
+deleteSetupApptSlotTime
 };
 export default api;

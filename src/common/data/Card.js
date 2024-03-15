@@ -4,26 +4,26 @@ import { useHistory } from "react-router-dom";
 import QRCode from 'qrcode.react'; // Import QRCode library
 import HrDetailDialog from 'pages/Setup/SetupDialog/HrDetailDialog';
 import './Card.css'; // Import CSS file for custom styling
-
+ 
 const Card = ({ getAllStaff, staff, staffname, email, qualification, number, role, location }) => {
   const history = useHistory();
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
-
+ 
   const handleEdit = async () => {
     const response = await history.push('/addstaff', { staff: staff });
   };
-
+ 
   const handleOpen = () => {
     setOpen(true);
   };
-
+ 
   const handleClose = () => {
     setOpen(false);
   };
-
+ 
   const staffDetails = `${staffname}, ${role}, ${qualification}, ${email}, ${number}`;
-
+ 
   return (
     <div
       className={`card ${isHovered ? 'hovered' : ''}`}
@@ -63,11 +63,11 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
             </>
           )}
         </div>
-
+ 
       </div>
       <HrDetailDialog location={location} getAllStaff={getAllStaff} open={open} handleClose={handleClose} staffDetail={staff} />
     </div>
   );
 };
-
+ 
 export default Card;
