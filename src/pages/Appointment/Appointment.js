@@ -86,18 +86,18 @@ const Appointment = (props) => {
       </Link>
     );
   };
-  const handleChangeStatus = async (data,value)=>{
-    console.log(data,"calling",updateStatus?.appointment_status)
-    if(updateStatus?.appointment_status){
+  const handleChangeStatus = async (data, value) => {
+    console.log(data, "calling", updateStatus?.appointment_status);
+    if (updateStatus?.appointment_status) {
       const dateObject = new Date(data.date);
       const formattedDate = `${dateObject.getFullYear()}-${String(
         dateObject.getMonth() + 1
       ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
       const timeWithoutAMPM = dateObject
-      .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      .replace(/\s[AaPp][Mm]$/, "");
-       const newData ={
-        id:data?.id,
+        .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        .replace(/\s[AaPp][Mm]$/, "");
+      const newData = {
+        id: data?.id,
         date: formattedDate,
         amount: data.amount,
         live_consult: data.live_consult,
@@ -107,22 +107,26 @@ const Appointment = (props) => {
         priority: data.priorityID,
         appointment_status: updateStatus?.appointment_status,
         source: data.source,
-        Hospital_id:1
-       }
+        Hospital_id: 1,
+      };
       const response = await api?.updateAppointment(newData);
-       console.log(datas,"datas");
-       toast.success("status updating...",
-       {
+      console.log(datas, "datas");
+      toast.success("status updating...", {
         position: toast.POSITION.TOP_RIGHT,
         closeButton: false,
         autoClose: 300,
       });
+      getAppointment();
+
+      setUpdateStaus(data);
+    } else {
       getAppointment();
  
       setUpdateStaus(data)
     }else{
       console.log("else");
     }
+  };
   }
 
   const columnDefs = [
@@ -153,6 +157,14 @@ const Appointment = (props) => {
     { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
+
+    { headerName: "Status",
+     field: "appointment_status" ,
+     cellRenderer: "statusRenderer",
+     cellRendererParams: {
+        onStatusChange: (row,value) => handleChangeStatus(row,value)
+     },
+},
     {
       headerName: "Status",
       field: "appointment_status",
@@ -259,6 +271,11 @@ const Appointment = (props) => {
     console.log(value, "eeerrrr");
     setUpdateStaus({ ...updateStatus, appointment_status: value });
   };
+  const handleChange = (e) => {
+    const { value } = e.target;
+    console.log(value, "eeerrrr");
+    setUpdateStaus({ ...updateStatus, appointment_status: value });
+  };
 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
@@ -333,7 +350,7 @@ const Appointment = (props) => {
               border: "1px solid #ffcc00",
               borderRadius: "7px",
               height: "35px",
-              width: "100px",
+              width: "95px",
               padding: "2px 10px",
               color: props?.value === "pending" ? "#333" : "white",
               cursor: "pointer",
@@ -356,6 +373,7 @@ const Appointment = (props) => {
     setModalOpen(false);
     setModalData(null);
   };
+
 
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
@@ -390,6 +408,9 @@ const Appointment = (props) => {
 
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
+  };
+  const handleChangeUpdate = () => {
+    console.log("calling ..2..");
   };
   const handleChangeUpdate = () => {
     console.log("calling ..2..");

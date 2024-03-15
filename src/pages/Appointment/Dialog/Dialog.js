@@ -296,13 +296,13 @@ export default function AlertDialog({
         DocName: formattedDoctorName,
       };
 
-      const email_datas = {
-       email: email,
-       Date: Dates,
-       name: Patname,
-       drname: formattedDoctorName,
-       HosName: hos
-      };
+      // const email_datas = {
+      //  email: email,
+      //  Date: Dates,
+      //  name: Patname,
+      //  drname: formattedDoctorName,
+      //  HosName: hos
+      // };
 
       const sms_response = await api.postSms(datas);
       // const email_response = await api.postEmail(email_datas)
