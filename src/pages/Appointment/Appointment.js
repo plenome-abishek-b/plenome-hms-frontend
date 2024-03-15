@@ -48,7 +48,7 @@ const Appointment = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
-  const [updateStatus,setUpdateStaus] = useState({})
+  const [updateStatus, setUpdateStaus] = useState({});
   const handleClickOpen = () => {
     //dialog open
     setSelectedData({});
@@ -86,18 +86,18 @@ const Appointment = (props) => {
       </Link>
     );
   };
-  const handleChangeStatus = async (data,value)=>{
-    console.log(data,"calling",updateStatus?.appointment_status)
-    if(updateStatus?.appointment_status){
+  const handleChangeStatus = async (data, value) => {
+    console.log(data, "calling", updateStatus?.appointment_status);
+    if (updateStatus?.appointment_status) {
       const dateObject = new Date(data.date);
       const formattedDate = `${dateObject.getFullYear()}-${String(
         dateObject.getMonth() + 1
       ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
       const timeWithoutAMPM = dateObject
-      .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      .replace(/\s[AaPp][Mm]$/, "");
-       const newData ={
-        id:data?.id,
+        .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        .replace(/\s[AaPp][Mm]$/, "");
+      const newData = {
+        id: data?.id,
         date: formattedDate,
         amount: data.amount,
         live_consult: data.live_consult,
@@ -107,25 +107,22 @@ const Appointment = (props) => {
         priority: data.priorityID,
         appointment_status: updateStatus?.appointment_status,
         source: data.source,
-        Hospital_id:1
-       }
+        Hospital_id: 1,
+      };
       const response = await api?.updateAppointment(newData);
-       console.log(datas,"datas");
-       toast.success("status updating...",
-       {
+      console.log(datas, "datas");
+      toast.success("status updating...", {
         position: toast.POSITION.TOP_RIGHT,
         closeButton: false,
         autoClose: 300,
       });
-       getAppointment();
+      getAppointment();
 
-      setUpdateStaus(data)
-    }else{
+      setUpdateStaus(data);
+    } else {
       console.log("else");
     }
-  }
-
-  
+  };
 
   const columnDefs = [
     {
@@ -133,7 +130,7 @@ const Appointment = (props) => {
       field: "patient_name",
       filter: "agSetColumnFilter",
       cellRenderer: "patientNameLinkRenderer",
-      flex: '1' 
+      flex: "1",
     },
     {
       headerName: "Appointment No",
@@ -147,20 +144,21 @@ const Appointment = (props) => {
         const appno = params.data.id;
         return <p>{"APPN" + appno}</p>;
       },
-      flex: '1'
+      flex: "1",
     },
-    { headerName: "Appointment Date", field: "date", flex: '2' },
+    { headerName: "Appointment Date", field: "date", flex: "2" },
     { headerName: "Gender", field: "gender" },
     { headerName: "Phone", field: "mobileno" },
     { headerName: "Priority", field: "priority_status" },
     { headerName: "Live Consultant", field: "live_consult" },
     { headerName: "Fees", field: "amount" },
-    { headerName: "Status",
-     field: "appointment_status" ,
-     cellRenderer: "statusRenderer",
-     cellRendererParams: {
-        onStatusChange: (row,value) => handleChangeStatus(row,value)
-     },
+    {
+      headerName: "Status",
+      field: "appointment_status",
+      cellRenderer: "statusRenderer",
+      cellRendererParams: {
+        onStatusChange: (row, value) => handleChangeStatus(row, value),
+      },
     },
     {
       headerName: "Actions",
@@ -174,7 +172,7 @@ const Appointment = (props) => {
   ];
 
   const onBtnExport = useCallback(() => {
-    console.log(gridRef.current); 
+    console.log(gridRef.current);
     gridRef.current.api.exportDataAsCsv();
   }, []);
 
@@ -188,7 +186,6 @@ const Appointment = (props) => {
       const { data } = response;
 
       const modifiedData = data.map((patient) => {
-
         const trimmedDate = patient.date.split("T")[0];
 
         const combinedDateTime = `${trimmedDate} ${patient.time}`;
@@ -206,7 +203,7 @@ const Appointment = (props) => {
         const modifiedName = patient?.patient_name?.replace(/\//g, "");
 
         return {
-          ...patient, 
+          ...patient,
           patient_name: modifiedName,
           date: formattedDateTime,
         };
@@ -256,11 +253,11 @@ const Appointment = (props) => {
     // setSelectedData()
     setOpen(true);
   };
-  const handleChange =  (e)=>{
-    const {value} = e.target
-    console.log(value,"eeerrrr")
-   setUpdateStaus({...updateStatus,appointment_status:value})
-  }
+  const handleChange = (e) => {
+    const { value } = e.target;
+    console.log(value, "eeerrrr");
+    setUpdateStaus({ ...updateStatus, appointment_status: value });
+  };
 
   const handleDeletionConfirmed = async (appointmentId) => {
     try {
@@ -303,7 +300,6 @@ const Appointment = (props) => {
     onFirstDataRendered: (params) => {
       // params.api.autoSizeAllColumns();
     },
-    
   };
 
   const onGridReady = (params) => {
@@ -315,36 +311,42 @@ const Appointment = (props) => {
   const components = {
     actionsRenderer: (props) => (
       <div>
-        <EditButtonRenderer onClick={() => props.onEditClick(props.data)}/>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
         &nbsp;
         <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
       </div>
     ),
-    statusRenderer: (props) =>(
-      console.log(props,"props"),
-      <div>
-     <select
-  onChange={handleChange}
-  style={{
-    backgroundColor:props.value=== 'pending'? "#FF9801":props.value ==='approved' ? '#66AA18':'#880000', 
-    border: "1px solid #ffcc00", 
-    borderRadius: "7px", 
-    height: "35px",
-    width:'90px',
-    padding: "2px 10px", 
-    color:props?.value ==='pending'? "#333": "white",
-    cursor: "pointer", 
-  }}
-  onClick={() => props.onStatusChange(props.data,props.value)} 
->
-  <option value="">{props.value}</option>
-  <option value="pending">Pending</option>
-  <option value="approved">Approved</option>
-  <option value="cancel">Cancel</option>
-  {/* Add more options as needed */}
-</select>
-
-      </div>
+    statusRenderer: (props) => (
+      console.log(props, "props"),
+      (
+        <div>
+          <select
+            onChange={handleChange}
+            style={{
+              backgroundColor:
+                props.value === "pending"
+                  ? "#FF9801"
+                  : props.value === "approved"
+                  ? "#66AA18"
+                  : "#880000",
+              border: "1px solid #ffcc00",
+              borderRadius: "7px",
+              height: "35px",
+              width: "105px",
+              padding: "2px 10px",
+              color: props?.value === "pending" ? "#333" : "white",
+              cursor: "pointer",
+            }}
+            onClick={() => props.onStatusChange(props.data, props.value)}
+          >
+            <option value="">{props.value}</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="cancel">Cancel</option>
+            {/* Add more options as needed */}
+          </select>
+        </div>
+      )
     ),
     patientNameLinkRenderer: PatientNameLinkRenderer,
   };
@@ -353,7 +355,7 @@ const Appointment = (props) => {
     setModalOpen(false);
     setModalData(null);
   };
-  
+
   const onBtnExportPDF = () => {
     const filteredColumnDefs = columnDefs.filter(
       (col) => col.headerName !== "Actions"
@@ -388,15 +390,15 @@ const Appointment = (props) => {
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
     doc.save(fileName);
   };
-  const handleChangeUpdate = () =>{
-    console.log("calling ..2..")
-  }
+  const handleChangeUpdate = () => {
+    console.log("calling ..2..");
+  };
   console.log(datas, "dataaaaaaa");
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <ToastContainer transition={Flip}/>
+          <ToastContainer transition={Flip} />
           <Breadcrumbs
             title={props.t("Appointment")}
             breadcrumbItem={props.t("Appointment")}
