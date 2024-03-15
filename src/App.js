@@ -59,30 +59,19 @@ const App = props => {
   }
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      const loginTime = parseInt(localStorage.getItem('loginTime'));
-      const currentTime = Date.now();
-      const elapsedMinutes = (currentTime - loginTime) / (1000 * 60);
-      if (elapsedMinutes > 15) {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('loginTime');
-      }
-    };
-  
-    // window.addEventListener('beforeunload', handleBeforeUnload);
-  
-    // return () => {
-    //   window.removeEventListener('beforeunload', handleBeforeUnload);
-    // };
+    elapsedMinutes
   }, []);
   
 
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 const loginTime = parseInt(localStorage.getItem('loginTime'));
 const currentTime = Date.now();
+console.log(currentTime,'currenttime'); 
 const elapsedMinutes = (currentTime - loginTime) / (1000 * 60);
 
-if (!isLoggedIn || elapsedMinutes > 10) {
+console.log(elapsedMinutes,'elapsed');
+
+if (!isLoggedIn || elapsedMinutes > 30) {
   history.push('/account/login');
 }
 
