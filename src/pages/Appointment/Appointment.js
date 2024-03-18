@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import {
   Button,
   Container,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Nav,
   NavItem,
   NavLink,
@@ -9,8 +13,8 @@ import {
   TabPane,
 } from "reactstrap";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { useMemo, useState, useCallback, useRef } from "react";
 import AlertDialog from "./Dialog/Dialog";
 import api from "services/Api";
@@ -47,6 +51,12 @@ const Appointment = (props) => {
   const gridRef = useRef();
 
   const [tableData, setTableData] = useState(null);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   const [formData, setFormData] = useState(initialValue);
 
@@ -142,7 +152,6 @@ const Appointment = (props) => {
   };
 
   const columnDefs = [
-    { headerName: "Token No", field: "id", filter: "agSetColumnFilter" },
     {
       headerName: "Patient Name",
       field: "patient_name",
@@ -292,7 +301,7 @@ const Appointment = (props) => {
         }
       );
     } catch (error) {
-      console.error("Error deleting appointment:", error);
+      console.error("Error deleting appointment:", errorcountry);
     }
   };
   const handleEditClick = (data) => {
@@ -343,6 +352,7 @@ const Appointment = (props) => {
     autoSizeStrategy: {
       type: "fitCellContents",
     },
+
     defaultColDef: {
       flex: 1,
       sortable: true,
@@ -446,7 +456,7 @@ const Appointment = (props) => {
       head: [columns.map((col) => col.header)],
       body: rows,
       columnStyles,
-      margin: { top: 20 },
+      margin: { top: 20, right: 90, bottom: 20, left: 10 },
     });
 
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
@@ -479,9 +489,9 @@ const Appointment = (props) => {
             >
               + Add Appointment
             </button>
-            {/* <Link to="/doctorwise">
+            <Link to="/doctorwise">
               <button
-                className="btn-mod bg-soft custom-btn"
+                className="btn btn-outline-primary"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-justify"></i>
@@ -490,38 +500,34 @@ const Appointment = (props) => {
             </Link>
             <Link to="/patientqueue">
               <button
-                className="btn-mod bg-soft custom-btn"
+                className="btn btn-outline-primary"
                 style={{ marginRight: "15px" }}
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link> */}
+            </Link>
 
-            <button
-              className="btn-mod bg-soft custom-btn"
-              onClick={() => onBtnExport()}
-            >
-              <i
-                className="far fa-file-excel fa-md"
-                style={{ paddingRight: "6px" }}
-              ></i>
-              Export
-            </button>
-            <button
-              className="btn-mod bg-soft custom-btn ms-3"
-              onClick={onBtnExportPDF}
-            >
-              <i
-                className="far fa-file-pdf fa-md"
-                // style={{ padding: "6px" }}
-              ></i>
-              &nbsp; Export as PDF
-            </button>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className="btn btn-outline-primary text-primary bg-white">
+            
+                Export&nbsp;<i className="fas fa-caret-down"></i>
+              </DropdownToggle>
+              <DropdownMenu style={{ minWidth: 'fit-content' }}>
+                <DropdownItem onClick={() => onBtnExport()}>
+                <i className="fas fa-file-csv"></i>&nbsp;
+                  CSV
+                </DropdownItem>
+                <DropdownItem onClick={onBtnExportPDF}>
+                <i className="far fa-file-pdf"></i>&nbsp;
+                  PDF
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </Container>
 
         <div
-          className="ag-theme-material"
+          className="ag-theme-quartz"
           style={{ height: 1000, marginTop: "20px" }}
         >
           <div className="d-flex justify-content-start">
