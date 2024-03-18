@@ -128,7 +128,7 @@ const Login = (props) => {
       const response = await api.postAuthUsers(values);
       console.log("API response:", response);
 
-      const [{ details }] = response.data;
+      const { details } = response.data;
       console.log(details, 'detailsss');
       const { resetStatus, username, role_name, Staff_id,staffName } = details;
       console.log(resetStatus, username, role_name, Staff_id, "datasss");
