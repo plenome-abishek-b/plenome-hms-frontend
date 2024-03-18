@@ -13,8 +13,8 @@ import {
   TabPane,
 } from "reactstrap";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-quartz.css';
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 import { useMemo, useState, useCallback, useRef } from "react";
 import AlertDialog from "./Dialog/Dialog";
 import api from "services/Api";
@@ -456,7 +456,7 @@ const Appointment = (props) => {
       head: [columns.map((col) => col.header)],
       body: rows,
       columnStyles,
-      margin: { top: 20, right: 90, bottom: 20, left: 10 },
+      margin: { top: 20, right: 100, bottom: 20, left: 10 },
     });
 
     const fileName = `AppointmentDetails_${formattedDate}.pdf`;
@@ -483,7 +483,7 @@ const Appointment = (props) => {
             }}
           >
             <button
-              className="btn-mod bg-soft custom-btn"
+              className="btn btn-primary"
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
@@ -527,7 +527,7 @@ const Appointment = (props) => {
         </Container>
 
         <div
-          className="ag-theme-quartz"
+          className="ag-theme-material"
           style={{ height: 1000, marginTop: "20px" }}
         >
           <div className="d-flex justify-content-start">
