@@ -136,6 +136,10 @@ const Dashboard = props => {
 
   console.log(dashboardStaff,'staffdashboard');
 
+  let name = localStorage.getItem("staffname");
+name = name.charAt(0).toUpperCase() + name.slice(1);
+
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -148,7 +152,7 @@ const Dashboard = props => {
                 <div className="row ">
                   <div className="col-6 ">
                     <div className="text-primary p-3 mt-2">
-                      <h5 className="fw-bold" style={{ color: "#6070FF" }}>Welcome Back!</h5>
+                      <h5 className="fw-bold" style={{ color: "#6070FF" }}>Welcome Back! <span>{name}</span></h5>
                       <p className="fs-6" style={{ color: "#6070FF" }}>BlockTrack Dashboard</p>
                     </div>
                   </div>

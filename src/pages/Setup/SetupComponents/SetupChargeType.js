@@ -229,7 +229,7 @@ const SetupChargeType = (props) => {
     ),
     checkboxRendererAppointment: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={
           (console.log(props, "eeee"), props?.data?.modules?.appointment?.value)
@@ -243,11 +243,11 @@ const SetupChargeType = (props) => {
             props?.data?.modules?.appointment?.value
           )
         }
-      />
+      />)
     ),
     checkboxRendererOpd: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         name="opdcheckbox"
         checked={props?.data?.modules?.opd?.value}
@@ -260,11 +260,11 @@ const SetupChargeType = (props) => {
             props?.data?.modules?.opd?.value
           )
         }
-      />
+      />)
     ),
     checkboxRendererIpd: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={props?.data?.modules?.ipd?.value}
         onClick={() =>
@@ -275,11 +275,11 @@ const SetupChargeType = (props) => {
             props?.data?.modules?.ipd?.vlaue
           )
         }
-      />
+      />)
     ),
     checkboxRendererPatho: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={props?.data?.modules?.pathology?.value}
         onClick={() =>
@@ -294,11 +294,11 @@ const SetupChargeType = (props) => {
         // Assuming 'yes' means checked, adjust as needed
         // checked={props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
         // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
-      />
+      />)
     ),
     checkboxRendererRadio: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={props?.data?.modules?.radiology?.value}
         onClick={() =>
@@ -313,11 +313,11 @@ const SetupChargeType = (props) => {
         // Assuming 'yes' means checked, adjust as needed
         // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
         // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
-      />
+      />)
     ),
     checkboxRendererBG: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={props?.data?.modules?.bloodbank?.value}
         onClick={() =>
@@ -332,11 +332,11 @@ const SetupChargeType = (props) => {
         // Assuming 'yes' means checked, adjust as needed
         // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
         // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
-      />
+      />)
     ),
     checkboxRendererAmbu: (props) => (
       // {const isChecked = props.data.module_shortcode.includes(props.colDef.field)}
-      <input
+      (<input
         type="checkbox"
         checked={props?.data?.modules?.ambulance?.value}
         onClick={() =>
@@ -350,7 +350,7 @@ const SetupChargeType = (props) => {
         // Assuming 'yes' means checked, adjust as needed
         // checked={console.log(props,"ddd"),props.data.module_shortcode.map((val)=> val === props?.colDef.field)}
         // onChange={() => handleCheckboxChange(props.data.id, props.colDef.field)}
-      />
+      />)
     ),
   };
   return (

@@ -58,7 +58,7 @@ export default function SetupPatientDetails({
 
   return (
     // <div style={{width:'100px',height:'200px',backgroundColor:'black'}}>SetupPatientDetails</div>
-    <div
+    (<div
       style={{
         display: "flex",
         alignItems: "flex-end",
@@ -184,7 +184,7 @@ export default function SetupPatientDetails({
            } */}
         </DialogActions>
       </Dialog>
-    </div>
+    </div>)
   );
 }
 
