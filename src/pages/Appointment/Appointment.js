@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Button, Container } from "reactstrap";
+import {
+  Button,
+  Container,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+} from "reactstrap";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -17,6 +25,7 @@ import autoTable from "jspdf-autotable";
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
+import "./nav.css"
 //redux
 
 const initialValue = {
@@ -49,6 +58,11 @@ const Appointment = (props) => {
   const [modalData, setModalData] = useState(null);
   const [selectedData, setSelectedData] = useState({});
   const [updateStatus,setUpdateStaus] = useState({})
+  const [activeTab, setActiveTab] = useState("current");
+ 
+  const handleTabSelect = (tab) => {
+    setActiveTab(tab);
+  };
   const handleClickOpen = () => {
     //dialog open
     setSelectedData({});
@@ -116,8 +130,8 @@ const Appointment = (props) => {
         position: toast.POSITION.TOP_RIGHT,
         closeButton: false,
         autoClose: 300,
-      });
-       getAppointment();
+      }); 
+      getAppointment();
 
       setUpdateStaus(data)
     }else{
@@ -219,6 +233,35 @@ const Appointment = (props) => {
       console.error("Error fetching appointment data:", error);
     }
   };
+  const filteredData = useMemo(() => {
+    if (!datas) return null;
+ 
+    const currentDate = new Date();
+ 
+    switch (activeTab) {
+      case "current":
+        return datas.filter((appointment) => {
+          const appointmentDate = new Date(appointment.date);
+          return (
+            appointmentDate.getDate() === currentDate.getDate() &&
+            appointmentDate.getMonth() === currentDate.getMonth() &&
+            appointmentDate.getFullYear() === currentDate.getFullYear()
+          );
+        });
+      case "upcoming":
+        return datas.filter((appointment) => {
+          const appointmentDate = new Date(appointment.date);
+          return appointmentDate > currentDate;
+        });
+      case "history":
+        return datas.filter((appointment) => {
+          const appointmentDate = new Date(appointment.date);
+          return appointmentDate < currentDate;
+        });
+      default:
+        return datas;
+    }
+  }, [datas, activeTab]);
 
   // const handleEditClick = (rowData) => {
   //   setSelectedRowData(rowData);
@@ -460,9 +503,56 @@ const Appointment = (props) => {
           className="ag-theme-alpine"
           style={{ height: 1000, marginTop: "20px" }}
         >
+        <div className="d-flex justify-content-start" >
+          <Nav
+            tabs
+            style={{
+              backgroundColor: "#fff",
+              width: "630px",
+              borderRadius: "60px 60px 0 0px",
+            }}
+          >
+            <NavItem className="custom-nav">
+              <NavLink
+                className={activeTab === "current" ? "active" : ""}
+                onClick={() => handleTabSelect("current")}
+                style={{fontWeight: '600', borderRadius: '12px 0 0 0px'}}
+              >
+                Current Appointment
+              </NavLink>
+            </NavItem>
+            <NavItem className="custom-nav">
+              <NavLink
+                className={activeTab === "upcoming" ? "active" : ""}
+                onClick={() => handleTabSelect("upcoming")}
+                style={{fontWeight: '600'}}
+              >
+                Upcoming Appointment
+              </NavLink>
+            </NavItem>
+            <NavItem className="custom-nav">
+              <NavLink
+                className={activeTab === "history" ? "active" : ""}
+                onClick={() => handleTabSelect("history")}
+                style={{ borderRadius: "0 12px 0 0",fontWeight: '600'}}
+              >
+                Appointment History
+              </NavLink>
+            </NavItem>
+          </Nav>
+          </div>
+         
+ 
+          <TabContent activeTab={activeTab}>
+            <TabPane tabId="current"></TabPane>
+            <TabPane tabId="upcoming"></TabPane>
+            <TabPane tabId="history">
+              {/* Add your appointment history content here */}
+            </TabPane>
+          </TabContent>
           <AgGridReact
             ref={gridRef}
-            rowData={datas}
+            rowData={filteredData}
             columnDefs={columnDefs}
             pagination={true}
             paginationPageSize={15}

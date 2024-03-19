@@ -129,7 +129,7 @@ const Login = (props) => {
       console.log("API response:", response);
 
 
-      const [{ details }] = response.data;
+      const { details } = response.data;
       const { resetStatus, username,role_name,Staff_id } = details;
       console.log(resetStatus, username,role_name,Staff_id, "datasss");
       if(Staff_id && role_name === 'Doctor'){
