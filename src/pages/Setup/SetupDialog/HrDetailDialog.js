@@ -61,7 +61,7 @@ export default function HrDetailDialog({
   var formattedDateOfJoining = dateOfJoining.toLocaleDateString("en-US");
 
   return (
-    <div>
+    (<div>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -161,7 +161,7 @@ export default function HrDetailDialog({
             >
               {location === "enable" ? (
                 // Enable button for right side
-                <div className="ms-3">
+                (<div className="ms-3">
                   <button
                     className="btn bg-soft btn-sm text-white fw-bold"
                     onClick={() => handleDisable(staffDetail?.id)}
@@ -170,10 +170,10 @@ export default function HrDetailDialog({
                     <i className="fas fa-user-slash"></i>
                     &nbsp;Disable
                   </button>
-                </div>
+                </div>)
               ) : (
                 // Disable and Delete buttons for right side
-                <>
+                (<>
                   <div className="ms-3">
                     <button
                       className="btn btn-sm text-white fw-bold"
@@ -184,7 +184,7 @@ export default function HrDetailDialog({
                       &nbsp;Enable
                     </button>
                   </div>
-                </>
+                </>)
               )}
               <div className="ms-3">
                 <button
@@ -294,6 +294,6 @@ export default function HrDetailDialog({
           </DialogActions>
         </div>
       </Dialog>
-    </div>
+    </div>)
   );
 }
