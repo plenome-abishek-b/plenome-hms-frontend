@@ -33,6 +33,7 @@ function Visits() {
 
   const [patientid, setPatientid] = useState('')
   const [openVisit, setOpenVisit] = useState(false);
+  const [showDoctor,setShowDoctor] = useState(true)
   const [tableData, setTableData] = useState(null)
   const [formData, setFormData] = useState(initialVisitValue);
   const [completeData,setCompleteData] = useState({})
@@ -74,6 +75,7 @@ function Visits() {
       setModelOpen(true);
     }
     const handleClose = () =>{
+      setShowDoctor(false)
       setModelOpen(false)
     }
       const columnDefs = [
@@ -201,7 +203,7 @@ function Visits() {
               domLayout='autoHeight'
               frameworkComponents={components}
             />
-          <OpdVistDetailDialog open={modelOpen} completeData={completeData} handleClose={handleClose}/> 
+          <OpdVistDetailDialog open={modelOpen} completeData={completeData} handleClose={handleClose} setShowDoctor={setShowDoctor} showDoctor={showDoctor}/> 
           </div>
     </div>
         

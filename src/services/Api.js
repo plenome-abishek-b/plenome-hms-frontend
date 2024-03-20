@@ -441,7 +441,9 @@ const URL = {
   OPD_DISCHARGED_PATIENT:'/discharge-patient-opd-module',
   APPOINTMENT_REPORT_URL: '/appointment_report',
   DASHBOARD_STAFF_URL: '/staff_roles',
-  YEARLY_INCOME_URL: '/income-summary/yearly-income'
+  YEARLY_INCOME_URL: '/income-summary/yearly-income',
+  OPD_TREATMENT_HISTORY:'/internal-opd-treatment-history',
+  OPD_TIMELINE:'/internal-opd-timeline'
 };  
 
 function getDashboardStaff(data = {}){
@@ -2976,7 +2978,23 @@ function patchSetupRadiologyParameter(data){
   function deleteSetupPatient(id){
     return http6.delete(`${URL.ADD_PATIENT_URL}/${id}`)
   }
-////////
+  function getTreatmentHistory_OPD(pid){
+    return http.get(`${URL.OPD_TREATMENT_HISTORY}?patient_id=${pid}`)
+ }
+ 
+  function getOPD_timeline(pid){
+    return http.get(`${URL.OPD_TIMELINE}?patient_id=${pid}`)
+  }
+  function postOPD_timeline(data){
+    return http.post(`${URL.OPD_TIMELINE}`,data)
+  }
+  function updateOPD_timeline(data){
+    return http.patch(`${URL.OPD_TIMELINE}/${data?.id}`,data)
+  }
+  function deleteOPD_timeline(id){
+    return http.delete(`${URL.OPD_TIMELINE}/${id}?hosId=1`)
+  }
+//////// 
 
 function createPhrAddress(
   transactionId,
@@ -3065,6 +3083,7 @@ function updateRoles(data){
   const url = `${URL.SETUP_ROLE_URL}/${data?.id}`
   return http.patch(url,data)
 }
+
 
 
 const api = {
@@ -3623,6 +3642,11 @@ appointment_chargeName_byid,
 getAmount_APPT_Slot,
 patchSetupApptShift,
 deleteSetupApptShift,
-deleteSetupApptSlotTime
+deleteSetupApptSlotTime,
+getTreatmentHistory_OPD,
+getOPD_timeline,
+postOPD_timeline,
+updateOPD_timeline,
+deleteOPD_timeline
 };
 export default api;

@@ -27,10 +27,14 @@ import Treatment from "./OpdTable/Treatment";
 import OpdVisits from "./OpdTabs/OpdVisits";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import api from "services/Api";
+import OpdVisitDialog from "./OpdDialog/OpdVisitsDialog";
 
 const Message = (props) => {
   const [details, setDetails] = useState([]);
-  const [consultant,setConsultant] = useState([])
+  const [consultant,setConsultant] = useState([]);
+  const [selectedData,setSelectedData] = useState({});
+  const [openVisit, setOpenVisit] = useState(false);
+
   const params = useParams();
   console.log(params.pid, "params");
   const pid = params?.pid;
@@ -54,6 +58,9 @@ const Message = (props) => {
     localStorage.setItem('opdid',data[0]?.OPD_ID)
     setDetails(data);
   };
+  const handleOpenVisit = () => {
+    setOpenVisit(true)
+  };
   const getConsultant = async () =>{
    const response = await api.get_OPD_Consultant(pid)
    const {data} = response;
@@ -63,6 +70,16 @@ const Message = (props) => {
   //     const getDetails = async () =>{
   // //    const data =
   //     }
+  const handleOPDEdit = async () =>{
+    handleOpenVisit(true)
+    console.log(details[0]?.OPD_ID,"OPD ID")
+    const response = await api.get_OPD_VISIT_list(details[0]?.OPD_ID);
+    const {data} = response;
+    setSelectedData(data[0]);
+  }
+  const handleCloseVisit = () => {
+    setOpenVisit(false)
+  }
   return (
     <React.Fragment>
       <div className="page-content">
@@ -176,6 +193,7 @@ const Message = (props) => {
                               <h3>{details[0]?.name}</h3>
                             </Col>
                             <Col lg="3" sm="6" className="mt-5 ms-3">
+                              <i className="fas fa-pencil-alt" onClick={()=>handleOPDEdit()} style={{marginBottom:'30px'}}></i>     
                               <div
                                 style={{
                                   display: "flex",
@@ -216,7 +234,7 @@ const Message = (props) => {
                                   className="fw-bold"
                                   style={{ marginRight: "10px" }}
                                 >
-                                  Guardian_Name
+                                  Guardian.name:
                                 </p>
                                 <span style={{ flex: "1" }}>
                                   {details[0]?.guardian_name}
@@ -441,6 +459,7 @@ const Message = (props) => {
               </Card>
             </Col>
           </Row>
+        <OpdVisitDialog selectedData={selectedData} open={openVisit} handleClose={handleCloseVisit}/>
         </Container>
       </div>
     </React.Fragment>

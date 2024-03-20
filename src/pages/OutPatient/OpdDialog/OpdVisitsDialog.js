@@ -8,17 +8,22 @@ import { TextField } from "@material-ui/core"
 import TextareaAutosize from "@mui/base/TextareaAutosize"
 import api from "services/Api"
 import { useParams } from "react-router-dom/cjs/react-router-dom"
+import { select } from "redux-saga/effects"
 
 export default function OpdVisitDialog({
   open,
   opdid,
   handleClose,
   data,
-  getOverviewVist
+  getOverviewVist,
+  selectedData,
+  setShowDoctor,
+  showDoctor
   // onChange,
   // handleFormSubmit,
   // handlePatientId
 }) {
+  console.log(selectedData,"selectedCompletely")
   const [openVisitDialog, setOpenVisitDialog] = React.useState(false)
   const [listPatient, setListPatient] = useState([])
    const [details,setDetials] = useState({})
@@ -30,6 +35,7 @@ export default function OpdVisitDialog({
   const [hospitalCharge, setHospitalCharge] = useState([]);
   const [chargeCategoryId, setChargeCategroyId] = useState("");
   const [charge, setCharge] = useState([]);
+  // const [showDoctor,setShowDoctor] = useState(true)
   const [amount, setAmount] = useState([]);
   const [tpa, setTpa] = useState([]);
   const params = useParams()
@@ -80,7 +86,38 @@ useEffect(()=>{
   // handleBloodgroups()
 
 },[])
-// useEffect(()=>{
+useEffect(()=>{
+  console.log(selectedData?.height,"an selectedData");
+  const OPDID = selectedData?.OPD_ID
+  const numericPart = OPDID?.replace(/[^\d]/g, "");
+  console.log(numericPart,"number only")
+  if(selectedData){
+    setFormData({
+      height:selectedData?.height,
+      weight:selectedData?.weight,
+      bp:selectedData?.bp,
+      pulse:selectedData?.pulse,
+      temperature:selectedData?.temperature,
+      respiration:selectedData?.respiration,
+      symptomsType:selectedData?.symptoms_type,
+      symptomTitle:selectedData?.symptoms,
+      note:selectedData?.note,
+      known_allergies:selectedData?.known_allergies,
+      // known_allergies:selectedData?.address,
+      appointment_date:selectedData?.appointment_date,
+      case_type:selectedData?.case_type,
+      casualty:selectedData?.casualty,
+      patient_old:selectedData?.patient_old,
+      tpa_charge:selectedData?.TPA,
+      refference:selectedData?.refference,
+      cons_doctor:selectedData?.doctor,
+      // charge_id:
+      // tax:selectedData?.
+      // payment_mode:
+    })
+  }
+},[selectedData])
+//useEffect(()=>{
 //    setFormData({
 //     opd_details_id:details?.OPD_ID,
 //     cons_doctor:details?.doctor,
@@ -118,7 +155,7 @@ useEffect(()=>{
 // },[details]);
 
 const handleSubmit = async () =>{
-  console.log(formData,"submit")
+  console.log(formData,"submit") 
   const response = await api?.post_OPD_VISIT(formData)
   const {data} = response;
   console.log(data,"reponse")
@@ -157,9 +194,9 @@ const handleChange = (e) =>{
     getVisitByid()
   }, [])
   const getVisitByid = async () =>{
-    const opdid = localStorage.getItem('opdid')
-    console.log(opdid,"eeda");
-   const response = await api.get_OPD_VISIT_list(opdid)
+    // const opdid = localStorage.getItem('opdid')
+    // console.log(opdid,"eeda");
+   const response = await api.get_OPD_Overview(pid)
    const {data} = response;
    console.log(data,"complete data")
    setDetials(data[0]);
@@ -240,6 +277,9 @@ const handleChange = (e) =>{
     
     setTpa(data);
   };
+  const handleDoctorshow = () =>{
+  setShowDoctor(false)
+  }
 
   return (
     <div
@@ -280,12 +320,12 @@ const handleChange = (e) =>{
         <DialogContent className="mt-4 ms-2" style={{paddingTop: '15px'}}>
           <Row>
             {/* <div> */}
-            <h4 style={{color:'black',display:'flex'}}>{details?.patient_name}</h4>
+            <h4 style={{color:'black',display:'flex'}}>{details?.name}</h4>
 <div style={{display:'flex', flexDirection:'column', justifyContent:'space-around'}}>
     <div style={{color:'black', marginBottom: '8px'}}>gender : {details?.gender}</div>
-    <div style={{color:'black', marginBottom: '8px'}}>email : {details?.email}</div>
-    <div style={{color:'black', marginBottom: '8px'}}>bloodgroup : {details?.blood_group ? details?.blood_group : 'null'}</div>
-    <div style={{color:'black', marginBottom: '8px'}}>mobileno : {details?.mobileno ? details?.mobileno : 'null'}</div>
+    {/* <div style={{color:'black', marginBottom: '8px'}}>email : {details?.email}</div> */}
+    <div style={{color:'black', marginBottom: '8px'}}>mobileno : {details?.phone ? details?.phone : 'null'}</div>
+    <div style={{color:'black', marginBottom: '8px'}}>guardian name : {details?.guardian_name ? details?.guardian_name   : 'null'}</div>
     <div style={{color:'black', marginBottom: '8px'}}>Any known allergies : {details?.known_allergies ? details?.known_allergies : 'null'}</div>
 </div>
 
@@ -623,7 +663,7 @@ const handleChange = (e) =>{
                       Consultant Doctor <span className="text-danger">*</span>
                     </label>
                     <br />
-                    <select
+                  {selectedData?.doctor && showDoctor ?  <input value={formData?.cons_doctor} onClick={()=>handleDoctorshow()}></input>:<select
                       style={{
                         width: "100%",
                         height: "30px",
@@ -642,6 +682,7 @@ const handleChange = (e) =>{
                           </option>
                         ))}
                     </select>
+}
                   </Col>
                 </Row>
                 <br />
