@@ -96,7 +96,19 @@ function SetupSlotAppt() {
       endTime: slot.end_time,
       id:slot.id
     }));
-    setTimeInputs(newTimeInputs);
+    console.log(newTimeInputs,"tiem")
+    setTimeInputs(newTimeInputs)
+    setTimeInputs(newTimeInputs, () => {
+      // Now you can safely access the updated state
+      if (data.length === 0 && data.length > 0) {
+        const newTimeInputs = data.map((slot) => ({
+          startTime: slot.start_time,
+          endTime: slot.end_time,
+          id:slot.id
+        }));
+        setTimeInputs(newTimeInputs);
+      }
+    });
     setData(data);
  
     if (
@@ -128,6 +140,10 @@ function SetupSlotAppt() {
       charge_id: data2[0]?.id,
     });
     console.log(chargeData, "chrgggg");
+    // searchAgain()
+  };
+  const searchAgain = () => {
+    handleSearch();
   };
  
   const handleFormSubmit = async () => {
@@ -250,7 +266,7 @@ function SetupSlotAppt() {
   //   }
   // }
   const handleDeleteSlots = async (id) => {
-    console.log(id, "id");
+    console.log(id,timeInputs, "id");
     const userConfirmed = window.confirm('Are you sure you want to delete this slot?');
     console.log(userConfirmed,"delete");
 if(userConfirmed && id){
@@ -599,7 +615,7 @@ if(userConfirmed && id){
                             }
                           />
                           <i
-                            onClick={() => handleDeleteSlots(timeInput.id)}
+                            onClick={() => handleDeleteSlots(timeInput?.id)}
                             style={{ marginLeft: "30px", cursor: "pointer" }}
                             className="fas fa-trash-alt fa-lg text-danger"
                           ></i>

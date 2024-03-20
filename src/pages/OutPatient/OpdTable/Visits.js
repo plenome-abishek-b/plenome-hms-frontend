@@ -123,6 +123,7 @@ function Visits() {
     
       const handleCloseVisit = () => {
         setOpenVisit(false)
+        localStorage.removeItem("opdid")
       }
 
       // useEffect(() => {
