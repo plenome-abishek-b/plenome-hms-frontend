@@ -139,33 +139,28 @@ const Header = props => {
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
+                            <Link to="/appointment" className="custom-list">{props.t("Appointment")}</Link>
+                          </li>
+                          <li>
                             <Link to="/opd" className="custom-list">{props.t("OPD-Out Patient")}</Link>
                           </li>
-                          <li>
-                            <Link to="/ipd" className="custom-list">{props.t("IPD-In Patient")}</Link>
-                          </li>
-                          <li>
+                          {/* <li>
                             <Link to="/pharmacy" className="custom-list">{props.t("Pharmacy")}</Link>
                           </li>
                           <li>
                             <Link to="/ambulance" className="custom-list">{props.t("Ambulance")}</Link>
-                          </li>
+                          </li> */}
                         </ul>
                       </Col>
 
                       <Col md={4}>
                         <h5 className="font-size-14 mt-0">
-                          {props.t("Records")}
+                          {props.t("Staffs")}
                         </h5>
                         <ul className="list-unstyled megamenu-list">
                           <li>
-                            <Link to="/birthrecord" className="custom-list">
-                              {props.t("Birth Records")}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/deathrecord" className="custom-list">
-                              {props.t("Death Records")}
+                            <Link to="/hr" className="custom-list">
+                              {props.t("Human Resource")}
                             </Link>
                           </li>
                         </ul>
@@ -200,10 +195,10 @@ const Header = props => {
                           </li>
                           <li>
                             <Link to="/ipdreport" className="custom-list">
-                              {props.t("IPD Reports")}
+                              {props.t("Appointment Reports")}
                             </Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link to="pathologyreport" className="custom-list">
                               {props.t("Pathology Reports")}
                             </Link>
@@ -217,7 +212,7 @@ const Header = props => {
                             <Link to="/radiologyreport" className="custom-list">
                               {props.t("Radiology Reports")}
                             </Link>
-                          </li>
+                          </li> */}
                         </ul>
                       </Col>
 
@@ -276,9 +271,9 @@ const Header = props => {
               </div>
             </div>
 
-            <LanguageDropdown />
+            {/* <LanguageDropdown /> */}
 
-            <div className="d-none d-lg-inline-block ms-1">
+            {/* <div className="d-none d-lg-inline-block ms-1">
               <button 
               className="btn header-item bed-icon"
                 data-toggle="fullscreen"
@@ -297,9 +292,9 @@ const Header = props => {
               className="btn header-item cal-icon"
                 data-toggle="fullscreen"
               ><i className="bx bx-check-square bx-sm text-white"></i></button>
-            </div>
+            </div> */}
 
-            <Dropdown
+            {/* <Dropdown
               className="d-none d-lg-inline-block ms-1"
               isOpen={socialDrp}
               toggle={() => {
@@ -312,7 +307,7 @@ const Header = props => {
               >
                 <i className="fab fa-whatsapp text-white"></i>
               </DropdownToggle>
-            </Dropdown>
+            </Dropdown> */}
 
             <div className="dropdown d-none d-lg-inline-block ms-1">
               <button
@@ -324,7 +319,7 @@ const Header = props => {
                 data-toggle="fullscreen"
                 style={{color: "white"}}
               >
-                <i className="bx bx-fullscreen text-white" />
+                <i className="fas fa-qrcode" style={{color: 'white'}}></i>
               </button>
             </div>
 
