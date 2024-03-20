@@ -27,6 +27,14 @@ function PrintableDetails({ data, handleDeleteClick }) {
     return formattedDateTime;
   }
 
+  const status_check = () => {
+    if(data[0].appointment_status === "pending"){
+      return (
+        <button className="btn btn-success">Pending</button>
+      )
+    }
+  }
+
   return (
     <div
       style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px", backgroundColor: 'rgba(0,0,0,0.1)' }}

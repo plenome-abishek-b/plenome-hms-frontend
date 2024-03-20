@@ -133,6 +133,7 @@ const URL = {
   OPD_VISITS: "/api/outpatient/visits",
 
   DISCHARGE_URL: "/api/dischargedPatient",
+  BILLING_URL: "/billings",
 
   NURSE_NOTE_URL: "/api/nursenote",
   CONSULTENT_URL: "/api/consultant_register",
@@ -443,6 +444,12 @@ const URL = {
   DASHBOARD_STAFF_URL: '/staff_roles',
   YEARLY_INCOME_URL: '/income-summary/yearly-income'
 };  
+
+function getBillings(data){
+  console.log(data,'data inside api');
+  const url = `${URL.BILLING_URL}/${data}`
+  return http.get(url)
+}
 
 function getDashboardStaff(data = {}){
   return http.get(URL.DASHBOARD_STAFF_URL,data)
@@ -3623,6 +3630,7 @@ appointment_chargeName_byid,
 getAmount_APPT_Slot,
 patchSetupApptShift,
 deleteSetupApptShift,
-deleteSetupApptSlotTime
+deleteSetupApptSlotTime,
+getBillings
 };
 export default api;
