@@ -133,6 +133,7 @@ const URL = {
   OPD_VISITS: "/api/outpatient/visits",
 
   DISCHARGE_URL: "/api/dischargedPatient",
+  BILLING_URL: "/billings",
 
   NURSE_NOTE_URL: "/api/nursenote",
   CONSULTENT_URL: "/api/consultant_register",
@@ -442,9 +443,24 @@ const URL = {
   APPOINTMENT_REPORT_URL: '/appointment_report',
   DASHBOARD_STAFF_URL: '/staff_roles',
   YEARLY_INCOME_URL: '/income-summary/yearly-income',
+
   OPD_TREATMENT_HISTORY:'/internal-opd-treatment-history',
-  OPD_TIMELINE:'/internal-opd-timeline'
+  OPD_TIMELINE:'/internal-opd-timeline',
+
+  
+  STAFF_ONBOARD_URL: '/staff-onboard'
+
 };  
+
+function postStaffonboard(data){
+  return sms_http.post(URL.STAFF_ONBOARD_URL,data)
+}
+
+function getBillings(data){
+  console.log(data,'data inside api');
+  const url = `${URL.BILLING_URL}/${data}`
+  return http.get(url)
+}
 
 function getDashboardStaff(data = {}){
   return http.get(URL.DASHBOARD_STAFF_URL,data)
@@ -3647,6 +3663,8 @@ getTreatmentHistory_OPD,
 getOPD_timeline,
 postOPD_timeline,
 updateOPD_timeline,
-deleteOPD_timeline
+deleteOPD_timeline,
+getBillings,
+postStaffonboard
 };
 export default api;

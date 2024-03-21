@@ -5,12 +5,16 @@
     color: white; /* Change this to the desired text color */
     border-radius: 0px 10px 0 0;
     border: none;
+    display: flex !important;
+  flex-wrap: wrap !important;
   }
   
   
   .ag-theme-material .ag-header-cell {
     border-color: #6070FF; /* Border color for header cells */
     text-align: center;
+    flex: 2 !important;
+    min-width: 120px !important; /* Adjust as needed */
   }
 
   /* styles.css */
@@ -50,8 +54,9 @@
     border-right: 1px solid white; /* Add a white border to the right of each header cell */
   }
   
-  .ag-theme-alpine .ag-header-row {
+  .ag-theme-material .ag-header-row {
     border-bottom: 1px solid white; /* Add a white border below the header row */
+    text-align: center;
   }
   
 
@@ -74,7 +79,7 @@
   }
 
   .navbar-header{
-    background: #7070FF;
+    background: #6070FF;
   }
 
   .btn-mod{

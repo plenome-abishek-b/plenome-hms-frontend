@@ -1,7 +1,5 @@
-// PrintableDetails.jsx
-
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Table } from "reactstrap";
 
 function PrintableDetails({ data, handleDeleteClick }) {
   console.log(data, "aaaaaa");
@@ -27,11 +25,21 @@ function PrintableDetails({ data, handleDeleteClick }) {
     return formattedDateTime;
   }
 
+  const status_check = () => {
+    if (data[0].appointment_status === "pending") {
+      return <button className="btn btn-success">Pending</button>;
+    }
+  };
+
   return (
     <div
-      style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px", backgroundColor: 'rgba(0,0,0,0.1)' }}
+      style={{
+        padding: "10px",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+      }}
     >
-      <div className="d-flex justify-content-end">
+      {/* <div className="d-flex justify-content-end">
         <button
           className="btn btn-danger"
           style={{
@@ -43,123 +51,141 @@ function PrintableDetails({ data, handleDeleteClick }) {
           {" "}
           <i className="fas fa-trash"></i>
         </button>
-      </div>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Patient Name: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? removeSlash(data[0].patient_name) : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Appointment No: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].appointment_no : "patient"}
-          </label>
-        </Col>
+      </div> */}
+      <Row className="mb-2 p-4">
+        <table className="table-responsive" style={{border: 'none'}}>
+          <tbody>
+            <tr>
+              <td style={{border: 'none'}}>
+                <span className="fw-bold">Patient Name:</span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? removeSlash(data[0].patient_name) : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="fw-bold">Appointment No:</span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].appointment_no : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}}>
+                <span className="fw-bold">Status:</span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].appointment_status : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="fw-bold">Mobile No:</span>
+              </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].phone : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Doctor Name: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].doctor : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">Appointment Date: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? formatDateTime(data[0].appointment_date) : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Appointment Priority: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].priority_status : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">Gender: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].gender : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Status: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].appointment_status : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">Source: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].source : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Amount: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].amount : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">Transaction ID: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].Transaction_id : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Payment Mode: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].payment_mode : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">Department Name: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].department_name : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Live Consultation: </td>
+              <td style={{border: 'none'}}>
+              <span className="cust-span">
+                  {data ? data[0].live_consult : "patient"}
+                </span>
+              </td>
+              <td style={{border: 'none'}} className="fw-bold">
+                Message:{" "}
+                <span className="cust-span">
+                  {data ? data[0].message : "patient"}
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td style={{border: 'none'}} className="fw-bold">Shift: </td>
+              <td style={{border: 'none'}}>
+                <span className="cust-span">
+                  {data ? data[0].shift : "patient"}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Email: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].Email : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Status: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].appointment_status : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Mobile No: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].phone : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Doctor Name: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].doctor : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Appointment Date: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? formatDateTime(data[0].appointment_date) : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Appointment Priority: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].priority_status : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Gender: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].gender : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Status: &nbsp;&nbsp;&nbsp;&nbsp;
-            {data ? data[0].appointment_status : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Source: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].source : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Amount: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].amount : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Transaction ID: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].Transaction_id : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Payment Mode: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].payment_mode : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Department Name: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].department_name : "patient"}
-          </label>
-        </Col>
-        <Col>
-          <label>
-            Live Consultation: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].live_consult : "patient"}
-          </label>
-        </Col>
-      </Row>
-      <Row className="mb-2">
-        <Col>
-          <label>
-            Message: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].message : "patient"}
-          </label>
-        </Col>
-        <Col>
-        <label>
-            Shift: &nbsp;&nbsp;&nbsp;&nbsp;{data ? data[0].shift : "patient"}
-          </label>
-        </Col>
-        </Row>
     </div>
   );
 }
