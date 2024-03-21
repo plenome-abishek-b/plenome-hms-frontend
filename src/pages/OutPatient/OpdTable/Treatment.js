@@ -4,20 +4,22 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import { useMemo, useState, useCallback, useRef , useEffect } from "react"
 import api from 'services/Api'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 
 function Treatment() {
     // const rowData = [
     //     {opdno: '', caseid: '', date: '', symptoms: '', consultant: '', action: ''}
     //   ];
-
+    const params = useParams()
+     const pid = params?.pid
     const [tableData,setTableData] = useState()
     
       const columnDefs = [
-        { headerName: 'OPD No', field: 'opd_details_id'},
-        { headerName: 'Case ID', field: 'id' },
+        { headerName: 'OPD No', field: 'OPD_ID'}, 
+        { headerName: 'Case ID', field: 'case_id' },
         { headerName: 'Appointment Date', field: 'appointment_date' },
         { headerName: 'Symptoms', field: 'symptoms' },
-        { headerName: 'Consultant', field: 'name' },
+        { headerName: 'Consultant', field: 'consultant_doctor' },
         // {headerName: 'Action', field: 'action'}
       ];
     
@@ -35,14 +37,11 @@ function Treatment() {
         getTreatment()
       }, [])
     
-      const getTreatment = () => {
-        
-        // api.getPatient().then(res => setTableData(res.data))
-        api.getTreatmentHistory().then(res => {
-          console.log(res,'response');
-          setTableData(res.data)})
-        
-        api.http
+      const getTreatment = async () => {
+        const response = await api.getTreatmentHistory_OPD(pid);
+        const {data} = response;
+        console.log(data,"treatment history")
+        setTableData(data)
       }
     
 
