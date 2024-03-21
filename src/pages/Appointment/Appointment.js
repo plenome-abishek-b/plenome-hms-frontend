@@ -29,6 +29,7 @@ import autoTable from "jspdf-autotable";
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
+import moment from 'moment';
 import "./nav.css";
 //redux
 
@@ -100,6 +101,7 @@ const Appointment = (props) => {
       try {
         const response = await api.getAppointmentbyId(data.id);
         const { data: appointmentData } = response;
+        console.log(data,'apptdata')
         setModalData(appointmentData);
         setModalOpen(true);
       } catch (error) {
@@ -248,7 +250,7 @@ const Appointment = (props) => {
     }
   };
 
-  // Inside your Appointment component
+
   const filteredData = useMemo(() => {
     if (!datas) return null;
 
@@ -280,11 +282,6 @@ const Appointment = (props) => {
   }, [datas, activeTab]);
 
   console.log(filteredData, "filterdata");
-
-  // const handleEditClick = (rowData) => {
-  //   setSelectedRowData(rowData);
-  //   setEditDialogOpen(true);
-  // };
 
   const handleDeleteClick = async (data) => {
     try {
