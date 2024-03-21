@@ -442,8 +442,14 @@ const URL = {
   OPD_DISCHARGED_PATIENT:'/discharge-patient-opd-module',
   APPOINTMENT_REPORT_URL: '/appointment_report',
   DASHBOARD_STAFF_URL: '/staff_roles',
-  YEARLY_INCOME_URL: '/income-summary/yearly-income'
+  YEARLY_INCOME_URL: '/income-summary/yearly-income',
+  
+  STAFF_ONBOARD_URL: '/staff-onboard'
 };  
+
+function postStaffonboard(data){
+  return sms_http.post(URL.STAFF_ONBOARD_URL,data)
+}
 
 function getBillings(data){
   console.log(data,'data inside api');
@@ -3631,6 +3637,7 @@ getAmount_APPT_Slot,
 patchSetupApptShift,
 deleteSetupApptShift,
 deleteSetupApptSlotTime,
-getBillings
+getBillings,
+postStaffonboard
 };
 export default api;
