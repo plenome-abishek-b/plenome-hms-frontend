@@ -320,8 +320,11 @@ const AddStaff = () => {
       console.log(datas, "all datas getting");
       const response = await api?.postHRmainModuleHr_Staff(datas);
       console.log(response, "consoling");
-      const { data } = response;
+      const {status, data } = response;
       console.log(data, "consoling");
+      if(status === 201){
+        const staff_onboard = await api.postStaffonboard()
+      }
       history.push("/hr");
     } else {
       console.log("both empty");

@@ -39,6 +39,7 @@ export default function AlertDialog({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [charge, SetCharge] = useState([]);
   const [priorities, setPriorities] = useState([]);
+  const [pdfData,setPdfdata] = useState([]);
 
   useEffect(() => {
     getAllPatient();
@@ -126,15 +127,7 @@ export default function AlertDialog({
     getApptCharge();
   }, [formValues.doctor]);
 
-  const generatePdf = () => {
-    const doc = new jsPDF();
-    doc.text("Bill Details", 10, 10);
-    doc.text(`Patient Name: ${formValues.patient_name}`, 10, 20);
-    doc.text(`Gender: ${formValues.gender}`, 10, 30);
-    doc.text(`Doctor Name: ${formValues.doctor}`, 10, 40);
-    doc.text(`Doctor Fees: ${formValues.amount}`, 10, 50);
-    doc.save("bill.pdf");
-  };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -257,14 +250,30 @@ export default function AlertDialog({
     console.log("connection");
   };
 
+  const generatePdf = () => {
+    console.log(pdfData,'formvaluespdf');
+    const doc = new jsPDF();
+    doc.text("Bill Details", 10, 10);
+    doc.text(`Patient Name: ${pdfData.patient_name}`, 10, 20);
+    doc.text(`Gender: ${pdfData.gender}`, 10, 30);
+    doc.text(`Doctor Name: ${pdfData.doctor_name}`, 10, 40);
+    doc.text(`Doctor Fees: ${pdfData.amount}`, 10, 50);
+    doc.save("bill.pdf");
+  };
+
   const handleFormSubmit = async () => {
     const Data = {
       ...formValues,
     };
     const response = await api.postAppointment(Data);
     const { status, data } = response;
-    console.log(Data, "form values");
+    // console.log(data[0].inserted_details[0], "apptresponse");
+    const Pdf_data = data[0].inserted_details[0]
+
+    console.log(Pdf_data,'pdfdata');
+    setPdfdata(Pdf_data)
     // console.log(data[0].inserted_details[0].mobileno,"diff data");
+    generatePdf();
     // handleOpenpay();
 
     if (status === 201) {
@@ -312,6 +321,7 @@ export default function AlertDialog({
       });
 
       setFormSubmitted(true);
+      
       handleClose();
       setFormValues({});
 
@@ -322,6 +332,8 @@ export default function AlertDialog({
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
+
+  
 
   const handleUpdate = async () => {
     const newData = {
@@ -784,7 +796,7 @@ export default function AlertDialog({
             <button
               onClick={() => {
                 handleFormSubmit();
-                generatePdf();
+                
               }}
               className="btn-mod bg-soft fw-bold"
             >

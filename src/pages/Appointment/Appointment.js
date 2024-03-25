@@ -18,8 +18,8 @@ import "ag-grid-community/styles/ag-theme-material.css";
 import { useMemo, useState, useCallback, useRef } from "react";
 import AlertDialog from "./Dialog/Dialog";
 import api from "services/Api";
-//Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb";
+// //Import Breadcrumb
+// import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import DeleteButtonRenderer from "common/data/delete-button";
@@ -29,6 +29,7 @@ import autoTable from "jspdf-autotable";
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
+import moment from 'moment';
 import "./nav.css";
 //redux
 
@@ -100,6 +101,7 @@ const Appointment = (props) => {
       try {
         const response = await api.getAppointmentbyId(data.id);
         const { data: appointmentData } = response;
+        console.log(data,'apptdata')
         setModalData(appointmentData);
         setModalOpen(true);
       } catch (error) {
@@ -158,6 +160,8 @@ const Appointment = (props) => {
       filter: "agSetColumnFilter",
       cellRenderer: "patientNameLinkRenderer",
       flex: "1",
+      minWidth: 170,
+      maxWidth: 170,
     },
     {
       headerName: "Appointment No",
@@ -172,12 +176,16 @@ const Appointment = (props) => {
         return <p>{"APPN" + appno}</p>;
       },
       flex: "1",
+      minWidth: 170,
+    maxWidth: 170,
     },
-    { headerName: "Appointment Date", field: "date", flex: "2" },
-    { headerName: "Gender", field: "gender" },
-    { headerName: "Phone", field: "mobileno" },
-    { headerName: "Priority", field: "priority_status" },
-    { headerName: "Live Consultant", field: "live_consult" },
+    { headerName: "Appointment Date", field: "date", flex: "1",minWidth: 210,
+    maxWidth: 210, },
+    { headerName: "Gender", field: "gender", flex: "1" },
+    { headerName: "Phone", field: "mobileno" , flex: "1",minWidth: 170},
+    { headerName: "Priority", field: "priority_status", flex: "1" },
+    { headerName: "Live Consultant", field: "live_consult" , flex: "1",minWidth: 170,
+    maxWidth: 170, },
     { headerName: "Fees", field: "amount" },
 
     {
@@ -187,6 +195,7 @@ const Appointment = (props) => {
       cellRendererParams: {
         onStatusChange: (row, value) => handleChangeStatus(row, value),
       },
+      flex: "1"
     },
     {
       headerName: "Actions",
@@ -241,7 +250,7 @@ const Appointment = (props) => {
     }
   };
 
-  // Inside your Appointment component
+
   const filteredData = useMemo(() => {
     if (!datas) return null;
 
@@ -273,11 +282,6 @@ const Appointment = (props) => {
   }, [datas, activeTab]);
 
   console.log(filteredData, "filterdata");
-
-  // const handleEditClick = (rowData) => {
-  //   setSelectedRowData(rowData);
-  //   setEditDialogOpen(true);
-  // };
 
   const handleDeleteClick = async (data) => {
     try {
@@ -352,11 +356,13 @@ const Appointment = (props) => {
     autoSizeStrategy: {
       type: "fitCellContents",
     },
+    
 
     defaultColDef: {
       flex: 1,
       sortable: true,
       filter: true,
+      suppressAutoSize: true,
     },
     onFirstDataRendered: (params) => {
       params.api.autoSizeAllColumns();
@@ -471,10 +477,7 @@ const Appointment = (props) => {
       <div className="page-content">
         <Container fluid>
           <ToastContainer transition={Flip} />
-          <Breadcrumbs
-            title={props.t("Appointment")}
-            breadcrumbItem={props.t("Appointment")}
-          />
+          <h4>Appointment</h4>
           <div
             style={{
               display: "flex",
@@ -527,7 +530,7 @@ const Appointment = (props) => {
         </Container>
 
         <div
-          className="ag-theme-material"
+          className="ag-theme-material col-lg-12 col-md-12"
           style={{ height: 1000, marginTop: "20px" }}
         >
           <div className="d-flex justify-content-start">
