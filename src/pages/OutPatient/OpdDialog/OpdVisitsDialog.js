@@ -18,12 +18,14 @@ export default function OpdVisitDialog({
   getOverviewVist,
   selectedData,
   setShowDoctor,
-  showDoctor
+  showDoctor,
+  setShowPaymode,
+  showPaymode
   // onChange,
   // handleFormSubmit,
   // handlePatientId
 }) {
-  console.log(selectedData,"selectedCompletely")
+  console.log(showDoctor,selectedData,"selectedCompletely")
   const [openVisitDialog, setOpenVisitDialog] = React.useState(false)
   const [listPatient, setListPatient] = useState([])
    const [details,setDetials] = useState({})
@@ -105,15 +107,17 @@ useEffect(()=>{
       known_allergies:selectedData?.known_allergies,
       // known_allergies:selectedData?.address,
       appointment_date:selectedData?.appointment_date,
+      payment_date:selectedData?.payment_date,
       case_type:selectedData?.case_type,
       casualty:selectedData?.casualty,
       patient_old:selectedData?.patient_old,
       tpa_charge:selectedData?.TPA,
       refference:selectedData?.refference,
       cons_doctor:selectedData?.doctor,
+      standard_charge:selectedData?.standard_charge,
       // charge_id:
       // tax:selectedData?.
-      // payment_mode:
+      payment_mode:selectedData?.payment_mode
     })
   }
 },[selectedData])
@@ -279,6 +283,9 @@ const handleChange = (e) =>{
   };
   const handleDoctorshow = () =>{
   setShowDoctor(false)
+  }
+  const handlePaymode = () =>{
+    setShowPaymode(false)
   }
 
   return (
@@ -740,7 +747,7 @@ const handleChange = (e) =>{
                 </Row>
                 <br />
                 <Row>
-                  <Col>
+                 {selectedData?.tax && <Col>
                     <label>Tax</label>
                     <br />
                     <input
@@ -755,10 +762,22 @@ const handleChange = (e) =>{
                         border: "1px solid rgba(0,0,0,0.2)",
                       }}
                     ></input>
-                  </Col>
-                  <Col>
-                    <label>Standard Charge(₹)</label>
+                  </Col>}
+                 <Col>
+                    <label>'Standard Charge(₹)</label>
                     <br />
+                    { selectedData?.standard_charge ?
+                    <input
+                      id="standard_charge"
+                      value={selectedData?.standard_charge}
+                      placeholder=""
+                      style={{
+                        width: "100%",
+                        height: "30px",
+                        borderRadius: "3px",
+                        border: "1px solid rgba(0,0,0,0.2)",
+                      }}
+                    ></input> :
                     <input
                       id="standard_charge"
                       value={amount[0]?.standard_charge}
@@ -770,10 +789,12 @@ const handleChange = (e) =>{
                         border: "1px solid rgba(0,0,0,0.2)",
                       }}
                     ></input>
+}
                   </Col>
                 </Row>
                 <br />
                 <Row>
+                  {selectedData?.apply_charge && 
                   <Col>
                     <label>
                       Applied Charge(₹) <span className="text-danger">*</span>
@@ -791,14 +812,15 @@ const handleChange = (e) =>{
                       }}
                     ></input>
                   </Col>
-                  <Col>
+}
+                 {selectedData?.amount && <Col>
                     <label>
                       Amount(₹) <span className="text-danger">*</span>
                     </label>
                     <br />
                     <input
                       id="amount"
-                      value={amount[0]?.amount}
+                      value={selectedData?.amount}
                       placeholder=""
                       style={{
                         width: "100%",
@@ -808,13 +830,14 @@ const handleChange = (e) =>{
                       }}
                     ></input>
                   </Col>
+}
                 </Row>
                 <br />
                 <Row>
                   <Col>
                     <label>Payment Mode</label>
                     <br />
-                    <select
+                    {selectedData?.payment_mode && showPaymode ? <input value={formData?.payment_mode} onClick={()=>handlePaymode()}></input>:<select
                       id="payment_mode"
                       onChange={handleChange}
                       value={formData?.payment_mode}
@@ -832,7 +855,9 @@ const handleChange = (e) =>{
                       <option value="bank transfer">Bank Transfer</option>
                       <option value="online">Online</option>
                     </select>
+}
                   </Col>
+                 {selectedData?.tax &&
                   <Col>
                     <label>
                       Paid Amount(₹) <span className="text-danger">*</span>
@@ -850,6 +875,7 @@ const handleChange = (e) =>{
                       }}
                     ></input>
                   </Col>
+}
                 </Row>
                 <br />
                 <Row>

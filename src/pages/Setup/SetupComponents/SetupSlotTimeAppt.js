@@ -179,15 +179,15 @@ function SetupSlotAppt() {
     console.log(newData, "complete newdata", formData);
     const response = await api.post_Appointment_slot_amount(newData);
     const { data } = response;
-    console.log(data, "complete response");
+    console.log(data,timeInputs, "complete response");
     if (data && start_time && end_time) {
       const timeSlotData = timeInputs.map((input) => ({
         day: formData?.day,
         //  day:'monday',
         staff_id: Number(formData?.doctor),
         global_shift_id: Number(formData?.shift),
-        start_time: start_time,
-        end_time: end_time,
+        start_time: input?.startTime,
+        end_time: input?.endTime,
         Hospital_id: 1,
       }));
  

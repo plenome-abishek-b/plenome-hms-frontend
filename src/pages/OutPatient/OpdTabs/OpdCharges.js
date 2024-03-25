@@ -5,10 +5,12 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 import { useMemo, useState, useCallback, useRef , useEffect } from "react"
 import OpdChargeDialog from '../OpdDialog/OpdChargeDialog'
 import api from 'services/Api'
+import { useParams } from 'react-router-dom/cjs/react-router-dom'
 
 function OpdCharges() {
 
-
+  const params = useParams()
+  console.log(params.pid,params?.opdid,"both id")
   const initialChargeValue = {
     created_at: "2023-02-02 11:11:11",
     opd_id: "1",
@@ -39,12 +41,12 @@ function OpdCharges() {
         { headerName: 'Date', field: 'date' },
         {headerName: 'Name', field: 'name'},
         {headerName: 'Charge Type', field: 'charge_type'},
-        {headerName: 'Charge Category', field: 'category_name'},
+        {headerName: 'Charge Category', field:'charge_category'},
         {headerName: 'Qty', field: 'qty'},
         {headerName: 'Standard Charge(₹)', field:'standard_charge'},
-        {headerName: 'TPA Charge(₹)', field: 'tpa_charge'},
-        {headerName: 'Tax', field: 'tax'},
-        {headerName: 'Applied Charge(₹)', field: 'apply_charge'},
+        {headerName: 'TPA Charge(₹)', field: 'TPA_charge'},
+        {headerName: 'Tax', field: 'tax1'},
+        {headerName: 'Applied Charge(₹)', field: 'apply_chargeapplied_charges'},
         {headerName: 'Amount(₹)', field: 'amount'}
         // {headerName: 'Action', field: 'action'}
       
@@ -68,20 +70,20 @@ function OpdCharges() {
         setOpenDialog(false)
       }
     
-      useEffect(() => {
-        // getUsers from json
+      useEffect(()=>{
+       
         getCharges()
-      }, [])
-    
-      const getCharges = () => {
-        
-        // api.getPatient().then(res => setTableData(res.data))
-        api.getOpdCharges().then(res => {
-          console.log(res,'response');
-          setTableData(res.data)})
-        
-        api.http
-      }
+       },[])
+       const getCharges = async () =>{
+        const datas ={
+          opdid : params?.opdid,
+          pid : params?.pid
+        }
+       const response = await api.getChargesAsperOPD(datas)
+       const {data} = response
+       console.log(data,"charge response")
+       setTableData(data)
+       }
 
       function patientId(e){
         console.log(e.target.value,"nameeeeeeeeeeee")
@@ -126,7 +128,7 @@ function OpdCharges() {
 
     <div >
     <div className='d-flex justify-content-end'>
-    <button className="btn-mod custom-btn" onClick={handleOpenCharge}>+ Add Charges</button>
+    <button className="btn-mod custom-btn" onClick={handleOpenCharge}> Add Charges</button>
     </div>
      
       <OpdChargeDialog open={openDialog} handleClose={handleCloseCharge} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>

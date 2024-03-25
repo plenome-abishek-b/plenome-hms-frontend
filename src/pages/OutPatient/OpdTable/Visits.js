@@ -75,7 +75,7 @@ function Visits() {
       setModelOpen(true);
     }
     const handleClose = () =>{
-      setShowDoctor(false)
+      // setShowDoctor(false)
       setModelOpen(false)
     }
       const columnDefs = [
@@ -203,7 +203,7 @@ function Visits() {
               domLayout='autoHeight'
               frameworkComponents={components}
             />
-          <OpdVistDetailDialog open={modelOpen} completeData={completeData} handleClose={handleClose} setShowDoctor={setShowDoctor} showDoctor={showDoctor}/> 
+          <OpdVistDetailDialog open={modelOpen} completeData={completeData} handleClose={handleClose} /> 
           </div>
     </div>
         
