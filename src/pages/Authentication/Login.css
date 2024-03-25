@@ -1,0 +1,68 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.plenome-hospital-text {
+    color: #3A639C;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 29px;
+}
+
+.welcome-text {
+    color: #1C2253;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+}
+.user-name-text{
+    color: #1C2253 !important;
+    font-size: 14px;
+
+}
+
+.account-pages {
+    height: 100vh;
+    background-image: url("./login-bg1.jpeg");
+    background-color: lightgray;
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+
+
+.eye{
+    position: absolute;
+   top: 99px;
+   left: 0;
+}
+.custom-checkbox{
+    border-color: #1C2253 !important;
+}
+.forget-text{
+    color: #2563EB;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* for  forgotpassword styles */
+.account-pages2{
+    height: 100vh;
+}
+
+.reset-text{
+    color: #1C2253;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 120%;
+}
+.reset-text2{
+    color: #8F98B3;
+    font-size: 14px;
+    font-weight: 400;
+}
+.reset-lable{
+    color: #1C2253;
+    font-size: 14px;
+    font-weight: 500;
+}
