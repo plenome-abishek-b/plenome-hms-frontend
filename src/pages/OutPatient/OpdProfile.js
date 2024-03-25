@@ -34,7 +34,8 @@ const Message = (props) => {
   const [consultant,setConsultant] = useState([]);
   const [selectedData,setSelectedData] = useState({});
   const [openVisit, setOpenVisit] = useState(false);
-
+  const [showDoctor,setShowDoctor] = useState(true)
+  const [showPaymode,setShowPaymode] = useState(true)
   const params = useParams();
   console.log(params.pid, "params");
   const pid = params?.pid;
@@ -78,6 +79,8 @@ const Message = (props) => {
     setSelectedData(data[0]);
   }
   const handleCloseVisit = () => {
+    setShowDoctor(true)
+    setShowPaymode(true)
     setOpenVisit(false)
   }
   return (
@@ -459,7 +462,7 @@ const Message = (props) => {
               </Card>
             </Col>
           </Row>
-        <OpdVisitDialog selectedData={selectedData} open={openVisit} handleClose={handleCloseVisit}/>
+        <OpdVisitDialog selectedData={selectedData} open={openVisit} handleClose={handleCloseVisit} setShowDoctor={setShowDoctor} showDoctor={showDoctor} setShowPaymode={setShowPaymode} showPaymode={showPaymode} />
         </Container>
       </div>
     </React.Fragment>

@@ -3,6 +3,9 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import { useMemo, useState, useCallback, useRef } from "react"
+import { useEffect } from 'react'
+import api from 'services/Api'
+import { useParams } from 'react-router-dom/cjs/react-router-dom'
 
 
 function Charges() {
@@ -11,7 +14,8 @@ function Charges() {
   const rowData = [
     { name: '', ctype: '', scharge: '', tax: '', appchrg: '', amt: '' }
   ];
-
+  const params = useParams()
+  console.log(params,"parass")
   const columnDefs = [
     { headerName: 'Name', field: 'name', cellStyle: { fontWeight: 'bold', color: 'black', backgroundColor: '#F1F6F5' } },
     { headerName: 'Charge Type', field: 'ctype' },
@@ -30,6 +34,12 @@ function Charges() {
     []
   );
 
+   useEffect(()=>{
+    getCharges()
+   },[])
+   const getCharges = async () =>{
+   const response = await api.getChargesAsperOPD()
+   }
 
 
 

@@ -122,7 +122,7 @@ const AddStaff = () => {
         staff_designation_id: staff?.staff_designation_id,
         department_id: staff?.department_id,
         department: staff?.department_name,
-        specialist: staff?.specialist,
+        specialist: JSON.stringify(parseInt(staff?.specialist)),
         surname: staff?.surname,
         first_name: staff?.name,
         father_name: staff?.father_name,

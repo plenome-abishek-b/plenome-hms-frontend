@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { toDate } from "validator";
@@ -105,7 +106,7 @@ const URL = {
   CHARGES_URL: "/setup-hospital-charge-charges",
   CHARGES_CATEGORY_URL: "/setup-hospital-charges-charge-category",
   CHARGE_TYPE_URL: "/setup-hospital-charges-charge-type-master",
-  SETUP_CHARGE_CATEGORY_URL: "/setup-hospital-charges-charge-category/bytype/",
+    SETUP_CHARGE_CATEGORY_URL: "/internal-modules-charge-category",
   SETUP_CHARGE_NAME: "/setup-hospital-charge-charges",
   SETUP_TAX_URL: "/setup-hospital-charges-tax-category",
   SETUP_UNIT_URL: "/setup-hospital-charges-unit-type",
@@ -443,7 +444,9 @@ const URL = {
   DASHBOARD_STAFF_URL: '/staff_roles',
   YEARLY_INCOME_URL: '/income-summary/yearly-income',
   OPD_TREATMENT_HISTORY:'/internal-opd-treatment-history',
-  OPD_TIMELINE:'/internal-opd-timeline'
+  OPD_TIMELINE:'/internal-opd-timeline',
+  OPD_INTERNAL:'/internal-opd-charges',
+  CHARGE_CATEGOY_BY_TYPEID:'internal-modules-charge-category'
 };  
 
 function getDashboardStaff(data = {}){
@@ -816,8 +819,8 @@ function getChargetype(data = {}) {
 }
 
 		
-function getSetupChargeCategory(id,data = {}) {
-    const url = `${URL.SETUP_CHARGE_CATEGORY_URL}${id}`;
+function getSetupChargeCategory(id,data) {
+    const url = `${URL.SETUP_CHARGE_CATEGORY_URL}/${id}`;
     return http3.get(url, data);
 }
   
@@ -955,7 +958,7 @@ function getChargeName(data = {}) {
 }
 
 function getChargeType(data = {}) {
-  return http3.get(URL.OPD_CHARGE_TYPE_URL, data);
+  return http6.get(URL.OPD_CHARGE_TYPE_URL, data);
 }
 
 function getLabInvest(data = {}) {
@@ -2994,6 +2997,15 @@ function patchSetupRadiologyParameter(data){
   function deleteOPD_timeline(id){
     return http.delete(`${URL.OPD_TIMELINE}/${id}?hosId=1`)
   }
+  function getChargesAsperOPD(data){
+    const datas = { params: { opd_id: data?.opdid ,patient_id:data?.pid} };
+    console.log(data,"alll are")
+    return http.get(URL.OPD_INTERNAL,datas)
+  }
+  function getChargeCategoryBychargeType(id){
+    const url = `${URL.CHARGE_CATEGOY_BY_TYPEID}/${id}`
+    return http.get(url)
+  }
 //////// 
 
 function createPhrAddress(
@@ -3647,6 +3659,8 @@ getTreatmentHistory_OPD,
 getOPD_timeline,
 postOPD_timeline,
 updateOPD_timeline,
-deleteOPD_timeline
+deleteOPD_timeline,
+getChargesAsperOPD,
+getChargeCategoryBychargeType
 };
 export default api;
