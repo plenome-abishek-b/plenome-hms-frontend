@@ -75,6 +75,7 @@ export default function AlertDialog({
         appointment_status: selectedData.appointment_status,
         source: selectedData.source,
         Hospital_id: 1,
+        doctor:selectedData?.doctorid
       });
     } else {
       setFormValues({
@@ -83,7 +84,7 @@ export default function AlertDialog({
         live_consult: "",
         global_shift_id: "",
         shift_id: "",
-        time: "11:11",
+        time: "11:11:11",
         priority: "",
         appointment_status: "",
         source: "Online",
@@ -123,6 +124,7 @@ export default function AlertDialog({
   };
   const [formValues, setFormValues] = useState({ initialValues });
   const [isEditing, setIsEditing] = useState(true);
+  const [date,setDate] = useState(null)
   useEffect(() => {
     getApptCharge();
   }, [formValues.doctor]);
@@ -133,7 +135,9 @@ export default function AlertDialog({
     const { name, value } = event.target;
 
     const formattedValue = name === "time" ? `${value}:00` : value;
-
+     if(name === 'date'){
+      setDate(value)
+     }
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       [name]: formattedValue,
@@ -339,7 +343,9 @@ export default function AlertDialog({
     const newData = {
       ...formValues,
       id: selectedData?.id,
+      doctor:Number(formValues?.doctor)
     };
+    
     const response = await api?.updateAppointment(newData);
     console.log(response, "eeeerespo");
     handleClose();
@@ -349,6 +355,25 @@ export default function AlertDialog({
         className: "toast-message",
         autoClose: 300
       });
+      console.log(date,"change date")
+      if(date !== null && response.status === 200){
+        const dateObject = new Date(selectedData.date)
+        const formattedDate = `${dateObject.getFullYear()}-${String(
+          dateObject.getMonth() + 1
+        ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
+        const timeWithoutAMPM = dateObject
+          .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+          .replace(/\s[AaPp][Mm]$/, "");
+        const datas ={
+          mobilenumber:selectedData?.mobileno,
+          patname:selectedData?.patient_name,
+          date:date,
+          doctor:selectedData?.doctor_name
+        }
+      const sms2 = await api.updateAppointmentSms(datas)
+      console.log(sms2,"sms2")
+      setDate(null)
+      }
     }
     getAppointment();
   };
@@ -567,7 +592,7 @@ export default function AlertDialog({
                 value={formValues.global_shift_id}
                 onChange={handleChange}
               >
-                <option>select one</option>
+                <option>{selectedData?.shift ? selectedData?.shift : 'select one'}</option>
                 {shift &&
                   shift.map((shifts) => (
                     <option
@@ -651,7 +676,7 @@ export default function AlertDialog({
                 value={formValues.shift_id}
                 onChange={handleChange}
               >
-                <option>select one</option>
+                <option>{selectedData?.slot ? selectedData?.slot :'select one'}</option>
                 {slot &&
                   slot.map((slots) => (
                     <option key={slots.shift_id} value={slots.shift_id}>
@@ -782,7 +807,7 @@ export default function AlertDialog({
           >
             Cancel
           </button>
-          {selectedData?.doctor_name ? (
+          {selectedData?.date? (
             <button
               onClick={() => {
                 handleUpdate();
