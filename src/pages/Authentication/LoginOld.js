@@ -228,7 +228,7 @@ const Login = (props) => {
       </div> */}
       <ToastContainer transition={Flip} />
       <div className="account-pages  pt-sm-5 ">
-        <Container className="">
+        <Container style={{marginTop: '120px'}}>
           <Row className=" justify-content-end">
             <Col md={8} lg={6} xl={5} className="">
               <Card className="">
@@ -456,7 +456,7 @@ const Login = (props) => {
                         </div>
                       </div>
 
-                      <div className="mt-3 d-grid pb-5">
+                      <div className="mt-4 d-grid pb-5">
                         <button
                           className="btn btn-outline-primary bg-primary btn-block text-white"
                           // type="submit"
@@ -464,6 +464,9 @@ const Login = (props) => {
                         >
                           Sign In
                         </button>
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        Don't have an account?<Link to='/account/registerstaff' className='ms-2'>Signup</Link>
                       </div>
                       {/* {userData === "Doctor" && <Sidebar role="Doctor" />}
             {userData === "Super Admin" && <Sidebar role="Super Admin" />} */}

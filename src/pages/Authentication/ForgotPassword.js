@@ -20,44 +20,196 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import { withRouter, Link, useHistory } from "react-router-dom";
-import { ToastContainer,toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './Login.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Login.css";
+import Verify from './verify-box.svg'
 
 // import api from "services/Api"
 
 const Forgotpassword = (props) => {
-    const [data, setData] = useState([]);
-    
-    const history = useHistory()
+  const [data, setData] = useState([]);
+  const [step, setStep] = useState(1);
 
-    const onChange = e => {
-        //catch the parameters when changed.
-        const { value, name } = e.target
-        console.log(value, name,'selectttttt');
-        setData({ ...data, [name]: value })
-        
-      }
+  const history = useHistory();
 
-      const handleFormSubmit = async () => {
-        console.log("hi");
-        const response = await api.postForgotPassword(data);
-        const { datas } = response;
-        console.log(datas, 'forgot data');
-    
-        if (response.status === 201) {
-          toast.success("Password Reset Mail sent Successfully", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 300,
-          });
-          setTimeout(()=>{
-            history.push('/account/login')
-          },1200)
-           
-          
-        }
-    };
-    
+  const onChange = (e) => {
+    //catch the parameters when changed.
+    const { value, name } = e.target;
+    console.log(value, name, "selectttttt");
+    setData({ ...data, [name]: value });
+  };
+
+  const handleFormSubmit = async () => {
+    console.log("hi");
+    const response = await api.postForgotPassword(data);
+    const { datas } = response;
+    console.log(datas, "forgot data");
+
+    if (response.status === 201) {
+      toast.success("Password Reset Mail sent Successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 300,
+      });
+      
+      const handleNext = () => {
+        setStep(step + 1);
+      };
+      handleNext()
+      
+      setTimeout(() => {
+        history.push("/account/changepassword");
+      }, 3000);
+    }
+  };
+  const handlBack = () => {
+    setStep(step - 1);
+  };
+
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div>
+            <Container>
+              {/* <Row className="justify-content-center">
+            <Col md={8} lg={6} xl={5}>
+              <Card
+                className="overflow-hidden d-flex align-items-center justify-content-center"
+                style={{ height: "500px" }}
+              >
+                <div className="">
+                  <Row>
+                    <Col xs={7}>
+                      <div className="p-5">
+                        <h2 className=" text-dark">Reset Your Password </h2> */}
+              {/* <p className="text-white">Enter Your Mail</p> */}
+              {/* </div>
+                    </Col> */}
+              {/* <Col className="col-4 align-self-end">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/4807/4807695.png"
+                        alt=""
+                        className="img-fluid"
+                      />
+                    </Col> */}
+              {/* </Row>
+                </div> */}
+
+              {/* <CardBody className="p-4">
+                  <Row className="mt-5">
+                    <Col>
+                      <label>Enter Mail</label>
+                      <br />
+                      <Input
+                        className="mt-2"
+                        style={{
+                          width: "100%",
+                          height: "35px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
+                        }}
+                        name="Username"
+                        onChange={onChange}
+                        value={data.Username}
+                      ></Input>
+                    </Col>
+                  </Row>
+                  <div className="mt-5 d-flex justify-content-center">
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleFormSubmit}
+                    >
+                      Reset Password
+                    </button>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row> */}
+              <Row>
+                <Col
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: "80vh" }}
+                >
+                  <div>
+                    <span className="reset-text">Reset your password</span>
+                    <br />
+                    <span className="reset-text2 ">
+                      Enter your email address to reset your password
+                    </span>
+                    <br />
+                    <label for="" className="reset-label mt-2">
+                      Username
+                    </label>
+                    <br />
+                    <input
+                      className=" form-control"
+                      placeholder="enter your username"
+                      style={{
+                        height: "35px",
+                        border: "1px solid #8F98B3",
+                        borderRadius: "8px",
+                      }}
+                      name="Username"
+                      onChange={onChange}
+                      value={data.Username}
+                    />
+                    <br />
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      // onClick={handleFormSubmit}
+                      onClick={handleFormSubmit}
+                      style={{ width: "100%" }}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        );
+      case 2:
+        return (
+          <div>
+            <Container className="">
+              <Row>
+                <Col>
+                  <div
+                    className="d-flex flex-column justify-content-center align-items-center"
+                    style={{ height: "80vh" }}
+                  >
+                    <div>
+                      <span>
+                        <img src={Verify} alt="SVG" className="mb-4" />
+                      </span>
+                    </div>
+                    <div>
+                      <span className="  text-center reset-text">
+                        Your credentials has sent to your email please check
+                      </span>
+                      <br />
+                      <Link to="/account/changepassword">
+                        {/* to="/account/login"{" "} */}
+                        <button
+                          type="button"
+                          className="btn btn-primary mt-4 "
+                          style={{ width: "90%", marginLeft: "20px" }}
+                        >
+                          Back to Login
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        );
+    }
+  };
 
   return (
     <React.Fragment>
@@ -166,103 +318,7 @@ const Forgotpassword = (props) => {
             Plenome Hospitals
           </span>
         </div>
-        <Container>
-          {/* <Row className="justify-content-center">
-            <Col md={8} lg={6} xl={5}>
-              <Card
-                className="overflow-hidden d-flex align-items-center justify-content-center"
-                style={{ height: "500px" }}
-              >
-                <div className="">
-                  <Row>
-                    <Col xs={7}>
-                      <div className="p-5">
-                        <h2 className=" text-dark">Reset Your Password </h2> */}
-          {/* <p className="text-white">Enter Your Mail</p> */}
-          {/* </div>
-                    </Col> */}
-          {/* <Col className="col-4 align-self-end">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/4807/4807695.png"
-                        alt=""
-                        className="img-fluid"
-                      />
-                    </Col> */}
-          {/* </Row>
-                </div> */}
-
-          {/* <CardBody className="p-4">
-                  <Row className="mt-5">
-                    <Col>
-                      <label>Enter Mail</label>
-                      <br />
-                      <Input
-                        className="mt-2"
-                        style={{
-                          width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
-                        }}
-                        name="Username"
-                        onChange={onChange}
-                        value={data.Username}
-                      ></Input>
-                    </Col>
-                  </Row>
-                  <div className="mt-5 d-flex justify-content-center">
-                    <button
-                      className="btn btn-primary"
-                      onClick={handleFormSubmit}
-                    >
-                      Reset Password
-                    </button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row> */}
-          <Row>
-            <Col
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: "80vh" }}
-            >
-              <div>
-                <span className="reset-text">Reset your password</span>
-                <br />
-                <span className="reset-text2 ">
-                  enter your eamil address to rest your password
-                </span>
-                <br />
-                <label for="" className="reset-label mt-2">
-                  Username
-                </label>
-                <br />
-                <input
-                  className=" form-control"
-                  placeholder="enter your username"
-                  style={{
-                    height: "35px",
-                    border: "1px solid #8F98B3",
-                    borderRadius: "8px",
-                  }}
-                  name="Username"
-                  onChange={onChange}
-                  value={data.Username}
-                />
-                <br />
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={handleFormSubmit}
-                  style={{width:'100%'}}
-                >
-                  Next
-                </button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        {renderStepContent()}
       </div>
     </React.Fragment>
   );

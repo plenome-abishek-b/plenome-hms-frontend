@@ -24,13 +24,14 @@ import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import DeleteButtonRenderer from "common/data/delete-button";
 import Patientdetails from "./Dialog/PatientdetailsDialog";
+import Filter from "./FilterDialog.js";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditButtonRenderer from "common/data/update-button";
-import moment from 'moment';
 import "./nav.css";
+import { Dialog } from "@mui/material";
 //redux
 
 const initialValue = {
@@ -60,8 +61,10 @@ const Appointment = (props) => {
   };
 
   const [formData, setFormData] = useState(initialValue);
-
+// for dialog
   const [open, setOpen] = React.useState(false);
+  // for dialog filter
+  const [open2, setOpen2] = React.useState(false);
 
   const [datas, setDatas] = useState(null);
 
@@ -82,6 +85,13 @@ const Appointment = (props) => {
     setSelectedData({});
     setOpen(true);
   };
+  const handleClickOpen2 =()=>{
+   
+    setOpen2(true)
+  }
+   const handleClose2 = () => {
+     setOpen2(false);
+   };
 
   const handleClose = () => {
     //dialog close
@@ -101,7 +111,6 @@ const Appointment = (props) => {
       try {
         const response = await api.getAppointmentbyId(data.id);
         const { data: appointmentData } = response;
-        console.log(data,'apptdata')
         setModalData(appointmentData);
         setModalOpen(true);
       } catch (error) {
@@ -177,15 +186,25 @@ const Appointment = (props) => {
       },
       flex: "1",
       minWidth: 170,
-    maxWidth: 170,
+      maxWidth: 170,
     },
-    { headerName: "Appointment Date", field: "date", flex: "1",minWidth: 210,
-    maxWidth: 210, },
+    {
+      headerName: "Appointment Date",
+      field: "date",
+      flex: "1",
+      minWidth: 210,
+      maxWidth: 210,
+    },
     { headerName: "Gender", field: "gender", flex: "1" },
-    { headerName: "Phone", field: "mobileno" , flex: "1",minWidth: 170},
+    { headerName: "Phone", field: "mobileno", flex: "1", minWidth: 170 },
     { headerName: "Priority", field: "priority_status", flex: "1" },
-    { headerName: "Live Consultant", field: "live_consult" , flex: "1",minWidth: 170,
-    maxWidth: 170, },
+    {
+      headerName: "Live Consultant",
+      field: "live_consult",
+      flex: "1",
+      minWidth: 170,
+      maxWidth: 170,
+    },
     { headerName: "Fees", field: "amount" },
 
     {
@@ -195,7 +214,10 @@ const Appointment = (props) => {
       cellRendererParams: {
         onStatusChange: (row, value) => handleChangeStatus(row, value),
       },
-      flex: "1"
+      flex: "1",
+      cellStyle:{
+        marginLeft: '-20px'
+      }
     },
     {
       headerName: "Actions",
@@ -234,6 +256,7 @@ const Appointment = (props) => {
           second: "2-digit",
           hour12: true,
         }).format(new Date(combinedDateTime));
+        
 
         const modifiedName = patient?.patient_name?.replace(/\//g, "");
 
@@ -250,7 +273,7 @@ const Appointment = (props) => {
     }
   };
 
-
+  // Inside your Appointment component
   const filteredData = useMemo(() => {
     if (!datas) return null;
 
@@ -283,6 +306,11 @@ const Appointment = (props) => {
 
   console.log(filteredData, "filterdata");
 
+  // const handleEditClick = (rowData) => {
+  //   setSelectedRowData(rowData);
+  //   setEditDialogOpen(true);
+  // };
+
   const handleDeleteClick = async (data) => {
     try {
       const toastId = toast.info(
@@ -302,6 +330,7 @@ const Appointment = (props) => {
         {
           position: toast.POSITION.TOP_CENTER,
           closeButton: false,
+
         }
       );
     } catch (error) {
@@ -356,7 +385,6 @@ const Appointment = (props) => {
     autoSizeStrategy: {
       type: "fitCellContents",
     },
-    
 
     defaultColDef: {
       flex: 1,
@@ -393,15 +421,15 @@ const Appointment = (props) => {
             style={{
               backgroundColor:
                 props.value === "pending"
-                  ? "#FFF6D6"
+                  ? "#FFECA9"
                   : props.value === "approved"
-                  ? "#E3F3E9"
+                  ? "#0EAD69"
                   : "#FADBDB",
               border:
                 props.value === "pending"
                   ? "#FFF6D6"
                   : props.value === "approved"
-                  ? "#E3F3E9"
+                  ? "#0EAD69"
                   : "#FADBDB",
               borderRadius: "7px",
               height: "35px",
@@ -490,9 +518,9 @@ const Appointment = (props) => {
               onClick={handleClickOpen}
               style={{ marginRight: "15px" }}
             >
-              + Add Appointment
+              + New Appointment
             </button>
-            <Link to="/doctorwise">
+            {/* <Link to="/doctorwise">
               <button
                 className="btn btn-outline-primary"
                 style={{ marginRight: "15px" }}
@@ -508,21 +536,30 @@ const Appointment = (props) => {
               >
                 <i className="fas fa-align-center"></i>&nbsp;&nbsp;Queue
               </button>
-            </Link>
+            </Link> */}
+
+            <button
+              type=""
+              className="btn btn-outline-primary"
+              style={{ marginRight: "15px" }}
+              onClick={handleClickOpen2}
+            >
+              Filter <i className=" fas fa-filter"></i>
+            </button>
 
             <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-              <DropdownToggle caret className="btn btn-outline-primary text-primary bg-white">
-            
+              <DropdownToggle
+                caret
+                className="btn btn-outline-primary text-primary bg-white"
+              >
                 Export&nbsp;<i className="fas fa-caret-down"></i>
               </DropdownToggle>
-              <DropdownMenu style={{ minWidth: 'fit-content' }}>
+              <DropdownMenu style={{ minWidth: "fit-content" }}>
                 <DropdownItem onClick={() => onBtnExport()}>
-                <i className="fas fa-file-csv"></i>&nbsp;
-                  CSV
+                  <i className="fas fa-file-csv"></i>&nbsp; CSV
                 </DropdownItem>
                 <DropdownItem onClick={onBtnExportPDF}>
-                <i className="far fa-file-pdf"></i>&nbsp;
-                  PDF
+                  <i className="far fa-file-pdf"></i>&nbsp; PDF
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -600,6 +637,13 @@ const Appointment = (props) => {
             data={formData}
             getAppointment={getAppointment}
           />
+          <Filter
+          open={open2}
+          handleClose={handleClose2}
+          selectedData={selectedData}
+          data={formData}
+          getAppointment={getAppointment}
+          />
           <Patientdetails
             open={modalOpen}
             handleClose={handleCloseModal}
@@ -608,6 +652,7 @@ const Appointment = (props) => {
             handleDeleteClick={handleDeleteClick}
             handleDeletionConfirmed={handleDeletionConfirmed}
           />
+          
         </div>
         {/* <h4>Abishek</h4> */}
       </div>

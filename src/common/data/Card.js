@@ -23,6 +23,7 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
   };
  
   const staffDetails = `${staffname}, ${role}, ${qualification}, ${email}, ${number}`;
+
  
   return (
     <div
@@ -35,7 +36,7 @@ const Card = ({ getAllStaff, staff, staffname, email, qualification, number, rol
           <div className="col-lg-6 col-md-12">
             {/* QR Code */}
             <div onClick={handleOpen}>
-              <QRCode value={staffDetails} bgColor="#ffffff" fgColor="#000000" style={{border: '9px solid #419197',borderRadius: '5px', padding: '9px', cursor: 'pointer'}}/>
+              <QRCode value={staffDetails} bgColor="#ffffff" fgColor="#000000" style={{border: '9px solid #419197',borderRadius: '5px', padding: '9px', cursor: 'pointer', width: '100px', height: '100px'}}/>
             </div>
           </div>
           <div className="col-lg-6 col-md-12">

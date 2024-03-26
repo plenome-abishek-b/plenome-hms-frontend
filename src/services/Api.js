@@ -451,9 +451,14 @@ const URL = {
   CHARGE_CATEGOY_BY_TYPEID:'internal-modules-charge-category',
 
   
-  STAFF_ONBOARD_URL: '/staff-onboard'
+  STAFF_ONBOARD_URL: '/staff-onboard',
+  APPT_NO: '/appointment-no-send'
 
 };  
+
+function postApptNoSend(data){
+  return sms_http.post(URL.APPT_NO,data)
+}
 
 function postStaffonboard(data){
   return sms_http.post(URL.STAFF_ONBOARD_URL,data)
@@ -3679,6 +3684,7 @@ deleteOPD_timeline,
 getChargesAsperOPD,
 getChargeCategoryBychargeType,
 getBillings,
-postStaffonboard
+postStaffonboard,
+postApptNoSend
 };
 export default api;
