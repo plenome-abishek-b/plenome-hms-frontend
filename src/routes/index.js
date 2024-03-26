@@ -193,6 +193,7 @@ import SetupBedLisNew from "pages/Setup/SetupComponents/SetupBedLisNew";
 import ModuleSettingsPage from "pages/Settings/SettingPages/ModuleToggleSettings";
 import ForgotPassword from "pages/Authentication/ForgotPassword";
 import AppointmetnReport from "pages/Reports/AppointmetnReport";
+import ChangePassword from "pages/Authentication/ChangePassword";
 
 const authProtectedRoutes = [
   // { path: "", component: Login },
@@ -384,6 +385,7 @@ const publicRoutes = [
   {path: "/account/abhagenerateotp", component: AbhaGenerateOtp},
   {path: "/account/generateqr", component: Generateqr},
   {path: "/account/forgotpassword", component: ForgotPassword},
+  {path: "/account/changepassword", component: ChangePassword}
 ];
 
 export { authProtectedRoutes, publicRoutes };

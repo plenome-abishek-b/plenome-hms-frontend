@@ -232,17 +232,19 @@ export default function SetupChargeDialog({
                 <label>Unit Type<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
+                id="charge_unit_id"
                   style={{
                     width: "100%",
                     height: "30px",
                     border: '1px solid rgba(0,0,0,0.2)', 
                     borderRadius: '3px'
                   }}
+                  onChange={(e)=>onChange(e)}
                 >
                   <option>select</option>
                   {unit &&
                     unit.map((unit_type) => (
-                      <option key={unit_type.id} value={unit_type.id}>
+                      <option key={unit_type.charge_unit_id} value={unit_type.charge_unit_id}>
                         {unit_type.unit}
                       </option>
                     ))}

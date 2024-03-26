@@ -6,7 +6,7 @@ import { Container, Card, CardBody } from "reactstrap"
 import { withTranslation } from "react-i18next"
 import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
+import "ag-grid-community/styles/ag-theme-material.css"
 
 import SetupChargeCategoryDialog from "../SetupDialog/SetupChargeCategoryDialog"
 import api from "services/Api"
@@ -96,12 +96,12 @@ const setupChargeCategory = props => {
             <CardBody>
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button className="btn-mod bg-soft" onClick={handleOpenCategory}>
+                  <button className="btn btn-primary bg-soft" onClick={handleOpenCategory}>
                     <i className="fa fa-plus"></i>&nbsp; Add Charge Category
                   </button>
                 </div>
                 <div
-                  className="ag-theme-alpine"
+                  className="ag-theme-material"
                   style={{ height: 500, marginTop: "20px" }}
                 >
                   <AgGridReact
