@@ -653,35 +653,6 @@ export default function AlertDialog({
             </Col>
             <Col lg="4" md="4" sm="12">
               <label>
-                Shift <span className="text-danger">*</span>
-              </label>
-              <br />
-              <select
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  border: "1px solid #8F98B3",
-                  borderRadius: "8px",
-                }}
-                onClick={() => getShifts()}
-                name="global_shift_id"
-                value={formValues.global_shift_id}
-                onChange={handleChange}
-              >
-                <option>select one</option>
-                {shift &&
-                  shift.map((shifts) => (
-                    <option
-                      key={shifts.global_shift_id}
-                      value={shifts.global_shift_id}
-                    >
-                      {shifts.shift_name}
-                    </option>
-                  ))}
-              </select>
-            </Col>
-            <Col lg="4" md="4" sm="12">
-              <label>
                 Time <span className="text-danger">*</span>
               </label>
               <br />
