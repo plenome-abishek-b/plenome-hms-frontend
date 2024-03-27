@@ -449,6 +449,10 @@ const URL = {
   OPD_TIMELINE:'/internal-opd-timeline',
   OPD_INTERNAL:'/internal-opd-charges',
   CHARGE_CATEGOY_BY_TYPEID:'internal-modules-charge-category',
+  STAFF_ONBOARD_URL: '/staff-onboard',
+  UPDATE_APPOINTMENT_SMS:'/sending-sms-appointment-reschedule',
+  UPDATE_APPOINTMENT_CONFIRM_SMS:'/sending-sms-appointment-completed',
+  UPDATE_APPOINTMENT_CANCELLED_SMS:'/sending-sms-appointment-cancelled',
 
   
   STAFF_ONBOARD_URL: '/staff-onboard',
@@ -3027,7 +3031,16 @@ function patchSetupRadiologyParameter(data){
     const url = `${URL.CHARGE_CATEGOY_BY_TYPEID}/${id}`
     return http.get(url)
   }
-//////// 
+  function updateAppointmentSms(data){
+    return sms_http.post(URL.UPDATE_APPOINTMENT_SMS,data);
+  }
+  function updateAppointmentApprovedSms(data){
+    return sms_http.post(URL.UPDATE_APPOINTMENT_CONFIRM_SMS,data);
+  }
+  function updateAppointmentCancelledSms(data){
+    return sms_http.post(URL.UPDATE_APPOINTMENT_CANCELLED_SMS,data)
+  }
+////////
 
 function createPhrAddress(
   transactionId,
@@ -3106,6 +3119,7 @@ function postSms(datas){
   console.log(datas,'logging in api');
   return sms_http.post(URL.SMS_GATEWAY,datas)
 }
+
 
 function postEmail(email_datas){
   return email_http.post(URL.EMAIL_GATEWAY,email_datas)
@@ -3685,6 +3699,10 @@ getChargesAsperOPD,
 getChargeCategoryBychargeType,
 getBillings,
 postStaffonboard,
+updateAppointmentSms,
+updateAppointmentCancelledSms,
+updateAppointmentApprovedSms,
 postApptNoSend
+ main
 };
 export default api;
