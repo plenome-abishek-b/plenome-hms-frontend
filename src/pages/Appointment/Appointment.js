@@ -423,13 +423,13 @@ const Appointment = (props) => {
                 props.value === "pending"
                   ? "#FFECA9"
                   : props.value === "approved"
-                  ? "#0EAD69"
+                  ? "#E3F3E9"
                   : "#FADBDB",
               border:
                 props.value === "pending"
                   ? "#FFF6D6"
                   : props.value === "approved"
-                  ? "#0EAD69"
+                  ? "#E3F3E9"
                   : "#FADBDB",
               borderRadius: "7px",
               height: "35px",
