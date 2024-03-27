@@ -126,14 +126,50 @@ const Appointment = (props) => {
   };
   const handleChangeStatus = async (data, value) => {
     console.log(data, "calling", updateStatus?.appointment_status);
-    if (updateStatus?.appointment_status) {
-      const dateObject = new Date(data.date);
-      const formattedDate = `${dateObject.getFullYear()}-${String(
-        dateObject.getMonth() + 1
-      ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
-      const timeWithoutAMPM = dateObject
-        .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-        .replace(/\s[AaPp][Mm]$/, "");
+//     if (updateStatus?.appointment_status) {
+//       const dateObject = new Date(data.date);
+//       const formattedDate = `${dateObject.getFullYear()}-${String(
+//         dateObject.getMonth() + 1
+//       ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
+//       const timeWithoutAMPM = dateObject
+//         .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+//         .replace(/\s[AaPp][Mm]$/, "");
+//         // const originalDate = new Date(data?.date);
+// // const formattedDate = originalDate.toLocaleDateString("en-US", {
+// //   month: 'short',
+// //   day: '2-digit',
+// //   year: 'numeric'
+// // });
+//         const message = {
+//           Patname:data?.patient_name,
+//           mobilenumber:data?.mobileno, 
+//           Date:formattedDate,
+//         }
+//         const cancellData = {
+//           mobileNumber:data?.mobileno, 
+//           name:data?.patient_name,
+//           date:formattedDate,
+//           reason:"doctor unavailable"      
+//         }
+//         console.log(message,formattedDate,"DATE AND MESSAGE");
+//         if(updateStatus?.appointment_status === 'approved'){
+//           console.log(message,"approved");
+//           const send = await api.updateAppointmentApprovedSms(message);
+//           console.log(send,"sms ... sms");
+//         }
+//         else if(updateStatus?.appointment_status === 'cancel'){
+//           console.log(cancellData,"canceleddsd");
+//           const send = await api.updateAppointmentCancelledSms(cancellData);
+//           console.log(send,"sms ... sms");
+//         }
+const dateObject = new Date(data.date);
+console.log(updateStatus?.appointment_status,"why")
+const formattedDate = `${dateObject.getFullYear()}-${String(
+  dateObject.getMonth() + 1
+).padStart(2, "0")}-${String(dateObject.getDate()).padStart(2, "0")}`;
+const timeWithoutAMPM = dateObject
+.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+.replace(/\s[AaPp][Mm]$/, "");
       const newData = {
         id: data?.id,
         date: formattedDate,
@@ -147,8 +183,40 @@ const Appointment = (props) => {
         source: data.source,
         Hospital_id: 1,
       };
+      console.log(newData,"new dddd")
       const response = await api?.updateAppointment(newData);
-      console.log(datas, "datas");
+      console.log(response?.data, "datass");
+      if (response.data[0]?.status === 'success' && updateStatus?.appointment_status) {
+          // const originalDate = new Date(data?.date);
+  // const formattedDate = originalDate.toLocaleDateString("en-US", {
+  //   month: 'short',
+  //   day: '2-digit',
+  //   year: 'numeric'
+  // });
+          const message = {
+            Patname:data?.patient_name,
+            mobilenumber:data?.mobileno, 
+            Date:formattedDate,
+          }
+          const cancellData = {
+            mobileNumber:data?.mobileno, 
+            name:data?.patient_name,
+            date:formattedDate,
+            reason:"doctor unavailable"      
+          }
+          console.log(message,formattedDate,"DATE AND MESSAGE");
+          if(updateStatus?.appointment_status === 'approved'){
+            console.log(message,"approved");
+            const send = await api.updateAppointmentApprovedSms(message);
+            console.log(send,"sms ... sms");
+            setUpdateStaus({...updateStatus,appointment_status:''})
+          }
+          else if(updateStatus?.appointment_status === 'cancel'){
+            console.log(cancellData,"canceleddsd");
+            const send = await api.updateAppointmentCancelledSms(cancellData);
+            console.log(send,"sms ... sms");
+            setUpdateStaus({...updateStatus,appointment_status:''})
+          }
       toast.success("status updating...", {
         position: toast.POSITION.TOP_RIGHT,
         closeButton: false,
@@ -548,10 +616,8 @@ const Appointment = (props) => {
             </button>
 
             <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-              <DropdownToggle
-                caret
-                className="btn btn-outline-primary text-primary bg-white"
-              >
+              <DropdownToggle caret className="btn btn-outline-primary text-primary bg-white">
+
                 Export&nbsp;<i className="fas fa-caret-down"></i>
               </DropdownToggle>
               <DropdownMenu style={{ minWidth: "fit-content" }}>

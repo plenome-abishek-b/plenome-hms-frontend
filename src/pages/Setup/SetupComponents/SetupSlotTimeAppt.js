@@ -179,8 +179,8 @@ function SetupSlotAppt() {
     console.log(newData, "complete newdata", formData);
     const response = await api.post_Appointment_slot_amount(newData);
     const { data } = response;
-    console.log(data,timeInputs, "complete response");
-    if (data && start_time && end_time) {
+    console.log(timeInputs, "complete response",data);
+    if (data) {
       const timeSlotData = timeInputs.map((input) => ({
         day: formData?.day,
         //  day:'monday',
@@ -210,7 +210,7 @@ function SetupSlotAppt() {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
-        }, index * 3000); // Delay each API call by 3 seconds
+        }, index * 1000); // Delay each API call by 3 seconds
       });
     }
     // if (data?.status === 'success') {
