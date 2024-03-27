@@ -6,7 +6,7 @@ import { Container, Card, CardBody } from "reactstrap"
 import { withTranslation } from "react-i18next"
 import { AgGridReact, AgGridColumn } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css"
+import "ag-grid-community/styles/ag-theme-material.css"
 import SetupBloodBankDialog from "../SetupDialog/SetupBloodBankDialog"
 import { useEffect } from "react"
 import api from "services/Api"
@@ -102,12 +102,12 @@ const Shift_setupAppointment = props => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn-mod bg-soft" onClick={handleOpenBb}>
+                <button className="btn-mod bg-primary" onClick={handleOpenBb}>
                   <i className="fa fa-plus"></i>&nbsp; Add Shift
                 </button>
               </div>
               <div
-                className="ag-theme-alpine"
+                className="ag-theme-material"
                 style={{ height: 500, marginTop: "20px" }}
               >
                 <AgGridReact

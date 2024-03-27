@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import { useEffect, useState } from "react";
@@ -7,7 +6,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
- 
+
 function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
   const [shift, setShift] = useState([]);
@@ -26,13 +25,13 @@ function SetupSlotAppt() {
     ]);
   };
   const LoginedDoctor = localStorage.getItem("existingDocotr_id");
- 
+
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
     updatedTimeInputs[index][field] = value;
     setTimeInputs(updatedTimeInputs);
   };
- 
+
   const [formData, setFormData] = useState({
     doctor: "",
     shift: "",
@@ -43,7 +42,7 @@ function SetupSlotAppt() {
     charge_category: "",
     consult_duration: "",
   });
- 
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
     console.log(name, value, "ee");
@@ -68,21 +67,81 @@ function SetupSlotAppt() {
       [name]: value,
     });
   };
- 
+
   const getDoctor = async () => {
     const response = await api.getApptDoctor();
     const { data } = response;
     setDoctor(data);
     console.log(data, "setup doctors");
   };
- 
+
   const getShift = async () => {
     const response = await api.getApptShift(formData.doctor);
     const { data } = response;
     setShift(data);
     console.log(data, "dd");
   };
- 
+
+  // const handleSearch = async () => {
+  //   const response = await api.getSlotTiming(
+  //     formData.day,
+  //     formData.doctor,
+  //     formData.shift
+  //   );
+  //   const { data } = response;
+  //   console.log(data, "datffs");
+  //   const newTimeInputs = data.map((slot) => ({
+  //     startTime: slot.start_time,
+  //     endTime: slot.end_time,
+  //     id: slot.id,
+  //   }));
+  //   console.log(newTimeInputs, "tiem");
+  //   setTimeInputs(newTimeInputs);
+  //   setTimeInputs(newTimeInputs, () => {
+  //     // Now you can safely access the updated state
+  //     if (data.length === 0 && data.length > 0) {
+  //       const newTimeInputs = data.map((slot) => ({
+  //         startTime: slot.start_time,
+  //         endTime: slot.end_time,
+  //         id: slot.id,
+  //       }));
+  //       setTimeInputs(newTimeInputs);
+  //     }
+  //   });
+  //   setData(data);
+
+  //   if (
+  //     timeInputs.every((input) => !Object.keys(input).length) &&
+  //     data.length > 0
+  //   ) {
+  //     const newTimeInputs = data.map((slot) => ({
+  //       startTime: slot.start_time,
+  //       endTime: slot.end_time,
+  //     }));
+
+  //     setTimeInputs(newTimeInputs);
+  //   } else {
+  //     // setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
+  //   }
+
+  //   console.log(formData, "doctor");
+
+  //   const charge_response = await api.getSetupAppointmentSlotChrg(
+  //     formData.doctor
+  //   );
+  //   const { data: data2 } = charge_response;
+  //   console.log(data2, "data2");
+  //   setFormData({ ...formData, consult_duration: data2[0].consult_duration });
+  //   setChargeData(data2);
+  //   setFormData({
+  //     ...formData,
+  //     consult_duration: data2[0].consult_duration,
+  //     charge_id: data2[0]?.id,
+  //   });
+  //   console.log(chargeData, "chrgggg");
+  //   // searchAgain()
+  // };
+
   const handleSearch = async () => {
     const response = await api.getSlotTiming(
       formData.day,
@@ -91,71 +150,44 @@ function SetupSlotAppt() {
     );
     const { data } = response;
     console.log(data, "datffs");
+  
     const newTimeInputs = data.map((slot) => ({
+      id: slot.id,
       startTime: slot.start_time,
       endTime: slot.end_time,
-      id:slot.id
     }));
-    console.log(newTimeInputs,"tiem")
-    setTimeInputs(newTimeInputs)
-    setTimeInputs(newTimeInputs, () => {
-      // Now you can safely access the updated state
-      if (data.length === 0 && data.length > 0) {
-        const newTimeInputs = data.map((slot) => ({
-          startTime: slot.start_time,
-          endTime: slot.end_time,
-          id:slot.id
-        }));
-        setTimeInputs(newTimeInputs);
-      }
-    });
+    console.log(newTimeInputs, "tiem");
+  
+    setTimeInputs(newTimeInputs);
     setData(data);
- 
-    if (
-      timeInputs.every((input) => !Object.keys(input).length) &&
-      data.length > 0
-    ) {
-      const newTimeInputs = data.map((slot) => ({
-        startTime: slot.start_time,
-        endTime: slot.end_time,
-      }));
- 
-      setTimeInputs(newTimeInputs);
-    } else {
-      // setTimeInputs([...timeInputs, { startTime: "", endTime: "" }]);
-    }
- 
-    console.log(formData, "doctor");
- 
+  
     const charge_response = await api.getSetupAppointmentSlotChrg(
       formData.doctor
     );
     const { data: data2 } = charge_response;
     console.log(data2, "data2");
-    setFormData({ ...formData, consult_duration: data2[0].consult_duration });
-    setChargeData(data2);
     setFormData({
       ...formData,
       consult_duration: data2[0].consult_duration,
       charge_id: data2[0]?.id,
     });
-    console.log(chargeData, "chrgggg");
-    // searchAgain()
+    setChargeData(data2);
   };
+  
   const searchAgain = () => {
     handleSearch();
   };
- 
+
   const handleFormSubmit = async () => {
     console.log(formData, "formdata");
     const staff_id = formData.doctor;
     console.log(staff_id, "staffid");
- 
+
     const global_shift_id = formData.shift;
     console.log(global_shift_id, "shiftid");
- 
+
     const Hospital_id = "1";
- 
+
     const start_time = timeInputs[0]?.startTime || "";
     const end_time = timeInputs[0]?.endTime || "";
     console.log(start_time, end_time, "time");
@@ -179,18 +211,18 @@ function SetupSlotAppt() {
     console.log(newData, "complete newdata", formData);
     const response = await api.post_Appointment_slot_amount(newData);
     const { data } = response;
-    console.log(timeInputs, "complete response",data);
-    if (data) {
+    console.log(data, "complete response");
+    if (data && start_time && end_time) {
       const timeSlotData = timeInputs.map((input) => ({
         day: formData?.day,
         //  day:'monday',
         staff_id: Number(formData?.doctor),
         global_shift_id: Number(formData?.shift),
-        start_time: input?.startTime,
-        end_time: input?.endTime,
+        start_time: start_time,
+        end_time: end_time,
         Hospital_id: 1,
       }));
- 
+
       console.log(timeSlotData, "timeslot");
       timeSlotData.forEach(async (slotData, index) => {
         console.log(slotData, "showing");
@@ -198,7 +230,7 @@ function SetupSlotAppt() {
           try {
             const response2 = await api.postSetupApptSlotTime(slotData);
             console.log(response2, "response of timeing");
- 
+
             // Show success toast
             toast.success("Setup appointment slot time added successfully", {
               position: toast.POSITION.TOP_RIGHT,
@@ -210,7 +242,7 @@ function SetupSlotAppt() {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
-        }, index * 1000); // Delay each API call by 3 seconds
+        }, index * 3000); // Delay each API call by 3 seconds
       });
     }
     // if (data?.status === 'success') {
@@ -219,9 +251,9 @@ function SetupSlotAppt() {
     // Handle failure
     // }
     // });
- 
+
     // const { status, data } = response;
- 
+
     // if (status === 201) {
     //   // const newData
     //   const response = await api.post_Appointment_slot_amount()
@@ -266,33 +298,40 @@ function SetupSlotAppt() {
   //   }
   // }
   const handleDeleteSlots = async (id) => {
-    console.log(id,timeInputs, "id");
-    const userConfirmed = window.confirm('Are you sure you want to delete this slot?');
-    console.log(userConfirmed,"delete");
-if(userConfirmed && id){
-    const rseponse = await api.deleteSetupApptSlotTime(id);
-    const response = await api.getSlotTiming(
-      formData.day,
-      formData.doctor,
-      formData.shift
+    console.log(id, timeInputs, "id");
+    const userConfirmed = window.confirm(
+      "Are you sure you want to delete this slot?"
     );
-    const { data } = response;
-    console.log(data, "datffs");
-    const newTimeInputs = data.map((slot) => ({
-      startTime: slot.start_time,
-      endTime: slot.end_time,
-      id:slot.id
-    }));
-    setTimeInputs(newTimeInputs);
-    toast.success("deleted sucessfullyl")
-    setData(data);
-}else{
-  console.log("rejected")
-}
-   
- 
+    console.log(userConfirmed, "delete");
+    if (userConfirmed && id) {
+      const rseponse = await api.deleteSetupApptSlotTime(id);
+      const response = await api.getSlotTiming(
+        formData.day,
+        formData.doctor,
+        formData.shift
+      );
+      const { data } = response;
+      console.log(data, "datffs");
+      const newTimeInputs = data.map((slot) => ({
+        startTime: slot.start_time,
+        endTime: slot.end_time,
+        id: slot.id,
+      }));
+      setTimeInputs(newTimeInputs);
+      toast.success("deleted sucessfullyl");
+      setData(data);
+    } else {
+      console.log("rejected");
+    }
   };
- 
+  const styles = {
+    font_color: {
+      color: "#1C2253",
+      fontSize: "14px",
+      fontWeight: "500",
+    },
+  };
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -300,7 +339,7 @@ if(userConfirmed && id){
           <Row>
             <Col>
               <Card>
-                <CardBody>
+                <CardBody style={styles.font_color}>
                   <ToastContainer />
                   <Row>
                     <Col lg="4">
@@ -314,9 +353,9 @@ if(userConfirmed && id){
                         value={formData.day}
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                       >
                         <option>select</option>
@@ -340,9 +379,9 @@ if(userConfirmed && id){
                         onClick={() => getDoctor()}
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                       >
                         <option>select</option>
@@ -376,9 +415,9 @@ if(userConfirmed && id){
                         onClick={() => getShift()}
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                       >
                         <option>select</option>
@@ -395,7 +434,7 @@ if(userConfirmed && id){
                     </Col>
                   </Row>
                   <div className="d-flex justify-content-end mt-3">
-                    <button className="btn-mod" onClick={handleSearch}>
+                    <button className="btn-mod bg-primary" onClick={handleSearch}>
                       Search
                     </button>
                   </div>
@@ -406,9 +445,9 @@ if(userConfirmed && id){
                       <input
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                         name="consult_duration"
                         onChange={handleChange}
@@ -421,9 +460,9 @@ if(userConfirmed && id){
                       <select
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                         name="charge_category"
                         onChange={handleChange}
@@ -458,9 +497,9 @@ if(userConfirmed && id){
                       <select
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                         }}
                         name="charge_id"
                         onChange={handleChange}
@@ -490,9 +529,9 @@ if(userConfirmed && id){
                       <input
                         style={{
                           width: "100%",
-                          height: "35px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
+                          height: "40px",
+                          border: "1px solid #8F98B3",
+                          borderRadius: "8px",
                           backgroundColor: "#f0f0f0",
                         }}
                         value={chargeData[0]?.standard_charge}
@@ -517,9 +556,9 @@ if(userConfirmed && id){
                                 type="time"
                                 style={{
                                   width: "70%",
-                                  height: "35px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
                                   backgroundColor: "#f0f0f0",
                                 }}
                                 value={
@@ -541,9 +580,9 @@ if(userConfirmed && id){
                                 type="time"
                                 style={{
                                   width: "70%",
-                                  height: "35px",
-                                  border: "1px solid rgba(0,0,0,0.2)",
-                                  borderRadius: "3px",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
                                   backgroundColor: "#f0f0f0",
                                 }}
                                 value={
@@ -573,66 +612,86 @@ if(userConfirmed && id){
                       ))}
                     </>
                   ))    :  */}
-                 
-                  {timeInputs.map((timeInput, index) => (
-                    console.log(timeInput,"EE"),
-                    <div key={index}>
-                      <Row
-                        key={index}
-                        className="mt-3"
-                        style={{ marginLeft: "90px" }}
-                      >
-                        <Col>
-                          <input
-                            type="time"
-                            style={{
-                              width: "70%",
-                              height: "35px",
-                              border: "1px solid rgba(0,0,0,0.2)",
-                              borderRadius: "3px",
-                              backgroundColor: "#f0f0f0",
-                            }}
-                            value={timeInput.startTime ||
-                              "" }
-                            onChange={(e) =>
-                              handleTimeInputChange(index, "startTime", e.target.value)
-                            }
-                          />
-                        </Col>
-                        <Col>
-                          <input
-                            type="time"
-                            style={{
-                              width: "70%",
-                              height: "35px",
-                              border: "1px solid rgba(0,0,0,0.2)",
-                              borderRadius: "3px",
-                              backgroundColor: "#f0f0f0",
-                            }}
-                            value={timeInput.endTime || ""}
-                            onChange={(e) =>
-                              handleTimeInputChange(index, "endTime", e.target.value)
-                            }
-                          />
-                          <i
-                            onClick={() => handleDeleteSlots(timeInput?.id)}
-                            style={{ marginLeft: "30px", cursor: "pointer" }}
-                            className="fas fa-trash-alt fa-lg text-danger"
-                          ></i>
-                        </Col>
-                      </Row>
-                    </div>
-                  ))
-                  }
-                  {timeInputs && timeInputs.map((val,index)=>(
-                     console.log(val,"time inputs")
-                  ))}
- 
+
+                  {timeInputs.map(
+                    (timeInput, index) => (
+                      console.log(timeInput, "EE"),
+                      (
+                        <div key={index}>
+                          <Row
+                            key={index}
+                            className="mt-3"
+                            style={{ marginLeft: "90px" }}
+                          >
+                            <Col>
+                              <input
+                                type="time"
+                                style={{
+                                  width: "70%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                  backgroundColor: "#f0f0f0",
+                                }}
+                                value={timeInput.startTime || ""}
+                                onChange={(e) =>
+                                  handleTimeInputChange(
+                                    index,
+                                    "startTime",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </Col>
+                            <Col>
+                              <input
+                                type="time"
+                                style={{
+                                  width: "70%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                  backgroundColor: "#f0f0f0",
+                                }}
+                                value={timeInput.endTime || ""}
+                                onChange={(e) =>
+                                  handleTimeInputChange(
+                                    index,
+                                    "endTime",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              <i
+                                onClick={() => handleDeleteSlots(timeInput?.id)}
+                                style={{
+                                  marginLeft: "30px",
+                                  cursor: "pointer",
+                                }}
+                                className="fas fa-trash-alt fa-lg text-danger"
+                              ></i>
+                            </Col>
+                          </Row>
+                        </div>
+                      )
+                    )
+                  )}
+                  {timeInputs &&
+                    timeInputs.map((val, index) =>
+                      console.log(val, "time inputs")
+                    )}
+
                   <div className="d-flex justify-content-end mt-4">
-                    <button className="btn-mod" onClick={()=>addNewTimeInputRow()}>
+                    <button
+                      className="btn-mod bg-primary"
+                      onClick={() => addNewTimeInputRow()}
+                    >
                       + Add Time Slot
                     </button>
-                    <button className="btn-mod ms-2" onClick={handleFormSubmit}>
+                    <button
+                      className="btn-mod  bg-primary ms-2"
+                      onClick={handleFormSubmit}
+                    >
                       Save
                     </button>
                   </div>
@@ -645,6 +704,5 @@ if(userConfirmed && id){
     </React.Fragment>
   );
 }
- 
+
 export default SetupSlotAppt;
- 

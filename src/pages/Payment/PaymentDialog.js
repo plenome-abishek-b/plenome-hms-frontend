@@ -22,68 +22,75 @@ export default function PaymentDialog({ open, handleClose }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="lg"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "30%",
+              maxWidth: "1200px", // Set your width here
+            },
+          },
+        }}
       >
-        <DialogTitle id="alert-dialog-title" style={{backgroundColor: '#7070FF'}}>
+        <DialogTitle id="alert-dialog-title" style={{backgroundColor: '#6070FF'}}>
           <h4 className="text-white fw-bold">Add Payment Details</h4>
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
-          <Container>
+          <Container lg='12' md='12' sm='12'>
             <Row>
-              <Col>
+              <Col lg="12" md='12' sm="12">
                 <label>Amount(₹)</label>
                 <br />
                 <input
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                   border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                 ></input>
               </Col>
             </Row>
             <br />
             <Row>
-              <Col>
+              <Col lg="12" md='12' sm="12">
                 <label>Patient Email</label>
                 <br />
                 <input
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                   border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                 ></input>
               </Col>
             </Row>
             <br />
             <Row>
-              <Col>
+              <Col lg="12" md='12' sm="12">
                 <label>Patient Mobile Number</label>
                 <br />
                 <input
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                   border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                 ></input>
               </Col>
             </Row>
             <br />
             <Row>
-              <Col>
+              <Col lg="12" md='12' sm="12">
                 <label>Transaction Type</label>
                 <br />
                 <select
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                   border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                 >
                     <option>select</option>

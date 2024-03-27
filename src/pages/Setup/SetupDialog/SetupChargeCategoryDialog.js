@@ -53,6 +53,13 @@ export default function SetupChargeCategoryDialog({
   console.log(chargetypes, "chargetype");
 
   console.log(data, "dataaaaaaa");
+  const styles = {
+    label_text: {
+      color: "#1C2253",
+      fontSize:'14px',
+      fontWeight:'500',
+    },
+  };
 
   return (
     <div
@@ -79,16 +86,16 @@ export default function SetupChargeCategoryDialog({
         <DialogTitle id="alert-dialog-title" className="bg-primary text-white">
           Add Charges
         </DialogTitle>
-        <DialogContent className="mt-4 ms-2">
+        <DialogContent className="mt-4 ms-2 " style={styles.label_text}>
           <Container className="p-2">
             <Row>
               <label>Charge Type<span className="text-danger ms-1">*</span></label>
               <br />
               <select
                 style={{
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 id="charge_type_id"
                 value={data.charge_type_id}
@@ -112,9 +119,9 @@ export default function SetupChargeCategoryDialog({
                 value={data.name}
                 onChange={(e) => onChange(e)}
                 style={{
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
               ></input>
             </Row>
@@ -125,8 +132,8 @@ export default function SetupChargeCategoryDialog({
               <textarea
                 style={{
                   height: "50px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 id="description"
                 value={data.description}
@@ -137,7 +144,7 @@ export default function SetupChargeCategoryDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn-mod bg-soft btn-md"
+            className="btn-mod bg-primary btn-md"
             onClick={() => handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >

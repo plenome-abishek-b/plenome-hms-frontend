@@ -3704,5 +3704,6 @@ updateAppointmentCancelledSms,
 updateAppointmentApprovedSms,
 postApptNoSend
 
+
 };
 export default api;

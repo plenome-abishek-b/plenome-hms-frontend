@@ -135,6 +135,13 @@ export default function SetupChargeDialog({
   };
 
   console.log(taxcategory, "tax");
+  const styles = {
+    label_text: {
+      color: "#1C2253",
+      fontSize: "14px", 
+      fontWeight: "500",
+    },
+  };
 
   return (
     <div
@@ -162,7 +169,7 @@ export default function SetupChargeDialog({
           Add Charges
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
-          <Container>
+          <Container className="" style={styles.label_text}>
             <Row className="p-1">
               <Col lg="3" md="3" sm="12">
                 <label>Charge Type<span className="text-danger ms-1">*</span></label>
@@ -170,9 +177,9 @@ export default function SetupChargeDialog({
                 <select
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="charge_type"
                   value={data.charge_type}
@@ -193,9 +200,9 @@ export default function SetupChargeDialog({
                 <select
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="charge_category_id"
                   value={data.charge_category_id}
@@ -222,9 +229,9 @@ export default function SetupChargeDialog({
                   onChange={(e) => onChange(e)}
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                 ></input>
               </Col>
@@ -232,19 +239,17 @@ export default function SetupChargeDialog({
                 <label>Unit Type<span className="text-danger ms-1">*</span></label>
                 <br />
                 <select
-                id="charge_unit_id"
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
-                  onChange={(e)=>onChange(e)}
                 >
                   <option>select</option>
                   {unit &&
                     unit.map((unit_type) => (
-                      <option key={unit_type.charge_unit_id} value={unit_type.charge_unit_id}>
+                      <option key={unit_type.id} value={unit_type.id}>
                         {unit_type.unit}
                       </option>
                     ))}
@@ -259,9 +264,9 @@ export default function SetupChargeDialog({
                 <select
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="tax_category_id"
                   value={selectedTaxCategoryId}
@@ -285,9 +290,9 @@ export default function SetupChargeDialog({
                   placeholder="%"
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   value={percentage}
                   readOnly
@@ -337,9 +342,9 @@ export default function SetupChargeDialog({
                   type="number"
                   style={{
                     width: "100%",
-                    height: "30px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    height: "40px",
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="standard_charge"
                   value={data.standard_charge}
@@ -356,8 +361,8 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "50px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="description"
                   value={data.description}
@@ -373,8 +378,8 @@ export default function SetupChargeDialog({
                   style={{
                     width: "100%",
                     height: "50px",
-                    border: '1px solid rgba(0,0,0,0.2)', 
-                    borderRadius: '3px'
+                    border: '1px solid #8F98B3', 
+                    borderRadius: '8px'
                   }}
                   id="date"
                   value={data.date}
@@ -387,7 +392,7 @@ export default function SetupChargeDialog({
         </DialogContent>
         <DialogActions>
           <button
-            className="btn-mod bg-soft btn-md"
+            className="btn-mod bg-primary btn-md"
             onClick={() => handleFormSubmits(data, handleClose)}
             style={{ marginRight: "3%" }}
           >

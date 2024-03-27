@@ -1,12 +1,12 @@
-import * as React from "react"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogTitle from "@mui/material/DialogTitle"
-import { Row, Col, Container, Label, Input, CardBody, Card } from "reactstrap"
-import { TextField } from "@material-ui/core"
-import TextareaAutosize from "@mui/base/TextareaAutosize"
-import PatientDialog from "pages/Appointment/Dialog/PatientDialog"
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Row, Col, Container, Label, Input, CardBody, Card } from "reactstrap";
+import { TextField } from "@material-ui/core";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import PatientDialog from "pages/Appointment/Dialog/PatientDialog";
 
 export default function SetupUnitTypeDialog({
   open,
@@ -15,17 +15,17 @@ export default function SetupUnitTypeDialog({
   onChange,
   handleFormSubmit,
 }) {
-  const [openUnitTypeDialog, setOpenUnitTypeDialog] = React.useState(false)
+  const [openUnitTypeDialog, setOpenUnitTypeDialog] = React.useState(false);
 
   const handleClickOpen = () => {
     //dialog open
-    setOpenUnitTypeDialog(true)
-  }
+    setOpenUnitTypeDialog(true);
+  };
 
   const handleDialogClose = () => {
     //dialog close
-    setOpenUnitTypeDialog(false)
-  }
+    setOpenUnitTypeDialog(false);
+  };
 
   return (
     <div
@@ -49,25 +49,39 @@ export default function SetupUnitTypeDialog({
           },
         }}
       >
-        <DialogTitle
-          id="alert-dialog-title"
-          className="bg-primary text-white"
-        >
+        <DialogTitle id="alert-dialog-title" className="bg-primary text-white">
           Add Unit Type
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
           <Container>
             <Row>
-                <label>Unit<span className="text-danger ms-1">*</span></label>
-                <br />
-                <input type="text" placeholder="" id="unit" value={data.unit} onChange={e=>onChange(e)} style={{ height: '35px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: '3px' }}></input>
+              <label style={{
+                color:'#1C2253',
+                fontSize:'14px',
+                fontWeight:'500'
+              }}>
+                Unit<span className="text-danger ms-1">*</span>
+              </label>
+              <br />
+              <input
+                type="text"
+                placeholder=""
+                id="unit"
+                value={data.unit}
+                onChange={(e) => onChange(e)}
+                style={{
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
+                }}
+              ></input>
             </Row>
           </Container>
         </DialogContent>
         <DialogActions>
           <button
             className="btn-mod bg-soft btn-md"
-            onClick={()=>handleFormSubmit(handleClose())}
+            onClick={() => handleFormSubmit(handleClose())}
             style={{ marginRight: "3%" }}
           >
             Save
@@ -75,5 +89,5 @@ export default function SetupUnitTypeDialog({
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }
