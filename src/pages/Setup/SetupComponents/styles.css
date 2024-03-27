@@ -1,34 +1,33 @@
 /* Add these styles to your component's CSS or a separate stylesheet */
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
 
-  thead{
-    background-color: #7070FF;
-  }
-  
-  thead th, tbody td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  thead th {
-    background-color: #7070FF;
-  }
-  
-  select {
-    width: 60px; /* Adjust the width as needed */
-    padding: 5px;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  button {
-    margin-top: 10px;
-    padding: 8px 16px;
-  }
-  
+thead{
+  background-color:rgb(96, 112, 255);
+}
+
+thead th, tbody td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+thead th {
+  background-color: rgb(96, 112, 255);
+}
+
+select {
+  width: 60px; /* Adjust the width as needed */
+  padding: 5px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 16px;
+}

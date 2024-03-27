@@ -145,7 +145,7 @@ const DoctorShift_setupAppointment = (props) => {
                 style={{ display: "flex", justifyContent: "flex-end" }}
               ></div>
               <table>
-                <thead>
+                <thead className="bg-primary">
                   <tr>
                     <th>Doctor Name</th>
                     {shifts &&

@@ -274,6 +274,15 @@ const RegisterStaff = () => {
     image: yup.string().required("Photo is required *"),
     password: yup.string().required("Password is required *"),
     role_id: yup.string().required("Role is required *"),
+    pan_number: yup
+      .string()
+      .matches(/^[A-Za-z]{5}[0-9]{4}[A-Za-z]$/, "Invalid PAN number")
+      .required("Pan Number is required *"),
+    identification_number: yup
+      .string()
+      .matches(/^[0-9]+$/, "Identification number must contain only digits")
+      .min(12, "Identification number must be at least 12 digits")
+      .required("Identification number is required *"),
   });
 
   const addCertificate = () => {
@@ -416,24 +425,57 @@ const RegisterStaff = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+  const history2= useHistory();
+  const toogle2 =()=>{
+    history2.push("/account/login")
+  }
+
 
   return (
     <React.Fragment>
-      <div className="page-content bg-primary bg-soft">
+      <div
+        className="page-content "
+        style={{
+          backgroundImage: `url("./login-bg1.jpeg")`, // Check if the path to the image is correct
+          backgroundSize: "cover", // Optionally adjust background size
+          backgroundPosition: "center", // Optionally adjust background position
+        }}
+      >
         <Container fluid>
-         
           {/* Render Breadcrumb */}
-         
-          <Card>
-          <div className="bg-primary">
-          <h4 className="text-white fw-bold p-4">Register New Staff</h4>
+          <h4 className="text-primary">Add New Staff</h4>
+          {/* <span
+            className=" btn-mod  "
+            title="back"
+            onClick={toogle2}
+            style={{
+              position: "absolute",
+              right: "4%",
+              top: "7%",
+              cursor: "pointer",
+            }}
+          ></span> */}
+          <div
+            className="d-flex justify-content-end"
+            style={{
+              position: "absolute",
+              right: "5%",
+              top: "7%",
+              cursor: "pointer",
+            }}
+          >
+            <button className="btn btn-primary btn-sm" onClick={toogle2}>
+              <i className="fas fa-angle-left fa-3x"></i>
+            </button>
           </div>
+          {/* < onSubmit={formik.handleSubmit}> */}
+          <Card className="addstaff-text-label ">
             <CardBody>
               <p className="text-danger d-flex justify-content-end fw-bold">
                 Fill All the Mandatoty Details (*)
               </p>
               <Row>
-                <Col lg="3">
+                {/* <Col lg="3">
                   <label>
                     Staff ID<span className="text-danger"> *</span>
                   </label>
@@ -443,21 +485,21 @@ const RegisterStaff = () => {
                     name="employee_id"
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     onChange={handleChange}
-                    value={formData?.employee_id}
-                    // onBlur={formik.handleBlur}
-                  ></input>
-                  {/* {formik.touched.employee_id && formik.errors.employee_id ? (
+                    value={formData?.employee_id} */}
+                {/* // onBlur={formik.handleBlur}
+                  ></input> */}
+                {/* {formik.touched.employee_id && formik.errors.employee_id ? (
                     <div className="text-danger">
                       {formik.errors.employee_id}
                     </div>
                   ) : null} */}
-                </Col>
-                <Col lg="3" md="12" sm="12">
+                {/* </Col> */}
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Role<span className="text-danger"> *</span>
                   </label>
@@ -465,9 +507,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="role_id"
                     onChange={handleChange}
@@ -486,7 +528,7 @@ const RegisterStaff = () => {
                     <div className="text-danger">{formik.errors.role_id}</div>
                   ) : null} */}
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Designation<span className="text-danger"> *</span>
                   </label>
@@ -494,9 +536,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="staff_designation_id"
                     onChange={handleChange}
@@ -513,7 +555,7 @@ const RegisterStaff = () => {
                     ))}
                   </select>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Department<span className="text-danger"> *</span>
                   </label>
@@ -521,9 +563,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="department_id"
                     onChange={handleChange}
@@ -540,7 +582,11 @@ const RegisterStaff = () => {
                     ))}
                   </select>
                 </Col>
-                <Col lg="3" md="12" sm="12" className="mt-3">
+              </Row>
+              <br />
+              <Row>
+                {" "}
+                <Col lg="4" md="4" sm="12" className=" ">
                   <label>
                     Specialist<span className="text-danger"> *</span>
                   </label>
@@ -548,29 +594,23 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="specialist"
                     onChange={handleChange}
-                    onClick={() => {
-                      getSpecialist();
-                    }}
-                    value={formData?.specialist}
+                    value={formData.specialist} // Ensure formData.specialist is set to an empty string initially
                   >
-                    <option>select</option>
+                    <option value="">select</option>
                     {specialist.map((staff) => (
-                      <option value={String(staff?.id)}>
-                        {staff?.specialist_name}
+                      <option key={staff.id} value={String(staff.id)}>
+                        {staff.specialist_name}
                       </option>
                     ))}
                   </select>
                 </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     First Name<span className="text-danger"> *</span>
                   </label>
@@ -578,9 +618,9 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="first_name"
                     onChange={handleChange}
@@ -592,7 +632,7 @@ const RegisterStaff = () => {
                     </div>
                   ) : null} */}
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Last Name<span className="text-danger"> *</span>
                   </label>
@@ -600,9 +640,9 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="surname"
                     onChange={handleChange}
@@ -615,16 +655,20 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="password"
                     onChange={handleChange}
                     value={formData?.password}
                   ></input>
                 </Col> */}
-                <Col lg="3" md="12" sm="12">
+              </Row>
+              <br />
+              <Row>
+                {" "}
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Father Name<span className="text-danger"> *</span>
                   </label>
@@ -632,9 +676,9 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="father_name"
                     onChange={handleChange}
@@ -642,7 +686,7 @@ const RegisterStaff = () => {
                     // onBlur={formik.handleBlur}
                   ></input>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Mother Name<span className="text-danger"> *</span>
                   </label>
@@ -650,19 +694,16 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="mother_name"
                     onChange={handleChange}
                     value={formData?.mother_name}
                   ></input>
                 </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Gender<span className="text-danger"> *</span>
                   </label>
@@ -670,9 +711,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="gender"
                     onChange={handleChange}
@@ -683,7 +724,10 @@ const RegisterStaff = () => {
                     <option value="Female">Female</option>
                   </select>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+              </Row>
+              <br />
+              <Row>
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Marital Status<span className="text-danger"> *</span>
                   </label>
@@ -691,9 +735,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="marital_status"
                     onChange={handleChange}
@@ -707,7 +751,7 @@ const RegisterStaff = () => {
                     <option value="Not specified">Not Specified</option>
                   </select>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Blood Group<span className="text-danger"> *</span>
                   </label>
@@ -715,9 +759,9 @@ const RegisterStaff = () => {
                   <select
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="blood_group"
                     onChange={handleChange}
@@ -730,7 +774,7 @@ const RegisterStaff = () => {
                     ))}
                   </select>
                 </Col>
-                <Col>
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Date of Birth<span className="text-danger"> *</span>
                   </label>
@@ -739,19 +783,19 @@ const RegisterStaff = () => {
                     type="date"
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="dob"
                     onChange={handleChange}
                     value={formData?.dob}
                   ></input>
                 </Col>
-              </Row>
+              </Row>{" "}
               <br />
               <Row>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Date of Joining<span className="text-danger"> *</span>
                   </label>
@@ -759,9 +803,9 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     type="date"
                     name="date_of_joining"
@@ -769,7 +813,7 @@ const RegisterStaff = () => {
                     value={formData?.date_of_joining}
                   ></input>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Phone<span className="text-danger"> *</span>
                   </label>
@@ -777,24 +821,29 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
+                    type="tel"
                     name="contact_no"
-                    onChange={handleChange}
-                    value={formData?.contact_no}
+                    value={formik.values.contact_no}
+                    onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     maxLength={10}
-                    type="tel"
-                  ></input>
+                    className={`form-control ${
+                      formik.touched.contact_no && formik.errors.contact_no
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
                   {formik.touched.contact_no && formik.errors.contact_no ? (
-                    <div className="text-danger">
+                    <div className="text-danger ">
                       {formik.errors.contact_no}
                     </div>
                   ) : null}
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12" className="">
                   <label>
                     Emergency Contact<span className="text-danger"> *</span>
                   </label>
@@ -802,16 +851,19 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="emergency_contact_no"
                     onChange={handleChange}
                     value={formData?.emergency_contact_no}
                   ></input>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+              </Row>
+              <br />
+              <Row>
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Email<span className="text-danger"> *</span>
                   </label>
@@ -819,20 +871,27 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
+                    type="email"
+                    id="email"
                     name="email"
-                    onChange={handleChange}
-                    value={formData?.email}
-                    // onBlur={formik.handleBlur}
-                  ></input>
-                  {/* {formik.touched.email && formik.errors.email ? (
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`form-control ${
+                      formik.touched.email && formik.errors.email
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  {formik.touched.email && formik.errors.email ? (
                     <div className="text-danger">{formik.errors.email}</div>
-                  ) : null} */}
+                  ) : null}
                 </Col>
-                <Col lg="3" md="12" sm="12" className="mt-3">
+                <Col lg="4" md="4" sm="12" className="">
                   <label>
                     Password<span className="text-danger"> *</span>
                   </label>
@@ -841,9 +900,9 @@ const RegisterStaff = () => {
                     <input
                       style={{
                         width: "100%",
-                        height: "30px",
-                        border: "1px solid rgba(0,0,0,0.2)",
-                        borderRadius: "3px",
+                        height: "40px",
+                        border: "1px solid #8F98B3",
+                        borderRadius: "8px",
                         paddingRight: "40px",
                       }}
                       name="password"
@@ -872,7 +931,7 @@ const RegisterStaff = () => {
                     </button>
                   </div>
                 </Col>
-                <Col lg="3" md="12" sm="12" className="mt-3">
+                <Col lg="4" md="4" sm="12" className="">
                   <label>
                     Photo<span className="text-danger"> *</span>
                   </label>
@@ -881,9 +940,9 @@ const RegisterStaff = () => {
                     type="file"
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="image"
                     onChange={handleChange}
@@ -922,9 +981,8 @@ const RegisterStaff = () => {
                   ></textarea>
                 </Col>
               </Row> */}
-              <br />
               <Row>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Qualification<span className="text-danger"> *</span>
                   </label>
@@ -932,16 +990,16 @@ const RegisterStaff = () => {
                   <textarea
                     style={{
                       width: "100%",
-                      height: "50px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="qualification"
                     onChange={handleChange}
                     value={formData?.qualification}
                   ></textarea>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Work Experience<span className="text-danger"> *</span>
                   </label>
@@ -949,16 +1007,16 @@ const RegisterStaff = () => {
                   <textarea
                     style={{
                       width: "100%",
-                      height: "50px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="work_exp"
                     onChange={handleChange}
                     value={formData?.work_exp}
                   ></textarea>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="4" md="4" sm="12">
                   <label>
                     Specialization<span className="text-danger"> *</span>
                   </label>
@@ -966,16 +1024,19 @@ const RegisterStaff = () => {
                   <textarea
                     style={{
                       width: "100%",
-                      height: "50px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="specialization"
                     onChange={handleChange}
                     value={formData?.specialization}
                   ></textarea>
                 </Col>
-                <Col lg="3" md="12" sm="12">
+              </Row>
+              <br />
+              <Row>
+                <Col lg="3" md="3" sm="12">
                   <label>
                     Note<span className="text-danger"> *</span>
                   </label>
@@ -983,19 +1044,16 @@ const RegisterStaff = () => {
                   <textarea
                     style={{
                       width: "100%",
-                      height: "50px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="note"
                     onChange={handleChange}
                     value={formData?.note}
                   ></textarea>
                 </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="3" md="3" sm="12">
                   <label>
                     PAN Number<span className="text-danger"> *</span>
                   </label>
@@ -1003,16 +1061,27 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="pan_number"
-                    onChange={handleChange}
-                    value={formData?.pan_number}
-                  ></input>
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.pan_number}
+                    className={`form-control ${
+                      formik.touched.pan_number && formik.errors.pan_number
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  {formik.touched.pan_number && formik.errors.pan_number && (
+                    <div className="text-danger">
+                      {formik.errors.pan_number}
+                    </div>
+                  )}
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="3" md="3" sm="12">
                   <label>
                     National Identification Number
                     <span className="text-danger"> *</span>
@@ -1021,16 +1090,30 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3 ",
+                      borderRadius: "8px",
                     }}
                     name="identification_number"
-                    onChange={handleChange}
-                    value={formData?.identification_number}
-                  ></input>
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    maxLength={12}
+                    value={formik.values.identification_number}
+                    className={`form-control ${
+                      formik.touched.identification_number &&
+                      formik.errors.identification_number
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  {formik.touched.identification_number &&
+                    formik.errors.identification_number && (
+                      <div className="text-danger">
+                        {formik.errors.identification_number}
+                      </div>
+                    )}
                 </Col>
-                <Col lg="3" md="12" sm="12">
+                <Col lg="3" md="3" sm="12">
                   <label>
                     Local Identification Number
                     <span className="text-danger"> *</span>
@@ -1039,75 +1122,48 @@ const RegisterStaff = () => {
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
-                      border: "1px solid rgba(0,0,0,0.2)",
-                      borderRadius: "3px",
+                      height: "40px",
+                      border: "1px solid #8F98B3",
+                      borderRadius: "8px",
                     }}
                     name="local_identification_number"
                     onChange={handleChange}
                     value={formData?.local_identification_number}
                   ></input>
                 </Col>
-
                 {/* <Col lg="3" md="12" sm="12">
                   <label>Reference Contact</label>
                   <br />
                   <input
                     style={{
                       width: "100%",
-                      height: "30px",
+                      height: "40px",
                       border: "1px solid grey",
                       borderRadius: "8px",
                     }}
                   ></input>
                 </Col> */}
-              </Row>
-              <br />
-              <Row>
-                <div>
-                  <div className="bg-primary bg-soft p-2 mb-3">
-                    <h5 className="mt-1">
-                      Certificates<span className="text-danger"> *</span>
-                    </h5>
-                  </div>
-                  {certificates.map((certificate) => (
-                    <div key={certificate.id}>
-                      <div>
-                        <br />
-                        <input
-                          name="certificates"
-                          onChange={handleChange}
-                          type="file"
-                          // onChange={(event) =>
-                          //   onChange(certificate.id, event)
-                          // }
-                          // value={formData?.cirt}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <br />
-                  <button
-                    onClick={addCertificate}
-                    className="btn btn-primary btn-sm"
-                  >
-                    Add Certificate
-                  </button>
-                  {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
-                </div>
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-end mt-4">
                   {staff ? (
                     <button
+                      type="submit"
                       className="btn text-white fw-bold"
-                      style={{ backgroundColor: "#6070FF" }}
+                      style={{
+                        backgroundColor: "#6070FF",
+                        paddingInline: "50px",
+                      }}
                       onClick={handleUpdate}
                     >
                       Save
                     </button>
                   ) : (
                     <button
+                      type="submit"
                       className="btn text-white fw-bold"
-                      style={{ backgroundColor: "#6070FF" }}
+                      style={{
+                        backgroundColor: "#6070FF",
+                        paddingInline: "30px",
+                      }}
                       onClick={handleSubmit}
                     >
                       Save
@@ -1116,9 +1172,388 @@ const RegisterStaff = () => {
                 </div>
               </Row>
               <br />
-              
+              {/* <Row className="mt-3">
+                <Col>
+                  <div>
+                    <h4>Add Other Details</h4>
+                    <div
+                      id="toggler"
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <Button color="primary" style={{ marginBottom: "1rem" }}>
+                        <i className="fas fa-caret-down fa-lg"></i>
+                      </Button>
+                    </div>
+
+                    <UncontrolledCollapse toggler="#toggler">
+                      <Card>
+                        <CardBody>
+                          <div className="bg-primary bg-soft p-2">
+                            <h5 className="mt-1 ms-1">Payroll</h5>
+                          </div>
+                          <Row className="mt-3">
+                            <Col lg="4">
+                              <label>EPF No</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="epf_no"
+                                onChange={handleChange}
+                                value={formData?.epf_no}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <label>Basic Salary</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="basic_salary"
+                                onChange={handleChange}
+                                value={formData?.basic_salary}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <label>Contract Type</label>
+                              <br />
+                              <select
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="contract_type"
+                                onChange={handleChange}
+                                value={formData?.contract_type}
+                              >
+                                <option>Select</option>
+                                <option value="permanent">Permanent</option>
+                                <option value="probation">Probation</option>
+                              </select>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <Col lg="4">
+                              <label>Work Shift</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="shift"
+                                onChange={handleChange}
+                                value={formData?.shift}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <label>Work Location</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="location"
+                                value={formData?.location}
+                                onChange={handleChange}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <div className="bg-primary bg-soft p-2 mb-3">
+                              <h5 className="mt-1 ms-2">Leaves</h5>
+                            </div>
+                            <Col lg="4">
+                              <label>Summer Vacation</label>
+                              <br />
+                              <input
+                                placeholder="Number of leaves"
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          {/* <Row> */}
+              {/* <br />
+                          <Row>
+                            <div className="bg-primary bg-soft p-2 mb-3">
+                              <h5 className="mt-1 ms-2">
+                                Bank Account Details
+                              </h5>
+                            </div>
+                            <Col lg="4">
+                              <label>Account Title</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="account_title"
+                                onChange={handleChange}
+                                value={formData?.account_title}
+                              ></input>
+                            </Col>
+
+                            <Col lg="4">
+                              <label>Bank Account No.</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="bank_account_no"
+                                onChange={handleChange}
+                                value={formData?.bank_account_no}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <Col lg="4">
+                              <label>Account Name</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="bank_name"
+                                onChange={handleChange}
+                                value={formData?.bank_name}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <label>IFSC Code</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="ifsc_code"
+                                onChange={handleChange}
+                                value={formData?.ifsc_code}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <label>Bank Branch Name</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="bank_branch"
+                                onChange={handleChange}
+                                value={formData?.bank_branch}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <div className="bg-primary bg-soft p-2 mb-3">
+                              <h5 className="mt-1">Social Media Link</h5>
+                            </div>
+                            <Col lg="6">
+                              <label>Facebook URL</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="facebook"
+                                onChange={handleChange}
+                                value={formData?.facebook}
+                              ></input>
+                            </Col>
+                            <Col lg="6">
+                              <label>Twitter URL</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="twitter"
+                                onChange={handleChange}
+                                value={formData?.twitter}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <Col lg="6">
+                              <label>Linkedin URL</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="linkedin"
+                                onChange={handleChange}
+                                value={formData?.linkedin}
+                              ></input>
+                            </Col>
+                            <Col lg="6">
+                              <label>Instagram URL</label>
+                              <br />
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  border: "1px solid #8F98B3",
+                                  borderRadius: "8px",
+                                }}
+                                name="instagram"
+                                onChange={handleChange}
+                                value={formData?.instagram}
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <div className="bg-primary bg-soft  p-2 mb-3">
+                              <h5 className="mt-1">Upload Documents</h5>
+                            </div>
+                            <Col lg="4">
+                              <p>1. Resume</p>
+                              <input
+                                type="file"
+                                name="resume"
+                                onChange={handleChange}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <p>3.Joining Letter</p>
+                              <input
+                                type="file"
+                                name="joining_letter"
+                                onChange={handleChange}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <p>3.Resignation Letter</p>
+                              <input
+                                type="file"
+                                name="resignation_letter"
+                                onChange={handleChange}
+                              ></input>
+                            </Col>
+                            <Col lg="4">
+                              <p>4.Other Documents</p>
+                              <input
+                                name="other_document_file"
+                                onChange={handleChange}
+                                type="file"
+                              ></input>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <div>
+                              <div className="bg-primary bg-soft p-2 mb-3">
+                                <h5 className="mt-1">
+                                  Certificates{" "}
+                                  <span className="text-danger">*</span>
+                                </h5>
+                              </div>
+                              {certificates.map((certificate) => (
+                                <div key={certificate.id}>
+                                  <div>
+                                    <br />
+                                    <input
+                                      name="certificates"
+                                      onChange={handleChange}
+                                      type="file" */}
+              {/* // onChange={(event) => */}
+              {/* //   onChange(certificate.id, event)
+                                      // }
+                                      // value={formData?.cirt}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                              <br /> */}
+              {/* <button
+                                onClick={addCertificate}
+                                className="btn btn-primary btn-sm"
+                              >
+                                Add Certificate
+                              </button>
+                              {/* <button onClick={handleSubmit} className="btn btn-success btn-sm ms-2">Submit</button> */}
+              {/* </Row> */}
+              {/* </CardBody>
+                      </Card>
+                      <div className="d-flex justify-content-end">
+                        {staff ? (
+                          <button
+                            type="submit"
+                            className="btn text-white fw-bold"
+                            style={{ backgroundColor: "#6070FF" }}
+                            onClick={handleUpdate}
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                            className="btn text-white fw-bold"
+                            style={{ backgroundColor: "#6070FF" }}
+                            onClick={handleSubmit}
+                          >
+                            Save
+                          </button>
+                        )}
+                      </div>
+                    </UncontrolledCollapse>
+                  </div>
+                </Col>
+              </Row> */}
             </CardBody>
           </Card>
+          {/* </> */}
         </Container>
       </div>
     </React.Fragment>

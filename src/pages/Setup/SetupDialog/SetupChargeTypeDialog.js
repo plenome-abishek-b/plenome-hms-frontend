@@ -103,6 +103,13 @@ export default function SetupChargeTypeDialog({
       [name]: checked,
     }));
   };
+  const styles = {
+    font_color: {
+      color: "#1C2253",
+      fontSize:'14px',
+      fontWeight:'500',
+    },
+  };
   return (
     <div
       style={{
@@ -120,12 +127,12 @@ export default function SetupChargeTypeDialog({
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="bg-primary bg-soft text-primary"
+          className="bg-primary bg-primary text-primary"
         >
           Add Charge Type
         </DialogTitle>
         <DialogContent className="mt-4 ms-2">
-          <Container>
+          <Container style={styles.font_color}>
             <Row>
               <label>
                 Charge Type<span className="text-danger ms-1">*</span>
@@ -134,9 +141,9 @@ export default function SetupChargeTypeDialog({
               <input
                 style={{
                   width: "100%",
-                  height: "30px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 id="charge_type"
                 value={chargeType.name}
@@ -248,7 +255,7 @@ export default function SetupChargeTypeDialog({
         <DialogActions>
           {selectedData?.charge_type ? (
             <button
-              className="btn-mod bg-soft btn-md"
+              className="btn-mod bg-primary btn-md"
               onClick={() => handleUpdate()}
               style={{ marginRight: "3%" }}
             >
@@ -256,7 +263,7 @@ export default function SetupChargeTypeDialog({
             </button>
           ) : (
             <button
-              className="btn-mod bg-soft btn-md"
+              className="btn-mod bg-primary btn-md"
               onClick={() => handleSubmit()}
               style={{ marginRight: "3%" }}
             >

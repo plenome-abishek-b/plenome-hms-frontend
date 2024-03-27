@@ -204,10 +204,16 @@ const timeWithoutAMPM = dateObject
             date:formattedDate,
             reason:"doctor unavailable"      
           }
+          const datas = {
+            mobilenumber: data?.mobileno,
+            Patname: data?.patient_name,
+            Date: formattedDate,
+            DocName: data?.doctor_name
+          };
           console.log(message,formattedDate,"DATE AND MESSAGE");
           if(updateStatus?.appointment_status === 'approved'){
             console.log(message,"approved");
-            const send = await api.updateAppointmentApprovedSms(message);
+            const send = await api.postSms(datas);
             console.log(send,"sms ... sms");
             setUpdateStaus({...updateStatus,appointment_status:''})
           }
