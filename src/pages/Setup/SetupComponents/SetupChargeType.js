@@ -9,7 +9,7 @@ import EditButtonRenderer from "common/data/update-button";
 import DeleteButtonRenderer from "common/data/delete-button";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 
 const SetupChargeType = (props) => {
   const initialValue = {
@@ -361,14 +361,14 @@ const SetupChargeType = (props) => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn-mod bg-soft" onClick={handleOpen}>
+                <button className="btn btn-primary bg-soft" onClick={handleOpen}>
                   <i className="fa fa-plus"></i>&nbsp; Add Charge Type
                 </button>
               </div>
 
               {/* <div style={{ marginTop: "20px" }}> */}
               <div
-                className="ag-theme-alpine"
+                className="ag-theme-material"
                 style={{ height: 500, marginTop: "20px" }}
               >
                 <AgGridReact

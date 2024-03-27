@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
+import './appointmentDetails.css';
 
 export default function PatientDialog({ open, handleClose, getAllPatient }) {
   const [bloodgroupData, setBloodgroupData] = useState("");
@@ -216,9 +217,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
           >
             Add Patient
           </DialogTitle>
-          <DialogContent className="mt-4 ms-2">
+          <DialogContent className="mt-4 ms-2 dialog-label">
             <Row>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>
                   Name <span className="text-danger">*</span>
                 </label>
@@ -229,9 +230,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                   value={formValues.patient_name}
                   onChange={handleChange}
@@ -240,10 +241,12 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   // value={formik.values.name}
                 ></input>
                 {formik.touched.patient_name && formik.errors.patient_name ? (
-                  <div className="text-danger">{formik.errors.patient_name}</div>
+                  <div className="text-danger">
+                    {formik.errors.patient_name}
+                  </div>
                 ) : null}
               </Col>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>Guardian Name</label>
                 <br />
                 <input
@@ -256,24 +259,23 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col lg="6" md="6" sm="12">
-                <label>Gender<span className="text-danger"> *</span></label>
+              <Col lg="4" md="4" sm="12">
+                <label>
+                  Gender<span className="text-danger"> *</span>
+                </label>
                 <br />
                 <select
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid  #8F98B3",
                   }}
                   name="gender"
                   value={formValues.gender}
@@ -291,7 +293,10 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   <div className="text-danger">{formik.errors.gender}</div>
                 ) : null}
               </Col>
-              <Col lg="6" md="6" sm="12">
+            </Row>
+            <br />
+            <Row>
+              <Col lg="4" md="4" sm="12">
                 <label>Date of Birth</label>
                 <br />
                 <input
@@ -303,19 +308,18 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   // value={formik.values.dob}
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
                 {formik.touched.patient_name && formik.errors.patient_name ? (
-                  <div className="text-danger">{formik.errors.patient_name}</div>
+                  <div className="text-danger">
+                    {formik.errors.patient_name}
+                  </div>
                 ) : null}
               </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>
                   Age <span className="text-danger">*</span>
                 </label>
@@ -330,7 +334,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                         width: "80px",
                         height: "35px",
                         borderRadius: "3px",
-                        border: "1px solid rgba(0,0,0,0.2)",
+                        border: "1px solid #8F98B3",
                       }}
                     />
                     <input
@@ -341,7 +345,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                         width: "80px",
                         height: "35px",
                         borderRadius: "3px",
-                        border: "1px solid rgba(0,0,0,0.2)",
+                        border: "1px solid #8F98B3",
                       }}
                       className="ms-3"
                     />
@@ -351,9 +355,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                       onChange={handledobChange}
                       style={{
                         width: "80px",
-                        height: "35px",
-                        borderRadius: "3px",
-                        border: "1px solid rgba(0,0,0,0.2)",
+                        height: "40px",
+                        borderRadius: "8px",
+                        border: "1px solid #8F98B3",
                       }}
                       className="ms-3"
                     />
@@ -363,20 +367,15 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 )}
                 <br />
               </Col>
-              {/* <Row>
-           
-
-            </Row> */}
-
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>Blood Group</label>
                 <br />
                 <select
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                   name="blood_group"
                   value={formValues.blood_group}
@@ -395,15 +394,16 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
               </Col>
             </Row>
             <br />
+
             <Row>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>Marital Status</label>
                 <select
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                   name="marital_status"
                   value={formValues.marital_status}
@@ -419,17 +419,16 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   <option value="not_specified">Not Specified</option>
                 </select>
               </Col>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label style={{ width: "100%", borderRadius: "5px" }}>
                   Patient Photo
                 </label>
                 <input type="file" name="image" placeholder=""></input>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col lg="6" md="6" sm="12">
-                <label>Phone<span className="text-danger"> *</span></label>
+              </Col>{" "}
+              <Col lg="4" md="4" sm="12">
+                <label>
+                  Phone<span className="text-danger"> *</span>
+                </label>
                 <br />
                 <input
                   type="number"
@@ -440,17 +439,22 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 />
                 {formik.touched.mobileno && formik.errors.mobileno ? (
                   <div className="text-danger">{formik.errors.mobileno}</div>
                 ) : null}
               </Col>
-              <Col lg="6" md="6" sm="12">
-                <label>Email<span className="text-danger"> *</span></label>
+            </Row>
+            <br />
+            <Row>
+              <Col lg="4" md="4" sm="12">
+                <label>
+                  Email<span className="text-danger"> *</span>
+                </label>
                 <br />
                 <input
                   type="email"
@@ -461,19 +465,16 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 />
                 {formik.touched.email && formik.errors.email ? (
                   <div className="error">{formik.errors.email}</div>
                 ) : null}
               </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>Remarks</label>
                 <br />
                 <input
@@ -486,13 +487,13 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>Any know Allergies</label>
                 <br />
                 <input
@@ -505,14 +506,15 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
             </Row>
             <br />
+
             <Row>
               <Col lg="12" md="12" sm="12">
                 <label>Address</label>
@@ -528,15 +530,15 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   style={{
                     width: "100%",
                     height: "60px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></textarea>
               </Col>
             </Row>
             <br />
             <Row>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>TPA ID</label>
                 <br />
                 <input
@@ -549,13 +551,13 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
-              <Col lg="6" md="6" sm="12">
+              <Col lg="4" md="4" sm="12">
                 <label>TPA Validity</label>
                 <br />
                 <input
@@ -568,16 +570,13 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col lg="12" md="12" sm="12">
+              </Col>{" "}
+              <Col lg="4" md="4" sm="12">
                 <label>National Identification Number</label>
                 <br />
                 <input
@@ -590,14 +589,15 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   placeholder=""
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
             </Row>
-            <br />
+            
+           
             <br />
             <h5 className="fw-bold">Additional Identifiers</h5>
 
@@ -609,9 +609,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                 <input
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
@@ -624,9 +624,9 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
                   onChange={handleChange}
                   style={{
                     width: "100%",
-                    height: "35px",
-                    borderRadius: "3px",
-                    border: "1px solid rgba(0,0,0,0.2)",
+                    height: "40px",
+                    borderRadius: "8px",
+                    border: "1px solid #8F98B3",
                   }}
                 ></input>
               </Col>
@@ -635,10 +635,10 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
             <br />
             <Row className="d-flex justify-content-center">
               <Col className="d-flex justify-content-center">
-                <button className="btn-mod fw-bold">Verify ABHA</button>
-                <button className="btn-mod ms-3 fw-bold">Patient Queue</button>
+                <button className="btn btn-primary fw-bold">Verify ABHA</button>
+                <button className="btn btn-primary ms-3 fw-bold">Patient Queue</button>
                 <Link to="/account/aadhar">
-                  <button className="btn-mod ms-3 fw-bold">Create ABHA</button>
+                  <button className="btn btn-primary ms-3 fw-bold">Create ABHA</button>
                 </Link>
               </Col>
             </Row>
@@ -654,7 +654,7 @@ export default function PatientDialog({ open, handleClose, getAllPatient }) {
             <button
               onClick={() => handleSubmit(handleClose())}
               // onClick={handleClose}
-              className="btn-mod bg-soft fw-bold"
+              className="btn btn-primary fw-bold"
               type="submit"
             >
               Save

@@ -2,17 +2,17 @@
 
 .custom-nav .nav-link {
     background-color: #fff !important; /* Default color */
-    color: #6070FF !important;
-    border: 1px solid #6070FF !important;
+    color: #3C4595 !important;
+    border: 1px solid #3C4595 !important;
 }
 
 .custom-nav .nav-link:hover {
     color: #fff !important; /* Color on hover */
-    background-color: #6070FF !important;
+    background-color: #3C4595 !important;
 }
 
 .custom-nav .nav-link.active {
-    background-color: #6070FF !important;
+    background-color: #3C4595 !important;
     color: #fff !important;
     /* border: 1px solid white !important; */
     box-shadow: 0 0 1px 0px grey;
@@ -20,11 +20,11 @@
 }
 
 .custom-nav .nav-link:active {
-    background-color: #6070FF !important;
+    background-color: #3C4595 !important;
     color: #fff !important;
 }
 
 .custom-nav .nav-link:focus {
-    background-color: #6070FF !important;
+    background-color: #3C4595 !important;
     color: #fff !important;
 }

@@ -24,7 +24,7 @@
 /* styles.css */
 
 .ag-theme-material .ag-header-cell:hover {
-  background: #4070FF !important; /* Change this to the desired hover background color */
+  background: #3C4595 !important; /* Change this to the desired hover background color */
   cursor: pointer; /* Optional: Change cursor to pointer on hover */
 }
 

@@ -452,8 +452,17 @@ const URL = {
   STAFF_ONBOARD_URL: '/staff-onboard',
   UPDATE_APPOINTMENT_SMS:'/sending-sms-appointment-reschedule',
   UPDATE_APPOINTMENT_CONFIRM_SMS:'/sending-sms-appointment-completed',
-  UPDATE_APPOINTMENT_CANCELLED_SMS:'/sending-sms-appointment-cancelled'
+  UPDATE_APPOINTMENT_CANCELLED_SMS:'/sending-sms-appointment-cancelled',
+
+  
+  STAFF_ONBOARD_URL: '/staff-onboard',
+  APPT_NO: '/appointment-no-send'
+
 };  
+
+function postApptNoSend(data){
+  return sms_http.post(URL.APPT_NO,data)
+}
 
 function postStaffonboard(data){
   return sms_http.post(URL.STAFF_ONBOARD_URL,data)
@@ -3692,6 +3701,8 @@ getBillings,
 postStaffonboard,
 updateAppointmentSms,
 updateAppointmentCancelledSms,
-updateAppointmentApprovedSms
+updateAppointmentApprovedSms,
+postApptNoSend
+ main
 };
 export default api;

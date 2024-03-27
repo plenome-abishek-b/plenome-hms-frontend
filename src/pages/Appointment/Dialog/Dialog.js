@@ -16,6 +16,7 @@ import jsPDF from "jspdf";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaymentDialog from "pages/Payment/PaymentDialog";
+import './appointmentDetails.css';
 // import "../customToast.css"
 // import "./";
 
@@ -39,7 +40,6 @@ export default function AlertDialog({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [charge, SetCharge] = useState([]);
   const [priorities, setPriorities] = useState([]);
-  const [pdfData,setPdfdata] = useState([]);
 
   useEffect(() => {
     getAllPatient();
@@ -112,7 +112,7 @@ export default function AlertDialog({
     appointment_status: "",
     message: "",
     live_consult: "",
-    time: "11:11:11",
+    time: "",
     specialist: "",
     source: "Online",
     is_opd: "yes",
@@ -129,7 +129,15 @@ export default function AlertDialog({
     getApptCharge();
   }, [formValues.doctor]);
 
-
+  const generatePdf = () => {
+    const doc = new jsPDF();
+    doc.text("Bill Details", 10, 10);
+    doc.text(`Patient Name: ${formValues.patient_name}`, 10, 20);
+    doc.text(`Gender: ${formValues.gender}`, 10, 30);
+    doc.text(`Doctor Name: ${formValues.doctor}`, 10, 40);
+    doc.text(`Doctor Fees: ${formValues.amount}`, 10, 50);
+    doc.save("bill.pdf");
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -254,53 +262,46 @@ export default function AlertDialog({
     console.log("connection");
   };
 
-  const generatePdf = () => {
-    console.log(pdfData,'formvaluespdf');
-    const doc = new jsPDF();
-    doc.text("Bill Details", 10, 10);
-    doc.text(`Patient Name: ${pdfData.patient_name}`, 10, 20);
-    doc.text(`Gender: ${pdfData.gender}`, 10, 30);
-    doc.text(`Doctor Name: ${pdfData.doctor_name}`, 10, 40);
-    doc.text(`Doctor Fees: ${pdfData.amount}`, 10, 50);
-    doc.save("bill.pdf");
-  };
-
   const handleFormSubmit = async () => {
     const Data = {
       ...formValues,
     };
+    console.log(Data, 'dataforposting')
     const response = await api.postAppointment(Data);
     const { status, data } = response;
-    // console.log(data[0].inserted_details[0], "apptresponse");
-    const Pdf_data = data[0].inserted_details[0]
-
-    console.log(Pdf_data,'pdfdata');
-    setPdfdata(Pdf_data)
+    console.log(data, 'apptresponse');
+    console.log(Data, "form values");
     // console.log(data[0].inserted_details[0].mobileno,"diff data");
-    generatePdf();
     // handleOpenpay();
-
+  
     if (status === 201) {
       const mobilenumber = data[0].inserted_details[0].mobileno;
-
+  
       const trimmedDate = data[0].inserted_details[0].date.split("T")[0];
-
+  
       const combinedDateTime = `${trimmedDate}`;
-
+  
       const formattedDateTime = new Intl.DateTimeFormat("en-US", {
         year: "numeric",
         month: "short",
         day: "2-digit",
       }).format(new Date(combinedDateTime));
-
-      const Dates = formattedDateTime;
+  
+      const Dates = new Date(combinedDateTime);
+  
+      // Add GMT+5.30 offset
+      Dates.setMinutes(Dates.getMinutes() + Dates.getTimezoneOffset() - 330);
+  
+      console.log(Dates, 'datesssss');
       const doctorName = data[0].inserted_details[0].doctor_name;
       const formattedDoctorName = doctorName.replace(/(\D)(\d+)/, "$1 ($2)");
-
+  
       const Patname = " " + data[0].inserted_details[0].patient_name.replace(/\//g, "");
-
+  
       const email = data[0].inserted_details[0].email;
-
+  
+      const appointment_no = data[0].inserted_details[0].appointment_no;
+  
       // console.log(mobilenumber,Patname,Date,DocName,'sms data');
       const datas = {
         mobilenumber: mobilenumber,
@@ -308,7 +309,16 @@ export default function AlertDialog({
         Date: Dates,
         DocName: formattedDoctorName,
       };
-
+  
+      const appt_no_datas = {
+        email: email,
+        name: Patname,
+        HosName: "Plenome Hospital",
+        date_time: Dates,
+        appoint_no: appointment_no,
+        location: "chennai"
+      }
+  
       // const email_datas = {
       //  email: email,
       //  Date: Dates,
@@ -316,19 +326,20 @@ export default function AlertDialog({
       //  drname: formattedDoctorName,
       //  HosName: hos
       // };
-
+  
       const sms_response = await api.postSms(datas);
+      const appt_no_response = await api.postApptNoSend(appt_no_datas);
       // const email_response = await api.postEmail(email_datas)
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 500,
       });
-
+  
       setFormSubmitted(true);
-      
       handleClose();
+      generatePdf();
       setFormValues({});
-
+  
       setTimeout(() => {
         getAppointment();
       }, 800);
@@ -336,7 +347,6 @@ export default function AlertDialog({
       toast.error("Failed to set up appointment slot. Please try again.");
     }
   };
-
   
 
   const handleUpdate = async () => {
@@ -446,21 +456,22 @@ export default function AlertDialog({
             backgroundColor: "#6070FF",
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          Add New Appointment
-          <div>
+          New Appointment
+          <div className="buttons-container">
             <button
-              className="btn text-white ms-5 fw-bold btn-cust"
+              className="btn text-primary bg-light  ms-5 fw-bold btn-cust"
               onClick={handleClickOpen}
-              style={{ border: "1px solid white" }}
+              style={{ border: "1px solid white", marginRight: "60px" }}
             >
-              + New Patient
+              Add New Patient
             </button>
             <button
               className="btn text-white ms-3 fw-bold"
               onClick={handleClose}
-              style={{ border: "1px solid white", backgroundColor: "#B2533E" }}
+              style={{ border: "1px solid white", backgroundColor: "#f40c0c" }}
             >
               X
             </button>
@@ -475,17 +486,17 @@ export default function AlertDialog({
             handleClose={handleclosePaydialog}
           />
         </DialogTitle>
-        <DialogContent className="mt-4">
+        <DialogContent className="mt-4 dialog-label">
           <Row>
-            <Col lg="12">
+            <Col lg="4" md="4" sm="12">
               <label className="fs-5">Patient</label>
               <br />
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="patient_id"
                 value={formValues.patient_id}
@@ -504,10 +515,7 @@ export default function AlertDialog({
                   ))}
               </select>
             </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col lg="6" md="6" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>
                 Doctor <span className="text-danger">*</span>
               </label>
@@ -516,9 +524,9 @@ export default function AlertDialog({
                 className="select-transition"
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="doctor"
                 onChange={handleChange}
@@ -540,16 +548,16 @@ export default function AlertDialog({
   ))} */}
               </select>
             </Col>
-            <Col lg="6" md="6" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>
                 Doctor Fees <span className="text-danger">*</span>
               </label>
               <Input
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                   backgroundColor: "rgba(0,0,0,0.2)",
                 }}
                 name="amount"
@@ -560,20 +568,23 @@ export default function AlertDialog({
                 readOnly
               ></Input>
             </Col>
+          </Row>
+          <br />
+          {/* <Row>
             <Input
               hidden
               style={{
                 width: "100%",
-                height: "35px",
-                border: "1px solid rgba(0,0,0,0.2)",
-                borderRadius: "3px",
+                height: "40px",
+                border: "1px solid #8F98B3",
+                borderRadius: "8px",
               }}
               name="specialist"
               value={formValues.specialist}
               onChange={handleChange}
             ></Input>
-          </Row>
-          <br />
+          </Row> */}
+          {/* <br /> */}
           <Row>
             <Col lg="4" md="4" sm="12">
               <label>
@@ -606,6 +617,7 @@ export default function AlertDialog({
             </Col>
             <Col lg="4" md="4" sm="12">
               <label>
+
                 Date <span className="text-danger">*</span>
               </label>
               <br />
@@ -614,9 +626,9 @@ export default function AlertDialog({
                   type="text"
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                    border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                   name="date"
                   value={formValues.date}
@@ -629,15 +641,44 @@ export default function AlertDialog({
                   type="date"
                   style={{
                     width: "100%",
-                    height: "35px",
-                    border: "1px solid rgba(0,0,0,0.2)",
-                    borderRadius: "3px",
+                    height: "40px",
+                    border: "1px solid #8F98B3",
+                    borderRadius: "8px",
                   }}
                   name="date"
                   value={formValues.date}
                   onChange={handleChange}
                 ></Input>
               )}
+            </Col>
+            <Col lg="4" md="4" sm="12">
+              <label>
+                Shift <span className="text-danger">*</span>
+              </label>
+              <br />
+              <select
+                style={{
+                  width: "100%",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
+                }}
+                onClick={() => getShifts()}
+                name="global_shift_id"
+                value={formValues.global_shift_id}
+                onChange={handleChange}
+              >
+                <option>select one</option>
+                {shift &&
+                  shift.map((shifts) => (
+                    <option
+                      key={shifts.global_shift_id}
+                      value={shifts.global_shift_id}
+                    >
+                      {shifts.shift_name}
+                    </option>
+                  ))}
+              </select>
             </Col>
             <Col lg="4" md="4" sm="12">
               <label>
@@ -648,9 +689,9 @@ export default function AlertDialog({
                 type="time"
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="time"
                 value={formValues.time}
@@ -659,7 +700,7 @@ export default function AlertDialog({
             </Col>
           </Row>
           <Row className="mt-4">
-            <Col lg="6" md="6" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>
                 Slot <span className="text-danger">*</span>
               </label>
@@ -667,9 +708,9 @@ export default function AlertDialog({
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 onClick={() => getSlot()}
                 name="shift_id"
@@ -685,15 +726,15 @@ export default function AlertDialog({
                   ))}
               </select>
             </Col>
-            <Col lg="6" md="6" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>Priority</label>
               <br />
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="priority"
                 value={formValues.priority}
@@ -710,18 +751,15 @@ export default function AlertDialog({
                 ))}
               </select>
             </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col lg="6" md="6" sm="12">
-              <label>Payment</label>
+            <Col lg="4" md="4" sm="12">
+              <label>Payment method</label>
               <br />
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="payment_mode"
                 value={formValues.payment_mode}
@@ -733,7 +771,10 @@ export default function AlertDialog({
                 <option value="upi">UPI</option>
               </select>
             </Col>
-            <Col lg="6" md="6" sm="12">
+          </Row>
+          <br />
+          <Row>
+            <Col lg="4" md="4" sm="12">
               <label>
                 Status <span className="text-danger">*</span>
               </label>
@@ -741,9 +782,9 @@ export default function AlertDialog({
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="appointment_status"
                 value={formValues.appointment_status}
@@ -755,26 +796,7 @@ export default function AlertDialog({
                 <option value="cancel">Cancel</option>
               </select>
             </Col>
-          </Row>
-          <Row className="mt-4">
-            <label>Message</label>
-            <Col lg="12" md="12" sm="12">
-              <textarea
-                style={{
-                  width: "100%",
-                  height: "60px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
-                }}
-                name="message"
-                value={formValues.message}
-                onChange={handleChange}
-              ></textarea>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col lg="12" md="12" sm="12">
+            <Col lg="4" md="4" sm="12">
               <label>
                 Live Consultant <span className="text-danger">*</span>
               </label>
@@ -782,9 +804,9 @@ export default function AlertDialog({
               <select
                 style={{
                   width: "100%",
-                  height: "35px",
-                  border: "1px solid rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
                 }}
                 name="live_consult"
                 value={formValues.live_consult}
@@ -795,25 +817,45 @@ export default function AlertDialog({
                 <option value="No">No</option>
               </select>
             </Col>
+            <Col lg="4" md="4" sm="12">
+              <label>Message</label>
+              <textarea
+                style={{
+                  width: "100%",
+                  height: "40px",
+                  border: "1px solid #8F98B3",
+                  borderRadius: "8px",
+                }}
+                name="message"
+                value={formValues.message}
+                onChange={handleChange}
+              ></textarea>
+            </Col>
           </Row>
+          
         </DialogContent>
-        <DialogActions
-          style={{ alignItems: "center", justifyContent: "center" }}
+        <DialogActions className="" style={{marginRight:"25px"}}
+          // style={{ alignItems: "center", justifyContent: "center" }}
         >
-          <button
+          {/* <button
             onClick={handleClose}
             className="btn fw-bold text-white"
             style={{ backgroundColor: "#B2533E" }}
           >
             Cancel
+
           </button>
           {selectedData?.date? (
+
+          </button> */}
+          {selectedData?.doctor_name ? (
+
             <button
               onClick={() => {
                 handleUpdate();
                 // generatePdf();
               }}
-              className="btn-mod bg-soft fw-bold"
+              className=" bg-primary fw-bold "
             >
               UPDATE
             </button>
@@ -821,9 +863,8 @@ export default function AlertDialog({
             <button
               onClick={() => {
                 handleFormSubmit();
-                
               }}
-              className="btn-mod bg-soft fw-bold"
+              className="btn-mod bg-primary fw-bold buttons-container"
             >
               SUBMIT
             </button>

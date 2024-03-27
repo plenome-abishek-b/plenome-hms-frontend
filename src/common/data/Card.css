@@ -1,9 +1,32 @@
-.edit-div{
-    position: absolute;
-    left: 20px;
-    bottom: 25px;
-}
+
 
 .card:hover{
     transition: transform 0.5s ease;
+}
+.edit-div {
+    position: absolute;
+    top: 88%;
+    left: 6%;
+}
+@media (max-width:768px) {
+    .edit-div {
+            position: absolute !important;
+            top: 80% !important;
+            right: 2% !important;
+        }
+}
+@media (min-width:767px)and (max-width:992px) {
+    .edit-div {
+        position: absolute;
+        top: 90%;
+        left: 6%;
+    }
+}
+@media (min-width:992px) {
+    .edit-div{
+        display: flex;
+        position: absolute;
+        top:78% ;
+        left: 4%;
+    }
 }

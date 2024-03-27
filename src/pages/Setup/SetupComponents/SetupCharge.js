@@ -6,7 +6,7 @@ import { Container, Card, CardBody } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 import SetupChargeDialog from "../SetupDialog/SetupChargeDialog";
 import api from "services/Api";
 //redux
@@ -15,7 +15,7 @@ const setupCharges = (props) => {
   const initialChargeValue = {
     name: "",
     charge_category_id: "",
-    charge_unit_id: "1",
+    charge_unit_id: "",
     tax_category_id: "",
     standard_charge: "",
     date: "",
@@ -63,9 +63,12 @@ const setupCharges = (props) => {
   );
 
   const onChange = (e) => {
+  
     //catch the parameters when changed.
     const { value, id } = e.target;
+    console.log(value,id,'changing');
     setFormData({ ...formData, [id]: value });
+    
   };
 
   console.log(formData,'data coming');
@@ -123,12 +126,12 @@ const setupCharges = (props) => {
           <Card>
             <CardBody>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button className="btn-mod bg-soft" onClick={handleOpenCharge}>
+                <button className="btn btn-primary bg-soft" onClick={handleOpenCharge}>
                   <i className="fa fa-plus"></i>&nbsp; Add Charges
                 </button>
               </div>
               <div
-                className="ag-theme-alpine"
+                className="ag-theme-material"
                 style={{ height: 500, marginTop: "20px" }}
               >
                 <AgGridReact

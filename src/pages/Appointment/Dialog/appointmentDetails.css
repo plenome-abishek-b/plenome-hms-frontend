@@ -1,0 +1,35 @@
+.no-box-shadow {
+    box-shadow: none !important;
+    border-radius: 8px;
+}
+
+.cust-span1 {
+    color: #737791;
+    font-size: 14px;
+}
+
+.cust-span2 {
+    color: #020821;
+    font-size: 16px;
+    font-weight: 500;
+
+}
+
+/*for dialog title  */
+.buttons-container {
+    display: flex;
+    align-items: center;
+   
+}
+
+.buttons-container>button {
+    position: absolute;
+
+    right: 15px;
+
+}
+.dialog-label label{
+    color: #1C2253;
+    font-size: 14px;
+    font-weight: 500;
+}
