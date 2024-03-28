@@ -3702,7 +3702,12 @@ postStaffonboard,
 updateAppointmentSms,
 updateAppointmentCancelledSms,
 updateAppointmentApprovedSms,
-postApptNoSend
+postApptNoSend,
+updateUnitType,
+deleteUnitType,
+updateTaxCategory,
+deleteTaxCategory,
+updateSlotTimings
 
 
 };
