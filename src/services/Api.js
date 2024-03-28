@@ -3152,7 +3152,29 @@ function updateRoles(data){
   return http.patch(url,data)
 }
 
+function updateUnitType(data) {
+  console.log(data,'unitdata');
+  const url = `${URL.SETUP_UNIT_URL}/${data?.id}`
+  return http3.patch(url, data);
+}
+function deleteUnitType(id) {
+  const url = `${URL.SETUP_UNIT_URL}/${id}`
+  return http3.delete(url);
+}
 
+function updateTaxCategory(data){
+  const url = `${URL.SETUP_TAX_URL}/${data?.id}`
+  return http3.patch(url,data)
+}
+function deleteTaxCategory(id){
+  const url = `${URL.SETUP_TAX_URL}/${id}`
+  return http3.delete(url)
+}
+
+function updateSlotTimings(data){
+  const url = `${URL.SETUP_APPT_SLOT_TIMING}/${data?.id}`
+  return http6.patch(url,data)
+}
 
 const api = {
   updateRoles,
@@ -3729,5 +3751,7 @@ deleteUnitType,
 updateTaxCategory,
 deleteTaxCategory,
 updateSlotTimings
+
+
 };
 export default api;

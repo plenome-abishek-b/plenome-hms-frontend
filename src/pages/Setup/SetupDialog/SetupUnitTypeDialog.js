@@ -11,7 +11,7 @@ import api from "services/Api"
 import { toast, Toaster } from "react-hot-toast"
 import { useEffect } from "react"
 import { useState } from "react"
-
+ 
 export default function SetupUnitTypeDialog({
   open,
   handleClose,
@@ -48,7 +48,7 @@ export default function SetupUnitTypeDialog({
   const handleUpdate = async () =>{
     const wholedata = {
       ...formData,
-      id:selectedData?.id
+      id:selectedData?.charge_unit_id
     }
     const response = await api.updateUnitType(wholedata)
     const {data} = response;
@@ -70,7 +70,7 @@ export default function SetupUnitTypeDialog({
     if(selectedData){
       setFormData({
         ...formData,
-        unit:selectedData?.charge_unit_id
+        unit:selectedData?.unit
       })
     }
   },[selectedData])
@@ -78,12 +78,12 @@ export default function SetupUnitTypeDialog({
     //dialog open
     setOpenUnitTypeDialog(true)
   }
-
+ 
   const handleDialogClose = () => {
     //dialog close
     setOpenUnitTypeDialog(false)
   }
-
+ 
   return (
     <div
       style={{

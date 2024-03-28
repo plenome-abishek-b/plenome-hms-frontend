@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
@@ -11,7 +12,7 @@ import { useState } from "react"
 import api from "services/Api"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
-
+ 
 export default function SetupTaxCategoryDialog({
   open,
   handleClose,
@@ -63,17 +64,17 @@ export default function SetupTaxCategoryDialog({
       handleClose();
     }
   }
-
+ 
   const handleClickOpen = () => {
     //dialog open
     setOpenTaxCategoryDialog(true)
   }
-
+ 
   const handleDialogClose = () => {
     //dialog close
     setOpenTaxCategoryDialog(false)
   }
-
+ 
   return (
     <div
       style={{
@@ -143,3 +144,4 @@ export default function SetupTaxCategoryDialog({
     </div>
   )
 }
+ 

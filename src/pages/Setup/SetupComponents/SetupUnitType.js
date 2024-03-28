@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React, { useMemo, useState, useEffect } from "react"
 import { Container, Card, CardBody } from "reactstrap"
-
+ 
 //i18n
 import { withTranslation } from "react-i18next"
 import { AgGridReact, AgGridColumn } from "ag-grid-react"
@@ -12,20 +12,20 @@ import api from "services/Api"
 import EditButtonRenderer from "common/data/update-button"
 import DeleteButtonRenderer from "common/data/delete-button"
 import { setElSeg } from "@fullcalendar/core"
-
+ 
 const setupUnitType = props => {
   const [openUnitTypeDialog, setOpenUnitTypeDialog] = useState();
-
+ 
   const initialUnitValue = {
     unit:'',
     created_at: '2023-09-08 11:11:11'
   }
-
+ 
   const [tableData, setTableData] = useState(null)
-
+ 
   const [formData, setFormData] = useState(initialUnitValue)
   const [selectedData,setSelectedData] = useState({});
-
+ 
   const handleEditClick = (data) =>{
     console.log(data,"edit");
     setSelectedData(data)
@@ -36,14 +36,14 @@ const setupUnitType = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
            console.log(userConfirmed,"delete");
    if(userConfirmed){
-         const deleteResponse = await api.deleteUnitType(data.charge_unit_id)
+         const deleteResponse = await api.deleteUnitType(data?.charge_unit_id)
          getUnit()
    }else{
     console.log("cancelled");
    }
-
+ 
    }
-
+ 
   const columnDefs = [
     { headerName: "Unit Name", field: "unit" },
     {
@@ -56,7 +56,7 @@ const setupUnitType = props => {
       },
     },
   ]
-
+ 
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
@@ -65,34 +65,34 @@ const setupUnitType = props => {
     }),
     []
   )
-
-  
+ 
+ 
   const onChange = e => {
     //catch the parameters when changed.
     const { value, id } = e.target
     setFormData({ ...formData, [id]: value })
   }
-
+ 
   const handleOpenUnitType = () => {
     setSelectedData({unit:''})
     setOpenUnitTypeDialog(true);
   }
-
+ 
   const handleCloseUnitType = () => {
     setOpenUnitTypeDialog(false);
   }
-
+ 
   useEffect(() => {
     // getUsers from json
     getUnit()
   }, [])
-
+ 
   const getUnit = () => {
     api.getUnitType
     ().then(res => setTableData(res.data))
     api.http
   }
-
+ 
   function handleFormSubmit() {
     //for posting and getting data at a sametime
     api.postUnitType(formData).then(resp => {
@@ -102,7 +102,7 @@ const setupUnitType = props => {
       }, 2000);
     })
     handleClose()
-
+ 
     api
       .getUnitType({ headers: { "content-type": "application/json" } })
       .then(resp => {
@@ -111,7 +111,7 @@ const setupUnitType = props => {
         preventDefault()
       })
   }
-
+ 
   const components = {
     actionsRenderer: (props) => (
       <div>
@@ -122,7 +122,7 @@ const setupUnitType = props => {
     ),
   };
  
-
+ 
   return (
     <React.Fragment>
       <div className="page-content">
@@ -156,5 +156,5 @@ const setupUnitType = props => {
     </React.Fragment>
   )
 }
-
+ 
 export default withTranslation()(setupUnitType)

@@ -91,17 +91,17 @@ function SetupSlotAppt() {
     );
     const { data } = response;
     console.log(data, "datffs");
-
+ 
     const newTimeInputs = data.map((slot) => ({
       id: slot.id,
       startTime: slot.start_time,
       endTime: slot.end_time,
     }));
     console.log(newTimeInputs, "tiem");
-
+ 
     setTimeInputs(newTimeInputs);
     setData(data);
-
+ 
     const charge_response = await api.getSetupAppointmentSlotChrg(
       formData.doctor
     );
@@ -114,7 +114,7 @@ function SetupSlotAppt() {
     });
     setChargeData(data2);
   };
-
+ 
   const searchAgain = () => {
     handleSearch();
   };
@@ -132,7 +132,7 @@ function SetupSlotAppt() {
       toast.success("updated successfully")
     }
   };
-
+ 
   const handleFormSubmit = async () => {
     const start_times = timeInputs.map((timeInput) => timeInput.startTime);
     const end_times = timeInputs.map((timeInput) => timeInput.endTime);
@@ -143,9 +143,9 @@ function SetupSlotAppt() {
     const newTimeInputs = timeInputs.filter((obj) => !obj.hasOwnProperty("id"));
     console.log(newTimeInputs, "apple");
     if(newTimeInputs.length < 1){
-      toast.error("please add a new time slot") 
+      toast.error("please add a new time slot")
     }
-
+ 
     // Post only the new timeInputs
     for (const input of newTimeInputs) {
       const { startTime, endTime } = input;
@@ -160,12 +160,12 @@ function SetupSlotAppt() {
           end_time: endTime,
           Hospital_id: 1,
         });
-
+ 
         // If the API call is successful, add the ID to the list of posted time IDs
         if (response.data && response.data.id) {
           setPostedTimeIds([...postedTimeIds, response.data.id]);
         }
-
+ 
         // Show success toast
         toast.success("Setup appointment slot time added successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -178,14 +178,14 @@ function SetupSlotAppt() {
         });
       }
     }
-
+ 
     // Check if there are any changes to existing slot timings
     const existingSlotTimings = data.map((slot) => ({
       id: slot.id,
       startTime: slot.start_time,
       endTime: slot.end_time,
     }));
-
+ 
     // if (!arraysEqual(existingSlotTimings, timeInputs)) {
     //   console.log(existingSlotTimings,"exist timing",timeInputs)
     //   // Changes detected, update the slot timings
@@ -206,11 +206,11 @@ function SetupSlotAppt() {
     //     });
     //   }
     // }
-
+ 
     // Reset the formSubmitted state to prevent duplicate submissions
     setFormSubmitted(true);
   };
-
+ 
   // Function to compare two arrays for equality
   const arraysEqual = (arr1, arr2) => {
     if (arr1.length !== arr2.length) return false;
@@ -224,7 +224,7 @@ function SetupSlotAppt() {
     }
     return true;
   };
-
+ 
   const getAllChargecategory = async () => {
     const response = await api.getChargeCategory();
     const { data } = response;
@@ -284,6 +284,7 @@ function SetupSlotAppt() {
       console.log("rejected");
     }
   };
+
   const styles = {
     font_color: {
       color: "#1C2253",
@@ -575,7 +576,7 @@ function SetupSlotAppt() {
                       ))}
                     </>
                   ))    :  */}
-
+ 
                   {timeInputs.map(
                     (timeInput, index) => (
                       console.log(timeInput, "EE"),
@@ -658,7 +659,7 @@ function SetupSlotAppt() {
                     timeInputs.map((val, index) =>
                       console.log(val, "time inputs")
                     )}
-
+ 
                   <div className="d-flex justify-content-end mt-4">
                     <button
                       className="btn-mod bg-primary"
@@ -682,5 +683,5 @@ function SetupSlotAppt() {
     </React.Fragment>
   );
 }
-
+ 
 export default SetupSlotAppt;

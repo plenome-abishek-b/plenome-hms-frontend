@@ -140,7 +140,7 @@ export default function AlertDialog({
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target; 
 
     const formattedValue = name === "time" ? `${value}:00` : value;
      if(name === 'date'){
@@ -263,6 +263,7 @@ export default function AlertDialog({
   };
 
   const handleFormSubmit = async () => {
+    // handleOpenpay()
     const Data = {
       ...formValues,
     };
@@ -272,7 +273,7 @@ export default function AlertDialog({
     console.log(data, 'apptresponse');
     console.log(Data, "form values");
     // console.log(data[0].inserted_details[0].mobileno,"diff data");
-    // handleOpenpay();
+    handleOpenpay();
   
     if (status === 201) {
       const mobilenumber = data[0].inserted_details[0].mobileno;
@@ -301,6 +302,18 @@ export default function AlertDialog({
       const email = data[0].inserted_details[0].email;
   
       const appointment_no = data[0].inserted_details[0].appointment_no;
+
+      const amount = data[0].inserted_details[0].amount;
+
+      const mobileno = data[0].inserted_details[0].mobileno;
+
+      const id = data[0].inserted_details[0].id;
+
+      const time = data[0].inserted_details[0].time;
+
+      const live_consult = data[0].inserted_details[0].live_consult;
+
+      const shift_id = data[0].inserted_details[0].shift_id;
   
       // console.log(mobilenumber,Patname,Date,DocName,'sms data');
       const datas = {
@@ -318,7 +331,39 @@ export default function AlertDialog({
         appoint_no: appointment_no,
         location: "chennai"
       }
-  
+
+      const sms_response = await api.postSms(datas);
+      const appt_no_response = await api.postApptNoSend(appt_no_datas);
+
+      
+
+     
+     const pay_Data = [
+      {
+        amount: amount,
+        hospital_id: '1',
+        patient_mobile: mobileno,
+        patient_email: email,
+        transaction_type: "DIRECT",
+        payment_mode: "",
+      },
+      {
+        patient_id: id,
+        doctor: '',
+        date: Dates,
+        time: time,
+        live_consult: live_consult,
+        payment_mode: '',
+        payment_date: '',
+        Hospital_id: '1',
+        global_shift_id: '',
+        Shift_id: shift_id
+      },
+      {
+        api: 'http://13.200.35.19:7000/appointment',
+        method: 'post'
+      }
+     ]
       // const email_datas = {
       //  email: email,
       //  Date: Dates,
@@ -327,8 +372,7 @@ export default function AlertDialog({
       //  HosName: hos
       // };
   
-      const sms_response = await api.postSms(datas);
-      const appt_no_response = await api.postApptNoSend(appt_no_datas);
+     
       // const email_response = await api.postEmail(email_datas)
       toast.success("Appointment booked successfully!", {
         position: toast.POSITION.TOP_RIGHT,

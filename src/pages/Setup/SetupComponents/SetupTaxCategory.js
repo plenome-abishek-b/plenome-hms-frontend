@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React, { useMemo, useState, useEffect } from "react"
 import { Container, Card, CardBody } from "reactstrap"
-
+ 
 //i18n
 import { withTranslation } from "react-i18next"
 import { AgGridReact, AgGridColumn } from "ag-grid-react"
@@ -11,15 +11,15 @@ import SetupTaxCategoryDialog from "../SetupDialog/SetupTaxCategoryDialog"
 import api from "services/Api"
 import EditButtonRenderer from "common/data/update-button"
 import DeleteButtonRenderer from "common/data/delete-button"
-
-
+ 
+ 
 const setupTaxCategory = props => {
   const initialTaxValue = {
     name: '',
     percentage: '',
     created_at: '2023-06-05 11:11:11'
   }
-
+ 
   const [openTaxCategoryDialog, setOpenTaxCategoryDialog] = useState();
   const [tableData, setTableData] = useState(null);
   const [selectedData,setSelectedData] = useState({});
@@ -40,13 +40,13 @@ const setupTaxCategory = props => {
     console.log("cancelled");
    }
   }
-
-
+ 
+ 
   const columnDefs = [
     { headerName: "Name", field: "name" },
-    { 
-      headerName: "Percentage", 
-      field: "percentage", 
+    {
+      headerName: "Percentage",
+      field: "percentage",
       valueGetter: ({ data }) => data.percentage.toFixed(2) + "%"
     },
     {
@@ -59,8 +59,8 @@ const setupTaxCategory = props => {
       },
     },
   ];
-  
-  
+ 
+ 
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
@@ -69,33 +69,33 @@ const setupTaxCategory = props => {
     }),
     []
   )
-
-  
+ 
+ 
   const onChange = e => {
     //catch the parameters when changed.
     const { value, id } = e.target
     setFormData({ ...formData, [id]: value })
   }
-
+ 
   const handleOpenTaxCategory = () => {
     setSelectedData({name:'',percentage:''})
     setOpenTaxCategoryDialog(true);
   }
-
+ 
   const handleCloseTaxCategory = () => {
     setOpenTaxCategoryDialog(false);
   }
-
+ 
    useEffect(() => {
     // getUsers from json
     getTax()
   }, [])
-
+ 
   const getTax = () => {
     api.getTaxCategory().then(res => setTableData(res.data))
     api.http
   }
-
+ 
   function handleFormSubmit() {
     //for posting and getting data at a sametime
     api.postTaxCategory(formData).then(resp => {
@@ -105,7 +105,7 @@ const setupTaxCategory = props => {
       }, 2000);
     })
     handleClose()
-
+ 
     api
       .getTaxCategory({ headers: { "content-type": "application/json" } })
       .then(resp => {
@@ -123,7 +123,7 @@ const setupTaxCategory = props => {
       </div>
     ),
   };
-
+ 
   return (
     <React.Fragment>
       <div className="page-content">
@@ -157,5 +157,5 @@ const setupTaxCategory = props => {
     </React.Fragment>
   )
 }
-
+ 
 export default withTranslation()(setupTaxCategory)
