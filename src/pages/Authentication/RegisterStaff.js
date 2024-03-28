@@ -425,25 +425,19 @@ const RegisterStaff = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-  const history2= useHistory();
-  const toogle2 =()=>{
-    history2.push("/account/login")
-  }
-
+  const history2 = useHistory();
+  const toogle2 = () => {
+    history2.push("/account/login");
+  };
 
   return (
     <React.Fragment>
       <div
-        className="page-content "
-        style={{
-          backgroundImage: `url("./login-bg1.jpeg")`, // Check if the path to the image is correct
-          backgroundSize: "cover", // Optionally adjust background size
-          backgroundPosition: "center", // Optionally adjust background position
-        }}
+        className="page-content cust-div"
       >
-        <Container fluid>
+        <Container fluid style={{ width: '80%' }}>
           {/* Render Breadcrumb */}
-          <h4 className="text-primary">Add New Staff</h4>
+
           {/* <span
             className=" btn-mod  "
             title="back"
@@ -455,18 +449,8 @@ const RegisterStaff = () => {
               cursor: "pointer",
             }}
           ></span> */}
-          <div
-            className="d-flex justify-content-end"
-            style={{
-              position: "absolute",
-              right: "5%",
-              top: "7%",
-              cursor: "pointer",
-            }}
-          >
-            <button className="btn btn-primary btn-sm" onClick={toogle2}>
-              <i className="fas fa-angle-left fa-3x"></i>
-            </button>
+          <div className="bg bg-primary p-4">
+            <h4 className="text-white">Add New Staff</h4>
           </div>
           {/* < onSubmit={formik.handleSubmit}> */}
           <Card className="addstaff-text-label ">
