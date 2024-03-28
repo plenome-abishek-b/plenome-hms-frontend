@@ -48,7 +48,7 @@ export default function SetupUnitTypeDialog({
   const handleUpdate = async () =>{
     const wholedata = {
       ...formData,
-      id:selectedData?.id
+      id:selectedData?.charge_unit_id
     }
     const response = await api.updateUnitType(wholedata)
     const {data} = response;
