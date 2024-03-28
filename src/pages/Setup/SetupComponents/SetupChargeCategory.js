@@ -10,6 +10,8 @@ import "ag-grid-community/styles/ag-theme-material.css"
 
 import SetupChargeCategoryDialog from "../SetupDialog/SetupChargeCategoryDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 const setupChargeCategory = props => {
   const initialChargecategoryValue = {
@@ -25,12 +27,38 @@ const setupChargeCategory = props => {
 
   const [tableData, setTableData] = useState(null)
 
-  const [formData, setFormData] = useState(initialChargecategoryValue)
+  const [formData, setFormData] = useState(initialChargecategoryValue);
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenTaxCategoryDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteTaxCategory(data.id)
+         getTax()
+   }else{
+    console.log("cancelled");
+   }
+  }
+
 
   const columnDefs = [
     { headerName: "Name", field: "name" },
     { headerName: "Charge Type", field: "charge_type" },
     { headerName: "Description", field: "description" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
     // { headerName: "Action", field: "action" },
   ]
 
@@ -85,7 +113,15 @@ const setupChargeCategory = props => {
         preventDefault()
       })
   }
-
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   return (
     <React.Fragment>
@@ -108,6 +144,7 @@ const setupChargeCategory = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                   />
                   <SetupChargeCategoryDialog open={openChargeCategoryDialog} handleClose={handleCloseCategory} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
                 </div>

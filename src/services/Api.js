@@ -869,7 +869,6 @@ function getUnitType(data = {}) {
 function postUnitType(data = {}) {
   return http3.post(URL.SETUP_UNIT_URL, data);
 }
-
 function getPharmacyCtgry(data = {}) {
   return http.get(URL.SETUP_PHARMACY_CTGRY_URL, data);
 }

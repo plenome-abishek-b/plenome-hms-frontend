@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
- 
+
 function SetupSlotAppt() {
   const [doctors, setDoctor] = useState([]);
   const [shift, setShift] = useState([]);
@@ -26,13 +26,13 @@ function SetupSlotAppt() {
     ]);
   };
   const LoginedDoctor = localStorage.getItem("existingDocotr_id");
- 
+
   const handleTimeInputChange = (index, field, value) => {
     const updatedTimeInputs = [...timeInputs];
     updatedTimeInputs[index][field] = value;
     setTimeInputs(updatedTimeInputs);
   };
- 
+
   const [formData, setFormData] = useState({
     doctor: "",
     shift: "",
@@ -43,7 +43,7 @@ function SetupSlotAppt() {
     charge_category: "",
     consult_duration: "",
   });
- 
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
     console.log(name, value, "ee");
@@ -68,21 +68,21 @@ function SetupSlotAppt() {
       [name]: value,
     });
   };
- 
+
   const getDoctor = async () => {
     const response = await api.getApptDoctor();
     const { data } = response;
     setDoctor(data);
     console.log(data, "setup doctors");
   };
- 
+
   const getShift = async () => {
     const response = await api.getApptShift(formData.doctor);
     const { data } = response;
     setShift(data);
     console.log(data, "dd");
   };
- 
+
   const handleSearch = async () => {
     const response = await api.getSlotTiming(
       formData.day,
@@ -284,6 +284,7 @@ function SetupSlotAppt() {
       console.log("rejected");
     }
   };
+
   const styles = {
     font_color: {
       color: "#1C2253",
@@ -291,7 +292,7 @@ function SetupSlotAppt() {
       fontWeight: "500",
     },
   };
- 
+
   return (
     <React.Fragment>
       <div className="page-content">

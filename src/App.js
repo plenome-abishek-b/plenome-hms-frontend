@@ -71,10 +71,9 @@ const elapsedMinutes = (currentTime - loginTime) / (1000 * 60);
 
 console.log(elapsedMinutes,'elapsed');
 
-// if (!isLoggedIn || elapsedMinutes > 30) {
-//   history.push('/account/login');
-// }
-
+if (!isLoggedIn || elapsedMinutes > 30) {
+  history.push('/account/login');
+}
 
   const Layout = getLayout();
   return (
