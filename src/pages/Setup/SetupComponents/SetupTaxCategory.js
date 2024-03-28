@@ -9,6 +9,8 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-material.css"
 import SetupTaxCategoryDialog from "../SetupDialog/SetupTaxCategoryDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
 
 
 const setupTaxCategory = props => {
@@ -18,10 +20,27 @@ const setupTaxCategory = props => {
     created_at: '2023-06-05 11:11:11'
   }
 
-  const [openTaxCategoryDialog, setOpenTaxCategoryDialog] = useState()
-  const [tableData, setTableData] = useState(null)
+  const [openTaxCategoryDialog, setOpenTaxCategoryDialog] = useState();
+  const [tableData, setTableData] = useState(null);
+  const [selectedData,setSelectedData] = useState({});
+  const [formData, setFormData] = useState(initialTaxValue);
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenTaxCategoryDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteTaxCategory(data.id)
+         getTax()
+   }else{
+    console.log("cancelled");
+   }
+  }
 
-  const [formData, setFormData] = useState(initialTaxValue)
 
   const columnDefs = [
     { headerName: "Name", field: "name" },
@@ -29,6 +48,15 @@ const setupTaxCategory = props => {
       headerName: "Percentage", 
       field: "percentage", 
       valueGetter: ({ data }) => data.percentage.toFixed(2) + "%"
+    },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
     },
   ];
   
@@ -50,6 +78,7 @@ const setupTaxCategory = props => {
   }
 
   const handleOpenTaxCategory = () => {
+    setSelectedData({name:'',percentage:''})
     setOpenTaxCategoryDialog(true);
   }
 
@@ -85,6 +114,15 @@ const setupTaxCategory = props => {
         preventDefault()
       })
   }
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
 
   return (
     <React.Fragment>
@@ -107,8 +145,9 @@ const setupTaxCategory = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                   />
-                  <SetupTaxCategoryDialog open={openTaxCategoryDialog} handleClose={handleCloseTaxCategory} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+                  <SetupTaxCategoryDialog getTaxCategory={getTax} selectedData={selectedData} open={openTaxCategoryDialog} handleClose={handleCloseTaxCategory} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
                 </div>
               </div>
             </CardBody>

@@ -9,6 +9,9 @@ import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-material.css"
 import SetupUnitTypeDialog from "../SetupDialog/SetupUnitTypeDialog"
 import api from "services/Api"
+import EditButtonRenderer from "common/data/update-button"
+import DeleteButtonRenderer from "common/data/delete-button"
+import { setElSeg } from "@fullcalendar/core"
 
 const setupUnitType = props => {
   const [openUnitTypeDialog, setOpenUnitTypeDialog] = useState();
@@ -21,9 +24,37 @@ const setupUnitType = props => {
   const [tableData, setTableData] = useState(null)
 
   const [formData, setFormData] = useState(initialUnitValue)
+  const [selectedData,setSelectedData] = useState({});
+
+  const handleEditClick = (data) =>{
+    console.log(data,"edit");
+    setSelectedData(data)
+    // setSelectedData()
+    setOpenUnitTypeDialog(true)
+   }
+   const handleDeleteClick = async (data) =>{
+    const userConfirmed = window.confirm('Are you sure you want to delete this item?');
+           console.log(userConfirmed,"delete");
+   if(userConfirmed){
+         const deleteResponse = await api.deleteUnitType(data.id)
+         getUnit()
+   }else{
+    console.log("cancelled");
+   }
+
+   }
 
   const columnDefs = [
     { headerName: "Unit Name", field: "unit" },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      cellRenderer: 'actionsRenderer',
+      cellRendererParams: {
+        onEditClick: (row) => handleEditClick(row),
+        onDeleteClick: (row) => handleDeleteClick(row),
+      },
+    },
   ]
 
   const defaultColDef = useMemo(
@@ -43,6 +74,7 @@ const setupUnitType = props => {
   }
 
   const handleOpenUnitType = () => {
+    setSelectedData({unit:''})
     setOpenUnitTypeDialog(true);
   }
 
@@ -80,6 +112,16 @@ const setupUnitType = props => {
       })
   }
 
+  const components = {
+    actionsRenderer: (props) => (
+      <div>
+        <EditButtonRenderer onClick={() => props.onEditClick(props.data)} />
+        &nbsp;
+        <DeleteButtonRenderer onClick={() => props.onDeleteClick(props.data)} />
+      </div>
+    ),
+  };
+ 
 
   return (
     <React.Fragment>
@@ -102,8 +144,9 @@ const setupUnitType = props => {
                     rowData={tableData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
+                  frameworkComponents={components}
                   />
-                  <SetupUnitTypeDialog open={openUnitTypeDialog} handleClose={handleCloseUnitType} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+                  <SetupUnitTypeDialog getUnit={getUnit} open={openUnitTypeDialog} handleClose={handleCloseUnitType} selectedData={selectedData} data={formData}/>
                 </div>
               </div>
             </CardBody>
