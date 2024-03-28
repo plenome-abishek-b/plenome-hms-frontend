@@ -861,14 +861,6 @@ function getTaxCategory(data = {}) {
 function postTaxCategory(data = {}) {
   return http3.post(URL.SETUP_TAX_URL, data);
 }
-function updateTaxCategory(data){
-  const url = `${URL.SETUP_TAX_URL}/${data?.id}`
-  return http3.patch(url,data)
-}
-function deleteTaxCategory(id){
-  const url = `${URL.SETUP_TAX_URL}/${id}`
-  return http3.delete(url)
-}
 
 function getUnitType(data = {}) {
   return http3.get(URL.SETUP_UNIT_URL, data);
@@ -877,16 +869,6 @@ function getUnitType(data = {}) {
 function postUnitType(data = {}) {
   return http3.post(URL.SETUP_UNIT_URL, data);
 }
-function updateUnitType(data) {
-  const url = `${URL.SETUP_UNIT_URL}/${data?.id}`
-  return http3.patch(url, data);
-}
-function deleteUnitType(id) {
-  const url = `${URL.SETUP_UNIT_URL}/${id}`
-  return http3.delete(url);
-}
-
-
 function getPharmacyCtgry(data = {}) {
   return http.get(URL.SETUP_PHARMACY_CTGRY_URL, data);
 }
@@ -2290,10 +2272,6 @@ function postSetupApptSlotTime(payload) {
 }
 function deleteSetupApptSlotTime(id){
   return http6.delete(`${URL.SETUP_APPT_SLOT_TIMING}/${id}`)
-}
-function updateSlotTimings(data){
-  const url = `${URL.SETUP_APPT_SLOT_TIMING}/${data?.id}`
-  return http6.patch(url,data)
 }
 
 function getSetupApptSlotCharge(staff_id) {
