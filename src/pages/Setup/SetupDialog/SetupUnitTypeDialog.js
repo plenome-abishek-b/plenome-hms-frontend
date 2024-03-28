@@ -70,7 +70,7 @@ export default function SetupUnitTypeDialog({
     if(selectedData){
       setFormData({
         ...formData,
-        unit:selectedData?.unit
+        unit:selectedData?.charge_unit_id
       })
     }
   },[selectedData])

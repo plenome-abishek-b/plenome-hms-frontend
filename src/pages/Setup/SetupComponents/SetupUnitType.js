@@ -36,7 +36,7 @@ const setupUnitType = props => {
     const userConfirmed = window.confirm('Are you sure you want to delete this item?');
            console.log(userConfirmed,"delete");
    if(userConfirmed){
-         const deleteResponse = await api.deleteUnitType(data.id)
+         const deleteResponse = await api.deleteUnitType(data.charge_unit_id)
          getUnit()
    }else{
     console.log("cancelled");
