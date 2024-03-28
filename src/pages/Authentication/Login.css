@@ -77,3 +77,10 @@
 .password-changed-img{
     filter: invert(5%);
 }
+
+.cust-div{
+    background-image: url("./login-bg1.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

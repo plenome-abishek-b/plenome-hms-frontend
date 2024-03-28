@@ -273,7 +273,7 @@ export default function AlertDialog({
     console.log(data, 'apptresponse');
     console.log(Data, "form values");
     // console.log(data[0].inserted_details[0].mobileno,"diff data");
-    // handleOpenpay();
+    handleOpenpay();
   
     if (status === 201) {
       const mobilenumber = data[0].inserted_details[0].mobileno;
@@ -334,6 +334,8 @@ export default function AlertDialog({
 
       const sms_response = await api.postSms(datas);
       const appt_no_response = await api.postApptNoSend(appt_no_datas);
+
+      
 
      
      const pay_Data = [
